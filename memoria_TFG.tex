@@ -84,7 +84,7 @@ Para a presentación e consulta do catálogo, a plataforma emprega o módulo \te
 O mecanismo de busca textual actual baséase no filtro \textit{combine} de \textit{Views}, que realiza comparacións de subcadeas sobre o campo título das entidades. Esta aproximación presenta limitacións relevantes: a busca restrinxese ao campo título, ignorando atributos como a descrición ou a área de coñecemento; non se aplica ningunha ponderación por relevancia, polo que os resultados se presentan en orde alfabética con independencia da pertinencia da consulta; e non existe tolerancia a erros tipográficos, de xeito que calquera inexactitude na consulta pode producir cero resultados aínda que o elemento buscado exista no catálogo. Ademais, as opcións de filtrado son estáticas e non se adaptan ao conxunto de resultados dispoñibles, polo que poden aparecer valores sen correspondencia con ningunha entrada existente.
 
 % **************************************************
-% * Objetivos y requisitos
+% * Obxectivos e requisitos
 % **************************************************
 \section{Obxectivos e requisitos}
 O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual —ausencia de criterios de ordenación, busca por coincidencia exacta e sen tolerancia a erros tipográficos—, propónse o deseño e implementación de dúas melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca existentes, e a implementación dun mecanismo de busca difusa que permita localizar programas aínda en presenza de erros tipográficos na consulta.
@@ -92,7 +92,7 @@ O presente traballo ten como obxectivo principal mellorar a experiencia de busca
 A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
 
 % **************************************************
-% * Requisitos funcionales
+% * Requisitos funcionais
 % **************************************************
 \subsection{Requisitos funcionais}
 
@@ -105,7 +105,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 
     \item Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
 
-    \item Ambas as vistas deben soportar os seguintes criterios de ordenación comúns: orde alfabética por título, área de coñecemento, número de créditos e país de orixe da institución.
+    \item Ambas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, área de coñecemento, número de créditos e país de orixe da institución.
 
     \item A vista de programas (\textit{search\_programme}) debe incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF.
 
