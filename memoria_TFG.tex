@@ -115,25 +115,21 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \end{enumerate}
 
 % **************************************************
-% * Sistema de filtrado
+% * Busca difusa
 % **************************************************
-\subsubsection{Sistema de filtrado}
+\subsubsection{Busca difusa}
 \begin{enumerate}
-    \item O sistema debe permitir a aplicación de filtros sobre o conxunto de resultados obtidos, posibilitando a restrición dos cursos amosados en función de distintos atributos do modelo de datos.
+    \item O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
 
-    \item Os filtros deberán contemplar, cando menos, aqueles campos estruturados que resulten relevantes para a consulta dos usuarios, tales como titulación, área de coñecemento, idioma de impartición, número de créditos, modalidade ou outros atributos dispoñibles no catálogo.
+    \item A busca difusa debe aplicar un criterio de similaridade entre a consulta e os títulos dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
 
-    \item O sistema debe permitir a combinación simultánea de múltiples filtros, de maneira que o usuario poida refinar progresivamente os resultados mediante criterios acumulativos.
+    \item A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
 
-    \item A aplicación ou modificación de filtros non deberá xerar inconsistencias nos resultados amosados, garantindo que o conxunto final de cursos cumpra todos os criterios activos en cada momento.
+    \item Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
 
-          % // \item O sistema debe actualizar os resultados de forma coherente tras a activación ou desactivación de filtros, mantendo unha experiencia de usuario fluída e evitando recargas innecesarias que afecten negativamente á interacción.
+    \item O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
 
-    \item O sistema debe permitir que os filtros sexan dinámicos e adaptativos ao conxunto de datos dispoñible, evitando amosar opcións de filtrado que non se correspondan con resultados existentes.
-
-          % // \item O mecanismo de filtrado deberá integrarse de forma consistente co sistema de busca, permitindo que ambos procesos actúen de maneira complementaria, de xeito que a consulta textual e os criterios estruturados poidan aplicarse conxuntamente.
-
-          % // \item O deseño do sistema de filtrado debe contemplar a posibilidade de ampliación futura, permitindo a incorporación de novos criterios sen necesidade de redeseñar a arquitectura principal.
+    \item O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
 \end{enumerate}
 
 % **************************************************
