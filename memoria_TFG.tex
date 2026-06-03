@@ -133,48 +133,25 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \end{enumerate}
 
 % **************************************************
-% * Requisitos no funcionales
+% * Requisitos non funcionais
 % **************************************************
 \subsection{Requisitos non funcionais}
-
-% **************************************************
-% * Integración y rendimiento
-% **************************************************
-\subsubsection{Integración e rendemento}
 \begin{enumerate}
-    \item A solución proposta debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
+    \item A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
 
-    \item O sistema debe ser compatible coa arquitectura actual baseada en Drupal e cos módulos empregados para a xestión do contido, garantindo que a mellora do mecanismo de busca e filtrado non requira unha reimplementación completa da contorna.
+    \item O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
 
-    \item A implementación debe reutilizar, na medida do posible, os mecanismos de indexación e consulta dispoñibles na plataforma, ou ben estendelos de forma controlada cando resulte necesario.
+    \item O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
 
-    \item O sistema debe garantir tempos de resposta axeitados nas consultas realizadas polo usuario, de maneira que a experiencia de uso non se vexa degradada por demoras excesivas na xeración de resultados.
+    \item A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
 
-    \item O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a escalabilidade da solución permita a súa evolución futura.
+    \item O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
 
-    \item O sistema debe soportar a execución concorrente de múltiples consultas sen producir erros, bloqueos ou degradacións significativas do rendemento.
+    \item A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
 
-    \item A solución implementada deberá minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
-\end{enumerate}
+    \item O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
 
-% **************************************************
-% * Otros
-% **************************************************
-\subsubsection{Outros}
-\begin{enumerate}
-    \item A solución debe estar fundamentada en tecnoloxías de uso libre e código aberto, mantendo coherencia cos principios e coa arquitectura xeral do proxecto DACEM.
-
-    \item O desenvolvemento debe garantir a mantenibilidade do código, estruturando a implementación de forma modular e documentada para facilitar futuras modificacións ou ampliacións.
-
-    \item A solución debe ser compatible con futuras actualizacións da plataforma e dos módulos empregados, evitando dependencias que comprometan a evolución do sistema.
-
-    \item O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas, consultas mal formadas ou combinacións de filtros non válidas, evitando erros visibles para o usuario final.
-
-    \item A interface de busca e filtrado debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
-
-    \item A solución debe preservar a integridade dos datos existentes, garantindo que as melloras introducidas na capa de consulta non alteren a información almacenada nin a súa consistencia.
-
-    \item O deseño do sistema deberá contemplar a súa posible reutilización ou adaptación noutros contextos similares, favorecendo a portabilidade e a extensibilidade da solución implementada.
+    \item A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
 \end{enumerate}
 
 % **************************************************
