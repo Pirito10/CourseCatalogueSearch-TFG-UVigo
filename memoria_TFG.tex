@@ -196,7 +196,7 @@ O fundamento teórico da busca difusa reside no concepto de distancia de edició
 
 A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo incorporando as transposicións de caracteres adxacentes como operación atómica, o que a fai máis precisa para modelar erros tipográficos humanos, onde o intercambio de dúas letras consecutivas é un dos erros máis frecuentes. Outra métrica habitual é a \textbf{similitude de Jaro-Winkler} \cite{winkler}, que premia as cadeas con prefixo común e adoita empregarse na comparación de nomes propios. Por último, os enfoques baseados en \textbf{n-gramas} dividen as cadeas en secuencias solapadas de $n$ caracteres e comparan a proporción de n-gramas compartidos, ofrecendo bo rendemento en textos longos e sendo facilmente paralelizables.
 
-Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza de implementación, a súa idoneidade para detectar erros tipográficos en cadeas curtas como os títulos de programas académicos, e pola dispoñibilidade dunha función nativa en PHP (\texttt{levenshtein()}) que non require dependencias externas.
+Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas académicos.
 
 \subsection{Busca e indexación en sistemas de xestión de contidos}
 
