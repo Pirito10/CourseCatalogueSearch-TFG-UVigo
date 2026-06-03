@@ -202,16 +202,16 @@ Para o presente traballo optouse pola distancia de Levenshtein como criterio de 
 
 Os sistemas de xestión de contidos modernos incorporan habitualmente mecanismos de busca que van máis alá da simple consulta SQL. En Drupal 10, a solución integrada por defecto para a busca en listaxes de contido é o módulo \textit{Views}, cuxo filtro \textit{combine} realiza comparacións de subcadeas mediante operadores SQL \texttt{LIKE}. Esta aproximación limítase a coincidencias exactas e non ofrece capacidades de indexación nin de ponderación de resultados por relevancia.
 
-Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{Search API} \cite{search_api}, que proporciona unha capa de abstracción para a indexación e consulta de contido con soporte para múltiples backends:
+Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{Search API} \cite{search_api}, que proporciona unha capa de abstracción para a indexación e consulta de contido. O módulo inclúe un sistema de procesadores configurables —como normalización de maiúsculas, transliteración de acentos, tokenización ou eliminación de palabras baleiras— que se aplican durante a indexación con independencia do \textit{backend} escollido. Os \textit{backends} dispoñibles máis empregados son os seguintes:
 
 \begin{itemize}
-    \item \textbf{Backend de base de datos}: almacena o índice en táboas da base de datos relacional existente. Non require infraestrutura adicional e é adecuado para catálogos de tamaño moderado.
+    \item \textbf{Backend de base de datos}: almacena o índice en táboas da base de datos relacional existente. Non require infraestrutura adicional e ofrece un rendemento axeitado para catálogos de tamaño moderado.
 
-    \item \textbf{Apache Solr}: motor de busca de código aberto baseado en Lucene. Ofrece \textit{stemming} e análise lingüística nativos e multilingües, ponderación avanzada de resultados por relevancia e mellor rendemento con grandes volumes de datos. Require un servidor Solr externo. O backend de base de datos tamén pode incorporar \textit{stemming} a través de procesadores adicionais, pero cunha integración menos profunda e menor soporte multilingüe.
+    \item \textbf{Apache Solr}: motor de busca de código aberto baseado en Lucene, optimizado para grandes volumes de datos e con capacidades avanzadas de ponderación de resultados por relevancia. Require un servidor Solr externo.
 
-    \item \textbf{Elasticsearch}: solución distribuída con capacidades similares a Solr, orientada a contornas de alta dispoñibilidade e escalabilidade horizontal. Tamén require infraestrutura adicional dedicada.
+    \item \textbf{Elasticsearch}: solución distribuída orientada á alta dispoñibilidade e á escalabilidade horizontal, con capacidades similares a Solr. Tamén require infraestrutura adicional dedicada.
 \end{itemize}
 
-Para este traballo optouse polo backend de base de datos de \textit{Search API}, dado que non require infraestrutura adicional, é suficiente para o volume de datos do catálogo DACEM, e permite integrar a lóxica de busca difusa directamente en PHP, empregando o índice para recuperar os títulos sobre os que aplicar a métrica de Levenshtein.
+Para este traballo optouse polo \textit{backend} de base de datos, dado que non require infraestrutura adicional, é suficiente para o volume de datos do catálogo DACEM, e permite integrar a lóxica de busca difusa directamente en PHP, empregando o índice para recuperar os títulos sobre os que aplicar a métrica de Levenshtein.
 
 \end{document}
