@@ -97,23 +97,21 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \subsection{Requisitos funcionais}
 
 % **************************************************
-% * Sistema de búsqueda
+% * Ordenación de resultados
 % **************************************************
-\subsubsection{Sistema de busca}
+\subsubsection{Ordenación de resultados}
 \begin{enumerate}
-    \item O sistema debe permitir a realización de buscas textuais sobre o catálogo de cursos a partir dunha cadea de consulta introducida polo usuario.
+    \item O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
 
-    \item A busca non debe limitarse exclusivamente ao título do curso, senón que deberá contemplar múltiples campos relevantes do modelo de datos, tales como a descrición, a área de coñecemento, a titulación asociada ou outros atributos significativos que formen parte da información estruturada do catálogo.
+    \item Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
 
-    \item O sistema debe soportar coincidencias parciais e non estritamente literais, permitindo a localización de resultados mesmo cando a consulta non coincida exactamente co texto almacenado. Neste sentido, deberase contemplar a normalización de maiúsculas e minúsculas e, no seu caso, a xestión de caracteres acentuados.
+    \item Ambas as vistas deben soportar os seguintes criterios de ordenación comúns: orde alfabética por título, área de coñecemento, número de créditos e país de orixe da institución.
 
-    \item O sistema deberá ordenar os resultados da busca segundo un criterio de relevancia, de maneira que os elementos máis pertinentes en relación coa consulta aparezan nas primeiras posicións.
+    \item A vista de programas (\textit{search\_programme}) debe incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF.
 
-    \item O sistema debe garantir que as buscas con consultas baleiras ou ambiguas non provoquen erros nin comportamentos inesperados, definindo un comportamento consistente nestes casos (por exemplo, amosando todos os resultados ou solicitando unha consulta válida).
+    \item A vista de compoñentes educativos (\textit{search\_iec}) debe incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
 
-          % // \item O sistema deberá integrarse co modelo de datos existente sen alterar a súa estrutura fundamental, reutilizando na medida do posible os mecanismos de indexación e consulta proporcionados pola plataforma.
-
-          % // \item O sistema debe permitir a extensión futura do mecanismo de busca, de maneira que poidan incorporarse novos campos ou criterios sen requirir unha reestruturación completa da solución implementada.
+    \item A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
 \end{enumerate}
 
 % **************************************************
