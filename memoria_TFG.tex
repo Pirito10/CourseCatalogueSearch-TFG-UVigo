@@ -207,7 +207,7 @@ Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{
 \begin{itemize}
     \item \textbf{Backend de base de datos}: almacena o índice en táboas da base de datos relacional existente. Non require infraestrutura adicional e é adecuado para catálogos de tamaño moderado.
 
-    \item \textbf{Apache Solr}: motor de busca de código aberto baseado en Lucene, con funcionalidades avanzadas como \textit{stemming}, análise lingüística e ponderación por relevancia. Require un servidor Solr externo.
+    \item \textbf{Apache Solr}: motor de busca de código aberto baseado en Lucene. Ofrece \textit{stemming} e análise lingüística nativos e multilingües, ponderación avanzada de resultados por relevancia e mellor rendemento con grandes volumes de datos. Require un servidor Solr externo. O backend de base de datos tamén pode incorporar \textit{stemming} a través de procesadores adicionais, pero cunha integración menos profunda e menor soporte multilingüe.
 
     \item \textbf{Elasticsearch}: solución distribuída con capacidades similares a Solr, orientada a contornas de alta dispoñibilidade e escalabilidade horizontal. Tamén require infraestrutura adicional dedicada.
 \end{itemize}
