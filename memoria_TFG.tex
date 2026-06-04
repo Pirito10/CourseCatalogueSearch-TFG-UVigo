@@ -159,6 +159,45 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % **************************************************
 \section{Deseño}
 
+\subsection{Ordenación de resultados}
+
+Para incorporar a funcionalidade de ordenación ás vistas \textit{search\_programme} e \textit{search\_iec}, optouse por empregar o mecanismo de ordenación exposta do módulo \textit{Views} de Drupal, en lugar de implementar unha solución baseada en manipulación directa de consultas ou en ordenación no lado do cliente.
+
+O mecanismo funciona do seguinte xeito: cando se declara un criterio de ordenación como exposto na configuración dunha vista, \textit{Views} xera automaticamente dous campos no formulario asociado —\texttt{sort\_by}, que identifica o campo polo que ordenar, e \texttt{sort\_order}, que indica a dirección (\texttt{ASC} ou \texttt{DESC})— e reconstrúe a consulta SQL ao recibir o envío do formulario. Este enfoque intégrase de forma nativa co sistema \textit{AJAX} de \textit{Views}, que en \textit{search\_programme} permite actualizar os resultados sen recargar a páxina. En \textit{search\_iec}, ao non ter activado o modo \textit{AJAX}, o envío produce unha recarga completa.
+
+Para a interacción do usuario, deseñouse un comportamento de alternancia: o primeiro clic sobre un botón de ordenación establece o criterio en orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección a descendente, e viceversa. Esta decisión permite concentrar cada criterio nun único botón, evitando duplicar os controis en dúas versións por dirección. A lóxica de alternancia recolle en \textit{JavaScript} o campo de ordenación activo no formulario e inverte a dirección se coincide co botón pulsado, ou establece a ascendente por defecto en caso contrario.
+
+Os criterios de ordenación definidos para cada vista son os seguintes:
+
+\begin{itemize}
+    \item \textbf{\textit{search\_programme}}: título (A-Z), área de coñecemento, nivel EQF, créditos e país.
+    \item \textbf{\textit{search\_iec}}: título (A-Z), programa pai, créditos, cuadrimestre, área de coñecemento e país.
+\end{itemize}
+
+Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; a área de coñecemento e o título do programa pai en \textit{search\_iec} pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de \textit{joins} adicionais.
+
+\subsection{Busca difusa}
+
+A busca difusa articulouse en tres compoñentes: un índice de \textit{Search API}, unha clase PHP de puntuación e dous \textit{hooks} de \textit{Views} que integran a lóxica de busca difusa na execución ordinaria da vista.
+
+A decisión de interceptar a consulta no nivel de \textit{hook} de PHP, en lugar de actuar sobre a capa de presentación, responde ao obxectivo de que o mecanismo sexa transparente para o usuario e compatible co sistema \textit{AJAX} de \textit{Views}. Dende a perspectiva da vista, o único cambio visible é que os resultados e a súa orde corresponden á busca difusa en lugar da coincidencia literal.
+
+O índice de \textit{Search API} emprégase exclusivamente como fonte dos títulos indexados. Non se delega nel a lóxica de busca: o seu papel é proporcionar un catálogo estruturado dos programas dispoñibles sobre o que a clase de puntuación pode operar.
+
+A puntuación aplícase a nivel de palabra. Tanto o termo de busca como cada título do índice son normalizados previamente —conversión a minúsculas e eliminación de acentos— e tokenizados en palabras de tres ou máis caracteres. O limiar de lonxitude mínima descarta preposicións, artigos e partículas curtas que, pola súa alta frecuencia, xerarían falsos positivos. Para cada par (palabra da consulta, palabra do título) calcúlase unha puntuación de similaridade segundo os seguintes niveis:
+
+\begin{itemize}
+    \item Coincidencia exacta: puntuación 1,0.
+    \item Coincidencia de prefixo (a palabra da consulta é inicio dunha palabra do título): puntuación 0,85.
+    \item Distancia de Levenshtein 1: puntuación alta, proporcional á lonxitude das palabras.
+    \item Distancia de Levenshtein 2 (só para palabras suficientemente longas): puntuación menor.
+    \item Distancia superior ao limiar: puntuación 0,0 (descartado).
+\end{itemize}
+
+A puntuación total dun programa é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste.
+
+O fluxo de execución é o seguinte: cando o usuario introduce un termo, \texttt{hook\_views\_query\_alter} intercepta a consulta SQL xerada por \textit{Views}, elimina a condición de filtrado por subcadea exacta (\texttt{LIKE}) e substitúea por un filtro \texttt{WHERE nid IN (...)} cos identificadores dos programas que superaron o limiar de puntuación. A continuación, \texttt{hook\_views\_post\_execute} reordena os resultados por puntuación descendente, dado que o operador \texttt{IN} non garante ningún orden determinado. As puntuacións compártense entre ambos os \textit{hooks} mediante un atributo estático da clase de puntuación, que actúa como canle de comunicación entre as dúas fases de execución.
+
 % **************************************************
 % * Desarrollo
 % **************************************************
