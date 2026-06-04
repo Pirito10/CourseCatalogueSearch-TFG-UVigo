@@ -87,6 +87,7 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
 % * Obxectivos e requisitos
 % **************************************************
 \section{Obxectivos e requisitos}
+\label{sec:obxectivos}
 O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual —ausencia de criterios de ordenación, busca por coincidencia exacta e sen tolerancia a erros tipográficos—, propónse o deseño e implementación de dúas melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca existentes, e a implementación dun mecanismo de busca difusa que permita localizar programas aínda en presenza de erros tipográficos na consulta.
 
 A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
@@ -186,7 +187,7 @@ A decisión de interceptar a consulta no nivel de \textit{hook} de PHP, en lugar
 
 O índice de \textit{Search API} emprégase exclusivamente como fonte dos títulos indexados. Non se delega nel a lóxica de busca: o seu papel é proporcionar un catálogo estruturado dos programas dispoñibles sobre o que a clase de puntuación pode operar. Fronte a unha consulta SQL directa ás táboas de nodos, o índice ofrece a vantaxe de desacoplar a lóxica de puntuación do esquema da base de datos e de manterse actualizado de forma automática ao modificarse o contido.
 
-A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque nun título multi-palabra un único erro tipográfico nunha das palabras impediría calquera coincidencia ao comparar as cadeas enteiras. Comparando palabra a palabra, cada termo avalíase de forma independente e o resultado global reflicte mellor o grao real de similitude. Tanto o termo de busca como cada título do índice son normalizados previamente —conversión a minúsculas e eliminación de acentos—, o que garante que a busca sexa insensible a maiúsculas e acentos, conforme ao requisito funcional establecido na sección~2. A continuación, tokenízanse en palabras de tres ou máis caracteres; o limiar de lonxitude mínima descarta preposicións, artigos e partículas curtas que, pola súa alta frecuencia, xerarían falsos positivos. Para cada par (palabra da consulta, palabra do título) calcúlase unha puntuación de similaridade segundo os seguintes niveis:
+A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque nun título multi-palabra un único erro tipográfico nunha das palabras impediría calquera coincidencia ao comparar as cadeas enteiras. Comparando palabra a palabra, cada termo avalíase de forma independente e o resultado global reflicte mellor o grao real de similitude. Tanto o termo de busca como cada título do índice son normalizados previamente —conversión a minúsculas e eliminación de acentos—, o que garante que a busca sexa insensible a maiúsculas e acentos, conforme ao requisito funcional establecido na sección~\ref{sec:obxectivos}. A continuación, tokenízanse en palabras de tres ou máis caracteres; o limiar de lonxitude mínima descarta preposicións, artigos e partículas curtas que, pola súa alta frecuencia, xerarían falsos positivos. Para cada par (palabra da consulta, palabra do título) calcúlase unha puntuación de similaridade segundo os seguintes niveis:
 
 \begin{itemize}
     \item Coincidencia exacta: puntuación 1,0.
@@ -196,7 +197,7 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
     \item Distancia superior ao limiar: puntuación 0,0 (descartado).
 \end{itemize}
 
-A puntuación total dun programa é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel —incluído $\alpha$ e os limiares de distancia— foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~B (pendente).
+A puntuación total dun programa é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel —incluído $\alpha$ e os limiares de distancia— foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~\ref{anx:calibrado} (pendente).
 
 O fluxo de execución é o seguinte: cando o usuario introduce un termo, \texttt{hook\_views\_query\_alter} intercepta a consulta SQL xerada por \textit{Views}, elimina a condición de filtrado por subcadea exacta (\texttt{LIKE}) e substitúea por un filtro \texttt{WHERE nid IN (...)} cos identificadores dos programas que superaron o limiar de puntuación. A continuación, \texttt{hook\_views\_post\_execute} reordena os resultados por puntuación descendente, dado que o operador \texttt{IN} non garante ningún orden determinado. As puntuacións compártense entre ambos os \textit{hooks} mediante un atributo estático da clase de puntuación, que actúa como canle de comunicación entre as dúas fases de execución.
 
@@ -254,5 +255,13 @@ Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{
 \end{itemize}
 
 Para este traballo optouse polo \textit{backend} de base de datos, dado que non require infraestrutura adicional, é suficiente para o volume de datos do catálogo DACEM, e permite integrar a lóxica de busca difusa directamente en PHP, empregando o índice para recuperar os títulos sobre os que aplicar a métrica de Levenshtein.
+
+% **************************************************
+% * Calibrado do algoritmo de busca difusa
+% **************************************************
+\section{Calibrado do algoritmo de busca difusa}
+\label{anx:calibrado}
+
+(pendente)
 
 \end{document}
