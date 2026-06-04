@@ -170,9 +170,11 @@ Para a interacción do usuario, deseñouse un comportamento de alternancia: o pr
 Os criterios de ordenación definidos para cada vista son os seguintes:
 
 \begin{itemize}
-    \item \textbf{\textit{search\_programme}}: título (A-Z), área de coñecemento, nivel EQF, créditos e país.
-    \item \textbf{\textit{search\_iec}}: título (A-Z), programa pai, créditos, cuadrimestre, área de coñecemento e país.
+    \item \textbf{\textit{search\_programme}}: título, área de coñecemento, nivel EQF, créditos e país.
+    \item \textbf{\textit{search\_iec}}: título, programa pai, créditos, cuadrimestre, área de coñecemento e país.
 \end{itemize}
+
+Os criterios de tipo textual (título, área de coñecemento, programa pai e país) ordenan alfabeticamente; os de tipo numérico (créditos, nivel EQF e cuadrimestre) ordenan por valor.
 
 Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; a área de coñecemento e o título do programa pai en \textit{search\_iec} pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de \textit{joins} adicionais.
 
