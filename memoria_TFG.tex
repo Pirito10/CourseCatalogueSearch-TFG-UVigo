@@ -190,13 +190,13 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
 
 \begin{itemize}
     \item Coincidencia exacta: puntuación 1,0.
-    \item Coincidencia de prefixo (a palabra da consulta é inicio dunha palabra do título): puntuación 0,85.
-    \item Distancia de Levenshtein 1: puntuación alta, proporcional á lonxitude das palabras.
-    \item Distancia de Levenshtein 2 (só para palabras suficientemente longas): puntuación menor.
+    \item Coincidencia de prefixo (a palabra da consulta é inicio dunha palabra do título): puntuación $\alpha$ (pendente).
+    \item Distancia de Levenshtein 1: puntuación proporcional á lonxitude das palabras (pendente).
+    \item Distancia de Levenshtein 2 (só para palabras suficientemente longas): puntuación menor (pendente).
     \item Distancia superior ao limiar: puntuación 0,0 (descartado).
 \end{itemize}
 
-A puntuación total dun programa é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste.
+A puntuación total dun programa é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel —incluído $\alpha$ e os limiares de distancia— foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~B (pendente).
 
 O fluxo de execución é o seguinte: cando o usuario introduce un termo, \texttt{hook\_views\_query\_alter} intercepta a consulta SQL xerada por \textit{Views}, elimina a condición de filtrado por subcadea exacta (\texttt{LIKE}) e substitúea por un filtro \texttt{WHERE nid IN (...)} cos identificadores dos programas que superaron o limiar de puntuación. A continuación, \texttt{hook\_views\_post\_execute} reordena os resultados por puntuación descendente, dado que o operador \texttt{IN} non garante ningún orden determinado. As puntuacións compártense entre ambos os \textit{hooks} mediante un atributo estático da clase de puntuación, que actúa como canle de comunicación entre as dúas fases de execución.
 
