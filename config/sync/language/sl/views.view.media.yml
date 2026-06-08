@@ -1,0 +1,35 @@
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      fields:
+        media_bulk_form:
+          action_title: Akcija
+        bundle:
+          label: Vrsta
+        uid:
+          label: Avtor
+        status:
+          label: Stanje
+          settings:
+            format_custom_true: Objavljeno
+        changed:
+          label: Posodobljeno
+        operations:
+          label: Operacije
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Ponastavi
+      filters:
+        bundle:
+          expose:
+            label: Vrsta
+        status:
+          group_info:
+            group_items:
+              1:
+                title: Objavljeno
+        langcode:
+          expose:
+            label: Jezik

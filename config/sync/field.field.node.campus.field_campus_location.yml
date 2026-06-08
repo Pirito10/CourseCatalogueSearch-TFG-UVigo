@@ -1,0 +1,19 @@
+uuid: be407452-d771-4e8d-a3f4-43ccceefc2e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campus_location
+    - node.type.campus
+id: node.campus.field_campus_location
+field_name: field_campus_location
+entity_type: node
+bundle: campus
+label: Location
+description: 'Enter the location in the format: City/Country. Example: Paris/France.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,21 @@
+uuid: 8c962f81-4d81-4520-8485-49e782e1edb0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_phone
+    - node.type.individual_educational_component
+  module:
+    - telephone
+id: node.individual_educational_component.field_iec_phone
+field_name: field_iec_phone
+entity_type: node
+bundle: individual_educational_component
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

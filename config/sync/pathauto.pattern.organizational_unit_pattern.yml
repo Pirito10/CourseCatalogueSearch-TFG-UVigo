@@ -1,0 +1,22 @@
+uuid: 67ac8ec4-e9b8-47bd-881d-601d26ca75bd
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: organizational_unit_pattern
+label: 'Organizational Unit Pattern'
+type: 'canonical_entities:node'
+pattern: '[node:field_ou_institution]/[node:title]'
+selection_criteria:
+  631f40f3-2d63-4738-9c21-386d2ab3f991:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 631f40f3-2d63-4738-9c21-386d2ab3f991
+    context_mapping:
+      node: node
+    bundles:
+      organizational_unit: organizational_unit
+selection_logic: and
+weight: -5
+relationships: {  }

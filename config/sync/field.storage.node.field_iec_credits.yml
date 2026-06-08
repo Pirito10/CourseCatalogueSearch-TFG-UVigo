@@ -1,0 +1,20 @@
+uuid: 85dd4e40-062c-4c65-8d28-3af20bb8c921
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_iec_credits
+field_name: field_iec_credits
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

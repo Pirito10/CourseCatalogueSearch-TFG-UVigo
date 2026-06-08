@@ -1,0 +1,18 @@
+uuid: bb141174-eb4b-46d9-a9fe-d18f8b542fa0
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.alliance
+id: node.alliance.changed
+field_name: changed
+entity_type: node
+bundle: alliance
+label: Changed
+description: 'The time that the node was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

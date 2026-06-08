@@ -1,0 +1,23 @@
+uuid: 6574e51e-283c-4d67-adc1-5f5ddd80a6b1
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_contact
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: K144Yfj9gZh09fBa4iVryo-SYagbk1nPfqEhW2ffqBw
+id: contact.email
+field_name: email
+entity_type: contact
+type: email
+settings: {  }
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

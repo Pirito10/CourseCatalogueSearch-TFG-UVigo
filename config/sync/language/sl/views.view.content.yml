@@ -1,0 +1,52 @@
+label: Vsebine
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      title: Vsebine
+      fields:
+        title:
+          label: Naslov
+        type:
+          label: 'Tip vsebine'
+        name:
+          label: Avtor
+        status:
+          label: Stanje
+          settings:
+            format_custom_true: Objavljeno
+        changed:
+          label: Posodobljeno
+        operations:
+          label: Operacije
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Ponastavi
+      empty:
+        area_text_custom:
+          content: 'Na voljo ni nobene vsebine.'
+      filters:
+        title:
+          expose:
+            label: Naslov
+        type:
+          expose:
+            label: 'Tip vsebine'
+        status:
+          expose:
+            label: Stanje
+          group_info:
+            group_items:
+              1:
+                title: Objavljeno
+        langcode:
+          expose:
+            label: Jezik
+  page_1:
+    display_title: Stran
+    display_options:
+      menu:
+        title: Vsebine
+      tab_options:
+        title: Vsebine

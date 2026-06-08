@@ -1,0 +1,23 @@
+uuid: e28dcd3a-3481-4064-b988-9a4542b36dc4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_trainership_students
+    - node.type.agreement
+id: node.agreement.field_trainership_students
+field_name: field_trainership_students
+entity_type: node
+bundle: agreement
+label: 'Student mobility for trainerships students'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

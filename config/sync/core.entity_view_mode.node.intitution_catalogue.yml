@@ -1,0 +1,11 @@
+uuid: 31ab9399-a0f8-436c-bcd1-6459feb7d673
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.intitution_catalogue
+label: intitution-catalogue
+description: ''
+targetEntityType: node
+cache: true

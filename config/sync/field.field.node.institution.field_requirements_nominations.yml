@@ -1,0 +1,24 @@
+uuid: 0922c22d-f023-4698-af6e-707c19f0c1f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_requirements_nominations
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_requirements_nominations
+field_name: field_requirements_nominations
+entity_type: node
+bundle: institution
+label: 'Academic requirements for nominations'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

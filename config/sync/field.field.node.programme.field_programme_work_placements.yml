@@ -1,0 +1,24 @@
+uuid: ddccd89c-390c-4cf8-aa2b-4cefe6ad2115
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_work_placements
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_programme_work_placements
+field_name: field_programme_work_placements
+entity_type: node
+bundle: programme
+label: 'Work placement(s)'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

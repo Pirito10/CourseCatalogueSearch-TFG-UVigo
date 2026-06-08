@@ -1,0 +1,71 @@
+label: Média
+display:
+  default:
+    display_title: Výchozí
+    display_options:
+      title: Média
+      fields:
+        media_bulk_form:
+          action_title: Akce
+        thumbnail__target_id:
+          label: Náhled
+          separator: ', '
+        name:
+          separator: ', '
+        bundle:
+          label: Typ
+          separator: ', '
+        uid:
+          label: Autor
+          separator: ', '
+        status:
+          label: Stav
+          settings:
+            format_custom_false: Skryto
+            format_custom_true: Zveřejněno
+          separator: ', '
+        changed:
+          label: Aktualizováno
+          separator: ', '
+        operations:
+          label: Operace
+      pager:
+        options:
+          tags:
+            next: 'Následující ›'
+            previous: '‹ Předchozí'
+            first: '« První'
+            last: 'Poslední »'
+          expose:
+            items_per_page_label: 'Položek na stránku'
+            items_per_page_options_all_label: '- Vše -'
+            offset_label: Posun
+      exposed_form:
+        options:
+          submit_button: Filtr
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      filters:
+        bundle:
+          expose:
+            label: Typ
+        status:
+          expose:
+            label: 'Pravda (True)'
+          group_info:
+            label: 'Status zveřejnění'
+            group_items:
+              1:
+                title: Zveřejněno
+              2:
+                title: Skryto
+        langcode:
+          expose:
+            label: 'Jazyk '
+  media_page_list:
+    display_title: Média
+    display_options:
+      menu:
+        title: Média

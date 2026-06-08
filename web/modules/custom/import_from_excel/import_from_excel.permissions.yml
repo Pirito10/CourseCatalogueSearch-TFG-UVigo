@@ -1,0 +1,4 @@
+#import_from_excel_page:
+#  title: 'Access Import from Excel Page'
+#  description: 'Allows access to the Import from Excel Page'
+#  restrict access: TRUE

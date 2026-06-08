@@ -1,0 +1,111 @@
+uuid: 0e42744d-cff9-4bb4-90eb-c039d95be17f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.hei.hei.abbreviation
+    - field.field.hei.hei.contact
+    - field.field.hei.hei.hei_id
+    - field.field.hei.hei.logo_url
+    - field.field.hei.hei.mailing_address
+    - field.field.hei.hei.mobility_factsheet_url
+    - field.field.hei.hei.name
+    - field.field.hei.hei.other_id
+    - field.field.hei.hei.street_address
+    - field.field.hei.hei.website_url
+  module:
+    - ewp_core
+    - ewp_flexible_address
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: poRXj48qkGHpVENZasAm5LvBqVHg8fSxv3iugjanSSc
+id: hei.hei.default
+targetEntityType: hei
+bundle: hei
+mode: default
+content:
+  abbreviation:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -16
+    region: content
+  contact:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: -10
+    region: content
+  hei_id:
+    type: ascii_identifier_default
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: -19
+    region: content
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -20
+    region: content
+  logo_url:
+    type: ewp_https_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -12
+    region: content
+  mailing_address:
+    type: ewp_flexible_address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -14
+    region: content
+  mobility_factsheet_url:
+    type: ewp_http_lang_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -11
+    region: content
+  name:
+    type: ewp_string_lang_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -17
+    region: content
+  other_id:
+    type: ewp_other_hei_id_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -18
+    region: content
+  street_address:
+    type: ewp_flexible_address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -15
+    region: content
+  website_url:
+    type: ewp_http_lang_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: -13
+    region: content
+hidden:
+  langcode: true

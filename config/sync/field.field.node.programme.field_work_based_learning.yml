@@ -1,0 +1,24 @@
+uuid: 0bf3c9a9-f0d5-4f76-86bb-cd63894d45dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_work_based_learning
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_work_based_learning
+field_name: field_work_based_learning
+entity_type: node
+bundle: programme
+label: 'Work-based learning'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

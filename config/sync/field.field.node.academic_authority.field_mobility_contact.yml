@@ -1,0 +1,21 @@
+uuid: f3232f95-e6e0-4bd1-9e59-1b78d98c26ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mobility_contact
+    - node.type.academic_authority
+id: node.academic_authority.field_mobility_contact
+field_name: field_mobility_contact
+entity_type: node
+bundle: academic_authority
+label: 'Mobility Contact'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

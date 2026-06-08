@@ -1,0 +1,24 @@
+uuid: bf6cf20f-1aa5-4522-9fb1-13d2dc3b4d18
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_admission_description
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_admission_description
+field_name: field_admission_description
+entity_type: node
+bundle: institution
+label: 'Admission Description'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

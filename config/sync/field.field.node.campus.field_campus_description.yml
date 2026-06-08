@@ -1,0 +1,24 @@
+uuid: bdfa4a1a-8e74-4ad1-aa7c-201244b6fb61
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campus_description
+    - filter.format.basic_html
+    - node.type.campus
+  module:
+    - text
+id: node.campus.field_campus_description
+field_name: field_campus_description
+entity_type: node
+bundle: campus
+label: Description
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

@@ -1,0 +1,22 @@
+uuid: ce4610a3-1ad2-43ca-a9c2-6004304fc5a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.alliance
+id: node.alliance.promote
+field_name: promote
+entity_type: node
+bundle: alliance
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

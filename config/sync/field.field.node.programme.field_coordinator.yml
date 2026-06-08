@@ -1,0 +1,19 @@
+uuid: 183c7391-eb7f-403a-9cb8-d68f295c0612
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_coordinator
+    - node.type.programme
+id: node.programme.field_coordinator
+field_name: field_coordinator
+entity_type: node
+bundle: programme
+label: Coordinator
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

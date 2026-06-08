@@ -1,0 +1,24 @@
+uuid: 93617fa3-2016-4cc0-8a94-9297f1bd8fbe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_visa
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_visa
+field_name: field_visa
+entity_type: node
+bundle: resources_and_services
+label: VISA
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

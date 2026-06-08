@@ -1,0 +1,18 @@
+uuid: 15c6dc51-5eb4-4bc4-9f85-7c73d02687c3
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: Institution
+type: institution
+description: null
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

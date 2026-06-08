@@ -1,0 +1,11 @@
+uuid: ba6be2df-9587-4c1d-99f0-5bea6ec8743b
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: node.detalles_de_universidad
+label: 'Detalles de Universidad...'
+description: ''
+targetEntityType: node
+cache: true

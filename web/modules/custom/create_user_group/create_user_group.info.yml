@@ -1,0 +1,8 @@
+name: Create User Group
+type: module
+description: 'Module to allow University Admins to create users and add them to a group.'
+core_version_requirement: ^8 || ^9  || ^10
+package: Custom
+dependencies:
+  - drupal:group
+  - group:group

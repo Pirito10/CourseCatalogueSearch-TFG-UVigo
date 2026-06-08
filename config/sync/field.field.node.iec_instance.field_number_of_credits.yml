@@ -1,0 +1,23 @@
+uuid: 707d4682-912a-4ccc-8afd-e4a472fc9810
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_number_of_credits
+    - node.type.iec_instance
+id: node.iec_instance.field_number_of_credits
+field_name: field_number_of_credits
+entity_type: node
+bundle: iec_instance
+label: 'Number of credits'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

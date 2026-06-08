@@ -1,0 +1,19 @@
+uuid: add24d69-c2a8-41fa-b25d-d3f0842ca061
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_core
+    - node
+id: node.field_level_of_education
+field_name: field_level_of_education
+entity_type: node
+type: eqf_level
+settings: {  }
+module: ewp_core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

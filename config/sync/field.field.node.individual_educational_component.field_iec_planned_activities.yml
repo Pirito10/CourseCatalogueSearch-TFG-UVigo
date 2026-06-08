@@ -1,0 +1,24 @@
+uuid: 79f93451-cf41-4de1-9a07-01602106a033
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_planned_activities
+    - filter.format.basic_html
+    - node.type.individual_educational_component
+  module:
+    - text
+id: node.individual_educational_component.field_iec_planned_activities
+field_name: field_iec_planned_activities
+entity_type: node
+bundle: individual_educational_component
+label: Activities
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

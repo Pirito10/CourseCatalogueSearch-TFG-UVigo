@@ -1,0 +1,69 @@
+label: Μέσα
+display:
+  default:
+    display_title: Προεπιλεγμένο
+    display_options:
+      title: Μέσα
+      fields:
+        media_bulk_form:
+          action_title: Ενέργεια
+        thumbnail__target_id:
+          label: Μικρογραφία
+          separator: ', '
+        name:
+          separator: ', '
+        bundle:
+          label: Τύπος
+          separator: ', '
+        uid:
+          label: Συντάκτης
+          separator: ', '
+        status:
+          label: Κατάσταση
+          settings:
+            format_custom_false: 'Μη δημοσιευμένο'
+            format_custom_true: Δημοσιευμένο
+          separator: ', '
+        changed:
+          label: Ενημερώθηκε
+          separator: ', '
+        operations:
+          label: Λειτουργίες
+      pager:
+        options:
+          tags:
+            next: 'Επόμενο ›'
+            previous: '‹ Προηγούμενο'
+          expose:
+            items_per_page_label: 'Είδη ανά σελίδα'
+            items_per_page_options_all_label: '- Όλα -'
+            offset_label: Αντιστάθμιση
+      exposed_form:
+        options:
+          submit_button: Φίλτρο
+          reset_button_label: Επαναφορά
+          exposed_sorts_label: 'Ταξινόμηση κατά'
+          sort_asc_label: Αύξ
+          sort_desc_label: Φθί
+      filters:
+        bundle:
+          expose:
+            label: Τύπος
+        status:
+          expose:
+            label: Αληθής
+          group_info:
+            label: 'Κατάσταση δημοσίευσης'
+            group_items:
+              1:
+                title: Δημοσιευμένο
+              2:
+                title: 'Μη δημοσιευμένο'
+        langcode:
+          expose:
+            label: Γλώσσα
+  media_page_list:
+    display_title: Μέσα
+    display_options:
+      menu:
+        title: Μέσα

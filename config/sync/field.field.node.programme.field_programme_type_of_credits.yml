@@ -1,0 +1,23 @@
+uuid: 5f28868f-4123-4dbe-bdf9-c63a235ece56
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_type_of_credits
+    - node.type.programme
+  module:
+    - options
+id: node.programme.field_programme_type_of_credits
+field_name: field_programme_type_of_credits
+entity_type: node
+bundle: programme
+label: 'Type of credits'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: ects
+default_value_callback: ''
+settings: {  }
+field_type: list_string

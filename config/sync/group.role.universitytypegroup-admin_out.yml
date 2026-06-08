@@ -1,0 +1,15 @@
+uuid: 6ebf67e1-b3c4-4758-bc25-f688cc1eb36b
+langcode: es
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - user.role.administrator
+id: universitytypegroup-admin_out
+label: Administrador
+weight: -10
+admin: true
+scope: outsider
+global_role: administrator
+group_type: universitytypegroup
+permissions: {  }

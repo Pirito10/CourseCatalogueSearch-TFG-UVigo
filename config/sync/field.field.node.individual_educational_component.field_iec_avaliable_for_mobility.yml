@@ -1,0 +1,23 @@
+uuid: 3faa5c94-86e1-41d3-bd23-2b3cb83a3ce0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_avaliable_for_mobility
+    - node.type.individual_educational_component
+id: node.individual_educational_component.field_iec_avaliable_for_mobility
+field_name: field_iec_avaliable_for_mobility
+entity_type: node
+bundle: individual_educational_component
+label: 'Available for Mobility Students'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

@@ -1,0 +1,24 @@
+uuid: 8a658343-063f-4f62-be74-0c3a6b2efd78
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_students_affairs_office
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_rs_students_affairs_office
+field_name: field_rs_students_affairs_office
+entity_type: node
+bundle: resources_and_services
+label: 'Students Affairs Office'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

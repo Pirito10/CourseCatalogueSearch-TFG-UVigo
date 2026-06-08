@@ -1,0 +1,7 @@
+name: 'Institution Menu'
+type: module
+description: 'Provides a dynamic menu for each institution.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:block

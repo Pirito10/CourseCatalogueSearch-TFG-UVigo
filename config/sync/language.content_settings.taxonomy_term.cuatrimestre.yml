@@ -1,0 +1,18 @@
+uuid: fb24a274-9586-439b-8570-c643af1773fc
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.cuatrimestre
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: taxonomy_term.cuatrimestre
+target_entity_type_id: taxonomy_term
+target_bundle: cuatrimestre
+default_langcode: site_default
+language_alterable: false

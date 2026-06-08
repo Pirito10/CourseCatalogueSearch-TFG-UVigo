@@ -1,0 +1,25 @@
+uuid: 7c0f657a-71e6-4b37-88ad-4731527ad129
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.email
+  module:
+    - ewp_contact
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: bCGxAXhKy0MOerLx-mUWJokn_-beppVCQTTqPSGrcnY
+id: contact.contact.email
+field_name: email
+entity_type: contact
+bundle: contact
+label: Email
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

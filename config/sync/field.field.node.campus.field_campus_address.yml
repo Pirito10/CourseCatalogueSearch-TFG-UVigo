@@ -1,0 +1,19 @@
+uuid: 0a250798-d695-4662-8de0-a48f6c3e8ac0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campus_address
+    - node.type.campus
+id: node.campus.field_campus_address
+field_name: field_campus_address
+entity_type: node
+bundle: campus
+label: 'Street Address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,9 @@
+uuid: ccb32081-0e73-40e3-9399-ab09ce16f492
+langcode: en
+status: true
+dependencies: {  }
+id: pt-pt
+label: 'Portuguese, Portugal'
+direction: ltr
+weight: 3
+locked: false

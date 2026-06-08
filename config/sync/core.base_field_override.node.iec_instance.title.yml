@@ -1,0 +1,18 @@
+uuid: b6c06563-094f-40be-be71-f8751f625c3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.iec_instance
+id: node.iec_instance.title
+field_name: title
+entity_type: node
+bundle: iec_instance
+label: Title
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

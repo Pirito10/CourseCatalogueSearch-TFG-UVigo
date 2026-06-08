@@ -1,0 +1,20 @@
+uuid: b64f98eb-8931-457e-b03e-747479226bdd
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_trainership_students
+field_name: field_trainership_students
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

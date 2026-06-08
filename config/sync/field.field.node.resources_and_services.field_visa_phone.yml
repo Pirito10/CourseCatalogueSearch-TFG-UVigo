@@ -1,0 +1,21 @@
+uuid: 18c90f1a-2147-4ccd-a50c-cd43d4a93427
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_visa_phone
+    - node.type.resources_and_services
+  module:
+    - telephone
+id: node.resources_and_services.field_visa_phone
+field_name: field_visa_phone
+entity_type: node
+bundle: resources_and_services
+label: 'VISA - phone'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

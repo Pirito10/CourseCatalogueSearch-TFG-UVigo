@@ -1,0 +1,27 @@
+uuid: f6f2907e-fbef-455b-b6d5-8008cdab217d
+langcode: es
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - user.role.anonymous
+id: universitytypegroup-anonimo
+label: Anonimo
+weight: -4
+admin: false
+scope: outsider
+global_role: anonymous
+group_type: universitytypegroup
+permissions:
+  - 'view group'
+  - 'view group_node:academic_authority entity'
+  - 'view group_node:asignatura entity'
+  - 'view group_node:campus entity'
+  - 'view group_node:carrera entity'
+  - 'view group_node:iec_instance entity'
+  - 'view group_node:individual_educational_component entity'
+  - 'view group_node:institution entity'
+  - 'view group_node:organizational_unit entity'
+  - 'view group_node:programme entity'
+  - 'view group_node:resources_and_services entity'
+  - 'view group_node:universidad entity'

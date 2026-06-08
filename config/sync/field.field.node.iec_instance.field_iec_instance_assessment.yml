@@ -1,0 +1,24 @@
+uuid: be304dfb-5df9-40d3-87bf-44a0168a1af0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_assessment
+    - filter.format.basic_html
+    - node.type.iec_instance
+  module:
+    - text
+id: node.iec_instance.field_iec_instance_assessment
+field_name: field_iec_instance_assessment
+entity_type: node
+bundle: iec_instance
+label: Assessment
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

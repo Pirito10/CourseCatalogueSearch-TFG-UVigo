@@ -1,0 +1,24 @@
+uuid: fdf63b6f-d597-41be-9ae6-71bcb6731238
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: NmjOpDy__WmCLH_0XZxiHpTSd0QEQmoijw7AxNESyRU
+id: hei.other_id
+field_name: other_id
+entity_type: hei
+type: ewp_other_hei_id
+settings:
+  max_length: 255
+module: ewp_institutions
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

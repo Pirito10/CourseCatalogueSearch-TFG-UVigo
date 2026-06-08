@@ -1,0 +1,19 @@
+uuid: 2592231b-72c2-4159-a84a-d1c65c21e5dc
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_joint_description
+field_name: field_joint_description
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

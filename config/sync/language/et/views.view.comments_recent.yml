@@ -1,0 +1,15 @@
+label: 'Hiljutised kommentaarid'
+description: 'Viimased kommentaarid.'
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      title: 'Hiljutised kommentaarid'
+      empty:
+        area_text_custom:
+          content: 'Kommentaarid puuduvad.'
+  block_1:
+    display_title: Plokk
+    display_options:
+      block_description: 'Hiljutised kommentaarid'
+      block_category: 'Nimekirjad (Views)'

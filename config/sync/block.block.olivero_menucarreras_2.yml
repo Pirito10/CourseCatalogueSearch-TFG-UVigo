@@ -1,0 +1,25 @@
+uuid: 762a19d5-6d99-4bc2-a6ca-10093b4483c9
+langcode: es
+status: false
+dependencies:
+  config:
+    - system.menu.menu-carreras
+  module:
+    - system
+  theme:
+    - olivero
+id: olivero_menucarreras_2
+theme: olivero
+region: content_above
+weight: -7
+provider: null
+plugin: 'system_menu_block:menu-carreras'
+settings:
+  id: 'system_menu_block:menu-carreras'
+  label: 'Menú Carreras'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }

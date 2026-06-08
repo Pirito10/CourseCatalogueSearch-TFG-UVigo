@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: VDJxTZtQR21qB4lvOq8zszJZLvLKrSPQpdn2E3T71Ww
+langcode: es
+uuid: a57d552a-a12a-4acc-8e9b-7e8e5be12df5
+name: dacem
+mail: oscar.trigo@det.uvigo.es
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /main-page
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: ''

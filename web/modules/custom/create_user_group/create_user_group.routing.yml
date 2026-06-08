@@ -1,0 +1,12 @@
+create_user_group.create_user_form:
+  path: '/group/{group}/create-user'
+  defaults:
+    _form: '\Drupal\create_user_group\Form\CreateUserInGroupForm'
+    _title: 'Create user and add to group'
+  requirements:
+    _custom_access: 'create_user_group.access_check:access'
+  options:
+    _admin_route: TRUE
+    parameters:
+      group:
+        type: entity:group

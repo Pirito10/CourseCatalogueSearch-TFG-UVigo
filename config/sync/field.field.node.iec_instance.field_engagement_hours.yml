@@ -1,0 +1,23 @@
+uuid: 6e7d72c4-743d-42fd-81d8-28c5e6750b87
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_engagement_hours
+    - node.type.iec_instance
+id: node.iec_instance.field_engagement_hours
+field_name: field_engagement_hours
+entity_type: node
+bundle: iec_instance
+label: 'Engagement hours'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

@@ -1,0 +1,11 @@
+
+#admin_area.programme_tab:
+# route_name: admin_area.programme_page
+# title: 'Programmes'
+# base_route: admin_area.programme_page
+
+#admin_area.programme_iec_tab:
+# route_name: admin_area.iec_page
+# title: 'IEC List'
+# base_route: admin_area.programme_page
+# weight: 10

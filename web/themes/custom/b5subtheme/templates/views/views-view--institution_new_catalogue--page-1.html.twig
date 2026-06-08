@@ -1,0 +1,358 @@
+{{ attach_library('b5subtheme/search-programme-sort') }}
+
+
+
+
+<style>:root
+{
+	--university_primary_color: {{catalogue_university_primary_color}};
+	--university_text_color: {{catalogue_university_text_color}};
+	--university_emphasis_text_color: {{catalogue_university_emphasis_text_color}};
+
+}</style>
+
+<div
+	class="negative-margin-search-page">
+
+	{# 👉 MANTÉN el wrapper de Views: AJAX necesita este div con data-view-dom-id #}
+	<div class="view view-id-{{ view.id }} view-display-id-{{ view.current_display }}
+		              js-view-dom-id-{{ view.dom_id }} view-dom-id-{{ view.dom_id }}" data-view-dom-id="{{ view.dom_id }}">
+
+		<div{{attributes.addClass('catalogue-view')}}>
+
+			<!-- CAMBIAR ESTO E PRECARGAR DICCIONARIO NESTA VISTA -->
+			<!-- CAMBIAR ESTO E PRECARGAR DICCIONARIO NESTA VISTA -->
+			
+
+			{% set programme_area = {
+    'es': {
+      'arts_and_humanities': 'Artes y Humanidades',
+      'sciences': 'Ciencias',
+      'health_sciences': 'Ciencias de la Salud',
+      'social_and_legal_sciences': 'Ciencias Sociales y Jurídicas',
+      'engineering_and_architecture': 'Ingeniería y Arquitectura'
+    },
+    'en': {
+      'arts_and_humanities': 'Arts and Humanities',
+      'sciences': 'Sciences',
+      'health_sciences': 'Health Sciences',
+      'social_and_legal_sciences': 'Social and Legal Sciences',
+      'engineering_and_architecture': 'Engineering and Architecture'
+    },
+    'fr': {
+      'arts_and_humanities': 'Arts et Humanités',
+      'sciences': 'Sciences',
+      'health_sciences': 'Sciences de la Santé',
+      'social_and_legal_sciences': 'Sciences Sociales et Juridiques',
+      'engineering_and_architecture': 'Ingénierie et Architecture'
+    },
+    'pt-pt': {
+      'arts_and_humanities': 'Artes e Humanidades',
+      'sciences': 'Ciências',
+      'health_sciences': 'Ciências da Saúde',
+      'social_and_legal_sciences': 'Ciências Sociais e Jurídicas',
+      'engineering_and_architecture': 'Engenharia e Arquitetura'
+    },
+    'gl': {
+      'arts_and_humanities': 'Artes e Humanidades',
+      'sciences': 'sciences',
+      'health_sciences': 'sciences da Saúde',
+      'social_and_legal_sciences': 'sciences Sociais e Xurídicas',
+      'engineering_and_architecture': 'Enxeñería e Arquitectura'
+    },
+    'hu': {
+      'arts_and_humanities': 'Művészetek és Bölcsészettudományok',
+      'sciences': 'Tudományok',
+      'health_sciences': 'Egészségtudományok',
+      'social_and_legal_sciences': 'Társadalmi és Jogtudományok',
+      'engineering_and_architecture': 'Mérnöki és Építészeti Tudományok'
+    },
+    'sl': {
+      'arts_and_humanities': 'Umetnost in Humanistika',
+      'sciences': 'Znanost',
+      'health_sciences': 'Zdravstvene vede',
+      'social_and_legal_sciences': 'Družbene in Pravne Znanosti',
+      'engineering_and_architecture': 'Inženiring in Arhitektura'
+    },
+    'et': {
+      'arts_and_humanities': 'Kunst ja Humanitaarteadused',
+      'sciences': 'Teadused',
+      'health_sciences': 'Tervishoiuteadused',
+      'social_and_legal_sciences': 'Sotsiaal- ja Õigusteadused',
+      'engineering_and_architecture': 'Inseneriteadus ja Arhitektuur'
+    },
+    'el': {
+      'arts_and_humanities': 'Τέχνες και Ανθρωπιστικές Επιστήμες',
+      'sciences': 'Επιστήμες',
+      'health_sciences': 'Επιστήμες Υγείας',
+      'social_and_legal_sciences': 'Κοινωνικές και Νομικές Επιστήμες',
+      'engineering_and_architecture': 'Μηχανική και Αρχιτεκτονική'
+    }
+  } %}
+
+
+
+			<!---->
+			<!---->
+			<!---->
+			<!---->
+			<!---->
+			<!---->
+			<!---->
+			<!---->
+        <!----> <div class="catalogue-hero newcatalogue-hero institution-new-catalogue-hero"style="height:300px;"> <div class="section-container" style="padding-top: 18px;">
+					<div class="my-custom-container-2">
+
+            <div class="row align-items-center mb-5">
+              <div class="col-auto d-flex align-items-center gap-3 flex-wrap">
+                <h1 class="p-0 m-0" style="color:white;font-weight:400; font-size: 1.65rem; line-height: 1.1;">
+                  {% if catalogue_shac_code %}
+                    <span style="font-weight:700;">{{ catalogue_shac_code }}</span>
+                  {% endif %}
+                  {{ 'catalogue search'|t }}
+                </h1>
+              </div>
+              {% if catalogue_programmes_index_url %}
+                <div class="col-auto">
+                  <a href="{{ catalogue_programmes_index_url }}" class="btn btn-whithout-border-radius px-3 py-2" style="border: 2px solid #fff; color: #fff; background: transparent; font-weight: 800; font-size: 1.35rem; line-height: 1;">
+                    {{ 'index'|t }}
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="row align-items-center mb-2">
+              <div class="col-auto">
+                <div class="" role="group" aria-label="Catalogue type">
+
+									<a href="#" class="btn btn-sm btn-whithout-border-radius newcatalogue-btn btn-newcatalogue-active" data-target-segment="programmes">
+										<h3>{{ 'PROGRAMMES'|t }}</h3>
+									</a>
+
+									<a href="#" class="btn btn-sm btn-whithout-border-radius newcatalogue-btn" data-target-segment="iecs">
+										<h3>{{ 'Courses'|t|upper }}</h3>
+									</a>
+
+
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-12">
+								<div class="input-group mb-3">
+									<input type="text" class="form-control bg-light border-0" placeholder="" id="programme-search">
+									<button class="btn btn-outline-secondary pe-4 ps-4 bg-black disabled" type="button" id="search-btn">
+										<i class="fas fa-search" style="color: white;"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						{% if exposed %}
+							<div class="catg__filters">
+								{{ exposed }}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+
+			<div class="section-container bg-light">
+				<div class="my-custom-container-2">
+					<div class="row institution-new-catalogue-results">
+						
+						
+						<div class="col-lg-2 institution-new-catalogue-sort">
+						{#
+							<h3 class="subsection-title p-0 pb-2 m-0">
+								<i class="fas fa-sort-amount-down me-2"></i>
+								{{ 'Sort'|t|upper }}
+							</h3>
+
+							<div class="group-search-sort-buttons w-100">
+								<button class="btn btn-dark btn-sm btn-whithout-border-radius js-sort disabled" data-sort-by="title" data-sort-order="ASC">A - Z</button>
+
+
+								<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled" data-sort-by="field_programme_level" data-sort-order="ASC">{{ 'Level'|t }}</button>
+
+								<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled" data-sort-by="field_institution_country" data-sort-order="ASC">{{ 'Country'|t }}</button>
+							</div>
+
+						#}
+
+						</div>
+
+						
+
+						<div
+							class="col-lg-10 ps-lg-5 institution-new-catalogue-list" id="programme-list">
+							{# Puedes seguir con tu loop propio: AJAX reemplaza todo el wrapper #}
+							{% if view.result is not empty %}
+								{% for row in view.result %}
+								
+
+										{% set programme = row._entity %}
+										{% set institution = row.display_institution|default(programme.field_programme_institution.entity ?? null) %}
+										{% set ou = row.display_ou|default(programme.field_programme_ou.entity ?? null) %}
+
+										{% set logo_uri = null %}
+									{% if ou and ou.field_ou_picture.entity is defined %}
+										{% set logo_uri = ou.field_ou_picture.entity.fileuri %}
+									{% endif %}
+									<div class="programme-item">
+									
+										<a href="{{ row.custom_url }}" class="text-decoration-none text-reset" target="_blank">
+											<div class="card shadow-none mb-3 border-0 rounded-0 position-relative catalogue-programme-card" style="height: 100.65px; cursor: pointer;">
+												{% if programme.field_avaliable_for_mobility.value %}
+													<div class="mobility-badge">
+														<img src="/themes/custom/b5subtheme/images/mobility_iec.jpeg" alt="Available for mobility">
+													</div>
+												{% endif %}
+
+												<div
+													class="row g-0 catalogue-programme-card__row">
+													<!-- Imagen (logo institución) -->
+													<div class="col-2 catalogue-programme-card__media" style="height: 100.65px;">
+														{% if logo_uri %}
+															<img src="{{ file_url(logo_uri) }}" alt="{{ ou ? ou.label : '' }}" class="img-fluid rounded-0 h-100 ">
+														{% else %}
+															<div class="bg-light d-flex align-items-center justify-content-center h-100">
+																<span class="text-muted small">No OU image</span>
+															</div>
+														{% endif %}
+													</div>
+
+													<!-- Texto -->
+													<div class="col-9 catalogue-programme-card__content">
+														<div
+															class="card-body p-2">
+															<!-- Título del programa -->
+															<h5 class="card-title mb-1 text-start">{{ programme.label }}</h5>
+
+															<!-- Línea intermedia: nivel, créditos y área -->
+															<div class="programme-meta d-flex align-items-center mb-2">
+																{% if programme.field_programme_level.value %}
+																	{% set level_code = {
+                              'bachelor': 'B',
+                              'master': 'M',
+                              'phd': 'PhD'
+                            }[programme.field_programme_level.value]|default(programme.field_programme_level.value) %}
+																	<strong>{{ level_code }}</strong>
+																{% endif %}
+
+																{% if programme.field_credits.value %}
+																	<span class="mx-2">·</span>
+																	<span class="fst-italic">{{ programme.field_credits.value }}
+																		ECTS</span>
+																{% endif %}
+
+																{% set lang_labels = row.display_instruction_languages|default([]) %}
+																{% if lang_labels is empty %}
+																	{% set langs = programme.field_programme_language_of_inst %}
+																	{% if langs is not empty %}
+																		{% set lang_labels = langs|map(item => item.entity.label)|filter(label => label) %}
+																	{% endif %}
+																{% endif %}
+																{% if lang_labels is not empty %}
+																	<span class="mx-2">·</span>
+																	<span class="fst-italic">
+																		{{ lang_labels|join(', ') }}
+																	</span>
+																{% endif %}
+															</div>
+
+															<!-- Línea inferior: institución y país 
+															<div class="ou-tag-bar">
+
+																	{% if institution.title.value is defined %}
+																		
+																		<span class="ou-tag px-3 py-1" style="background-color: {{ catalogue_university_primary_color }}; color: #fff; border-radius: 0;">
+																		{{ institution.title.value }}
+																	</span>
+																{% endif %}
+
+																{% if institution.field_institution_country.value %}
+																	<span class="ou-tag px-3 py-1" style="background-color: black; color: white; border: 2px solid black; border-radius: 0;">
+																		{{ country_list[institution.field_institution_country.value]|default(institution.field_institution_country.value) }}
+																	</span>
+																{% endif %}
+															</div>
+															-->
+														</div>
+													</div>
+												</div>
+											</div>
+										</a>
+									</div>
+								{% endfor %}
+							{% else %}
+								<p class="empty">{{ empty }}</p>
+							{% endif %}
+
+							{# Pager dentro del wrapper para que AJAX lo actualice #}
+							{{ pager }}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{# (opcional) attachments/feeds si los usas #}
+			{{ attachment_after }}
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="homeProgrammeModal" tabindex="-1" aria-labelledby="homeProgrammeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="homeProgrammeModalLabel">{{ 'Select Home Programme'|t }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        {{ drupal_form('Drupal\\programme_suggestions\\Form\\HomeProgrammeForm') }}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+		(function () {
+function replaceLastPathSegment(pathname, newSegment) { // Quita trailing slash salvo que sea "/"
+const hasTrailingSlash = pathname.length > 1 && pathname.endsWith('/');
+const clean = hasTrailingSlash ? pathname.slice(0, -1) : pathname;
+
+const parts = clean.split('/').filter(Boolean); // sin vacíos
+if (parts.length === 0) 
+return '/' + newSegment;
+
+
+parts[parts.length - 1] = newSegment;
+return '/' + parts.join('/') + (hasTrailingSlash ? '/' : '');
+}
+
+document.querySelectorAll('.newcatalogue-btn[data-target-segment]').forEach((btn) => {
+btn.addEventListener('click', (e) => {
+e.preventDefault();
+
+const target = btn.getAttribute('data-target-segment');
+if (! target) 
+return;
+
+
+const {pathname, search, hash} = window.location;
+const nextPath = replaceLastPathSegment(pathname, target);
+
+// Mantiene ?query y #hash
+window.location.href = nextPath + search + hash;
+});
+});
+})();
+	</script>

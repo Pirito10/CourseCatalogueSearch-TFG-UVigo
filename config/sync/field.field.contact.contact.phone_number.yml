@@ -1,0 +1,26 @@
+uuid: b84d6662-44f0-4587-a3b0-aa30dcf9e4b2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.phone_number
+  module:
+    - ewp_contact
+    - ewp_phone_number
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: ZgPDd0WuluzPYYFFUsQoEI7WNcZnywWawQuVWCeNjiI
+id: contact.contact.phone_number
+field_name: phone_number
+entity_type: contact
+bundle: contact
+label: 'Phone number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_phone_number

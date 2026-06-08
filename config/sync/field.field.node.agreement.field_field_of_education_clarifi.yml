@@ -1,0 +1,24 @@
+uuid: 40d58818-086c-4c5a-95c0-ea978a8fda92
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_field_of_education_clarifi
+    - filter.format.basic_html
+    - node.type.agreement
+  module:
+    - text
+id: node.agreement.field_field_of_education_clarifi
+field_name: field_field_of_education_clarifi
+entity_type: node
+bundle: agreement
+label: 'Field of education clarification'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

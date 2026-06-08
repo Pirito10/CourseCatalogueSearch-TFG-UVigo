@@ -1,0 +1,19 @@
+uuid: 9006ae54-eb82-42c4-bb0f-d729175c7990
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_erasmus_code
+    - node.type.institution
+id: node.institution.field_erasmus_code
+field_name: field_erasmus_code
+entity_type: node
+bundle: institution
+label: 'Erasmus Code'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

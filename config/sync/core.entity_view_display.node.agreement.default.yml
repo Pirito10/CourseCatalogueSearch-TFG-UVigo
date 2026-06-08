@@ -1,0 +1,213 @@
+uuid: d6339171-9fb8-45b3-9b61-12558646a4c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.agreement.field_agreement_email
+    - field.field.node.agreement.field_agreement_observations
+    - field.field.node.agreement.field_agreement_phone
+    - field.field.node.agreement.field_contact_person
+    - field.field.node.agreement.field_department_partner_1
+    - field.field.node.agreement.field_department_partner_2
+    - field.field.node.agreement.field_duration_from_year
+    - field.field.node.agreement.field_duration_to_year
+    - field.field.node.agreement.field_field_of_education
+    - field.field.node.agreement.field_field_of_education_clarifi
+    - field.field.node.agreement.field_institution_1
+    - field.field.node.agreement.field_institution_2
+    - field.field.node.agreement.field_language_of_instruction_1
+    - field.field.node.agreement.field_language_of_instruction_2
+    - field.field.node.agreement.field_level_of_education
+    - field.field.node.agreement.field_mobility_blended_option
+    - field.field.node.agreement.field_recommended_language_level
+    - field.field.node.agreement.field_studies_students
+    - field.field.node.agreement.field_studies_total_months
+    - field.field.node.agreement.field_trainership_students
+    - field.field.node.agreement.field_trainership_total_months
+    - node.type.agreement
+  module:
+    - ewp_core
+    - isced_field
+    - text
+    - user
+id: node.agreement.default
+targetEntityType: node
+bundle: agreement
+mode: default
+content:
+  field_agreement_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 122
+    region: content
+  field_agreement_observations:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 124
+    region: content
+  field_agreement_phone:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 123
+    region: content
+  field_contact_person:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_department_partner_1:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_department_partner_2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_duration_from_year:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_duration_to_year:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_field_of_education:
+    type: isced_f_default
+    label: above
+    settings:
+      prefix: true
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_field_of_education_clarifi:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_institution_1:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_institution_2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_language_of_instruction_1:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_language_of_instruction_2:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_level_of_education:
+    type: eqf_level_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_mobility_blended_option:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_recommended_language_level:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_studies_students:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 125
+    region: content
+  field_studies_total_months:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 126
+    region: content
+  field_trainership_students:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 127
+    region: content
+  field_trainership_total_months:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 128
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

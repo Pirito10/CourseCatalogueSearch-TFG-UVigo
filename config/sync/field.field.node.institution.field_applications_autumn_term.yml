@@ -1,0 +1,19 @@
+uuid: 7e767f98-061e-456d-ae85-e011d5a347ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_applications_autumn_term
+    - node.type.institution
+id: node.institution.field_applications_autumn_term
+field_name: field_applications_autumn_term
+entity_type: node
+bundle: institution
+label: 'Applications autumn term'
+description: 'Enter the date in mm/dd format.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

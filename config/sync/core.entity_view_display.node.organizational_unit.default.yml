@@ -1,0 +1,156 @@
+uuid: f83a9b1d-0475-4deb-9fe5-28367f1e4340
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.organizational_unit.field_ou_abbreviation
+    - field.field.node.organizational_unit.field_ou_address
+    - field.field.node.organizational_unit.field_ou_campus
+    - field.field.node.organizational_unit.field_ou_code
+    - field.field.node.organizational_unit.field_ou_description
+    - field.field.node.organizational_unit.field_ou_email
+    - field.field.node.organizational_unit.field_ou_institution
+    - field.field.node.organizational_unit.field_ou_knowledge_area
+    - field.field.node.organizational_unit.field_ou_map
+    - field.field.node.organizational_unit.field_ou_phone
+    - field.field.node.organizational_unit.field_ou_picture
+    - field.field.node.organizational_unit.field_ou_type
+    - field.field.node.organizational_unit.field_ou_web
+    - field.field.node.organizational_unit.field_parent_organizational_unit
+    - node.type.organizational_unit
+  module:
+    - geofield
+    - image
+    - isced_field
+    - link
+    - options
+    - text
+    - user
+id: node.organizational_unit.default
+targetEntityType: node
+bundle: organizational_unit
+mode: default
+content:
+  field_ou_abbreviation:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 122
+    region: content
+  field_ou_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_ou_campus:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_ou_code:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 124
+    region: content
+  field_ou_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  field_ou_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_ou_institution:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_ou_knowledge_area:
+    type: isced_f_default
+    label: above
+    settings:
+      prefix: true
+    third_party_settings: {  }
+    weight: 123
+    region: content
+  field_ou_map:
+    type: geofield_default
+    label: above
+    settings:
+      output_format: wkt
+      output_escape: true
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_ou_phone:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_ou_picture:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_ou_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_ou_web:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_parent_organizational_unit:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

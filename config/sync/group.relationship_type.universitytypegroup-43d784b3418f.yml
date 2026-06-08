@@ -1,0 +1,17 @@
+uuid: 75801801-b264-4578-bb2c-151285bcee26
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - node.type.programme
+  module:
+    - gnode
+    - node
+id: universitytypegroup-43d784b3418f
+group_type: universitytypegroup
+content_plugin: 'group_node:programme'
+plugin_config:
+  group_cardinality: 1
+  entity_cardinality: 1
+  use_creation_wizard: false

@@ -1,0 +1,14 @@
+uuid: 82f5abc4-dadb-4c51-94ac-72988d37876e
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.suject_admi
+  module:
+    - user
+id: user_add_role_action.suject_admi
+label: 'Añade el rol Suject Admi al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: suject_admi

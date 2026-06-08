@@ -1,0 +1,24 @@
+uuid: 3ac1caad-546d-4ddd-8326-e3b06669d231
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_learn_outcomes
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_programme_learn_outcomes
+field_name: field_programme_learn_outcomes
+entity_type: node
+bundle: programme
+label: 'Learning Outcomes'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

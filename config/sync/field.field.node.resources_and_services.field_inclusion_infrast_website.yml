@@ -1,0 +1,23 @@
+uuid: 63d4a920-8d50-4a0f-8184-e3d7c7ecba30
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_inclusion_infrast_website
+    - node.type.resources_and_services
+  module:
+    - link
+id: node.resources_and_services.field_inclusion_infrast_website
+field_name: field_inclusion_infrast_website
+entity_type: node
+bundle: resources_and_services
+label: 'Inclusion and accessibility Infrastructure website'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

@@ -1,0 +1,6 @@
+name: 'Programme Suggestions'
+type: module
+description: 'Provides a Home Programme selector with autocomplete.'
+package: Custom
+core_version_requirement: ^10 || ^11
+version: 1.0

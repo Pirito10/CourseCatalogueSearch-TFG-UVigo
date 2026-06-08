@@ -1,0 +1,24 @@
+uuid: adedd2f6-d538-4e42-8429-1453aa5af2ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_admission_language_policy
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_admission_language_policy
+field_name: field_admission_language_policy
+entity_type: node
+bundle: institution
+label: Languages
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

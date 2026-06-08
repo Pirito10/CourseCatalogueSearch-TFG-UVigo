@@ -1,0 +1,20 @@
+uuid: a1ec320e-43a0-4120-885c-a5928f4d1152
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.alliance
+  module:
+    - path
+id: node.alliance.path
+field_name: path
+entity_type: node
+bundle: alliance
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

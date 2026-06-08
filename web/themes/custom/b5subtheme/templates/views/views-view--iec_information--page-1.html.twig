@@ -1,0 +1,174 @@
+{% set current_language = view.result[0].node_field_data_langcode %}
+
+
+{% if sidebar_second %}
+	{{dump('sideebar')}}
+
+{% endif %}
+
+
+{# Acceder a la asignatura actual #}
+{% set iec = view.result[0]._entity %}
+{% if iec.hasTranslation(current_language) %}
+	{% set translated_iec = iec.getTranslation(current_language) %}
+{% else %}
+	{% set translated_iec = iec %}
+{% endif %}
+
+{# Acceder a la carrera a la que pertenece la asignatura #}
+{% set programme = translated_iec.field_iec_programme.entity %}
+
+{% if programme %}
+	{% if programme.hasTranslation(current_language) %}
+		{% set translated_programme = programme.getTranslation(current_language) %}
+	{% else %}
+		{% set translated_programme = programme %}
+	{% endif %}
+{% endif %}
+
+{# Acceder a la universidad a la que pertenece la carrera #}
+{% set institution = programme.field_programme_institution.entity %}
+
+{% if institution %}
+	{% if institution.hasTranslation(current_language) %}
+		{% set translated_institution = institution.getTranslation(current_language) %}
+	{% else %}
+		{% set translated_institution = institution %}
+	{% endif %}
+{% endif %}
+
+{# Obtener colores de la universidad #}
+{% set university_primary_color = institution.field_primary_color[0].color %}
+{% set university_text_color = institution.field_text_color[0].color %}
+{% set university_emphasis_text_color = institution.field_emphasis_text_color[0].color %}
+
+
+<style>:root
+{
+	--university_primary_color: {{university_primary_color}}
+	;
+	--university_text_color: {{university_text_color}}
+	;
+	--university_emphasis_text_color: {{university_emphasis_text_color}}
+	;
+}</style>{# Cuatrimestres del curso #}{% set cuatrimestres_curso = {
+  '1o': '1º',
+  '2o': '2º',
+  '3o': '3º',
+  '4o': '4º',
+} %}<div class="programme-page">
+
+{% if translated_programme and translated_programme.id %}
+	{% set original_url = path('entity.node.canonical', {'node': translated_programme.id}) %}
+	{% set language_prefix = '/' ~ current_language ~ '/' %}
+	{% set modified_url = original_url|replace({(language_prefix): language_prefix ~ 'catalogue/'}) %}
+	<a href="{{ modified_url }}" class="programme-header-link">
+		<div class="rs-header " >
+			<div class="my-custom-container-2">
+				<div class="page-band">
+					<h1 class="rs-title">{{ translated_programme.title.value|raw }}</h1>
+				</div>
+			</div>
+		</div>
+	</a>
+{% else %}
+	<div class="programme-header-link">
+		<div class="programme-header">
+			<div class="container-fluid">
+				<h1 class="rs-title">
+					{{ 'Degree information unavailable'|t }}
+				</h1>
+			</div>
+		</div>
+	</div>
+{% endif %}
+<div class="rs-header bg-black">
+	<div class="my-custom-container-2">
+		<div class="page-band">
+			<h1 class="rs-title">{{ translated_iec.label|upper }}</h1>
+		</div>
+	</div>
+
+</div></div><div class="section-container">
+<div class="my-custom-container-2">
+
+	<div class="row">
+
+
+  {# SIDEBAR — arriba en móvil, derecha en desktop #}
+{# SIDEBAR — arriba en móvil, derecha en desktop #}
+{% if attachment_after %}
+  <div class="col-sm-12 col-md-12 col-xl-4 degree-sidebar-wrapper order-1 order-xl-2">
+    {{ attachment_after }}
+  </div>
+{% endif %}
+  {# CONTENIDO PRINCIPAL #}
+  <div class="col-sm-12 col-md-12 col-xl-8 order-2 order-xl-1">
+
+    {% if translated_iec.field_iec_description.value is not empty %}
+      <div class="programme-section" id="general-information" style="text-align: justify;">
+        <h3 class="subsection-title mt-0">{{ translations[current_language]['Description'] }}</h3>
+        {{ translated_iec.field_iec_description.value|raw }}
+
+        {% if translated_iec.field_subject_area is defined and translated_iec.field_subject_area.value is not empty %}
+          <div class="mt-4">
+            <h4 class="subsection-title">{{ 'Subject area'|t }}</h4>
+            {{ translated_iec.field_subject_area.value|raw }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if translated_iec.field_iec_requirements.value is not empty %}
+      <div class="programme-section" style="text-align: justify;">
+        <h3 class="subsection-title">{{ translations[current_language]['Requirements'] }}</h3>
+        {{ translated_iec.field_iec_requirements.value|raw }}
+      </div>
+    {% endif %}
+
+    {% if translated_iec.field_iec_instructors.value is not empty %}
+      <div class="programme-section" style="text-align: justify;">
+        <h3 class="subsection-title">{{ translations[current_language]['Instructors'] }}</h3>
+        {{ translated_iec.field_iec_instructors.value|raw }}
+      </div>
+    {% endif %}
+
+    {% if translated_iec.field_iec_contents.value is not empty %}
+      <div class="programme-section" style="text-align: justify;">
+        <h3 class="subsection-title">{{ translations[current_language]['Contents'] }}</h3>
+        {{ translated_iec.field_iec_contents.value|raw }}
+      </div>
+    {% endif %}
+
+    {% if translated_iec.field_iec_learning_outcomes.value is not empty %}
+      <div class="programme-section" style="text-align: justify;">
+        <h3 class="subsection-title">{{ translations[current_language]['Learning Outcomes'] }}</h3>
+        {{ translated_iec.field_iec_learning_outcomes.value|raw }}
+      </div>
+    {% endif %}
+
+    {% if translated_iec.field_iec_recommendations.value is not empty %}
+      <div class="programme-section" style="text-align: justify;">
+        <h3 class="subsection-title">{{ translations[current_language]['Recommended Readings and Tools'] }}</h3>
+        {{ translated_iec.field_iec_recommendations.value|raw }}
+      </div>
+    {% endif %}
+
+    {% if translated_iec.field_iec_planned_activities.value is not empty %}
+      <div class="programme-section" style="text-align: justify;">
+        <h3 class="subsection-title">{{ translations[current_language]['Planned Activities'] }}</h3>
+        {{ translated_iec.field_iec_planned_activities.value|raw }}
+      </div>
+    {% endif %}
+
+    {% if translated_iec.field_iec_evaluation.value is not empty %}
+      <div class="programme-section" style="text-align: justify;">
+        <h3 class="subsection-title">{{ translations[current_language]['Assessment Methods and Criteria'] }}</h3>
+        {{ translated_iec.field_iec_evaluation.value|raw }}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+</div></div>

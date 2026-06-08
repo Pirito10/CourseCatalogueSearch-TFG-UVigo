@@ -1,0 +1,20 @@
+uuid: 6f12da20-4453-4f3a-9b2c-3ec3a48077c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.universitytypegroup-a48852cf133b
+id: group_relationship.universitytypegroup-a48852cf133b.uid
+field_name: uid
+entity_type: group_relationship
+bundle: universitytypegroup-a48852cf133b
+label: 'Group relationship creator'
+description: 'The username of the group relationship creator.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: 'Drupal\group\Entity\GroupRelationship::getDefaultEntityOwner'
+settings:
+  handler: default
+  handler_settings: {  }
+field_type: entity_reference

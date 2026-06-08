@@ -1,0 +1,23 @@
+uuid: 5b366ced-45fa-46fd-b33a-1d19e889dc4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_display_order
+    - node.type.academic_authority
+id: node.academic_authority.field_display_order
+field_name: field_display_order
+entity_type: node
+bundle: academic_authority
+label: 'Order number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

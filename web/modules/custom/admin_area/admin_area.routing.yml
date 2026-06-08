@@ -1,0 +1,63 @@
+admin_area.my_area:
+  path: '/my-area'
+  defaults:
+    _controller: '\Drupal\admin_area\Controller\AdminAreaController::content'
+    _title: 'My Area'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: TRUE
+
+
+
+
+
+
+admin_area.my_entity_page:
+  path: '/admin/my-area/{entity_type}'
+  defaults:
+    _controller: '\Drupal\admin_area\Controller\AdminAreaController::myEntityPage'
+    _title: 'My Area'
+  requirements:
+    _permission: 'access content'
+    entity_type: '[a-z_]+'
+  options:
+    _admin_route: TRUE
+
+admin_area.admin_agreements_page:
+  path: '/admin/admin-agreements'
+  defaults:
+    _controller: '\Drupal\admin_area\Controller\AdminAreaController::myEntityPage'
+    _title: 'My Agreements'
+    entity_type: 'agreement'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: TRUE
+
+
+admin_area.redirect_create_user:
+  path: '/my-create-user'
+  defaults:
+    _controller: '\Drupal\admin_area\Controller\AdminAreaController::redirectToCreateUserForm'
+    _title: 'Redirect to Create User Form'
+  requirements:
+    _permission: 'access content'
+  options:
+    _admin_route: TRUE
+
+
+
+
+
+admin_area.add_membership_form:
+  path: '/admin-area/add-membership-form/{joint_programme}'
+  defaults:
+    _controller: '\Drupal\admin_area\Controller\AdminAreaMembershipController::redirectToMembershipForm'
+    _title: 'Add membership'
+  requirements:
+    _permission: 'access content'
+  options:
+    parameters:
+      joint_programme:
+        type: entity:node

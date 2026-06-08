@@ -1,0 +1,19 @@
+uuid: 4db36a16-cf23-48b5-8361-b2c38ffddb53
+langcode: en
+status: true
+dependencies:
+  module:
+    - isced_field
+    - node
+id: node.field_isced_f
+field_name: field_isced_f
+entity_type: node
+type: isced_f
+settings: {  }
+module: isced_field
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,19 @@
+uuid: 449d186b-19cb-45c9-a3ab-bdee09e660fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_alliance_email
+    - node.type.alliance
+id: node.alliance.field_alliance_email
+field_name: field_alliance_email
+entity_type: node
+bundle: alliance
+label: E-mail
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

@@ -1,0 +1,23 @@
+uuid: 8ca34050-b72f-4753-bf01-e14c0eabff7a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_number_of_terms
+    - node.type.programme
+id: node.programme.field_number_of_terms
+field_name: field_number_of_terms
+entity_type: node
+bundle: programme
+label: 'Number of terms per year'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

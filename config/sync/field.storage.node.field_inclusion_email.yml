@@ -1,0 +1,18 @@
+uuid: 4a516fc7-e349-4f1b-89f8-52e5e14c5cbb
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_inclusion_email
+field_name: field_inclusion_email
+entity_type: node
+type: email
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

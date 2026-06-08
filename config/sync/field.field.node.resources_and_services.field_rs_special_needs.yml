@@ -1,0 +1,24 @@
+uuid: c26632f0-5c22-4a54-a3c2-1f461453b247
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_special_needs
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_rs_special_needs
+field_name: field_rs_special_needs
+entity_type: node
+bundle: resources_and_services
+label: 'Support for students with disabilities and special needs'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

@@ -1,0 +1,34 @@
+uuid: 4591e79f-8111-4adf-934a-1386c9f1f356
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_activity_types
+    - node.type.individual_educational_component
+  module:
+    - elm_vocabulary_field
+id: node.individual_educational_component.field_iec_activity_types
+field_name: field_iec_activity_types
+entity_type: node
+bundle: individual_educational_component
+label: 'Planned activity types'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    3c8bd58d62: false
+    4357e0e681: false
+    59eaf34fab: false
+    a7e556215a: false
+    b660f5dcea: false
+    bf2e3a7bae: false
+    bf5588ff84: false
+    d46a826a39: false
+    efff75e10a: false
+    fd33e234ae: false
+    ff436ea7c9: false
+    c_5665a0ad: false
+field_type: elm_controlled_vocabulary

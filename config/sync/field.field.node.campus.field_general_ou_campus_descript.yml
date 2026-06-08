@@ -1,0 +1,24 @@
+uuid: f09a5196-c586-4ba4-933a-c5b1e25d0d19
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_general_ou_campus_descript
+    - filter.format.basic_html
+    - node.type.campus
+  module:
+    - text
+id: node.campus.field_general_ou_campus_descript
+field_name: field_general_ou_campus_descript
+entity_type: node
+bundle: campus
+label: 'General Organizational Units Description'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

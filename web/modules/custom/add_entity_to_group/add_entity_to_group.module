@@ -1,0 +1,327 @@
+<?php
+use Drupal\group\Entity\Group;
+use Drupal\group\Entity\GroupContent;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\group\Entity\GroupRelationship;
+
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function add_entity_to_group_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+
+
+
+  // Casos para carreras.
+  if ($form_id === 'node_programme_form') {
+    // Determinar la operación actual.
+    $operation = $form_state->getFormObject()->getOperation();
+    if ($operation === 'default') {
+      _alter_edit_programme_form($form, $form_state);
+    } elseif ($operation === 'edit') {
+      _alter_edit_programme_form($form, $form_state);
+    }
+  }
+
+  // Casos para asignaturas.
+  if ($form_id === 'node_individual_educational_component_form') {
+    // Determinar la operación actual.
+    $operation = $form_state->getFormObject()->getOperation();
+    if ($operation === 'default') {
+      _alter_edit_individual_educational_component_form($form, $form_state);
+    } elseif ($operation === 'edit') {
+      _alter_edit_individual_educational_component_form($form, $form_state);
+    }
+  }
+
+
+  // Casos para asignaturas.
+  if ($form_id === 'node_individual_educational_component_form') {
+    // Determinar la operación actual.
+    $operation = $form_state->getFormObject()->getOperation();
+    if ($operation === 'default') {
+      _alter_edit_individual_educational_component_form($form, $form_state);
+    } elseif ($operation === 'edit') {
+      _alter_edit_individual_educational_component_form($form, $form_state);
+    }
+  }
+
+
+
+
+
+
+}
+
+/**
+ * Altera el formulario al crear una carrera.
+ */
+function _alter_create_programme_form(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+  //\Drupal::messenger()->addMessage('Hook add entity to group alter create carrera form ****************************');
+
+
+
+
+
+
+  if (isset($form['field_programme_institution'])) {
+    // Obtener el ID de la carrera desde la URL (si está presente).
+    $universidad_id = \Drupal::request()->query->get('field_programme_institution');
+
+    if (isset($form['uid'])) {
+
+      $form['uid']['#access'] = TRUE;
+      $form['uid']['#disabled'] = FALSE; // Asegúrate de que el campo no esté bloqueado.
+    }
+
+    // Si hay un ID de carrera en la URL, usarlo como valor predeterminado.
+    if ($universidad_id) {
+      $universidad = \Drupal::entityTypeManager()->getStorage('node')->load($universidad_id);
+      if ($universidad_id && $universidad->bundle() === 'institution') {
+        // Preseleccionar la carrera y deshabilitar el campo.
+        $form['field_programme_institution']['widget'][0]['target_id']['#default_value'] = $universidad;
+        $form['field_programme_institution']['widget'][0]['target_id']['#disabled'] = TRUE; // Deshabilitar el campo.
+
+        //\Drupal::messenger()->addMessage(t('Universidad preseleccionada: @name', ['@name' => $universidad->label()]));
+        return; // Salir, ya que la carrera fue configurada correctamente.
+      }
+    }
+
+    // Si no hay carrera válida, mostrar un mensaje de error.
+    //\Drupal::messenger()->addError(t('No se pudo preseleccionar la carrera.'));
+  }
+}
+
+/**
+ * Altera el formulario al editar una carrera.
+ */
+function _alter_edit_programme_form(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+  $node = $form_state->getFormObject()->getEntity();
+
+  if ($node->hasField('field_programme_institution') && !$node->get('field_programme_institution')->isEmpty()) {
+    $university = $node->get('field_programme_institution')->entity;
+
+    if ($university) {
+      //\Drupal::messenger()->addMessage('Universidad encontrada: ' . $university->label());
+      $user_options = _get_group_users_by_role($university, 'universitytypegroup-degree_admin');
+
+      if (!empty($user_options)) {
+        _set_uid_field_as_select($form, $node, $user_options);
+
+        if (!_add_entity_to_group_is_translation_add_form()) {
+          _add_create_user_button($form, $university);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Altera el formulario al crear una asignatura.
+ */
+function _alter_create_individual_educational_component_form(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+  // Verificar si el campo field_iec_programme existe en el formulario.
+  //\Drupal::messenger()->addMessage(t('El campo de asdfasdfasdffaasdsdfautor esasdfasdfasdtasdfasdfasdfá habasdfasdfilitado.'));
+  if (isset($form['uid'])) {
+    // Hacer que el campo de autor sea visible y editable.
+    $form['uid']['#access'] = TRUE;
+    $form['uid']['#disabled'] = FALSE;  // Hacer editable el campo.
+
+    // Mover el campo "Autor" a la parte superior del formulario.
+
+    //\Drupal::messenger()->addMessage(t('El campo de autor está habilitado.'));
+  }
+  if (isset($form['field_iec_programme'])) {
+    // Obtener el ID de la carrera desde la URL (si está presente).
+    $carrera_id = \Drupal::request()->query->get('field_iec_programme');
+
+
+    // Si hay un ID de carrera en la URL, usarlo como valor predeterminado.
+    if ($carrera_id) {
+      $carrera = \Drupal::entityTypeManager()->getStorage('node')->load($carrera_id);
+      if ($carrera && $carrera->bundle() === 'programme') {
+        // Preseleccionar la carrera y deshabilitar el campo.
+        $form['field_iec_programme']['widget'][0]['target_id']['#default_value'] = $carrera;
+        $form['field_iec_programme']['widget'][0]['target_id']['#disabled'] = TRUE; // Deshabilitar el campo.
+        //\Drupal::messenger()->addMessage(t('Carrera preseleccionada: @name', ['@name' => $carrera->label()]));
+        return; // Salir, ya que la carrera fue configurada correctamente.
+      }
+    }
+
+    // Si no hay carrera válida, mostrar un mensaje de error.
+    //\Drupal::messenger()->addError(t('No se pudo preseleccionar la carrera.'));
+  }
+}
+
+
+
+
+
+
+
+
+
+/**
+ * Altera el formulario al editar una asignatura.
+ */
+function _alter_edit_individual_educational_component_form(&$form, \Drupal\Core\Form\FormStateInterface $form_state)
+{
+
+  $node = $form_state->getFormObject()->getEntity();
+  //\Drupal::messenger()->addMessage(t('El campo dasdfasdfdfasdfae autor sdfaestfasdfsdfasasdfá habilitado.'));
+  if (isset($form['uid'])) {
+    // Hacer que el campo de autor sea visible y editable.
+    $form['uid']['#access'] = TRUE;
+    $form['uid']['#disabled'] = FALSE;  // Hacer editable el campo.
+
+    // Mover el campo "Autor" a la parte superior del formulario.
+
+    //\Drupal::messenger()->addMessage(t('El campo de autor está habilitado.'));
+  }
+
+  if ($node->hasField('field_iec_programme') && !$node->get('field_iec_programme')->isEmpty()) {
+    $degree = $node->get('field_iec_programme')->entity;
+
+    if ($degree) {
+      $university = $degree->get('field_programme_institution')->entity;
+      if ($university) {
+        $user_options = _get_group_users_by_role($university, 'universitytypegroup-subject_admi');
+
+        if (!empty($user_options)) {
+          _set_uid_field_as_select($form, $node, $user_options);
+
+          if (!_add_entity_to_group_is_translation_add_form()) {
+            _add_create_user_button($form, $university);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Obtiene usuarios de un grupo con un rol específico.
+ */
+function _get_group_users_by_role($university, $role_id)
+{
+  $relationships = GroupRelationship::loadByEntity($university);
+  $user_options = [];
+
+  foreach ($relationships as $relationship) {
+    $group = $relationship->getGroup();
+    $members = $group->getMembers();
+
+    foreach ($members as $member) {
+      $user = $member->getUser();
+      $roles = $member->getRoles();
+
+      foreach ($roles as $role) {
+        if ($role->id() === $role_id) {
+          $user_options[$user->id()] = $user->getDisplayName();
+        }
+      }
+    }
+  }
+
+  asort($user_options);
+  return $user_options;
+}
+
+/**
+ * Configura el campo UID como una lista desplegable.
+ */
+function _set_uid_field_as_select(&$form, $node, $user_options)
+{
+  if (isset($form['uid']) && !empty($user_options)) {
+    $form['uid']['widget'][0]['target_id'] = [
+      '#type' => 'select',
+      '#title' => t('Author'),
+      '#options' => $user_options,
+      '#default_value' => $node->getOwnerId(),
+      '#required' => TRUE,
+    ];
+  }
+}
+
+/**
+ * Añade un botón para crear un usuario debajo del campo autor.
+ */
+function _add_create_user_button(&$form, $university)
+{
+  $current_url = \Drupal::request()->getRequestUri();
+
+  $form['create_user_button'] = [
+    '#type' => 'link',
+    '#title' => t('Create user'),
+    '#url' => \Drupal\Core\Url::fromRoute('create_user_group.create_user_form', [
+      'group' => $university->id(),
+    ], [
+      'query' => ['destination' => $current_url],
+    ]),
+    '#attributes' => ['class' => ['button', 'button--primary']],
+  ];
+}
+
+/**
+ * Checks whether the current node form is creating a translation.
+ */
+function _add_entity_to_group_is_translation_add_form()
+{
+  return \Drupal::routeMatch()->getRouteName() === 'entity.node.content_translation_add';
+}
+
+/**
+ * Función auxiliar para obtener el grupo desde el contexto.
+ */
+function _get_group_from_context()
+{
+  $route_match = \Drupal::routeMatch();
+  return $route_match->getParameter('group') ?: NULL;
+}
+
+
+
+
+
+
+
+
+
+
+/**
+ * Implements hook_preprocess_block() to disable the "Add existing content" button in the nodes tab.
+ */
+function add_entity_to_group_preprocess_block(&$variables)
+{
+  if (isset($variables['content']['group_relationship.group_node_add_page'])) {
+    //\Drupal::messenger()->addMessage('Botón "Add existing content" encontrado.');
+
+    // Deshabilitamos el botón.
+    //$variables['content']['group_relationship.group_node_add_page']['#link']['localized_options']['attributes']['onclick'] = 'return false;';
+    //$variables['content']['group_relationship.group_node_add_page']['#link']['localized_options']['attributes']['class'][] = 'button--disabled';
+    //$variables['content']['group_relationship.group_node_add_page']['#link']['localized_options']['attributes']['style'] = 'pointer-events: none; opacity: 0.5;';
+  }
+}
+

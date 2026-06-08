@@ -1,0 +1,161 @@
+{{ attach_library('b5subtheme/university_carousel') }}
+
+{% set current_language = view.result[0].node_field_data_langcode %}
+
+
+<div class="image-banner image-banner-main-page">
+  <img src="{{ main_banner_image }}" style="object-position: center;" alt="{{ 'Study in Europe'|t }}">
+	<div class="overlay-text">
+		<h2 class="text-main-image-uni{% if main_page_is_athena %} text-main-image-uni--athena{% endif %}">
+			{% if main_page_is_athena %}
+				{{ 'Study in Europe with ATHENA'|t }}
+			{% else %}
+				{{'Study in Europe'|t}}
+			{% endif %}
+		</h2>
+		<a href="{{ main_page_search_programme_url|default('/search-programme') }}"><button class="cta-button{% if main_page_is_athena %} cta-button--athena{% endif %}">{{'FIND A PROGRAMME'|t}}</button></a>
+	</div>
+	</div>
+
+<section class="main-page-disclaimer section-container">
+	<div class="my-custom-container-2">
+		<div class="main-page-disclaimer__box">
+			<h2 class="main-page-disclaimer__title">{{ 'Disclaimer'|t }}</h2>
+			<div class="main-page-disclaimer__content">
+				<p>{{ 'The information provided in the DACEM Academic Catalogue is made available exclusively for validation, testing, and demonstration purposes within the context of the DACEM project. The content presented in this catalogue may not be complete, accurate, current, or officially validated by the participating institutions.'|t }}</p>
+			</div>
+		</div>
+	</div>
+</section>
+	
+	<section>
+
+<div class="container-flex container-university-list" id="institutions">
+
+	<p class="d-flex text-under-main-image-uni">{{'Explore the best opportunities to study in Europe. Discover universities, programs, and destinations tailored to your future. Your next academic adventure starts here.'|t}}</p>
+
+	<div
+		id="universityCarousel" class="carousel slide" data-bs-ride="carousel">
+		<!-- Indicadores del carrusel -->
+		<div class="carousel-indicators">
+			{% for i in 0..((view.result|length / 3)|round(0, 'ceil') - 1) %}
+				<button type="button" data-bs-target="#universityCarousel" data-bs-slide-to="{{ i }}" class="{% if loop.first %}active{% endif %}" aria-current="true"></button>
+			{% endfor %}
+		</div>
+
+		<!-- Contenido del carrusel -->
+		<div class="carousel-inner">
+			{% for row in view.result %}
+				{% set is_active = loop.index0 == 0 %}
+				{% if loop.index0 % 3 == 0 %}
+					<div class="carousel-item {% if is_active %}active{% endif %}">
+						<div class="row justify-content-center">
+						{% endif %}
+						<!-- Tarjeta de la universidad -->
+						<div class="col-12 col-md-4">
+
+							<a href="/{{ row.custom_url }}" class="card h-100">
+
+								{% set file = row._entity.field_institution_card_image.entity %}
+
+
+								{% if file %}
+									{% set uri = file.getFileUri() %}
+									{% set image_url = file_url(uri) %}
+									<div>
+										<img src="{{ image_url }}" alt="{{ row._entity.title.value }}">
+									</div>
+								{% endif %}
+
+
+							
+							<div class="card-body ">
+								<h5 class="card-title">{{ row._entity.title.value }}</h5>
+                <p class="card-text-country" style="color: {{ main_page_primary_color|default('#ff4949') }};">{{ row._country_name }}</p>
+								
+								<p class="card-text truncate-text">{{ row._entity.field_information.processed | striptags }}</p>
+							</div>
+
+
+						</a>
+					</div>
+					{% if loop.index0 % 3 == 2 or loop.last %}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	<!-- Controles del carrusel -->
+	<!-- Controles del carrusel con flechas personalizadas -->
+	<button class="carousel-control-prev custom-prev" type="button" data-bs-target="#universityCarousel" data-bs-slide="prev">
+		<span aria-hidden="true" class="custom-arrow">
+			<i class="fas fa-chevron-left"></i>
+			<!-- Icono FontAwesome -->
+		</span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next custom-next" type="button" data-bs-target="#universityCarousel" data-bs-slide="next">
+		<span aria-hidden="true" class="custom-arrow">
+			<i class="fas fa-chevron-right"></i>
+			<!-- Icono FontAwesome -->
+		</span>
+		<span class="visually-hidden">Next</span>
+	</button>
+	</div>
+
+	<div class="main-page-see-all-wrapper">
+		<a href="{{ path('view.main_page.page_2') }}" class="main-page-see-all-button">{{ 'See all'|t }}</a>
+	</div>
+	
+	<div class="row map-and-explore">
+	<div class="col-12 col-xl-7">
+		<div class="map-wrapper" style="min-height: 300px;">
+			{{ drupal_view('map_view', 'block_5') }}
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="col-12 col-xl-5" style="justify-content">
+
+
+
+
+
+
+		<h2>{{ 'EXPLORE OUR UNIVERSITIES'|t }}</h2>
+
+<p>{{ 'Find a new place to continue your studies, meet new people and learn a new language. Before this, you should:'|t }}</p>
+
+<ul>
+	<li>
+		{{ 'Find which universities are available from your home university at your local international office.'|t }}
+	</li>
+	<li>
+		{{ 'Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar.'|t }}
+	</li>
+	<li>
+		{{ 'Assess accommodation, transportation, and daily expenses.'|t }}
+	</li>
+	<li>
+		{{ 'Research the local culture, student life, and opportunities for personal and professional growth.'|t }}
+	</li>
+	<li>
+		{{ 'Check healthcare coverage, safety, and housing availability.'|t }}
+	</li>
+</ul>
+
+<p style="text-align: center; font-size: 18px; font-weight: bold; color: #000;">{{ "Don't miss the opportunity!"|t }}</p>
+
+
+</div></div>
+
+
+<div style="margin-top: 75px;"></div>

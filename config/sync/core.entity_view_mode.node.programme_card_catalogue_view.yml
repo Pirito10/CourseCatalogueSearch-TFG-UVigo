@@ -1,0 +1,11 @@
+uuid: 45bf278a-0b71-4f78-9aad-9f7673149971
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.programme_card_catalogue_view
+label: 'Programme card catalogue view'
+description: ''
+targetEntityType: node
+cache: true

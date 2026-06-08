@@ -1,0 +1,21 @@
+uuid: 6f8f19c0-5e92-4dea-9ea7-2d3efc9421a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_inclusion_infrast_phone
+    - node.type.resources_and_services
+  module:
+    - telephone
+id: node.resources_and_services.field_inclusion_infrast_phone
+field_name: field_inclusion_infrast_phone
+entity_type: node
+bundle: resources_and_services
+label: 'Inclusion and accessibility Infrastructure phone '
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

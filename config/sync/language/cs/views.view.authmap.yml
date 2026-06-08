@@ -1,0 +1,37 @@
+display:
+  default:
+    display_title: Nadřízené
+    display_options:
+      fields:
+        uid:
+          format_plural_string: !!binary MQNAY291bnQ=
+        name:
+          separator: ', '
+        delete_link:
+          label: smazat
+          text: smazat
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Položek na stránku'
+            items_per_page_options_all_label: '- Vše -'
+            offset_label: Posun
+      exposed_form:
+        options:
+          submit_button: 'Přihlásit se'
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      arguments:
+        provider_field:
+          exception:
+            title: Vše
+  page:
+    display_title: Stránka
+    display_options:
+      menu:
+        title: Externí

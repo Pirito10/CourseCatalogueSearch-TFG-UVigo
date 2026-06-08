@@ -1,0 +1,39 @@
+uuid: 71b6eb17-0f34-461a-b44a-2c2fa65b132c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_assessment_me
+    - node.type.iec_instance
+  module:
+    - elm_vocabulary_field
+id: node.iec_instance.field_iec_instance_assessment_me
+field_name: field_iec_instance_assessment_me
+entity_type: node
+bundle: iec_instance
+label: 'Assessment method types'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    19a2e5e671: false
+    2939dae15f: false
+    3484bd7e51: false
+    4f03b91c0e: false
+    56539a6507: false
+    6a4db9f11d: false
+    6e6cb2cc78: false
+    7331eb4762: false
+    795dac4096: false
+    812e3b0ae1: false
+    b1b68f6735: false
+    c4256a2726: false
+    c_04b30a72: false
+    c_2b3bd410: false
+    c_4f874951: false
+    d30284d7df: false
+    de4d165a6c: false
+field_type: elm_controlled_vocabulary

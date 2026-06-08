@@ -1,0 +1,108 @@
+uuid: be053436-960d-4661-9402-0e16552961ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.programme_card_catalogue_view
+    - field.field.node.programme.field_access_to_further_studies
+    - field.field.node.programme.field_arrangments_recognition
+    - field.field.node.programme.field_avaliable_for_mobility
+    - field.field.node.programme.field_competencies
+    - field.field.node.programme.field_coordinator
+    - field.field.node.programme.field_credits
+    - field.field.node.programme.field_distribution_of_credits
+    - field.field.node.programme.field_email
+    - field.field.node.programme.field_eqf_level
+    - field.field.node.programme.field_isced_f
+    - field.field.node.programme.field_joint_programme
+    - field.field.node.programme.field_learning_opportunity_type
+    - field.field.node.programme.field_length_of_programme
+    - field.field.node.programme.field_main_objective
+    - field.field.node.programme.field_number_of_terms
+    - field.field.node.programme.field_occupational_profiles
+    - field.field.node.programme.field_professional_practices
+    - field.field.node.programme.field_programme_abbreviation
+    - field.field.node.programme.field_programme_code
+    - field.field.node.programme.field_programme_description
+    - field.field.node.programme.field_programme_end_date
+    - field.field.node.programme.field_programme_grading_scheme
+    - field.field.node.programme.field_programme_grading_table
+    - field.field.node.programme.field_programme_institution
+    - field.field.node.programme.field_programme_language_of_inst
+    - field.field.node.programme.field_programme_learn_outcomes
+    - field.field.node.programme.field_programme_mobility
+    - field.field.node.programme.field_programme_mobility_windows
+    - field.field.node.programme.field_programme_mode_of_learning
+    - field.field.node.programme.field_programme_mode_of_study
+    - field.field.node.programme.field_programme_ou
+    - field.field.node.programme.field_programme_phone
+    - field.field.node.programme.field_programme_qualification
+    - field.field.node.programme.field_programme_requirements
+    - field.field.node.programme.field_programme_restricted_allia
+    - field.field.node.programme.field_programme_start_date
+    - field.field.node.programme.field_programme_type
+    - field.field.node.programme.field_programme_type_of_credits
+    - field.field.node.programme.field_programme_web
+    - field.field.node.programme.field_programme_work_placements
+    - field.field.node.programme.field_qualification_awarded
+    - field.field.node.programme.field_qualification_requirements
+    - field.field.node.programme.field_work_based_learning
+    - node.type.programme
+  module:
+    - layout_builder
+    - user
+third_party_settings:
+  layout_builder:
+    enabled: false
+    allow_custom: false
+id: node.programme.programme_card_catalogue_view
+targetEntityType: node
+bundle: programme
+mode: programme_card_catalogue_view
+content: {  }
+hidden:
+  field_access_to_further_studies: true
+  field_arrangments_recognition: true
+  field_avaliable_for_mobility: true
+  field_competencies: true
+  field_coordinator: true
+  field_credits: true
+  field_distribution_of_credits: true
+  field_email: true
+  field_eqf_level: true
+  field_isced_f: true
+  field_joint_programme: true
+  field_learning_opportunity_type: true
+  field_length_of_programme: true
+  field_main_objective: true
+  field_number_of_terms: true
+  field_occupational_profiles: true
+  field_professional_practices: true
+  field_programme_abbreviation: true
+  field_programme_code: true
+  field_programme_description: true
+  field_programme_end_date: true
+  field_programme_grading_scheme: true
+  field_programme_grading_table: true
+  field_programme_institution: true
+  field_programme_language_of_inst: true
+  field_programme_learn_outcomes: true
+  field_programme_mobility: true
+  field_programme_mobility_windows: true
+  field_programme_mode_of_learning: true
+  field_programme_mode_of_study: true
+  field_programme_ou: true
+  field_programme_phone: true
+  field_programme_qualification: true
+  field_programme_requirements: true
+  field_programme_restricted_allia: true
+  field_programme_start_date: true
+  field_programme_type: true
+  field_programme_type_of_credits: true
+  field_programme_web: true
+  field_programme_work_placements: true
+  field_qualification_awarded: true
+  field_qualification_requirements: true
+  field_work_based_learning: true
+  langcode: true
+  links: true

@@ -1,0 +1,24 @@
+uuid: 2409cb00-9b9d-4cd5-b551-a5d2ed522a27
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_learning_facilities
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_rs_learning_facilities
+field_name: field_rs_learning_facilities
+entity_type: node
+bundle: resources_and_services
+label: 'Learning Facilities'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

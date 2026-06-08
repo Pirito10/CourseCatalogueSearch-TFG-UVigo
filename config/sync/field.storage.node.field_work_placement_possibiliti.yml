@@ -1,0 +1,19 @@
+uuid: d5665528-4ba0-40d1-8bde-4cab04f7bf47
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_work_placement_possibiliti
+field_name: field_work_placement_possibiliti
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

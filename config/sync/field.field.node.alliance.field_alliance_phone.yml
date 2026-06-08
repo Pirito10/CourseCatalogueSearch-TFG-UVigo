@@ -1,0 +1,21 @@
+uuid: 2c1343a8-f4a9-4fdc-a041-1deeb2ebccc9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_alliance_phone
+    - node.type.alliance
+  module:
+    - telephone
+id: node.alliance.field_alliance_phone
+field_name: field_alliance_phone
+entity_type: node
+bundle: alliance
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

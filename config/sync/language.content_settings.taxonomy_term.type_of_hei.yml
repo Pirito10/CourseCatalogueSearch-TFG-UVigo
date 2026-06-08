@@ -1,0 +1,18 @@
+uuid: 89bdc242-3a3b-465b-ba66-ff7617c0647c
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.type_of_hei
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: taxonomy_term.type_of_hei
+target_entity_type_id: taxonomy_term
+target_bundle: type_of_hei
+default_langcode: site_default
+language_alterable: false

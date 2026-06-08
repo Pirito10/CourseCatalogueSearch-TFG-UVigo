@@ -1,0 +1,54 @@
+label: Φύλακας
+description: 'Πρόσφατα μηνύματα ημερολογίου καταγραφής'
+display:
+  default:
+    display_title: Προεπιλεγμένο
+    display_options:
+      title: 'Πρόσφατα μηνύματα ημερολογίου καταγραφής'
+      fields:
+        nothing:
+          admin_label: Εικονίδιο
+        wid:
+          label: WID
+        severity:
+          label: Σοβαρότητα
+        type:
+          label: Τύπος
+        timestamp:
+          label: Ημερομηνία
+        message:
+          label: Μήνυμα
+        name:
+          label: Χρήστης
+          separator: ', '
+        link:
+          label: Λειτουργίες
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Είδη ανά σελίδα'
+            items_per_page_options_all_label: '- Όλα -'
+            offset_label: Αντιστάθμιση
+      exposed_form:
+        options:
+          submit_button: Φίλτρο
+          reset_button_label: Επαναφορά
+          exposed_sorts_label: 'Ταξινόμηση κατά'
+          sort_asc_label: Αύξ
+          sort_desc_label: Φθί
+      empty:
+        area:
+          admin_label: 'Δεν υπάρχουν μηνύματα στο ημερολόγιο συστήματος.'
+          content: 'Δεν υπάρχουν μηνύματα στο ημερολόγιο συστήματος.'
+      filters:
+        type:
+          expose:
+            label: Τύπος
+        severity:
+          expose:
+            label: Σοβαρότητα
+  page:
+    display_title: Σελίδα

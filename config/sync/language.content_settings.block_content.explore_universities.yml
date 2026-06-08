@@ -1,0 +1,18 @@
+uuid: edcc5908-2e4d-4637-b35f-59d4e02f41a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.explore_universities
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: block_content.explore_universities
+target_entity_type_id: block_content
+target_bundle: explore_universities
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,24 @@
+uuid: 5087c56d-8e43-4de3-84e8-03d20da3d766
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_contact
+    - ewp_core
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: f5cnzrt-wEBQOY6g1YVY1eoKwDwgS-WzyG4PqmphWaQ
+id: contact.person_gender
+field_name: person_gender
+entity_type: contact
+type: gender_code
+settings: {  }
+module: ewp_core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

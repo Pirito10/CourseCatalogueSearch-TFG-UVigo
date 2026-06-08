@@ -1,0 +1,21 @@
+uuid: 5862f28c-7ae8-4743-9d78-f0ef5438d65f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_isced_f
+    - node.type.programme
+  module:
+    - isced_field
+id: node.programme.field_isced_f
+field_name: field_isced_f
+entity_type: node
+bundle: programme
+label: 'Fields of study'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: isced_f

@@ -1,0 +1,24 @@
+uuid: 8cca2d73-1664-4069-964a-22177d408b9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_alliance_description
+    - filter.format.basic_html
+    - node.type.alliance
+  module:
+    - text
+id: node.alliance.field_alliance_description
+field_name: field_alliance_description
+entity_type: node
+bundle: alliance
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

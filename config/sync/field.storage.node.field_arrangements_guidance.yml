@@ -1,0 +1,19 @@
+uuid: 3ac90c37-12e6-431b-999c-65d2bc7e39cb
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_arrangements_guidance
+field_name: field_arrangements_guidance
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,19 @@
+uuid: c765dbd3-cc01-410f-8d2e-c771b08576f6
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_member_role
+field_name: field_member_role
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

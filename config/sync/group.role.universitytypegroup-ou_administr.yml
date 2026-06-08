@@ -1,0 +1,25 @@
+uuid: 40736aee-6853-4269-b508-655ee71a2c9f
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+id: universitytypegroup-ou_administr
+label: 'Organizational Unit (OU) Administrator'
+weight: -6
+admin: false
+scope: individual
+global_role: null
+group_type: universitytypegroup
+permissions:
+  - 'create group_node:programme entity'
+  - 'delete own group_node:programme entity'
+  - 'update any group_node:programme entity'
+  - 'update own group_node:organizational_unit entity'
+  - 'update own group_node:programme entity'
+  - 'update own group_node:programme relationship'
+  - 'view group_node:iec_instance entity'
+  - 'view group_node:individual_educational_component entity'
+  - 'view group_node:institution entity'
+  - 'view group_node:organizational_unit entity'
+  - 'view group_node:programme entity'

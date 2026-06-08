@@ -1,0 +1,10 @@
+name: Custom Taxonomy (List field)
+type: module
+description: Adds a taxonomy field with translatable options to Programme.
+core_version_requirement: ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:node
+  - drupal:options
+  - drupal:language
+  - drupal:content_translation

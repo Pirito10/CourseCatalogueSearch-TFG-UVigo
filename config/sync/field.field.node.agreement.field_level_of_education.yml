@@ -1,0 +1,21 @@
+uuid: 4f3e8551-d935-48be-93ed-f20f7afa66ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_level_of_education
+    - node.type.agreement
+  module:
+    - ewp_core
+id: node.agreement.field_level_of_education
+field_name: field_level_of_education
+entity_type: node
+bundle: agreement
+label: 'Level of education'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: eqf_level

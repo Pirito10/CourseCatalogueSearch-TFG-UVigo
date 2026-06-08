@@ -1,0 +1,29 @@
+uuid: d68cf246-87d6-4a3b-9cce-785ef0eda39c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_language
+    - node.type.iec_instance
+    - taxonomy.vocabulary.languages_of_instuction
+id: node.iec_instance.field_iec_instance_language
+field_name: field_iec_instance_language
+entity_type: node
+bundle: iec_instance
+label: 'Languages of instruction'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      languages_of_instuction: languages_of_instuction
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

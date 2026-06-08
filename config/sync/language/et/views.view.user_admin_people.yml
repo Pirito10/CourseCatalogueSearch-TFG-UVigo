@@ -1,0 +1,76 @@
+label: Kasutajad
+description: 'Sinu lehel käivate inimeste leidmine ja haldus.'
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      title: Kasutajad
+      fields:
+        user_bulk_form:
+          label: Massuuendus
+        name:
+          label: Kasutajanimi
+        status:
+          label: Olek
+          settings:
+            format_custom_false: Blokeeritud
+            format_custom_true: Aktiivne
+        roles_target_id:
+          label: Rollid
+        created:
+          label: 'Liikmeks oldud aeg'
+        access:
+          label: 'Viimane külastus'
+        operations:
+          label: Toimingud
+        mail:
+          separator: ', '
+      pager:
+        options:
+          tags:
+            next: 'Järgmine ›'
+            previous: '‹ Eelmine'
+            first: '« Esimene'
+            last: 'Viimane »'
+          expose:
+            items_per_page_label: 'Kirjeid lehel'
+            items_per_page_options_all_label: '- Kõik -'
+            offset_label: Nihe
+      exposed_form:
+        options:
+          submit_button: Filtreeri
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+      empty:
+        area_text_custom:
+          content: 'Inimesed puuduvad.'
+      filters:
+        combine:
+          expose:
+            label: 'Nimi või e-post sisaldab'
+        status:
+          group_info:
+            label: Olek
+            group_items:
+              1:
+                title: Aktiivne
+              2:
+                title: Blokeeritud
+        roles_target_id:
+          expose:
+            label: Roll
+        permission:
+          expose:
+            label: Õigus
+      use_more_text: veel
+  page_1:
+    display_title: Leht
+    display_options:
+      menu:
+        title: Nimekiri
+        description: 'Sinu lehel käivate inimeste leidmine ja haldus.'
+      tab_options:
+        title: Kasutajad
+        description: 'Kasutajakontode, rollide ja õiguste haldamine.'

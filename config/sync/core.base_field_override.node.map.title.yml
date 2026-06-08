@@ -1,0 +1,18 @@
+uuid: b9b6049e-f46c-4598-9b08-ce344bcfdafe
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.map
+id: node.map.title
+field_name: title
+entity_type: node
+bundle: map
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

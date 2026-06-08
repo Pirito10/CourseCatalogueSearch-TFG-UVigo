@@ -1,0 +1,391 @@
+{{ attach_library('b5subtheme/search-programme-sort') }}
+
+<style>:root
+{
+	--university_primary_color: {{search_site_primary_color|default('#ff4949')}};
+	--university_emphasis_text_color: #fff;
+}</style>
+
+
+<div class="negative-margin-search-page">
+
+
+<div class="view view-id-{{ view.id }} view-display-id-{{ view.current_display }}
+					              js-view-dom-id-{{ view.dom_id }} view-dom-id-{{ view.dom_id }}" data-view-dom-id="{{ view.dom_id }}">
+
+	<div{{attributes.addClass('catalogue-view')}}>
+
+
+		{% set programme_area = {
+    'es': {
+      'arts_and_humanities': 'Artes y Humanidades',
+      'sciences': 'Ciencias',
+      'health_sciences': 'Ciencias de la Salud',
+      'social_and_legal_sciences': 'Ciencias Sociales y Jurídicas',
+      'engineering_and_architecture': 'Ingeniería y Arquitectura'
+    },
+    'en': {
+      'arts_and_humanities': 'Arts and Humanities',
+      'sciences': 'Sciences',
+      'health_sciences': 'Health Sciences',
+      'social_and_legal_sciences': 'Social and Legal Sciences',
+      'engineering_and_architecture': 'Engineering and Architecture'
+    },
+    'fr': {
+      'arts_and_humanities': 'Arts et Humanités',
+      'sciences': 'Sciences',
+      'health_sciences': 'Sciences de la Santé',
+      'social_and_legal_sciences': 'Sciences Sociales et Juridiques',
+      'engineering_and_architecture': 'Ingénierie et Architecture'
+    },
+    'pt-pt': {
+      'arts_and_humanities': 'Artes e Humanidades',
+      'sciences': 'Ciências',
+      'health_sciences': 'Ciências da Saúde',
+      'social_and_legal_sciences': 'Ciências Sociais e Jurídicas',
+      'engineering_and_architecture': 'Engenharia e Arquitetura'
+    },
+    'gl': {
+      'arts_and_humanities': 'Artes e Humanidades',
+      'sciences': 'sciences',
+      'health_sciences': 'sciences da Saúde',
+      'social_and_legal_sciences': 'sciences Sociais e Xurídicas',
+      'engineering_and_architecture': 'Enxeñería e Arquitectura'
+    },
+    'hu': {
+      'arts_and_humanities': 'Művészetek és Bölcsészettudományok',
+      'sciences': 'Tudományok',
+      'health_sciences': 'Egészségtudományok',
+      'social_and_legal_sciences': 'Társadalmi és Jogtudományok',
+      'engineering_and_architecture': 'Mérnöki és Építészeti Tudományok'
+    },
+    'sl': {
+      'arts_and_humanities': 'Umetnost in Humanistika',
+      'sciences': 'Znanost',
+      'health_sciences': 'Zdravstvene vede',
+      'social_and_legal_sciences': 'Družbene in Pravne Znanosti',
+      'engineering_and_architecture': 'Inženiring in Arhitektura'
+    },
+    'et': {
+      'arts_and_humanities': 'Kunst ja Humanitaarteadused',
+      'sciences': 'Teadused',
+      'health_sciences': 'Tervishoiuteadused',
+      'social_and_legal_sciences': 'Sotsiaal- ja Õigusteadused',
+      'engineering_and_architecture': 'Inseneriteadus ja Arhitektuur'
+    },
+    'el': {
+      'arts_and_humanities': 'Τέχνες και Ανθρωπιστικές Επιστήμες',
+      'sciences': 'Επιστήμες',
+      'health_sciences': 'Επιστήμες Υγείας',
+      'social_and_legal_sciences': 'Κοινωνικές και Νομικές Επιστήμες',
+      'engineering_and_architecture': 'Μηχανική και Αρχιτεκτονική'
+    }
+  } %}
+
+
+		<div class="catalogue-hero institution-new-catalogue-hero" style="height:300px;">
+			<div class="section-container">
+				<div class="my-custom-container-2">
+
+					<div class="row align-items-center">
+						<div class="col-auto">
+							<h1 class="section-title" style="color:white">{{ 'CATALOGUE'|t|capitalize }}</h1>
+						</div>
+
+						<div class="col-auto">
+							<div role="group" aria-label="Catalogue type">
+								{% set current_language = language_manager.getCurrentLanguage().getId() %}
+								<a href="#" class="btn btn-sm btn-whithout-border-radius newcatalogue-btn btn-iec-searcher btn-newcatalogue-active" data-target-segment="programmes">
+									<h3>{{ 'PROGRAMMES'|t }}</h3>
+								</a>
+
+								<a href="{{ path('view.search_iec.page_1', {}, {'language': language_manager.getLanguage(current_language)}) }}" class="btn btn-sm btn-whithout-border-radius newcatalogue-btn btn-iec-searcher " data-target-segment="iecs">
+									<h3>{{ 'Courses'|t|upper }}</h3>
+								</a>
+							</div>
+						</div>
+
+						<div class="col ms-auto text-end">
+							<button class="btn btn-primary bg-black border-0" data-bs-toggle="modal" data-bs-target="#homeProgrammeModal">
+								{{ selected_home_programme ? 'Change Home Programme'|t : 'Select Home Programme'|t }}
+							</button>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-12">
+							<div class="input-group mb-3">
+								<input type="text" class="form-control bg-light border-0" placeholder="" id="programme-search">
+								<button class="btn btn-outline-secondary pe-4 ps-4 bg-black disabled" type="button" id="search-btn">
+									<i class="fas fa-search" style="color: white;"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					{% if exposed %}
+						<div class="catg__filters">
+							{{ exposed }}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+
+		<div class="section-container bg-light">
+			<div class="my-custom-container-2">
+				<div class="row institution-new-catalogue-results">
+
+					<div class="col-lg-2">
+						<h3 class="subsection-title p-0 pb-2 m-0">
+							<i class="fas fa-sort-amount-down me-2"></i>
+							SORT
+						</h3>
+
+						<div class="group-search-sort-buttons w-100">
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius js-sort" data-sort-by="title" data-sort-order="ASC">A - Z</button>
+
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_programme_area" data-sort-order="ASC">Knowledge Area</button>
+
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_eqf_level" data-sort-order="ASC">Level</button>
+
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_credits" data-sort-order="ASC">ECTS</button>
+
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_institution_country" data-sort-order="ASC">Country</button>
+						</div>
+					</div>
+
+					<div class="col-lg-10 ps-lg-5 institution-new-catalogue-list" id="programme-list">
+						{% if selected_home_programme %}
+							<div class="d-flex align-items-center justify-content-between gap-3 flex-wrap bg-white border-start border-4 border-dark p-3 mb-3">
+								<div>
+									<strong>{{ 'Home programme'|t }}:</strong>
+									{{ selected_home_programme.label }}
+									{% if selected_home_programme.institution %}
+										<span class="text-muted">·
+											{{ selected_home_programme.institution }}</span>
+									{% endif %}
+								</div>
+								<a href="{{ clear_home_programme_url }}" class="btn btn-sm btn-outline-dark btn-whithout-border-radius">
+									{{ 'Clear home programme'|t }}
+								</a>
+							</div>
+						{% endif %}
+
+						{# Puedes seguir con tu loop propio: AJAX reemplaza todo el wrapper #}
+						{% if view.result is not empty %}
+							{% for row in view.result %}
+
+								{% set programme = row._entity %}
+								{% set institution = row.display_institution|default(programme.field_programme_institution.entity ?? null) %}
+								{% set university_primary_color = institution.field_primary_color[0].color %}
+
+								{% set logo_uri = null %}
+								{% if institution and institution.field_logo.entity is defined %}
+									{% set logo_uri = institution.field_logo.entity.fileuri %}
+								{% endif %}
+								<div class="programme-item">
+									<a href="{{ row.programme_url }}" class="text-decoration-none text-reset" target="_blank">
+										<div class="card shadow-none mb-3 border-0 rounded-0 position-relative catalogue-programme-card" style="height: 123.65px; cursor: pointer;">
+											{% if programme.field_avaliable_for_mobility.value %}
+												<div class="mobility-badge">
+													<img src="/themes/custom/b5subtheme/images/mobility_iec.jpeg" alt="Available for mobility">
+												</div>
+											{% endif %}
+
+											<div
+												class="row g-0 catalogue-programme-card__row">
+											
+												<div class="col-3 catalogue-programme-card__media" style="height: 123.65px;">
+													{% if logo_uri %}
+														<img src="{{ file_url(logo_uri) }}" alt="{{ institution ? institution.label : '' }}" class="img-fluid rounded-0 h-100 object-fit-contain p-2">
+													{% else %}
+														<div class="bg-light d-flex align-items-center justify-content-center h-100">
+															<span class="text-muted small">No logo</span>
+														</div>
+													{% endif %}
+												</div>
+
+											
+												<div class="col-9 catalogue-programme-card__content">
+													<div
+														class="card-body p-2">
+												
+														<h5 class="card-title mb-1 text-start">{{ programme.label }}</h5>
+
+														<div class="programme-meta d-flex align-items-center mb-2">
+
+															{% if programme.field_eqf_level.value %}
+																{% set level_code = {
+      '6': 'B',
+      '7': 'M',
+      '8': 'PhD'
+    }[programme.field_eqf_level.value]|default(programme.field_eqf_level.value) %}
+																<strong>{{ level_code }}</strong>
+															{% endif %}
+
+															{% if programme.field_credits.value %}
+																<span class="mx-2">·</span>
+																<span class="fst-italic">{{ programme.field_credits.value }}
+																	ECTS</span>
+															{% endif %}
+
+															{% set lang_labels = row.display_instruction_languages|default([]) %}
+															{% if lang_labels is empty %}
+																{% set langs = programme.field_programme_language_of_inst %}
+																{% if langs is not empty %}
+																	{% set lang_labels = langs|map(item => item.entity.label)|filter(label => label) %}
+																{% endif %}
+															{% endif %}
+															{% if lang_labels is not empty %}
+																<span class="mx-2">·</span>
+																<span class="fst-italic">
+																	{{ lang_labels|join(', ') }}
+																</span>
+															{% endif %}
+
+														</div>
+
+
+														
+														<div class="ou-tag-bar">
+
+															{% set university_primary_color = institution.field_primary_color[0].color %}
+															{% set university_text_color = institution.field_text_color[0].color %}
+															{% set university_emphasis_text_color = institution.field_emphasis_text_color[0].color %}
+															{% if institution.title.value is defined %}
+																<!--<span class="ou-tag px-3 py-1" style="background-color: #F44743; color: #fff; border-radius: 0;">-->
+																<span class="ou-tag px-3 py-1" style="background-color: {{university_primary_color}}; color: #fff; border-radius: 0;">
+																	{{ institution.title.value }}
+																</span>
+															{% endif %}
+
+															{% if institution.field_institution_country.value %}
+																<span class="ou-tag px-3 py-1" style="background-color: black; color: white; border: 2px solid black; border-radius: 0;">
+																	{{ country_list[institution.field_institution_country.value]|default(institution.field_institution_country.value) }}
+																</span>
+															{% endif %}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>
+								</div>
+							{% endfor %}
+						{% else %}
+							<p class="empty">{{ empty }}</p>
+						{% endif %}
+
+						{# Pager dentro del wrapper para que AJAX lo actualice #}
+						{{ pager }}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{# (opcional) attachments/feeds si los usas #}
+		{{ attachment_after }}
+	</div>
+</div>
+
+
+<div class="modal fade" id="homeProgrammeModal" tabindex="-1" aria-labelledby="homeProgrammeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="homeProgrammeModalLabel">{{ 'Select Home Programme'|t }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+
+			<div class="modal-body">
+				{{ drupal_form('Drupal\\programme_suggestions\\Form\\HomeProgrammeForm') }}
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<script>
+	(function () {
+const norm = s => (s || '').toString().trim();
+
+const searchInput = document.getElementById('programme-search');
+const searchBtn = document.getElementById('search-btn');
+if (! searchInput) 
+return;
+
+
+
+const wrapper = document.querySelector('[data-view-dom-id]');
+if (! wrapper) 
+return;
+
+
+
+const form = wrapper.querySelector('form[id^="views-exposed-form-"]');
+if (! form) 
+return;
+
+
+
+function resetPageParam() {
+let pageField = form.querySelector('input[name="page"]');
+if (! pageField) {
+pageField = document.createElement('input');
+pageField.type = 'hidden';
+pageField.name = 'page';
+form.appendChild(pageField);
+}
+pageField.value = 0;
+}
+
+function submitSearch() {
+const val = norm(searchInput.value);
+
+// 1) Pon el valor en TODOS los combine existentes
+form.querySelectorAll('input[name="combine"]').forEach(el => {
+el.value = val;
+});
+
+// 2) Inyecta un hidden al FINAL del form (último gana en la querystring)
+let injected = form.querySelector('input[name="combine"][data-injected="1"]');
+if (! injected) {
+injected = document.createElement('input');
+injected.type = 'hidden';
+injected.name = 'combine';
+injected.setAttribute('data-injected', '1');
+form.appendChild(injected); // al final
+}injected.value = val;
+
+resetPageParam();
+form.submit();
+}
+
+// Mantén sincronizado si ya había valor del exposed al cargar
+const firstCombine = wrapper.querySelector('input[name="combine"]');
+if (firstCombine && ! searchInput.value) 
+searchInput.value = firstCombine.value || '';
+
+
+
+searchInput.addEventListener('keydown', (e) => {
+if (e.key === 'Enter') {
+e.preventDefault();
+submitSearch();
+}
+});
+if (searchBtn) 
+searchBtn.addEventListener('click', (e) => {
+e.preventDefault();
+submitSearch();
+});
+
+
+
+})();
+</script>

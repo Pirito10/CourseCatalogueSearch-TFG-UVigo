@@ -1,0 +1,9 @@
+uuid: f88f6388-9272-4a94-af44-4caaae23686e
+langcode: es
+status: true
+dependencies: {  }
+id: suject_admi
+label: 'Subject Admin'
+weight: 7
+is_admin: null
+permissions: {  }

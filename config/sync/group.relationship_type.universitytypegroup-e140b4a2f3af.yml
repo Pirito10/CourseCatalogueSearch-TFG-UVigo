@@ -1,0 +1,17 @@
+uuid: cb8bffb3-bd3f-49d8-9fe0-c7e370447375
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - node.type.individual_educational_component
+  module:
+    - gnode
+    - node
+id: universitytypegroup-e140b4a2f3af
+group_type: universitytypegroup
+content_plugin: 'group_node:individual_educational_component'
+plugin_config:
+  group_cardinality: 1
+  entity_cardinality: 1
+  use_creation_wizard: false

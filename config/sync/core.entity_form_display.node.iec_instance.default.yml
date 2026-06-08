@@ -1,0 +1,221 @@
+uuid: 9e82c220-b8a0-42d7-bdbc-0f2830abb4a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.iec_instance.body
+    - field.field.node.iec_instance.field_end_date
+    - field.field.node.iec_instance.field_engagement_hours
+    - field.field.node.iec_instance.field_iec
+    - field.field.node.iec_instance.field_iec_instance_activities
+    - field.field.node.iec_instance.field_iec_instance_assessment
+    - field.field.node.iec_instance.field_iec_instance_assessment_me
+    - field.field.node.iec_instance.field_iec_instance_grade_distrib
+    - field.field.node.iec_instance.field_iec_instance_grading_schem
+    - field.field.node.iec_instance.field_iec_instance_instructors
+    - field.field.node.iec_instance.field_iec_instance_language
+    - field.field.node.iec_instance.field_iec_instance_mode_delivery
+    - field.field.node.iec_instance.field_iec_instance_planned_activ
+    - field.field.node.iec_instance.field_iec_instance_term
+    - field.field.node.iec_instance.field_iec_instance_type
+    - field.field.node.iec_instance.field_instance_type_of_credits
+    - field.field.node.iec_instance.field_number_of_credits
+    - field.field.node.iec_instance.field_start_date
+    - node.type.iec_instance
+  module:
+    - datetime
+    - elm_vocabulary_field
+    - path
+    - text
+id: node.iec_instance.default
+targetEntityType: node
+bundle: iec_instance
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_end_date:
+    type: datetime_default
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_engagement_hours:
+    type: number
+    weight: 12
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_iec:
+    type: entity_reference_autocomplete
+    weight: 8
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_iec_instance_activities:
+    type: text_textarea
+    weight: 16
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_iec_instance_assessment:
+    type: text_textarea
+    weight: 18
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_iec_instance_assessment_me:
+    type: elm_controlled_vocabulary_select
+    weight: 19
+    region: content
+    settings:
+      prefix: false
+    third_party_settings: {  }
+  field_iec_instance_grade_distrib:
+    type: text_textarea
+    weight: 22
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_iec_instance_grading_schem:
+    type: text_textarea
+    weight: 21
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_iec_instance_instructors:
+    type: text_textarea
+    weight: 20
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_iec_instance_language:
+    type: options_buttons
+    weight: 13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_iec_instance_mode_delivery:
+    type: elm_controlled_vocabulary_select
+    weight: 15
+    region: content
+    settings:
+      prefix: false
+    third_party_settings: {  }
+  field_iec_instance_planned_activ:
+    type: elm_controlled_vocabulary_select
+    weight: 17
+    region: content
+    settings:
+      prefix: false
+    third_party_settings: {  }
+  field_iec_instance_term:
+    type: options_buttons
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_iec_instance_type:
+    type: elm_controlled_vocabulary_select
+    weight: 14
+    region: content
+    settings:
+      prefix: false
+    third_party_settings: {  }
+  field_instance_type_of_credits:
+    type: options_select
+    weight: 27
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_number_of_credits:
+    type: number
+    weight: 11
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_start_date:
+    type: datetime_default
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  body: true

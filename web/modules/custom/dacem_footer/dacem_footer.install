@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall hooks for the DACEM Footer module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function dacem_footer_schema() {
+  $schema['dacem_footer_feedback'] = [
+    'description' => 'Stores feedback submitted from the DACEM footer form.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary Key: Unique feedback ID.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'email' => [
+        'description' => 'Email address submitted in the footer form.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'message' => [
+        'description' => 'Feedback message body.',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+      ],
+      'page_path' => [
+        'description' => 'Request path where the feedback was submitted.',
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'created' => [
+        'description' => 'Unix timestamp when the feedback was created.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Creates the feedback table for existing installations.
+ */
+function dacem_footer_update_10001() {
+  $schema = \Drupal::database()->schema();
+  if (!$schema->tableExists('dacem_footer_feedback')) {
+    $definition = dacem_footer_schema();
+    $schema->createTable('dacem_footer_feedback', $definition['dacem_footer_feedback']);
+  }
+}

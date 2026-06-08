@@ -1,0 +1,19 @@
+uuid: d23e4934-ee8e-4874-86b8-45fcfc46a50b
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_institution_webpage
+field_name: field_institution_webpage
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

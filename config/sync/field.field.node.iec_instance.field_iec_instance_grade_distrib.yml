@@ -1,0 +1,24 @@
+uuid: 28511f33-6563-4877-88ec-4fd9b3c5efe9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_grade_distrib
+    - filter.format.basic_html
+    - node.type.iec_instance
+  module:
+    - text
+id: node.iec_instance.field_iec_instance_grade_distrib
+field_name: field_iec_instance_grade_distrib
+entity_type: node
+bundle: iec_instance
+label: 'Grading distribution table'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

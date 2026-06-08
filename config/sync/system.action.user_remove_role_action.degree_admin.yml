@@ -1,0 +1,14 @@
+uuid: 4b124246-3235-413f-ab0e-ac2c5df58daa
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.degree_admin
+  module:
+    - user
+id: user_remove_role_action.degree_admin
+label: 'Elimina el rol Degree Admin al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: degree_admin

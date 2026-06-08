@@ -1,0 +1,51 @@
+display:
+  default:
+    display_title: Master
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Restablecer
+          exposed_sorts_label: 'Sort by'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page_label: 'Items per page'
+            items_per_page_options_all_label: '- All -'
+            offset_label: Offset
+      fields:
+        label:
+          label: Etiqueta
+          separator: ', '
+        person_given_names:
+          separator: ', '
+        person_family_name:
+          separator: ', '
+        person_gender:
+          separator: ', '
+        phone_number:
+          label: 'Número de teléfono'
+        email:
+          label: 'Correo electrónico'
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        role_description:
+          separator: ', '
+      filters:
+        label:
+          expose:
+            label: Etiqueta
+      title: Contactos
+  contact_list:
+    display_options:
+      menu:
+        title: Contactos

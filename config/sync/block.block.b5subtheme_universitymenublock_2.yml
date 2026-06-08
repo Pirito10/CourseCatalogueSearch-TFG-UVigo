@@ -1,0 +1,20 @@
+uuid: 5e1b2b25-404b-4ee1-aad3-907ac6efb517
+langcode: es
+status: false
+dependencies:
+  module:
+    - university_menu
+  theme:
+    - b5subtheme
+id: b5subtheme_universitymenublock_2
+theme: b5subtheme
+region: header
+weight: 0
+provider: null
+plugin: university_menu_block
+settings:
+  id: university_menu_block
+  label: 'University Menu Block'
+  label_display: visible
+  provider: university_menu
+visibility: {  }

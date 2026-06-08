@@ -1,0 +1,19 @@
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      fields:
+        title:
+          label: Naslov
+        name:
+          label: Avtor
+        changed:
+          label: 'Zadnja posodobitev'
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+  attachment_1:
+    display_title: Priponka
+  page_1:
+    display_title: Stran

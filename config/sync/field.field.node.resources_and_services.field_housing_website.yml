@@ -1,0 +1,23 @@
+uuid: fc85b001-4ff4-4c43-8dd8-24698c8dbfe4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_housing_website
+    - node.type.resources_and_services
+  module:
+    - link
+id: node.resources_and_services.field_housing_website
+field_name: field_housing_website
+entity_type: node
+bundle: resources_and_services
+label: 'Housing - website'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

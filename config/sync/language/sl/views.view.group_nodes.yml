@@ -1,0 +1,42 @@
+display:
+  default:
+    display_options:
+      title: Vozlišča
+      fields:
+        title:
+          label: Naslov
+        type:
+          label: 'Tip vsebine'
+        status:
+          label: Stanje
+          settings:
+            format_custom_true: Objavljeno
+        changed:
+          label: Posodobljeno
+        dropbutton:
+          label: Operacije
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+      empty:
+        area_text_custom:
+          content: 'Na voljo ni nobene vsebine.'
+      arguments:
+        gid:
+          exception:
+            title: Vsi
+      filters:
+        status:
+          group_info:
+            group_items:
+              1:
+                title: Objavljeno
+        type:
+          expose:
+            label: Vrsta
+  page_1:
+    display_title: Stran
+    display_options:
+      menu:
+        title: Vozlišča

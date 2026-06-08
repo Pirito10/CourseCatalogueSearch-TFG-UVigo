@@ -1,0 +1,120 @@
+{
+    "name": "drupal/recommended-project",
+    "description": "Project template for Drupal projects with a relocated document root",
+    "type": "project",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/drupal",
+    "support": {
+        "docs": "https://www.drupal.org/docs/user_guide/en/index.html",
+        "chat": "https://www.drupal.org/node/314178"
+    },
+    "repositories": [
+        { "type": "composer", "url": "https://packages.uni-foundation.eu/" },
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
+    "require": {
+        "composer/installers": "^2.0",
+        "drupal/address": "^2.0",
+        "drupal/admin_toolbar": "^3.4",
+        "drupal/better_exposed_filters": "^7.0",
+        "drupal/bootstrap5": "^4.0",
+        "drupal/color_field": "^3.0",
+        "drupal/content_access": "^2.0",
+        "drupal/core-composer-scaffold": "~10.6.2",
+        "drupal/core-recommended": "~10.6.2",
+        "drupal/devel": "^5.2",
+        "drupal/devel_kint_extras": "^1.1",
+        "drupal/examples": "^4.0",
+        "drupal/extlink": "^2.0",
+        "drupal/field_group": "^3.6",
+        "drupal/field_permissions": "^1.4",
+        "drupal/geocoder": "^4.29",
+        "drupal/geocoder_ajax_prepopulate": "^3.0",
+        "drupal/geofield": "^1.64",
+        "drupal/geofield_map": "^11.0",
+        "drupal/group": "^3.2",
+        "drupal/group_content_menu": "^3.0",
+        "drupal/jquery_scrollup": "^2.0",
+        "drupal/leaflet": "^10.3",
+        "drupal/locale_download": "^1.0@RC",
+        "drupal/login_destination": "^2.0@beta",
+        "drupal/og": "^1.0@alpha",
+        "drupal/openid_connect": "^3.0@alpha",
+        "drupal/pathauto": "^1.12",
+        "drupal/scrollup": "^3.0",
+        "drupal/search_api": "^1.41",
+        "drupal/subpathauto": "^1.3",
+        "drupal/token": "^1.14",
+        "drupal/twig_tweak": "^3.4",
+        "drupal/twig_vardumper": "^3.1",
+        "drupal/user_redirect": "^2.0",
+        "drupal/views_alias_filter": "^1.0",
+        "drupal/views_field_view": "^1.0@beta",
+        "drush/drush": "^13.7",
+        "euf/elm_vocabulary_field": "^1.1@alpha",
+        "euf/ewp_core": "^1.0@rc",
+        "euf/ewp_flexible_address": "^1.0@RC",
+        "euf/ewp_institutions": "^1.0@RC",
+        "euf/ewp_phone_number": "^1.0@RC",
+        "euf/isced_field": "^1.0@alpha",
+        "euf/myacademicid_user_fields": "^1.0@rc",
+        "euf/openid_connect_eufidp": "^1.0@beta",
+        "phpoffice/phpspreadsheet": "^3.3",
+        "symfony/intl": "^6.4"
+    },
+    "conflict": {
+        "drupal/drupal": "*"
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "drupal/core-composer-scaffold": true,
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "web/"
+            }
+        },
+        "installer-paths": {
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/Commands/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "web/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "web/profiles/custom/{$name}": [
+                "type:drupal-custom-profile"
+            ],
+            "web/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ]
+        }
+        
+    }
+}

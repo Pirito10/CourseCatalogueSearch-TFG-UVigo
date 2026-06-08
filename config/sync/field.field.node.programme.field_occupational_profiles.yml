@@ -1,0 +1,24 @@
+uuid: a973a659-dfe4-4604-8e42-a3e06c3e1af8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_occupational_profiles
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_occupational_profiles
+field_name: field_occupational_profiles
+entity_type: node
+bundle: programme
+label: 'Occupational profiles of graduates'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

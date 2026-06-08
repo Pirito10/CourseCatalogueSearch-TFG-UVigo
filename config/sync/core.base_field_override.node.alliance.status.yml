@@ -1,0 +1,22 @@
+uuid: 56209853-8108-45f6-925a-df27ecaba099
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.alliance
+id: node.alliance.status
+field_name: status
+entity_type: node
+bundle: alliance
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

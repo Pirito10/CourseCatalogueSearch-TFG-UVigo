@@ -1,0 +1,23 @@
+label: 'Nový obsah'
+description: 'Poslední obsah.'
+display:
+  default:
+    display_title: Výchozí
+    display_options:
+      title: 'Nový obsah'
+      fields:
+        changed:
+          separator: ', '
+      exposed_form:
+        options:
+          submit_button: 'Přihlásit se'
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      empty:
+        area_text_custom:
+          content: 'Žádný obsah není k dispozici.'
+      use_more_text: Více
+  block_1:
+    display_title: Blok

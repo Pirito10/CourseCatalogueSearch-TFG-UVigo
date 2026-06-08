@@ -1,0 +1,24 @@
+uuid: 2285d0ca-7890-4ee0-a625-993770cf9243
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_instructors
+    - filter.format.basic_html
+    - node.type.iec_instance
+  module:
+    - text
+id: node.iec_instance.field_iec_instance_instructors
+field_name: field_iec_instance_instructors
+entity_type: node
+bundle: iec_instance
+label: Instructors
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

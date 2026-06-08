@@ -1,0 +1,23 @@
+uuid: 9c4f50c3-baa4-43d9-bed2-b2183a18a109
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_type_of_credits
+    - node.type.individual_educational_component
+  module:
+    - options
+id: node.individual_educational_component.field_iec_type_of_credits
+field_name: field_iec_type_of_credits
+entity_type: node
+bundle: individual_educational_component
+label: 'Type of credits'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: ects
+default_value_callback: ''
+settings: {  }
+field_type: list_string

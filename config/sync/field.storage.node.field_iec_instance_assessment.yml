@@ -1,0 +1,19 @@
+uuid: 72bbb193-6c20-43a7-9dbc-e1d32fdaf199
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_iec_instance_assessment
+field_name: field_iec_instance_assessment
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

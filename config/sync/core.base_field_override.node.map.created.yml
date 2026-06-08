@@ -1,0 +1,18 @@
+uuid: bb19435b-6ad3-4a9a-b37d-752f68b67ce8
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.map
+id: node.map.created
+field_name: created
+entity_type: node
+bundle: map
+label: 'Authored on'
+description: 'The date and time that the content was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

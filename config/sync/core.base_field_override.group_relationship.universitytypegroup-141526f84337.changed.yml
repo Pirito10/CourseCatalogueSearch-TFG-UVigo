@@ -1,0 +1,18 @@
+uuid: 8a85d8e4-0492-40e2-a522-12fde5897736
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.universitytypegroup-141526f84337
+id: group_relationship.universitytypegroup-141526f84337.changed
+field_name: changed
+entity_type: group_relationship
+bundle: universitytypegroup-141526f84337
+label: 'Changed on'
+description: 'The time that the group relationship was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

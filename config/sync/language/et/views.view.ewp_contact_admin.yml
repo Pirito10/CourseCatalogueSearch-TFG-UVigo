@@ -1,0 +1,51 @@
+display:
+  default:
+    display_title: Peamine
+    display_options:
+      exposed_form:
+        options:
+          submit_button: 'Rakenda / Kinnita'
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Esimene'
+            last: 'Viimane »'
+          expose:
+            items_per_page_label: 'Kirjeid lehel'
+            items_per_page_options_all_label: '- Kõik -'
+            offset_label: Nihe
+      fields:
+        label:
+          label: Nimetus
+          separator: ', '
+        person_given_names:
+          separator: ', '
+        person_family_name:
+          separator: ', '
+        person_gender:
+          separator: ', '
+        phone_number:
+          label: 'Telefoni number'
+        email:
+          label: E-post
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        role_description:
+          separator: ', '
+      filters:
+        label:
+          expose:
+            label: Nimetus
+      title: Kontaktid
+  contact_list:
+    display_options:
+      menu:
+        title: Kontaktid

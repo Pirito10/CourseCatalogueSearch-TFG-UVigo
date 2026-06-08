@@ -1,0 +1,24 @@
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      fields:
+        info:
+          label: 'Opis bloka'
+        changed:
+          label: Posodobljeno
+        operations:
+          label: Operacije
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+      filters:
+        info:
+          expose:
+            label: 'Opis bloka'
+  page_1:
+    display_title: Stran
+    display_options:
+      menu:
+        title: Bloki

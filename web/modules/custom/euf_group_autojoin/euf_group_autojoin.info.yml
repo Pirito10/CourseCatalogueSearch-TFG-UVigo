@@ -1,0 +1,8 @@
+name: EUF Group Autojoin (EUF events)
+type: module
+description: Joins users to a Group based on EUF institution events (SetUserInstitutionEvent / UserInstitutionChangeEvent).
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - group
+  - ewp_institutions_user

@@ -1,0 +1,21 @@
+uuid: ee12a4bd-1c5d-444b-896d-4a8e04c12b8c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ou_knowledge_area
+    - node.type.organizational_unit
+  module:
+    - isced_field
+id: node.organizational_unit.field_ou_knowledge_area
+field_name: field_ou_knowledge_area
+entity_type: node
+bundle: organizational_unit
+label: 'Knowledge area'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: isced_f

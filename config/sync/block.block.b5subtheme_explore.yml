@@ -1,0 +1,25 @@
+uuid: b19b9723-79fa-41b3-b4c9-ce50d7c982f8
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:explore_universities:bbc90f55-9fb2-4fa5-b7bb-7f200c4509ba'
+  module:
+    - block_content
+  theme:
+    - b5subtheme
+id: b5subtheme_explore
+theme: b5subtheme
+region: content
+weight: 0
+provider: null
+plugin: 'block_content:bbc90f55-9fb2-4fa5-b7bb-7f200c4509ba'
+settings:
+  id: 'block_content:bbc90f55-9fb2-4fa5-b7bb-7f200c4509ba'
+  label: 'Explore '
+  label_display: visible
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

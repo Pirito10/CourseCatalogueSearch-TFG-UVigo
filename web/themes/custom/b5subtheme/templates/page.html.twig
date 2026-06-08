@@ -1,0 +1,50 @@
+{# themes/custom/b5subtheme/templates/page.html.twig #}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --university_primary_color: {{ site_primary_color|default('#ff4949') }};
+      --university_emphasis_text_color: #fff;
+    }
+  </style>
+  {{ attach_library('b5subtheme/global-styling') }}
+  <title>{{ head_title|safe_join(' | ') }}</title>
+</head>
+<body>
+
+  <header>
+    {{ page.header }}
+  </header>
+
+<main>
+  <div class="row">
+    <div class="{% if page.sidebar_second %}col-12 col-lg-9{% else %}col-12{% endif %}">
+      {{ page.content }}
+    </div>
+
+    {% if page.sidebar_second %}
+      <aside class="col-12 col-lg-3">
+        {{ page.sidebar_second }}
+      </aside>
+    {% endif %}
+  </div>
+</main>
+
+
+<a href="#" class="back-to-top" title="Go to top">
+  <i class="fas fa-arrow-up"></i>
+</a>
+
+
+  <footer>
+  {#% include '@dacem_footer/dacem_footer_block.html.twig' %#}
+  {{page.footer}}
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+uuid: f16cde33-9c48-40fe-9a4a-71b4d971715e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_additional_requirements
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_additional_requirements
+field_name: field_additional_requirements
+entity_type: node
+bundle: institution
+label: 'Additional requirements'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

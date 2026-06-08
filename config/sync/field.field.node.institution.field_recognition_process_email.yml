@@ -1,0 +1,19 @@
+uuid: 926a2dd9-4cdd-445e-9242-1f6d8644fe08
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recognition_process_email
+    - node.type.institution
+id: node.institution.field_recognition_process_email
+field_name: field_recognition_process_email
+entity_type: node
+bundle: institution
+label: 'Recognition process email'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

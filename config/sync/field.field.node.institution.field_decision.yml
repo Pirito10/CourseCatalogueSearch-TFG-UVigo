@@ -1,0 +1,23 @@
+uuid: d63174c0-5ae1-42fc-9d29-f716e7273c1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_decision
+    - node.type.institution
+id: node.institution.field_decision
+field_name: field_decision
+entity_type: node
+bundle: institution
+label: Decision
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: 5
+  prefix: ''
+  suffix: ''
+field_type: integer

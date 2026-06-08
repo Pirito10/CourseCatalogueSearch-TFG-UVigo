@@ -1,0 +1,24 @@
+uuid: 9820e194-4edf-4de8-96b5-5c23dabe9108
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_qualification_requirements
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_qualification_requirements
+field_name: field_qualification_requirements
+entity_type: node
+bundle: programme
+label: 'Qualification Requirements'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

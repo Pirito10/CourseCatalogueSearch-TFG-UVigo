@@ -1,0 +1,22 @@
+display:
+  default:
+    display_options:
+      fields:
+        name:
+          label: Uporabnik
+        group_roles:
+          label: Vloge
+        changed:
+          label: Posodobljeno
+        dropbutton:
+          label: Operacije
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+      arguments:
+        gid:
+          exception:
+            title: Vsi
+  page_1:
+    display_title: Stran

@@ -1,0 +1,2259 @@
+<?php
+
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Url;
+use Drupal\views\Views;
+use Symfony\Component\Intl\Countries;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\node\NodeInterface;
+use Isced\IscedFieldsOfStudy;
+
+/**
+ * @file
+ * B5 subtheme theme file.
+ */
+
+
+use Drupal\Core\Language\LanguageManagerInterface;
+
+
+
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() to provide custom templates.
+ */
+function b5subtheme_theme_suggestions_HOOK_alter(array &$suggestions, array $variables)
+{
+  // Your custom theme suggestions code.
+}
+
+
+
+
+/**
+ * Implements hook_preprocess_HOOK() for block templates.
+ */
+function b5subtheme_preprocess_block(&$variables)
+{
+  $variables['current_language'] = \Drupal::languageManager()
+    ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+    ->getId();
+}
+
+
+
+
+
+
+function getEntityFromAlias($alias, $langcode = NULL)
+{
+
+  $alias_manager = \Drupal::service('path_alias.manager');
+
+  $internal_path = $alias_manager->getPathByAlias('/' . $alias, $langcode);
+
+  if (preg_match('/^\/node\/(\d+)$/', $internal_path, $matches)) {
+    $nid = (int) $matches[1];
+
+   
+    $node = Node::load($nid);
+
+   
+    if ($langcode && $node->hasTranslation($langcode)) {
+      return $node->getTranslation($langcode);
+    }
+
+    return $node;
+  }
+
+  return NULL;
+}
+
+/**
+ * Returns an entity translated to the current language, falling back to English.
+ */
+function b5subtheme_entity_for_language_with_fallback(?EntityInterface $entity, string $langcode): ?EntityInterface
+{
+  if (!$entity) {
+    return NULL;
+  }
+
+  if ($entity->hasTranslation($langcode)) {
+    return $entity->getTranslation($langcode);
+  }
+
+  if ($entity->hasTranslation('en')) {
+    return $entity->getTranslation('en');
+  }
+
+  return $entity;
+}
+
+/**
+ * Returns the language that should be used when linking to an entity.
+ */
+function b5subtheme_entity_language_for_url(?EntityInterface $entity, string $langcode): string
+{
+  if (!$entity) {
+    return 'en';
+  }
+
+  if ($entity->hasTranslation($langcode)) {
+    return $langcode;
+  }
+
+  if ($entity->hasTranslation('en')) {
+    return 'en';
+  }
+
+  return $entity->language()->getId();
+}
+
+/**
+ * Returns translated labels for referenced entities in a field.
+ */
+function b5subtheme_referenced_entity_labels_for_language(EntityInterface $entity, string $field_name, string $langcode): array
+{
+  if (!$entity->hasField($field_name) || $entity->get($field_name)->isEmpty()) {
+    return [];
+  }
+
+  $labels = [];
+  foreach ($entity->get($field_name) as $item) {
+    $referenced_entity = $item->entity ?? NULL;
+    if ($referenced_entity instanceof EntityInterface) {
+      $referenced_entity = b5subtheme_entity_for_language_with_fallback($referenced_entity, $langcode);
+      $labels[] = $referenced_entity->label();
+    }
+    elseif (!empty($item->value)) {
+      $labels[] = $item->value;
+    }
+  }
+
+  return array_filter($labels);
+}
+
+/**
+ * Returns ISCED-F labels in the requested language, falling back to English.
+ */
+function b5subtheme_isced_labels_for_language(string $langcode): array
+{
+  $isced = new IscedFieldsOfStudy();
+  $labels = [];
+
+  foreach ($isced->getLabeledList() as $code => $label) {
+    // ISCED labels are provided by the isced_field translation catalogue.
+    // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
+    $labels[$code] = (string) t($label, [], ['langcode' => $langcode]);
+  }
+
+  return $labels;
+}
+
+/**
+ * Builds the declared curriculum structure for a programme node.
+ */
+function b5subtheme_programme_curriculum_structure(?NodeInterface $programme): array
+{
+  $terms_per_year = 2;
+  $total_terms = 8;
+
+  if ($programme instanceof NodeInterface) {
+    if ($programme->hasField('field_number_of_terms') && !$programme->get('field_number_of_terms')->isEmpty()) {
+      $terms_per_year = (int) $programme->get('field_number_of_terms')->value;
+    }
+
+    if ($programme->hasField('field_length_of_programme') && !$programme->get('field_length_of_programme')->isEmpty()) {
+      $total_terms = (int) $programme->get('field_length_of_programme')->value;
+    }
+  }
+
+  $terms_per_year = max(1, $terms_per_year);
+  $total_terms = max(1, $total_terms);
+  $number_of_years = max(1, (int) ceil($total_terms / $terms_per_year));
+
+  $years = [];
+  for ($year = 1; $year <= $number_of_years; $year++) {
+    $years[(string) $year] = [
+      'id' => (string) $year,
+      'label' => t('Year @number', ['@number' => $year]),
+    ];
+  }
+
+  $terms = [];
+  $term_short_labels = [];
+  for ($term = 1; $term <= $terms_per_year; $term++) {
+    $terms[$term] = [
+      'id' => $term,
+      'label' => t('Term @number', ['@number' => $term]),
+    ];
+    $term_short_labels[(string) $term] = (string) $term;
+  }
+
+  return [
+    'terms_per_year' => $terms_per_year,
+    'total_terms' => $total_terms,
+    'number_of_years' => $number_of_years,
+    'years' => $years,
+    'terms' => $terms,
+    'term_short_labels' => $term_short_labels,
+  ];
+}
+
+
+
+
+
+
+
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function b5subtheme_preprocess_page(&$variables)
+{
+
+
+
+  // Your custom preprocess code for pages.
+  $variables['#attached']['library'][] = 'b5subtheme/course_buttons';
+  $branding = \Drupal::service('settings')->get('site_branding', []);
+  $variables['site_primary_color'] = $branding['primary_color'] ?? '#ff4949';
+
+  $path = \Drupal::theme()->getActiveTheme()->getPath() . '/translations/translations.yml';
+
+
+  // Cargar el contenido del archivo YAML.
+  if (file_exists($path)) {
+    $translations = \Drupal\Component\Serialization\Yaml::decode(file_get_contents($path));
+
+    // Verifica si las traducciones se están cargando correctamente.
+    //\Drupal::logger('b5subtheme')->notice('Translations loaded: <pre>@translations</pre>', ['@translations' => print_r($translations, TRUE)]);
+
+    // Pasar las traducciones al contexto de Twig.
+    $variables['translations'] = $translations;
+  } else {
+    //\Drupal::logger('b5subtheme')->error('Translations file not found at path: @path', ['@path' => $path]);
+  }
+
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ */
+function b5subtheme_preprocess_node(&$variables)
+{
+  // Your custom preprocess code for nodes.
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for your custom templates.
+ */
+function b5subtheme_preprocess_HOOK(&$variables)
+{
+  // Your custom preprocess code for your custom templates.
+}
+
+
+
+
+/**
+ * Implements hook_preprocess_HOOK() for views_view templates.
+ */
+function b5subtheme_preprocess_views_view(&$variables)
+{
+
+  // Importar el language_manager.
+  $language_manager = \Drupal::service('language_manager');
+  $variables['language_manager'] = $language_manager;
+
+  ////dump($variables['view']->id());
+
+  $path = \Drupal::theme()->getActiveTheme()->getPath() . '/translations/translations.yml';
+ 
+  
+  // Cargar el contenido del archivo YAML.
+  if (file_exists($path)) {
+    $translations = \Drupal\Component\Serialization\Yaml::decode(file_get_contents($path));
+
+    // Verifica si las traducciones se están cargando correctamente.
+    //\Drupal::logger('b5subtheme')->notice('Translations loaded: <pre>@translations</pre>', ['@translations' => print_r($translations, TRUE)]);
+
+    // Pasar las traducciones al contexto de Twig.
+    $variables['translations'] = $translations;
+  } else {
+    //\Drupal::logger('b5subtheme')->error('Translations file not found at path: @path', ['@path' => $path]);
+  }
+
+
+  if ($variables['view']->id() === 'programme_information') {
+    $programme = NULL;
+    if (!empty($variables['view']->result[0]->_entity) && $variables['view']->result[0]->_entity instanceof NodeInterface) {
+      $programme = $variables['view']->result[0]->_entity;
+    }
+
+    $variables['programme_curriculum'] = b5subtheme_programme_curriculum_structure($programme);
+  }
+
+  if ($variables['view']->id() === 'alliances') {
+    $branding = \Drupal::service('settings')->get('site_branding', []);
+    $variables['site_primary_color'] = $branding['primary_color'] ?? '#ff4949';
+  }
+
+
+
+
+  if (in_array($variables['view']->id(), ['main_page', 'alliance_institutions'], TRUE)) {
+    $current_language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+    $translated_institution = null;
+    $variables['main_page_is_athena'] = str_contains(strtolower(\Drupal::request()->getHost()), 'athena');
+
+    // === ADD: Country list (Address repo) para el idioma actual ===
+    $country_repo = \Drupal::service('address.country_repository');
+    $full_country_list = $country_repo->getList($current_language); // ['ES' => 'España' / 'Spain', ...]
+
+    foreach ($variables['view']->result as $key => $row) {
+
+      $institution = $row->_entity;
+
+
+      if ($institution->hasTranslation($current_language)) {
+
+        // Si la asignatura tiene traducción al idioma actual.
+        $translated_institution = $institution->getTranslation($current_language);
+        //$row->custom_url = $translated_subject->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($current_language)])->toString();
+
+
+        $translated_url = $translated_institution->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($current_language)])->toString();
+
+        // Extraer el idioma desde la URL original
+        //$language_prefix = '/' . \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+        // Eliminar el prefijo del idioma si ya está presente en la URL original
+        if (strpos($translated_url, '/' . $current_language) === 0) {
+
+          $translated_url = substr($translated_url, strlen('/' . $current_language));
+
+        }
+        ////dump($current_language . '/catalogue' . $translated_url);
+        // Construir la nueva URL con el formato correcto
+        $row->custom_url = $current_language . '/general-information' . $translated_url;
+        $variables['view']->result[$key]->_entity = $translated_institution;
+
+      } else {
+        // Si no tiene traducción al idioma actual, enlazar a la versión inglesa.
+        $fallback_language = 'en';
+        $fallback_institution = $institution->hasTranslation($fallback_language)
+          ? $institution->getTranslation($fallback_language)
+          : $institution;
+
+        //$row->custom_url = $subject->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($original_language)])->toString();
+        $translated_url = $fallback_institution->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($fallback_language)])->toString();
+
+        // Extraer el idioma desde la URL original
+        $language_prefix = $fallback_language;
+
+        // Eliminar el prefijo del idioma si ya está presente en la URL original
+        if (strpos($translated_url, '/' . $fallback_language) === 0) {
+
+          $translated_url = substr($translated_url, strlen('/' . $fallback_language));
+        }
+
+        // Construir la nueva URL con el formato correcto
+        $row->custom_url = $language_prefix . '/general-information' . $translated_url;
+
+        $variables['view']->result[$key]->_entity = $fallback_institution;
+      }
+      // === ADD: país por fila ===
+      $entity = $variables['view']->result[$key]->_entity;
+      $code = ($entity->hasField('field_institution_country') && !$entity->get('field_institution_country')->isEmpty())
+        ? $entity->get('field_institution_country')->value
+        : NULL;
+
+      // Guarda en la fila (ResultRow) para Twig:
+      $variables['view']->result[$key]->_country_code = $code; // p.ej. "ES"
+      $variables['view']->result[$key]->_country_name = ($code && isset($full_country_list[$code])) ? $full_country_list[$code] : $code;
+
+
+      // Asignar la universidad traducida y la URL personalizada
+
+
+    }
+
+    if ($variables['view']->id() === 'alliance_institutions') {
+      $alliance_id = $variables['view']->args[0] ?? NULL;
+      $alliance = $alliance_id && is_numeric($alliance_id) ? Node::load((int) $alliance_id) : NULL;
+      if ($alliance instanceof NodeInterface) {
+        $alliance = b5subtheme_entity_for_language_with_fallback($alliance, $current_language);
+        $variables['alliance'] = $alliance;
+        $variables['alliance_title'] = $alliance->label();
+        $variables['alliance_email'] = !$alliance->get('field_alliance_email')->isEmpty()
+          ? $alliance->get('field_alliance_email')->value
+          : NULL;
+        $variables['alliance_phone'] = !$alliance->get('field_alliance_phone')->isEmpty()
+          ? $alliance->get('field_alliance_phone')->value
+          : NULL;
+        $variables['alliance_webpage_url'] = !$alliance->get('field_alliance_webpage')->isEmpty()
+          ? $alliance->get('field_alliance_webpage')->first()->getUrl()->toString()
+          : NULL;
+        $variables['alliance_webpage_title'] = !$alliance->get('field_alliance_webpage')->isEmpty()
+          ? ($alliance->get('field_alliance_webpage')->title ?: $variables['alliance_webpage_url'])
+          : NULL;
+      }
+    }
+
+    $branding = \Drupal::service('settings')->get('site_branding', []);
+
+    $variables['main_banner_image'] = $branding['main_banner_image'] ?? '/themes/custom/b5subtheme/images/dacem-008.jpg';
+    $variables['main_page_primary_color'] = $branding['primary_color'] ?? '#ff4949';
+    $variables['main_page_search_programme_url'] = Url::fromRoute('view.search_programme.page_1', [], [
+      'language' => \Drupal::languageManager()->getLanguage($current_language),
+    ])->toString();
+
+
+
+
+  }
+
+
+
+  if ($variables['view']->id() == 'institution_new_catalogue') {
+
+  $institution = NULL;
+  $institution_id = $variables['view']->args[0] ?? NULL;
+  $current_language = \Drupal::languageManager()
+    ->getCurrentLanguage(\Drupal\Core\Language\LanguageInterface::TYPE_CONTENT)
+    ->getId();
+
+  if ($institution_id && is_numeric($institution_id)) {
+    $institution = Node::load((int) $institution_id);
+  }
+  elseif ($institution_id) {
+    $alias_manager = \Drupal::service('path_alias.manager');
+    foreach ([$current_language, 'en'] as $alias_language) {
+      $internal_path = $alias_manager->getPathByAlias('/' . trim($institution_id, '/'), $alias_language);
+      if (preg_match('/^\/node\/(\d+)$/', $internal_path, $matches)) {
+        $institution = Node::load((int) $matches[1]);
+        break;
+      }
+    }
+  }
+
+  if ($institution) {
+    $institution_for_colors = $institution;
+
+    if ($institution->hasTranslation($current_language)) {
+      $institution = $institution->getTranslation($current_language);
+    }
+
+    $variables['catalogue_institution'] = $institution;
+    $variables['catalogue_university_primary_color'] =
+      ($institution_for_colors->hasField('field_primary_color') && !$institution_for_colors->get('field_primary_color')->isEmpty() && isset($institution_for_colors->get('field_primary_color')->first()->color))
+        ? $institution_for_colors->get('field_primary_color')->first()->color
+        : '#19d329ff';
+
+    $variables['catalogue_university_text_color'] =
+      ($institution_for_colors->hasField('field_text_color') && !$institution_for_colors->get('field_text_color')->isEmpty() && isset($institution_for_colors->get('field_text_color')->first()->color))
+        ? $institution_for_colors->get('field_text_color')->first()->color
+        : '#000000';
+      
+    $variables['catalogue_university_emphasis_text_color'] =
+      ($institution_for_colors->hasField('field_emphasis_text_color') && !$institution_for_colors->get('field_emphasis_text_color')->isEmpty() && isset($institution_for_colors->get('field_emphasis_text_color')->first()->color))
+        ? $institution_for_colors->get('field_emphasis_text_color')->first()->color
+        : '#000000';
+
+    $variables['catalogue_shac_code'] =
+      !$institution->get('field_shac_code')->isEmpty()
+        ? $institution->get('field_shac_code')->value
+        : '';
+
+    $route_language = \Drupal::languageManager()->getLanguage($current_language);
+    $variables['catalogue_programmes_search_url'] = Url::fromRoute('view.institution_new_catalogue.page_1', ['arg_0' => $institution_id], [
+      'language' => $route_language,
+    ])->toString();
+    $variables['catalogue_programmes_index_url'] = Url::fromRoute('view.institution_new_catalogue.page_3', ['arg_0' => $institution_id], [
+      'language' => $route_language,
+    ])->toString();
+    $variables['catalogue_courses_url'] = Url::fromRoute('view.institution_new_catalogue.page_2', ['arg_0' => $institution_id], [
+      'language' => $route_language,
+    ])->toString();
+
+    if ($variables['view']->current_display === 'page_3') {
+      $generic_area_key = 'generic';
+      $isced_labels = b5subtheme_isced_labels_for_language($current_language);
+      $programmes_by_area = [];
+      $area_meta = [];
+      $seen = [];
+
+      foreach ($variables['view']->result as $row) {
+        $programme = $row->_entity ?? NULL;
+        if (!$programme instanceof NodeInterface) {
+          continue;
+        }
+
+        $programme = b5subtheme_entity_for_language_with_fallback($programme, $current_language);
+        $seen_key = $programme->id();
+        if (isset($seen[$seen_key])) {
+          continue;
+        }
+        $seen[$seen_key] = TRUE;
+
+        $lvl_raw = $programme->hasField('field_eqf_level')
+          ? strtolower($programme->get('field_eqf_level')->value ?? '')
+          : '';
+        if (str_starts_with($lvl_raw, '6')) {
+          $level = 'B';
+        }
+        elseif (str_starts_with($lvl_raw, '7')) {
+          $level = 'M';
+        }
+        elseif (str_starts_with($lvl_raw, '8')) {
+          $level = 'PhD';
+        }
+        else {
+          $programme_level = $programme->hasField('field_programme_level')
+            ? strtolower($programme->get('field_programme_level')->value ?? '')
+            : '';
+          $level = [
+            'bachelor' => 'B',
+            'master' => 'M',
+            'phd' => 'PhD',
+          ][$programme_level] ?? NULL;
+        }
+
+        if (!$level) {
+          continue;
+        }
+
+        $programme_area_keys = [];
+        if ($programme->hasField('field_isced_f') && !$programme->get('field_isced_f')->isEmpty()) {
+          foreach ($programme->get('field_isced_f') as $item) {
+            $broad_key = $item->broad ?? '';
+            if ($broad_key !== '') {
+              $programme_area_keys[$broad_key] = $broad_key;
+            }
+          }
+        }
+        if ($programme_area_keys === []) {
+          $programme_area_keys[$generic_area_key] = $generic_area_key;
+        }
+
+        foreach ($programme_area_keys as $area_key) {
+          if (!isset($programmes_by_area[$area_key])) {
+            $programmes_by_area[$area_key] = ['B' => [], 'M' => [], 'PhD' => []];
+          }
+
+          if (!isset($area_meta[$area_key])) {
+            $area_meta[$area_key] = [
+              'label' => $area_key === $generic_area_key
+                ? (string) t('Other', [], ['langcode' => $current_language])
+                : ($isced_labels[$area_key] ?? $area_key),
+              'icon' => 'fas fa-folder',
+            ];
+          }
+
+          $programmes_by_area[$area_key][$level][] = [
+            'id' => $programme->id(),
+            'label' => $programme->label(),
+            'level_code' => $programme->hasField('field_eqf_level') ? ($programme->get('field_eqf_level')->value ?? '') : '',
+            'programme_url' => $row->custom_url ?? NULL,
+            'ects' => $programme->hasField('field_credits') && !$programme->get('field_credits')->isEmpty()
+              ? $programme->get('field_credits')->value
+              : NULL,
+            'interuniversity' => $programme->hasField('field_interuniversity') && !$programme->get('field_interuniversity')->isEmpty()
+              ? (bool) $programme->get('field_interuniversity')->value
+              : FALSE,
+          ];
+        }
+      }
+
+      foreach ($programmes_by_area as $area => $levels) {
+        foreach (['B', 'M', 'PhD'] as $lev) {
+          usort($programmes_by_area[$area][$lev], static function ($a, $b) {
+            return strcasecmp($a['label'], $b['label']);
+          });
+        }
+      }
+
+      $area_meta_filtered = [];
+      foreach ($programmes_by_area as $area_key => $levels) {
+        $total = count($levels['B']) + count($levels['M']) + count($levels['PhD']);
+        if ($total > 0) {
+          $area_meta_filtered[$area_key] = $area_meta[$area_key];
+        }
+      }
+
+      if (isset($area_meta_filtered[$generic_area_key])) {
+        $generic_area = $area_meta_filtered[$generic_area_key];
+        unset($area_meta_filtered[$generic_area_key]);
+        ksort($area_meta_filtered, SORT_NATURAL);
+        $area_meta_filtered[$generic_area_key] = $generic_area;
+      }
+      else {
+        ksort($area_meta_filtered, SORT_NATURAL);
+      }
+
+      $variables['area_meta'] = $area_meta_filtered;
+      $variables['programmes_by_area'] = $programmes_by_area;
+    }
+  }
+  else {
+
+    \Drupal::logger('catalogue_debug')->notice('Institutionfsdfsadfasdfasdf id arg: @id', [
+  '@id' => $institution_id ?? 'NULL',
+]);
+    $variables['catalogue_institution'] = NULL;
+    $variables['catalogue_university_primary_color'] = '#F44743';
+    $variables['catalogue_university_text_color'] = '#000000';
+    $variables['catalogue_university_emphasis_text_color'] = '#000000';
+    $variables['catalogue_shac_code'] = '';
+    $variables['catalogue_programmes_search_url'] = NULL;
+    $variables['catalogue_programmes_index_url'] = NULL;
+    $variables['catalogue_courses_url'] = NULL;
+  }
+
+
+  }
+
+
+  
+
+
+
+
+
+
+
+  if ($variables['view']->id() == 'institution_catalogue') {
+    $current_language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+
+    $grouped_carreras = [];
+
+
+
+    foreach ($variables['view']->result as $row) {
+
+
+      // Accede a las carreras relacionadas desde la relación inversa.
+      if (isset($row->_relationship_entities['reverse__node__field_programme_institution'])) {
+
+        $carrera = $row->_relationship_entities['reverse__node__field_programme_institution'];
+
+
+        if ($carrera->hasTranslation($current_language)) {
+          $carrera_translated = $carrera->getTranslation($current_language);
+        } else {
+          $carrera_translated = $carrera; // Usa la carrera en su idioma original.
+        }
+
+        // Accede a la universidad principal.
+        $institution = $row->_entity;
+
+
+        // Obtener el alias del programa en el idioma actual
+        $programme_alias = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $carrera_translated->id(), $current_language);
+
+        // Obtener el código del idioma actual
+        $language_prefix = '/' . \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+
+        // Construir la URL con el formato deseado
+        $url = $language_prefix . '/catalogue/' . trim($programme_alias, '/');
+
+
+        // Valida si la entidad tiene un ID válido.
+        if ($carrera_translated && $carrera_translated->id()) {
+          // Obtén el área para agrupar las carreras.
+          $area = $carrera_translated->get('field_programme_area')->value ?? 'undefined';
+          //\Drupal::logger('custom_log')->notice('Area--> ' . $area);
+
+          ////dump('/catalogue' . $carrera_translated->toUrl()->toString());
+          $grouped_carreras[$area][] = [
+            'title' => $carrera_translated->getTitle(),
+            'url' => $url,
+
+
+          ];
+        }
+      }
+    }
+
+    // Ordena las carreras alfabéticamente dentro de cada área.
+    foreach ($grouped_carreras as &$carreras) {
+      usort($carreras, function ($a, $b) {
+        return strcmp($a['title'], $b['title']);
+      });
+    }
+
+    // Pasa las carreras agrupadas a la plantilla.
+    $variables['grouped_carreras'] = $grouped_carreras;
+  }
+
+
+  /*
+  if (\Drupal::routeMatch()->getRouteName() === 'view.institution_new_catalogue.page_1') {
+    dump(\Drupal::routeMatch()->getRouteName());
+  $current_language = \Drupal::languageManager()
+    ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+    ->getId();
+  
+  
+
+  $alias_manager = \Drupal::service('path_alias.manager');
+  $language_prefix = '/' . $current_language;
+
+  foreach ($variables['view']->result as &$row) {
+   
+    $programme = $row->_entity ?? NULL;
+
+  
+    if (!$programme || !$programme->id()) {
+      continue;
+    }
+
+    // Traducción del programme
+    $programme_translated = $programme->hasTranslation($current_language)
+      ? $programme->getTranslation($current_language)
+      : $programme;
+
+    // Institution referenciada
+    if (
+      !$programme_translated->hasField('field_programme_institution') ||
+      $programme_translated->get('field_programme_institution')->isEmpty()
+    ) {
+      continue;
+    }
+
+    
+    $institution = $programme_translated->get('field_programme_institution')->entity;
+    if (!$institution || !$institution->id()) {
+      continue;
+    }
+
+    // Traducción de la institution
+    $institution_translated = $institution->hasTranslation($current_language)
+      ? $institution->getTranslation($current_language)
+      : $institution;
+
+    // Alias por idioma
+    $programme_alias = $alias_manager->getAliasByPath(
+      '/node/' . $programme_translated->id(),
+      $current_language
+    );
+
+    $institution_alias = $alias_manager->getAliasByPath(
+      '/node/' . $institution_translated->id(),
+      $current_language
+    );
+
+    // Slugs (último segmento)
+    $programme_slug = basename(trim($programme_alias, '/'));
+    $institution_slug = basename(trim($institution_alias, '/'));
+
+    // URL final
+    $row->custom_url = $language_prefix
+      . '/catalogue/'
+      . $institution_slug
+      . '/'
+      . $programme_slug;
+
+
+
+      dump([
+  'nid' => $programme ? $programme->id() : NULL,
+  'custom_url' => $row->custom_url ?? 'NO_URL',
+]);
+
+  }
+}
+
+
+
+if (\Drupal::routeMatch()->getRouteName() === 'view.institution_new_catalogue.page_2') {
+
+  
+
+  $current_language = \Drupal::languageManager()
+    ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+    ->getId();
+
+  foreach ($variables['view']->result as &$row) {
+   
+    $iec = $row->_entity ?? NULL;
+
+    if (!$iec instanceof NodeInterface || !$iec->id()) {
+      
+      continue;
+    }
+
+    $lang_for_url = b5subtheme_entity_language_for_url($iec, $current_language);
+    $language = \Drupal::languageManager()->getLanguage($lang_for_url);
+
+    $iec_for_url = b5subtheme_entity_for_language_with_fallback($iec, $current_language);
+    $row->_entity = $iec_for_url;
+
+    if ($iec_for_url->hasField('field_iec_programme') && !$iec_for_url->get('field_iec_programme')->isEmpty()) {
+      $programme = $iec_for_url->get('field_iec_programme')->entity;
+      $programme = b5subtheme_entity_for_language_with_fallback($programme, $current_language);
+      $row->display_programme = $programme;
+
+      if ($programme && $programme->hasField('field_programme_institution') && !$programme->get('field_programme_institution')->isEmpty()) {
+        $institution = $programme->get('field_programme_institution')->entity;
+        $row->display_institution = b5subtheme_entity_for_language_with_fallback($institution, $current_language);
+      }
+    }
+
+    // Genera la URL canónica en el idioma adecuado
+    $url = $iec_for_url
+      ->toUrl('canonical', ['language' => $language])
+      ->toString();
+
+    // Si la URL viene ya con prefijo /xx, lo quitamos para evitar duplicados
+    if (strpos($url, '/' . $lang_for_url) === 0) {
+      $url = substr($url, strlen('/' . $lang_for_url));
+    }
+
+    // Construir la nueva URL con el formato correcto: /<lang_for_url>/catalogue/<...>
+    // (Nota: pongo "/" al principio para que sea una ruta absoluta correcta)
+    $row->custom_url = '/' . $lang_for_url . '/catalogue' . $url;
+  }
+
+
+
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  if ($variables['view']->id() === 'programme_information') {
+    $current_language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+
+
+    foreach ($variables['view']->result as &$row) {
+      
+
+      // Accedemos a la relacion
+      if (!empty($row->_relationship_entities['reverse__node__field_iec_programme'])) {
+
+        $iec = $row->_relationship_entities['reverse__node__field_iec_programme'];
+        
+        if ($iec instanceof Node) {
+
+
+
+          
+          if ($iec->hasTranslation($current_language)) {
+
+            // Si la asignatura tiene traducción al idioma actual.
+            $translated_iec = $iec->getTranslation($current_language);
+            //$row->custom_url = $translated_subject->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($current_language)])->toString();
+
+
+            $translated_url = $translated_iec->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($current_language)])->toString();
+
+            // Extraer el idioma desde la URL original
+            //$language_prefix = '/' . \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+            // Eliminar el prefijo del idioma si ya está presente en la URL original
+            if (strpos($translated_url, '/' . $current_language) === 0) {
+
+              $translated_url = substr($translated_url, strlen('/' . $current_language));
+
+            }
+            ////dump($current_language . '/catalogue' . $translated_url);
+            // Construir la nueva URL con el formato correcto
+            $row->custom_url = $current_language . '/catalogue' . $translated_url;
+
+
+          } else {
+            // Si no tiene traducción, usar el idioma original de la asignatura.
+            $original_language = $iec->language()->getId();
+            //$row->custom_url = $subject->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($original_language)])->toString();
+            $translated_url = $iec->toUrl('canonical', ['language' => \Drupal::languageManager()->getLanguage($original_language)])->toString();
+
+            // Extraer el idioma desde la URL original
+            $language_prefix = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+            // Eliminar el prefijo del idioma si ya está presente en la URL original
+            if (strpos($translated_url, '/' . $original_language) === 0) {
+
+              $translated_url = substr($translated_url, strlen('/' . $original_language));
+            }
+
+            // Construir la nueva URL con el formato correcto
+            $row->custom_url = $language_prefix . '/catalogue' . $translated_url;
+
+
+          }
+        }
+      }
+    }
+
+
+
+
+
+
+
+    
+      
+  }
+
+
+
+
+
+
+
+  // Verifica si estamos en la ruta deseada.
+  if (\Drupal::routeMatch()->getRouteName() === 'view.general_information.page_1') {
+    // Obtén el idioma actual.
+    $current_language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+    // Obtén el nodo pasado como argumento a la vista.
+    $arg_0 = \Drupal::routeMatch()->getParameter('arg_0');
+
+    if ($arg_0 && is_numeric($arg_0)) {
+
+      $node = \Drupal\node\Entity\Node::load($arg_0);
+    } else {
+
+      $node = getEntityFromAlias($arg_0, $current_language);
+    }
+
+
+    if ($node && $node->hasTranslation($current_language)) {
+
+      // Carga la traducción activa del nodo.
+      $translated_node = $node->getTranslation($current_language);
+      // Pasa el nodo traducido a las plantillas Twig.
+      ////dump($translated_node);
+      $variables['university'] = $translated_node;
+
+      if (
+        $translated_node->hasField('field_institution_alliance') &&
+        !$translated_node->get('field_institution_alliance')->isEmpty()
+      ) {
+        $alliance = $translated_node->get('field_institution_alliance')->entity;
+        if ($alliance instanceof NodeInterface) {
+          $variables['general_information_alliance'] =
+            b5subtheme_entity_for_language_with_fallback($alliance, $current_language);
+        }
+      }
+
+      // Obtener los campus asociados a la universidad.
+      $campuses = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->loadByProperties([
+          'type' => 'campus', // Asegúrate de que 'campus' sea el tipo de contenido.
+          'field_campus_institution' => $translated_node->id(),
+        ]);
+
+
+      // Traducir los campus al idioma actual.
+      $translated_campuses = [];
+      foreach ($campuses as $campus) {
+        if ($campus->hasTranslation($current_language)) {
+          $translated_campuses[] = $campus->getTranslation($current_language);
+        } else {
+          $translated_campuses[] = $campus;
+        }
+      }
+      // Verifica si hay campus disponibles.
+
+
+
+
+
+    }
+
+    if (
+      !isset($variables['general_information_alliance']) &&
+      $node instanceof NodeInterface &&
+      $node->hasField('field_institution_alliance') &&
+      !$node->get('field_institution_alliance')->isEmpty()
+    ) {
+      $alliance = $node->get('field_institution_alliance')->entity;
+      if ($alliance instanceof NodeInterface) {
+        $variables['general_information_alliance'] =
+          b5subtheme_entity_for_language_with_fallback($alliance, $current_language);
+      }
+    }
+
+
+
+
+    $full_country_list = \Drupal::service('address.country_repository')->getList($current_language);
+    $country_code = $node->get('field_institution_country')->value; // "ES", "FR", ...
+    $variables['country_name'] = t($full_country_list[$country_code], [], ['langcode' => $current_language]);
+
+
+
+
+
+
+
+    $variables['campuses'] = !empty($translated_campuses) ? array_values($translated_campuses) : NULL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Helper inline: mapea claves → etiquetas del vocabulario ELM.
+     * - Usa $lang (idioma actual) y hace fallback a 'en' y luego a la clave.
+     */
+    $elm_labels = function (EntityInterface $entity, string $field_name, string $lang): array {
+      if (!$entity->hasField($field_name) || $entity->get($field_name)->isEmpty()) {
+        return [];
+      }
+
+      // ID del vocabulario configurado en el storage del field.
+      $vocabulary_id = $entity->getFieldDefinition($field_name)->getSetting('vocabulary');
+
+      /** @var \Drupal\elm_vocabulary_field\ControlledVocabularyProviderInterface $provider */
+      $provider = \Drupal::service('elm_vocabulary_field.provider');
+      $vocabulary = $provider->getVocabulary($vocabulary_id);
+
+      // Listas por idioma destino + fallback a EN.
+      $listLang = $vocabulary->getLabeledList($lang);
+      $listEn = $vocabulary->getLabeledList('en');
+
+      $labels = [];
+      foreach ($entity->get($field_name) as $item) {
+        $key = $item->value;
+        $labels[] = $listLang[$key] ?? $listEn[$key] ?? $key;
+      }
+      return $labels;
+    };
+
+    /**
+     * 1) Etiquetas para la universidad (variable directa para Twig).
+     *    Usa SIEMPRE el idioma actual ($current_language) con fallback incluido.
+     */
+    if (!empty($translated_node) && $translated_node->hasField('field_example_vocabularies')) {
+      $variables['institution_vocab_labels'] =
+        $elm_labels($translated_node, 'field_example_vocabularies', $current_language);
+
+      $variables['institution_vocab_labels_str'] =
+        implode(', ', $variables['institution_vocab_labels']);
+    }
+
+    /**
+     * 2) (Opcional) Etiquetas por cada row de la vista (si usas "result rows" en Twig).
+     *    Inyecta en cada fila _elm_vocab_labels y _elm_vocab_labels_str para usar en plantillas.
+     */
+    if (!empty($variables['view']->result)) {
+      foreach ($variables['view']->result as $idx => $row) {
+        $entity = $row->_entity ?? NULL;
+        if ($entity instanceof EntityInterface && $entity->hasField('field_example_vocabularies')) {
+          $labels = $elm_labels($entity, 'field_example_vocabularies', $current_language);
+          $variables['view']->result[$idx]->_elm_vocab_labels = $labels;
+          $variables['view']->result[$idx]->_elm_vocab_labels_str = implode(', ', $labels);
+        }
+      }
+    }
+
+
+
+    /***************************/
+    /***************************/
+    /***************************/
+    /***************************/
+    /*FACER MENU DINAMICO */
+    /*FACER MENU DINAMICO */
+    /*FACER MENU DINAMICO */
+    /*FACER MENU DINAMICO */
+    /*FACER MENU DINAMICO */
+    /***************************/
+    /***************************/
+    /***************************/
+    /***************************/
+    /***************************/
+    /***************************/
+
+
+
+
+      $sections = [];
+
+
+      if (!$node->get('field_information')->isEmpty()) {
+        $sections[] = [
+          'id' => 'description',
+          'label' => t('Description'),
+        ];
+      }
+
+    
+      /*
+      if (!empty($variables['has_academic_authorities'])) {
+        $sections[] = [
+          'id' => 'academic-authorities',
+          'label' => t('Authorities'),
+        ];
+      }
+      */
+
+      if (
+        !$node->get('field_mobility_incoming_students')->isEmpty()
+        || !$node->get('field_mobility_outgoing_students')->isEmpty()
+      ) {
+        $sections[] = [
+          'id' => 'mobility',
+          'label' => t('Mobility'),
+        ];
+      }
+
+
+
+      if (!$node->get('field_admission_description')->isEmpty()) {
+        $sections[] = [
+          'id' => 'admission',
+          'label' => t('Admission'),
+        ];
+      }
+
+
+     if (
+        !$node->get('field_ects_credit_allocation_pol')->isEmpty() ||
+        !$node->get('field_arrangements_guidance')->isEmpty() ||
+        !$node->get('field_arrangements_recognition')->isEmpty()
+      ) {
+        $sections[] = [
+          'id' => 'ects-policies',
+          'label' => t('Policies'),
+        ];
+      }
+
+
+
+      
+
+      /*
+      if (!empty($variables['has_campuses'])) {
+        $sections[] = [
+          'id' => 'campuses',
+          'label' => t('Campuses'),
+        ];
+      }*/
+
+      /*
+      if (!empty($variables['has_organizational_units'])) {
+        $sections[] = [
+          'id' => 'organizational-units',
+          'label' => t('Org. Units'),
+        ];
+      }*/
+
+      $variables['menu_sections'] = $sections;
+
+
+
+      
+      $changed = $node->getChangedTime();
+
+      $variables['last_updated'] = \Drupal::service('date.formatter')
+      ->format($changed, 'custom', 'd/m/Y');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+  if ($variables['view']->id() == 'resources_and_services') {
+    $current_language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+    $variables['current_language'] = $current_language;
+
+
+    $arg_0 = \Drupal::routeMatch()->getParameter('arg_0');
+
+    if ($arg_0 && is_numeric($arg_0)) {
+
+      $node = \Drupal\node\Entity\Node::load($arg_0);
+    } else {
+
+      $node = getEntityFromAlias($arg_0, $current_language);
+    }
+
+
+    if ($node && $node->hasTranslation($current_language)) {
+      // Carga la traducción activa del nodo.
+      $translated_node = $node->getTranslation($current_language);
+      // Pasa el nodo traducido a las plantillas Twig.
+      ////dump($translated_node);
+
+
+      $path_alias_manager = \Drupal::service('path_alias.manager');
+
+
+      $internal_path = '/node/' . $translated_node->id();
+      $alias = $path_alias_manager->getAliasByPath($internal_path, $current_language);
+
+      // Prepende el idioma
+      $lang_prefix = $current_language;
+      $translated_node->custom_url = '/' . $lang_prefix . '/resources-and-services' . $alias;
+
+
+      $variables['university'] = $translated_node;
+
+      // Obtener los campus asociados a la universidad.
+      $campuses = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->loadByProperties([
+          'type' => 'campus', // Asegúrate de que 'campus' sea el tipo de contenido.
+          'field_campus_institution' => $translated_node->id(),
+        ]);
+
+
+      // Traducir los campus al idioma actual.
+      $translated_campuses = [];
+      /*foreach ($campuses as $campus) {
+        if ($campus->hasTranslation($current_language)) {
+          $translated_campuses[] = $campus->getTranslation($current_language);
+        } else {
+          $translated_campuses[] = $campus;
+        }
+      }*/
+      // Verifica si hay campus disponibles.
+
+
+
+      foreach ($campuses as $campus) {
+        $translated = $campus->hasTranslation($current_language) ? $campus->getTranslation($current_language) : $campus;
+
+        $internal_path = '/node/' . $translated->id();
+        if ($translated->hasTranslation($current_language)) {
+          $alias = $path_alias_manager->getAliasByPath($internal_path, $current_language);
+        } else {
+          $alias = $path_alias_manager->getAliasByPath($internal_path, 'en');
+        }
+
+        //dump($alias);
+        // Prepende el idioma
+        ////dump($campus->id());
+
+
+        $rs_campus_nodes = \Drupal::entityTypeManager()
+          ->getStorage('node')
+          ->loadByProperties([
+            'type' => 'resources_and_services',
+            'field_rs_campus' => $campus->id(),
+          ]);
+
+        $rs_campus = reset($rs_campus_nodes);
+
+        $lang_prefix = '';
+        if ($rs_campus && $rs_campus->hasTranslation($current_language)) {
+          ////dump('entramos if');
+          $lang_prefix = $current_language;
+        } else {
+          $lang_prefix = 'en';
+          $alias = $path_alias_manager->getAliasByPath($internal_path, 'en');
+        }
+
+
+
+        //$lang_prefix = $current_language;
+        $translated->custom_url = '/' . $lang_prefix . '/resources-and-services' . $alias;
+
+        $translated_campuses[] = $translated;
+      }
+
+
+
+      //En caso de que sexa rs de campuso o que estamos vendo
+      if ($variables['view']->current_display == 'page_2') {
+
+        
+
+
+
+        $query = \Drupal::entityQuery('node')
+          ->condition('type', 'resources_and_services')
+          ->condition('field_rs_institution', $node->id())
+          ->notExists('field_rs_campus')
+          ->accessCheck(TRUE) // ← 🔹 SOLUCIÓN AQUÍ
+          ->range(0, 1);
+
+        $nids = $query->execute();
+
+        $institution_rs = NULL;
+        if (!empty($nids)) {
+          $nid = reset($nids);
+          $institution_rs = \Drupal\node\Entity\Node::load($nid);
+
+          if ($current_language && $node->hasTranslation($current_language)) {
+            $institution_rs = $institution_rs->getTranslation($current_language);
+          }
+        }
+
+
+        //dump($institution_rs);
+
+
+        // Pasamos la entidad RS de la institución a Twig
+        $variables['institution_rs'] = $institution_rs;
+
+
+
+
+        $fields = [
+          'field_rs_students_affairs_office',
+          'field_financial_support_for_stud',
+          'field_rs_insurance',
+          'field_rs_medical_facilities',
+          'field_rs_learning_facilities',
+          'field_sport_and_leisure_faciliti',
+          'field_rs_special_facilities',
+          'field_practical_information_for',
+          'field_rs_cost_of_living',
+          
+          'field_rs_transportation',
+          'field_rs_meals',
+          'field_rs_housing',
+          'field_rs_students_associations',
+          'field_work_placement_possibiliti',
+          'field_sport_clubs_programs',
+          'field_rs_language_courses',
+          'field_cultural_event_city_calend',
+
+
+
+          'field_housing_email',
+          'field_housing_phone',
+          'field_housing_website',
+          'field_inclusion_infrast_email',
+          'field_inclusion_infrast_phone',
+          'field_inclusion_infrast_website',
+          'field_inclusion_email',
+          'field_inclusion_phone',
+          'field_inclusion_website',
+          'field_rs_institution',
+          'field_insurance_email',
+          'field_insurance_phone',
+          'field_insurance_website',
+          'field_rs_special_needs',
+          'field_visa',
+          'field_visa_email',
+          'field_visa_phone',
+          'field_visa_website',
+
+
+
+        ];
+
+        // Obtenemos el nodo actual (que es un RS de campus porque estamos en page_2)
+        $current_rs_node = $variables['view']->result[0]->_entity ?? null;
+
+        if ($current_rs_node && $current_rs_node->hasField('field_rs_campus') && !$current_rs_node->get('field_rs_campus')->isEmpty()) {
+          $campus = $current_rs_node->get('field_rs_campus')->entity;
+          if ($campus && $campus->hasTranslation($current_language)) {
+            $campus = $campus->getTranslation($current_language);
+          }
+          $variables['rs_campus_title'] = $campus->label();
+
+        }
+
+
+
+        $rs_fallback_data = [];
+
+
+
+        $renderer = \Drupal::service('renderer');
+
+        foreach ($fields as $field) {
+          if ($current_rs_node && $current_rs_node->hasField($field) && !$current_rs_node->get($field)->isEmpty()) {
+            $field_view = $current_rs_node->get($field)->view(['label' => 'hidden']);
+            $rendered_output = $renderer->render($field_view)->__toString();
+            $rs_fallback_data[$field] = [
+              'rendered' => $rendered_output,
+              'source' => 'campus',
+            ];
+          } elseif ($institution_rs && $institution_rs->hasField($field) && !$institution_rs->get($field)->isEmpty()) {
+            $field_view = $institution_rs->get($field)->view(['label' => 'hidden']);
+            $rendered_output = $renderer->render($field_view)->__toString();
+            $rs_fallback_data[$field] = [
+              'rendered' => $rendered_output,
+              'source' => 'institution',
+            ];
+          } else {
+            $rs_fallback_data[$field] = [
+              'rendered' => NULL,
+              'source' => 'none',
+            ];
+          }
+        }
+
+
+
+
+        $variables['rs_fallback_data'] = $rs_fallback_data;
+        $variables['rs_mode'] = 'campus'; // útil en Twig para saber en qué modo estamos
+
+
+
+
+
+
+      } else {
+        $variables['rs_mode'] = 'institution'; // Para saber en que modo estamos.
+      }
+
+
+
+
+    }
+
+    $variables['campuses'] = !empty($translated_campuses) ? array_values($translated_campuses) : NULL;
+
+  }
+
+
+  if ($variables['view']->id() == 'campus_information') {
+    $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+    $area_meta_filtered = [];
+    $generic_area_key = 'generic';
+    $isced_labels = b5subtheme_isced_labels_for_language($langcode);
+    $programmes_by_area = [];
+    $area_meta = [];
+
+    $seen = []; // dedupe OU:PROG
+
+    // Recorre resultados de la vista.
+
+    foreach ($variables['view']->result as $row) {
+      // Coge entidades vía relaciones de la vista (ajusta los índices si difieren en tu vista).
+      $ou = $row->_relationship_entities['reverse__node__field_ou_campus'] ?? NULL;
+      $programme = $row->_relationship_entities['reverse__node__field_programme_ou'] ?? NULL;
+
+      if (!$ou || !$programme) {
+        continue;
+      }
+
+      // Deduplicar por combinación OU+Programme.
+      $key = $ou->id() . ':' . $programme->id();
+      if (isset($seen[$key])) {
+        continue;
+      }
+      $seen[$key] = TRUE;
+
+      // Traducción al idioma actual si existe.
+      if ($ou->hasTranslation($langcode)) {
+        $ou = $ou->getTranslation($langcode);
+      }
+      if ($programme->hasTranslation($langcode)) {
+        $programme = $programme->getTranslation($langcode);
+      }
+
+      // Nivel -> B / M / PhD.
+      $lvl_raw = strtolower($programme->get('field_eqf_level')->value ?? '');
+      //dump($programme->title->value);
+      //dump($lvl_raw);
+      if (str_starts_with($lvl_raw, '6')) {
+        $level = 'B';
+      } elseif (str_starts_with($lvl_raw, '7')) {
+        $level = 'M';
+      } elseif (str_starts_with($lvl_raw, '8')) {
+        $level = 'PhD';
+      } else {
+        continue;
+      }
+
+      $programme_area_keys = [];
+      if ($programme->hasField('field_isced_f') && !$programme->get('field_isced_f')->isEmpty()) {
+        foreach ($programme->get('field_isced_f') as $item) {
+          $broad_key = $item->broad ?? '';
+          if ($broad_key !== '') {
+            $programme_area_keys[$broad_key] = $broad_key;
+          }
+        }
+      }
+
+      if ($programme_area_keys === []) {
+        $programme_area_keys[$generic_area_key] = $generic_area_key;
+      }
+
+      $lang_for_url = $programme->hasTranslation($langcode) ? $langcode : 'en';
+      $language = \Drupal::languageManager()->getLanguage($lang_for_url);
+
+
+      // Canonical en ese idioma (si hay alias lo devuelve; si no, /<lang>/node/<nid>)
+      $canonical = Url::fromRoute('entity.node.canonical', ['node' => $programme->id()], ['language' => $language])->toString();
+      // /es/universidad-x/programa-y   ó   /es/node/123
+
+      $parts = array_values(array_filter(explode('/', trim($canonical, '/'))));
+      // p.ej. ['es','universidad-x','programa-y']  ó  ['es','node','123']
+
+      $programme_url = NULL;
+      if (count($parts) >= 3) {
+        $last = $parts[count($parts) - 1];     // 'programa-y'  ó '123'
+        $prev = $parts[count($parts) - 2];     // 'universidad-x' ó 'node'
+
+        // Si no hay alias (prev == 'node'), no podemos inferir el alias de institución.
+        // Usamos un placeholder 'x' que tu hook puede ignorar/gestionar.
+        // Si hay alias, usamos institución + programa directamente.
+        $institution_alias = ($prev === 'node') ? 'x' : $prev;
+        $programme_alias = $last;
+
+        $programme_url = '/' . $lang_for_url . '/catalogue/' . $institution_alias . '/' . $programme_alias;
+        //dump($programme_url);
+      }
+      foreach ($programme_area_keys as $area_key) {
+        if (!isset($programmes_by_area[$area_key])) {
+          $programmes_by_area[$area_key] = ['B' => [], 'M' => [], 'PhD' => []];
+        }
+
+        if (!isset($area_meta[$area_key])) {
+          $area_meta[$area_key] = [
+            'label' => $area_key === $generic_area_key
+              ? (string) t('Other', [], ['langcode' => $langcode])
+              : ($isced_labels[$area_key] ?? $area_key),
+            'icon' => 'fas fa-folder',
+          ];
+        }
+
+        $programmes_by_area[$area_key][$level][] = [
+          'id' => $programme->id(),
+          'label' => $programme->label(),
+          'level_code' => $programme->get('field_eqf_level')->value,
+          'programme_url' => $programme_url,
+        ];
+      }
+    }
+
+    // Ordena alfabéticamente por label en cada bucket.
+    foreach ($programmes_by_area as $area => $levels) {
+      foreach (['B', 'M', 'PhD'] as $lev) {
+        usort($programmes_by_area[$area][$lev], static function ($a, $b) {
+          return strcasecmp($a['label'], $b['label']);
+        });
+      }
+    }
+
+
+    // Cuando termines de rellenar, filtra las vacías:
+    foreach ($programmes_by_area as $area_key => $levels) {
+      $total = count($levels['B']) + count($levels['M']) + count($levels['PhD']);
+      if ($total > 0) {
+        $area_meta_filtered[$area_key] = $area_meta[$area_key];
+      }
+    }
+
+    if (isset($area_meta_filtered[$generic_area_key])) {
+      $generic_area = $area_meta_filtered[$generic_area_key];
+      unset($area_meta_filtered[$generic_area_key]);
+      ksort($area_meta_filtered, SORT_NATURAL);
+      $area_meta_filtered[$generic_area_key] = $generic_area;
+    } else {
+      ksort($area_meta_filtered, SORT_NATURAL);
+    }
+
+    $variables['area_meta'] = $area_meta_filtered;
+    $variables['programmes_by_area'] = $programmes_by_area;
+
+
+
+    $full_country_list = \Drupal::service('address.country_repository')->getList($langcode);
+    $country_code = $variables['view']->result[0]->_relationship_entities['field_campus_institution']->get('field_institution_country')->value;
+    $variables['institution_country_name'] = t($full_country_list[$country_code], [], ['langcode' => $langcode]);
+
+
+
+
+    //dump($area_meta_filtered);
+    //dump($programmes_by_area);
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+  if ($variables['view']->id() == 'organizational_unit_information') {
+    $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+    $area_meta_filtered = [];
+    $generic_area_key = 'generic';
+    $isced_labels = b5subtheme_isced_labels_for_language($langcode);
+    $programmes_by_area = [];
+    $area_meta = [];
+
+    $seen = [];
+
+    foreach ($variables['view']->result as $row) {
+      $ou = $row->_entity; // la OU principal de la vista
+      $programme = $row->_relationship_entities['reverse__node__field_programme_ou'] ?? NULL;
+
+      if (!$ou || !$programme) {
+        continue;
+      }
+
+      $key = $ou->id() . ':' . $programme->id();
+      if (isset($seen[$key])) {
+        continue;
+      }
+      $seen[$key] = TRUE;
+
+      if ($ou->hasTranslation($langcode)) {
+        $ou = $ou->getTranslation($langcode);
+      }
+      if ($programme->hasTranslation($langcode)) {
+        $programme = $programme->getTranslation($langcode);
+      }
+
+      // Nivel
+      $lvl_raw = strtolower($programme->get('field_eqf_level')->value ?? '');
+      if (str_starts_with($lvl_raw, '6')) {
+        $level = 'B';
+      } elseif (str_starts_with($lvl_raw, '7')) {
+        $level = 'M';
+      } elseif (str_starts_with($lvl_raw, '8')) {
+        $level = 'PhD';
+      } else {
+        continue;
+      }
+
+      $programme_area_keys = [];
+      if ($programme->hasField('field_isced_f') && !$programme->get('field_isced_f')->isEmpty()) {
+        foreach ($programme->get('field_isced_f') as $item) {
+          $broad_key = $item->broad ?? '';
+          if ($broad_key !== '') {
+            $programme_area_keys[$broad_key] = $broad_key;
+          }
+        }
+      }
+
+      if ($programme_area_keys === []) {
+        $programme_area_keys[$generic_area_key] = $generic_area_key;
+      }
+
+      // URL (igual que en campus_information, pero institución desde OU)
+      $lang_for_url = $programme->hasTranslation($langcode) ? $langcode : 'en';
+      $language = \Drupal::languageManager()->getLanguage($lang_for_url);
+
+      $prog_canonical = Url::fromRoute('entity.node.canonical', ['node' => $programme->id()], ['language' => $language])->toString();
+      $prog_parts = array_values(array_filter(explode('/', trim($prog_canonical, '/'))));
+      $programme_alias = end($prog_parts);
+
+      $institution_alias = 'x';
+      $inst = NULL;
+      if ($programme->hasField('field_programme_institution') && !$programme->get('field_programme_institution')->isEmpty()) {
+        $inst = $programme->get('field_programme_institution')->entity;
+      } elseif ($ou->hasField('field_ou_institution') && !$ou->get('field_ou_institution')->isEmpty()) {
+        $inst = $ou->get('field_ou_institution')->entity;
+      } elseif ($ou->hasField('field_ou_campus') && !$ou->get('field_ou_campus')->isEmpty()) {
+        $campus = $ou->get('field_ou_campus')->entity;
+        if ($campus && $campus->hasField('field_campus_institution') && !$campus->get('field_campus_institution')->isEmpty()) {
+          $inst = $campus->get('field_campus_institution')->entity;
+        }
+      }
+
+      if ($inst) {
+        if ($inst->hasTranslation($lang_for_url)) {
+          $inst = $inst->getTranslation($lang_for_url);
+        }
+        $inst_canonical = Url::fromRoute('entity.node.canonical', ['node' => $inst->id()], ['language' => $language])->toString();
+        $inst_parts = array_values(array_filter(explode('/', trim($inst_canonical, '/'))));
+        if (count($inst_parts) >= 2 && $inst_parts[count($inst_parts) - 2] !== 'node') {
+          $institution_alias = end($inst_parts);
+        }
+      }
+
+      $programme_url = '/' . $lang_for_url . '/catalogue/' . $institution_alias . '/' . $programme_alias;
+
+      foreach ($programme_area_keys as $area_key) {
+        if (!isset($programmes_by_area[$area_key])) {
+          $programmes_by_area[$area_key] = ['B' => [], 'M' => [], 'PhD' => []];
+        }
+
+        if (!isset($area_meta[$area_key])) {
+          $area_meta[$area_key] = [
+            'label' => $area_key === $generic_area_key
+              ? (string) t('Other', [], ['langcode' => $langcode])
+              : ($isced_labels[$area_key] ?? $area_key),
+            'icon' => 'fas fa-folder',
+          ];
+        }
+
+        $programmes_by_area[$area_key][$level][] = [
+          'id' => $programme->id(),
+          'label' => $programme->label(),
+          'level_code' => $programme->get('field_eqf_level')->value,
+          'programme_url' => $programme_url,
+        ];
+      }
+    }
+
+    foreach ($programmes_by_area as $area => $levels) {
+      foreach (['B', 'M', 'PhD'] as $lev) {
+        usort($programmes_by_area[$area][$lev], static function ($a, $b) {
+          return strcasecmp($a['label'], $b['label']);
+        });
+      }
+    }
+
+    // Cuando termines de rellenar, filtra las vacías:
+    foreach ($programmes_by_area as $area_key => $levels) {
+      $total = count($levels['B']) + count($levels['M']) + count($levels['PhD']);
+      if ($total > 0) {
+        $area_meta_filtered[$area_key] = $area_meta[$area_key];
+      }
+    }
+
+    if (isset($area_meta_filtered[$generic_area_key])) {
+      $generic_area = $area_meta_filtered[$generic_area_key];
+      unset($area_meta_filtered[$generic_area_key]);
+      ksort($area_meta_filtered, SORT_NATURAL);
+      $area_meta_filtered[$generic_area_key] = $generic_area;
+    } else {
+      ksort($area_meta_filtered, SORT_NATURAL);
+    }
+
+    $variables['area_meta'] = $area_meta_filtered;
+    $variables['programmes_by_area'] = $programmes_by_area;
+
+
+    //dump($programmes_by_area);
+  }
+
+
+
+  if ($variables['view']->id() === 'search_programme' || $variables['view']->id() === 'searcher') {
+    $branding = \Drupal::service('settings')->get('site_branding', []);
+    $variables['search_site_primary_color'] = $branding['primary_color'] ?? '#ff4949';
+
+    // Idioma de contenido actual.
+    $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+
+    // Países traducidos (Address).
+    $variables['country_list'] = \Drupal::service('address.country_repository')->getList($langcode);
+
+    // Etiquetas "bonitas" para programme_area por idioma (ajusta si quieres cargar de config).
+    $map = [
+      'es' => [
+        'arts_and_humanities' => 'Artes y Humanidades',
+        'sciences' => 'Ciencias',
+        'health_sciences' => 'Ciencias de la Salud',
+        'social_and_legal_sciences' => 'Ciencias Sociales y Jurídicas',
+        'engineering_and_architecture' => 'Ingeniería y Arquitectura',
+      ],
+      'en' => [
+        'arts_and_humanities' => 'Arts and Humanities',
+        'sciences' => 'Sciences',
+        'health_sciences' => 'Health Sciences',
+        'social_and_legal_sciences' => 'Social and Legal Sciences',
+        'engineering_and_architecture' => 'Engineering and Architecture',
+      ],
+      'fr' => [
+        'arts_and_humanities' => 'Arts et Humanités',
+        'sciences' => 'Sciences',
+        'health_sciences' => 'Sciences de la Santé',
+        'social_and_legal_sciences' => 'Sciences Sociales et Juridiques',
+        'engineering_and_architecture' => 'Ingénierie et Architecture',
+      ],
+      'pt-pt' => [
+        'arts_and_humanities' => 'Artes e Humanidades',
+        'sciences' => 'Ciências',
+        'health_sciences' => 'Ciências da Saúde',
+        'social_and_legal_sciences' => 'Ciências Sociais e Jurídicas',
+        'engineering_and_architecture' => 'Engenharia e Arquitetura',
+      ],
+      'gl' => [
+        'arts_and_humanities' => 'Artes e Humanidades',
+        'sciences' => 'sciences',
+        'health_sciences' => 'sciences da Saúde',
+        'social_and_legal_sciences' => 'sciences Sociais e Xurídicas',
+        'engineering_and_architecture' => 'Enxeñería e Arquitectura',
+      ],
+      'hu' => [
+        'arts_and_humanities' => 'Művészetek és Bölcsészettudományok',
+        'sciences' => 'Tudományok',
+        'health_sciences' => 'Egészségtudományok',
+        'social_and_legal_sciences' => 'Társadalmi és Jogtudományok',
+        'engineering_and_architecture' => 'Mérnöki és Építészeti Tudományok',
+      ],
+      'sl' => [
+        'arts_and_humanities' => 'Umetnost in Humanistika',
+        'sciences' => 'Znanost',
+        'health_sciences' => 'Zdravstvene vede',
+        'social_and_legal_sciences' => 'Družbene in Pravne Znanosti',
+        'engineering_and_architecture' => 'Inženiring in Arhitektura',
+      ],
+      'et' => [
+        'arts_and_humanities' => 'Kunst ja Humanitaarteadused',
+        'sciences' => 'Teadused',
+        'health_sciences' => 'Tervishoiuteadused',
+        'social_and_legal_sciences' => 'Sotsiaal- ja Õigusteadused',
+        'engineering_and_architecture' => 'Inseneriteadus ja Arhitektuur',
+      ],
+      'el' => [
+        'arts_and_humanities' => 'Τέχνες και Ανθρωπιστικές Επιστήμες',
+        'sciences' => 'Επιστήμες',
+        'health_sciences' => 'Επιστήμες Υγείας',
+        'social_and_legal_sciences' => 'Κοινωνικές και Νομικές Επιστήμες',
+        'engineering_and_architecture' => 'Μηχανική και Αρχιτεκτονική',
+      ],
+    ];
+    $variables['programme_area_labels'] = $map[$langcode] ?? $map['en'];
+
+    $variables['selected_home_programme'] = NULL;
+    $variables['clear_home_programme_url'] = NULL;
+    \Drupal\Core\Cache\CacheableMetadata::createFromRenderArray($variables)
+      ->addCacheContexts(['url.query_args:home_programme'])
+      ->applyTo($variables);
+
+    $home_programme_id = \Drupal::request()->query->get('home_programme');
+    if ($home_programme_id && is_numeric($home_programme_id)) {
+      $home_programme = Node::load((int) $home_programme_id);
+
+      if ($home_programme instanceof NodeInterface && $home_programme->bundle() === 'programme') {
+        $home_programme = b5subtheme_entity_for_language_with_fallback($home_programme, $langcode);
+        $home_programme_label = $home_programme->label();
+        $home_institution_label = '';
+
+        if ($home_programme->hasField('field_programme_institution') && !$home_programme->get('field_programme_institution')->isEmpty()) {
+          $home_institution = $home_programme->get('field_programme_institution')->entity;
+          $home_institution = b5subtheme_entity_for_language_with_fallback($home_institution, $langcode);
+          $home_institution_label = $home_institution ? $home_institution->label() : '';
+        }
+
+        $variables['selected_home_programme'] = [
+          'label' => $home_programme_label,
+          'institution' => $home_institution_label,
+        ];
+
+        $query_params = \Drupal::request()->query->all();
+        unset($query_params['home_programme'], $query_params['page']);
+
+        $variables['clear_home_programme_url'] = Url::fromRoute('view.search_programme.page_1', [], [
+          'query' => $query_params,
+          'language' => \Drupal::languageManager()->getLanguage($langcode),
+        ])->toString();
+      }
+    }
+
+
+
+
+
+
+
+
+
+    foreach ($variables['view']->result as $row) {
+      $programme = $row->_entity ?? NULL;
+      if (!$programme) {
+        continue;
+      }
+
+      $lang_for_url = b5subtheme_entity_language_for_url($programme, $langcode);
+      $language = \Drupal::languageManager()->getLanguage($lang_for_url);
+      $programme_t = b5subtheme_entity_for_language_with_fallback($programme, $langcode);
+      $row->_entity = $programme_t;
+      $row->display_instruction_languages = b5subtheme_referenced_entity_labels_for_language($programme_t, 'field_programme_language_of_inst', $lang_for_url);
+
+      // Institution del programme.
+      if (
+        !$programme_t->hasField('field_programme_institution') ||
+        $programme_t->get('field_programme_institution')->isEmpty()
+      ) {
+        continue;
+      }
+      $inst = $programme_t->get('field_programme_institution')->entity;
+      $inst = b5subtheme_entity_for_language_with_fallback($inst, $lang_for_url);
+      if (!$inst) {
+        continue;
+      }
+      $row->display_institution = $inst;
+
+      // Aliases (último segmento de la URL canónica traducida).
+      $prog_canonical = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $programme_t->id()], ['language' => $language])->toString();
+      $inst_canonical = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $inst->id()], ['language' => $language])->toString();
+
+      $programme_alias = basename(trim($prog_canonical, '/'));
+      $institution_alias = basename(trim($inst_canonical, '/'));
+
+      // /lang/alias_institution/catalogue/alias_programme_actual
+      $row->programme_url = '/' . $lang_for_url . '/catalogue/' . $institution_alias . '/' . $programme_alias;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+  if ($variables['view']->id() === 'search_iec') {
+    $branding = \Drupal::service('settings')->get('site_branding', []);
+    $variables['search_site_primary_color'] = $branding['primary_color'] ?? '#ff4949';
+
+    $langcode = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+
+    // Países traducidos (Address).
+    $variables['country_list'] = \Drupal::service('address.country_repository')->getList($langcode);
+
+
+
+
+    $current_language = \Drupal::languageManager()
+    ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+    ->getId();
+
+  foreach ($variables['view']->result as &$row) {
+    /** @var \Drupal\node\NodeInterface|null $iec */
+    $iec = $row->_entity ?? NULL;
+
+    if (!$iec instanceof NodeInterface || !$iec->id()) {
+      
+      continue;
+    }
+
+    $lang_for_url = b5subtheme_entity_language_for_url($iec, $current_language);
+    $language = \Drupal::languageManager()->getLanguage($lang_for_url);
+
+    $iec_for_url = b5subtheme_entity_for_language_with_fallback($iec, $current_language);
+    $row->_entity = $iec_for_url;
+    $row->display_instruction_languages = b5subtheme_referenced_entity_labels_for_language($iec_for_url, 'field_iec_language_of_instructio', $lang_for_url);
+
+    if ($iec_for_url->hasField('field_iec_programme') && !$iec_for_url->get('field_iec_programme')->isEmpty()) {
+      $programme = $iec_for_url->get('field_iec_programme')->entity;
+      $programme = b5subtheme_entity_for_language_with_fallback($programme, $current_language);
+      $row->display_programme = $programme;
+
+      if ($programme && $programme->hasField('field_programme_institution') && !$programme->get('field_programme_institution')->isEmpty()) {
+        $institution = $programme->get('field_programme_institution')->entity;
+        $row->display_institution = b5subtheme_entity_for_language_with_fallback($institution, $current_language);
+      }
+    }
+
+    // Genera la URL canónica en el idioma adecuado
+    $url = $iec_for_url
+      ->toUrl('canonical', ['language' => $language])
+      ->toString();
+
+    // Si la URL viene ya con prefijo /xx, lo quitamos para evitar duplicados
+    if (strpos($url, '/' . $lang_for_url) === 0) {
+      $url = substr($url, strlen('/' . $lang_for_url));
+    }
+
+    // Construir la nueva URL con el formato correcto: /<lang_for_url>/catalogue/<...>
+    // (Nota: pongo "/" al principio para que sea una ruta absoluta correcta)
+    $row->custom_url = '/' . $lang_for_url . '/catalogue' . $url;
+  }
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+/* Implements hook_theme_registry_alter().
+ */
+function b5subtheme_theme_registry_alter(&$theme_registry)
+{
+  \Drupal::service('twig.loader.filesystem')->addPath(
+    DRUPAL_ROOT . '/modules/custom/dacem_footer/templates',
+    'dacem_footer'
+  );
+}
+
+
+
+use Drupal\Core\Form\FormStateInterface;
+
+function b5subtheme_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state, $form_id)
+{
+  $view = $form_state->getBuildInfo()['callback_object']->view ?? NULL;
+  if ($view && $view->id() === 'alliances') {
+    if (isset($form['title'])) {
+      $form['title']['#attributes']['placeholder'] = t('Type here to search');
+      $form['title']['#title_display'] = 'invisible';
+    }
+
+    if (isset($form['actions']['submit'])) {
+      $form['actions']['submit']['#value'] = t('Search');
+    }
+  }
+
+  if ($view && $view->id() === 'main_page' && $view->current_display === 'page_2') {
+    if (isset($form['title'])) {
+      $form['title']['#attributes']['placeholder'] = t('Type here to search');
+      $form['title']['#title_display'] = 'invisible';
+    }
+  }
+
+  if ($view && $view->id() === 'search_programme') {
+    // En el form
+    $form['#attributes']['data-disable-refocus'] = 'true';
+
+    $request = \Drupal::request();
+    $home_programme_id = $request->query->get('home_programme');
+    $reset_requested = $request->query->get('op') === 'Reset';
+
+    if (!$reset_requested && $home_programme_id && is_numeric($home_programme_id)) {
+      $form['home_programme'] = [
+        '#type' => 'hidden',
+        '#value' => (int) $home_programme_id,
+        '#attributes' => [
+          'data-home-programme-filter' => '1',
+        ],
+      ];
+    }
+
+    if (isset($form['actions']['reset'])) {
+      if ($home_programme_id && is_numeric($home_programme_id)) {
+        $form['actions']['reset']['#access'] = TRUE;
+      }
+
+      $form['actions']['reset']['#attributes']['data-clear-home-programme'] = '1';
+      $form['actions']['reset']['#attributes']['data-reset-url'] = Url::fromRoute('view.search_programme.page_1', [], [
+        'language' => \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT),
+      ])->toString();
+    }
+
+    // En todos los hijos del form (inputs/selects)
+    array_walk_recursive($form, function (&$value, $key) {
+      if ($key === '#attributes') {
+        $value['data-disable-refocus'] = 'true';
+      }
+    });
+    // En el botón submit, por si acaso
+    if (isset($form['actions']['submit'])) {
+      $form['actions']['submit']['#attributes']['data-disable-refocus'] = 'true';
+    }
+  }
+}
+
+
+
+
+
+
+
+
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function b5subtheme_views_pre_render(ViewExecutable $view) {
+  if ($view->id() !== 'institution_new_catalogue') {
+    return;
+  }
+
+  if ($view->current_display === 'page_1' || $view->current_display === 'page_3') {
+    $current_language = \Drupal::languageManager()
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
+
+    foreach ($view->result as &$row) {
+      /** @var \Drupal\node\NodeInterface|null $programme */
+      $programme = $row->_entity ?? NULL;
+
+      if (!$programme || !$programme->id()) {
+        \Drupal::logger('catalogue_debug')->warning('Row without valid programme entity.');
+        continue;
+      }
+
+      $lang_for_url = b5subtheme_entity_language_for_url($programme, $current_language);
+      $language = \Drupal::languageManager()->getLanguage($lang_for_url);
+      $programme_for_url = b5subtheme_entity_for_language_with_fallback($programme, $current_language);
+      $row->_entity = $programme_for_url;
+      $row->display_instruction_languages = b5subtheme_referenced_entity_labels_for_language($programme_for_url, 'field_programme_language_of_inst', $lang_for_url);
+
+      if (
+        !$programme_for_url->hasField('field_programme_institution') ||
+        $programme_for_url->get('field_programme_institution')->isEmpty()
+      ) {
+        \Drupal::logger('catalogue_debug')->warning('Programme @nid has no institution reference.', [
+          '@nid' => $programme_for_url->id(),
+        ]);
+        continue;
+      }
+
+      /** @var \Drupal\node\NodeInterface|null $institution */
+      $institution = $programme_for_url->get('field_programme_institution')->entity;
+      $institution = b5subtheme_entity_for_language_with_fallback($institution, $lang_for_url);
+      if (!$institution || !$institution->id()) {
+        \Drupal::logger('catalogue_debug')->warning('Programme @nid has invalid institution entity.', [
+          '@nid' => $programme_for_url->id(),
+        ]);
+        continue;
+      }
+
+      $institution_for_url = $institution;
+      $row->display_institution = $institution_for_url;
+
+      if ($programme_for_url->hasField('field_programme_ou') && !$programme_for_url->get('field_programme_ou')->isEmpty()) {
+        $ou = $programme_for_url->get('field_programme_ou')->entity;
+        $row->display_ou = b5subtheme_entity_for_language_with_fallback($ou, $lang_for_url);
+      }
+
+      $programme_canonical = Url::fromRoute('entity.node.canonical', ['node' => $programme_for_url->id()], ['language' => $language])->toString();
+      $institution_canonical = Url::fromRoute('entity.node.canonical', ['node' => $institution_for_url->id()], ['language' => $language])->toString();
+
+      $programme_slug = basename(trim($programme_canonical, '/'));
+      $institution_slug = basename(trim($institution_canonical, '/'));
+
+      $row->custom_url = '/' . $lang_for_url
+        . '/catalogue/'
+        . $institution_slug
+        . '/'
+        . $programme_slug;
+
+      \Drupal::logger('catalogue_debug')->notice('Generated custom_url for @display nid @nid: @url', [
+        '@display' => $view->current_display,
+        '@nid' => $programme_for_url->id(),
+        '@url' => $row->custom_url,
+      ]);
+    }
+  }
+
+  if ($view->current_display === 'page_2') {
+    $current_language = \Drupal::languageManager()
+      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+      ->getId();
+
+    foreach ($view->result as &$row) {
+      /** @var \Drupal\node\NodeInterface|null $iec */
+      $iec = $row->_entity ?? NULL;
+
+      if (!$iec instanceof NodeInterface || !$iec->id()) {
+        continue;
+      }
+
+      $lang_for_url = b5subtheme_entity_language_for_url($iec, $current_language);
+      $language = \Drupal::languageManager()->getLanguage($lang_for_url);
+
+      $iec_for_url = b5subtheme_entity_for_language_with_fallback($iec, $current_language);
+      $row->_entity = $iec_for_url;
+      $row->display_instruction_languages = b5subtheme_referenced_entity_labels_for_language($iec_for_url, 'field_iec_language_of_instructio', $lang_for_url);
+
+      if ($iec_for_url->hasField('field_iec_programme') && !$iec_for_url->get('field_iec_programme')->isEmpty()) {
+        $programme = $iec_for_url->get('field_iec_programme')->entity;
+        $programme = b5subtheme_entity_for_language_with_fallback($programme, $current_language);
+        $row->display_programme = $programme;
+      }
+
+      // Genera la URL canónica en el idioma adecuado.
+      $url = $iec_for_url
+        ->toUrl('canonical', ['language' => $language])
+        ->toString();
+
+      // Si la URL viene ya con prefijo /xx, lo quitamos para evitar duplicados.
+      if (strpos($url, '/' . $lang_for_url) === 0) {
+        $url = substr($url, strlen('/' . $lang_for_url));
+      }
+
+      // Construir la nueva URL con el formato correcto: /<lang_for_url>/catalogue/<...>
+      $row->custom_url = '/' . $lang_for_url . '/catalogue' . $url;
+
+      \Drupal::logger('catalogue_debug')->notice('Generated custom_url for page_2 nid @nid: @url', [
+        '@nid' => $iec_for_url->id(),
+        '@url' => $row->custom_url,
+      ]);
+    }
+  }
+}

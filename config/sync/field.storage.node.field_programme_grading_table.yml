@@ -1,0 +1,19 @@
+uuid: 73508ef3-210c-4790-85bc-5b0a3af0d8f0
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_programme_grading_table
+field_name: field_programme_grading_table
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

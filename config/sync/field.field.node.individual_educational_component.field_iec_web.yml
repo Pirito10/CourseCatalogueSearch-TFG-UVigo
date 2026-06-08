@@ -1,0 +1,23 @@
+uuid: 6e57f551-d444-432e-8daa-1fe4ae9a2bfe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_web
+    - node.type.individual_educational_component
+  module:
+    - link
+id: node.individual_educational_component.field_iec_web
+field_name: field_iec_web
+entity_type: node
+bundle: individual_educational_component
+label: Webpage
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

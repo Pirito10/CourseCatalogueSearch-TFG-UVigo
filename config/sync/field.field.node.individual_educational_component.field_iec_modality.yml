@@ -1,0 +1,29 @@
+uuid: 0fc9d30a-2acb-4fe7-9236-22cd7cd2a92e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_modality
+    - node.type.individual_educational_component
+  module:
+    - elm_vocabulary_field
+id: node.individual_educational_component.field_iec_modality
+field_name: field_iec_modality
+entity_type: node
+bundle: individual_educational_component
+label: 'Mode of Delivery'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    729f3bed4b: false
+    7813801c77: false
+    9191af2ed9: false
+    920fbb3cbe: false
+    c_3a90b26d: false
+    e92d221e4d: false
+    ed4c557045: false
+field_type: elm_controlled_vocabulary

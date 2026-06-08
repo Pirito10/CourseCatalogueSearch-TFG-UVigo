@@ -1,0 +1,51 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Candidatar-se
+          reset_button_label: Atualizar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Primeira'
+            last: 'Última »'
+          expose:
+            items_per_page_label: 'Itens por página'
+            items_per_page_options_all_label: '- Todos -'
+            offset_label: Deslocamento
+      fields:
+        label:
+          label: Etiqueta
+          separator: ', '
+        person_given_names:
+          separator: ', '
+        person_family_name:
+          separator: ', '
+        person_gender:
+          separator: ', '
+        phone_number:
+          label: 'Número de telefone'
+        email:
+          label: Email
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        role_description:
+          separator: ', '
+      filters:
+        label:
+          expose:
+            label: Etiqueta
+      title: Contactos
+  contact_list:
+    display_options:
+      menu:
+        title: Contactos

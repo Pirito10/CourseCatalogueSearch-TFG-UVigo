@@ -1,0 +1,24 @@
+uuid: 77c2d4dc-165a-495b-a71e-b422039ee38c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_general_campus_description
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_general_campus_description
+field_name: field_general_campus_description
+entity_type: node
+bundle: institution
+label: 'General Campus Description'
+description: 'Introductory text that will be displayed before the list of campuses.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

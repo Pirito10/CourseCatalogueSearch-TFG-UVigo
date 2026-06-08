@@ -1,0 +1,29 @@
+uuid: 17875f2f-4454-456e-a280-fa8e3d133189
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_member_institution
+    - node.type.institution
+    - node.type.member
+id: node.member.field_member_institution
+field_name: field_member_institution
+entity_type: node
+bundle: member
+label: Institution
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      institution: institution
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

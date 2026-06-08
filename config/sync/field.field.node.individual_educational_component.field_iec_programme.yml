@@ -1,0 +1,29 @@
+uuid: 9769ed8b-2c16-456b-ad0e-5e64029e680a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_programme
+    - node.type.individual_educational_component
+    - node.type.programme
+id: node.individual_educational_component.field_iec_programme
+field_name: field_iec_programme
+entity_type: node
+bundle: individual_educational_component
+label: Programme
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      programme: programme
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

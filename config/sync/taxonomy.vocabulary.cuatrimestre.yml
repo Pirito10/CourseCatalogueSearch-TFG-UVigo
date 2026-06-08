@@ -1,0 +1,9 @@
+uuid: 05d8a656-de69-4ca7-9f05-62bfbc165037
+langcode: es
+status: true
+dependencies: {  }
+name: Cuatrimestre
+vid: cuatrimestre
+description: 'Indica el cuatrimestre en el que se dá la asignatura'
+weight: 0
+new_revision: false

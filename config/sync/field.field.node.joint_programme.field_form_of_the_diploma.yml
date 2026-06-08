@@ -1,0 +1,21 @@
+uuid: e231187f-5677-4008-a66e-285d3b9da062
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_form_of_the_diploma
+    - node.type.joint_programme
+  module:
+    - options
+id: node.joint_programme.field_form_of_the_diploma
+field_name: field_form_of_the_diploma
+entity_type: node
+bundle: joint_programme
+label: 'Form of the diploma'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

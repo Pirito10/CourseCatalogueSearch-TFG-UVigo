@@ -1,0 +1,24 @@
+uuid: acf39066-c23a-4754-92c3-30e417c35c00
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mobility_structure
+    - filter.format.basic_html
+    - node.type.joint_programme
+  module:
+    - text
+id: node.joint_programme.field_mobility_structure
+field_name: field_mobility_structure
+entity_type: node
+bundle: joint_programme
+label: 'Mobility structure'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

@@ -1,0 +1,21 @@
+uuid: 72b4de5f-df8f-443c-a28f-8165cbc9cd2c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_term
+    - node.type.iec_instance
+  module:
+    - options
+id: node.iec_instance.field_iec_instance_term
+field_name: field_iec_instance_term
+entity_type: node
+bundle: iec_instance
+label: Term
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

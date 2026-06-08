@@ -1,0 +1,23 @@
+uuid: 35c3a2d9-73f5-44df-b6a1-50d5bc0b1cba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_credits
+    - node.type.individual_educational_component
+id: node.individual_educational_component.field_iec_credits
+field_name: field_iec_credits
+entity_type: node
+bundle: individual_educational_component
+label: 'Number of credits'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1.0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

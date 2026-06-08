@@ -1,0 +1,23 @@
+uuid: 14c850b4-0051-42ee-b0a5-128546e8c18e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_credits
+    - node.type.programme
+id: node.programme.field_credits
+field_name: field_credits
+entity_type: node
+bundle: programme
+label: 'Number of credits'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

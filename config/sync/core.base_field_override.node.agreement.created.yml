@@ -1,0 +1,18 @@
+uuid: 87ee7571-d0b3-454b-bffa-d5a2f6b0747e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.agreement
+id: node.agreement.created
+field_name: created
+entity_type: node
+bundle: agreement
+label: 'Authored on'
+description: 'The date and time that the content was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

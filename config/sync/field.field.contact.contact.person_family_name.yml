@@ -1,0 +1,26 @@
+uuid: 659b1192-cbc2-4d82-ad18-1135fc7f3e34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.person_family_name
+  module:
+    - ewp_contact
+    - ewp_core
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: JttQWX9eU5c-hPWUvsBT-U9emDEEy33sFZ2DBMEzmXQ
+id: contact.contact.person_family_name
+field_name: person_family_name
+entity_type: contact
+bundle: contact
+label: 'Person family name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_string_lang

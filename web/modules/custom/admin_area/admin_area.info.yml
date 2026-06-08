@@ -1,0 +1,7 @@
+name: 'Admin Area'
+type: module
+description: 'Módulo para gestionar el área de administración de universidad.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - group:group

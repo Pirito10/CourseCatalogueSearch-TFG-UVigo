@@ -1,0 +1,15 @@
+label: 'Taksonomski izraz'
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+      arguments:
+        tid:
+          exception:
+            title: Vsi
+  page_1:
+    display_title: Stran

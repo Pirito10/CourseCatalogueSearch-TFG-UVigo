@@ -1,0 +1,8 @@
+name: Agreements Programmes
+type: module
+description: Shows compatible programmes based on agreements and ISCED-F fields.
+core_version_requirement: ^9 || ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:node
+  - isced_field:isced_field

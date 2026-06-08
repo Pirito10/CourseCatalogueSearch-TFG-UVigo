@@ -1,0 +1,21 @@
+uuid: 0cdb4029-f0df-40ea-929b-4a93c3162b26
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_term
+    - node.type.individual_educational_component
+  module:
+    - options
+id: node.individual_educational_component.field_iec_term
+field_name: field_iec_term
+entity_type: node
+bundle: individual_educational_component
+label: Term
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

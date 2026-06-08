@@ -1,0 +1,25 @@
+uuid: 1ebd4051-4d21-4736-ad50-e6b21abd5797
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_contact
+    - ewp_core
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: v7H9eq7RIBP9bzMHa-lFwkKfWpt4LBDkv2du9P_oVeo
+id: contact.person_family_name
+field_name: person_family_name
+entity_type: contact
+type: ewp_string_lang
+settings:
+  max_length: 255
+module: ewp_core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

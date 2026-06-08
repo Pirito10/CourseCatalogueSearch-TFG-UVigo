@@ -1,0 +1,241 @@
+<h1>{{ title }}</h1>
+
+
+<!-- Tabs navigation -->
+<ul
+	class="nav nav-tabs" id="adminAreaTabs" role="tablist">
+	<!-- Pestaña de contenido -->
+	<li class="nav-item" role="presentation">
+		<button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content" type="button" role="tab" aria-controls="content" aria-selected="true">
+			Content
+		</button>
+	</li>
+
+	<!-- Pestaña de usuarios (solo para University Admin) -->
+	{% if data.role == 'universitytypegroup-university_a' %}
+		<li class="nav-item" role="presentation">
+			<button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="false">
+				Users
+			</button>
+		</li>
+	{% endif %}
+</ul>
+
+<div
+	class="tab-content mt-3" id="adminAreaTabsContent">
+	<!-- Tab de contenido -->
+	<div
+		class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
+		<!-- Mostrar siempre la universidad -->
+		<div class="d-flex align-items-center mb-3 ms-3">
+			<h2 class="me-3 mb">
+				<a class="h1" target="_blank" href="{{ data.university.link }}">{{ data.university.name }}</a>
+			</h2>
+
+			<!-- Botones exclusivos para University Admin -->
+			{% if data.role == 'universitytypegroup-university_a' %}
+				<a href="{{ data.university.edit_link }}" class="btn btn-primary" title='Edit Institution Information'>Edit Institution</a>
+				<a href="{{ data.university.create_degree_link }}" class="btn btn-success btn-sm">Create Programme</a>
+				<!-- <a href="{{ data.university.translation_link }}" class="btn btn-warning btn-sm">Language</a> -->
+				{% if data.resources_services.exists %}
+					<a href="{{ data.resources_services.edit_link }}" class="btn btn-warning" title='Edit Institution Resources and Services'>Edit RS</a>
+				{% else %}
+					<a href="{{ data.resources_services.create_link }}" class="btn btn-success">Create RS</a>
+				{% endif %}
+
+			{% endif %}
+		</div>
+
+		<!-- Mostrar carreras y asignaturas -->
+		{% if data.role == 'universitytypegroup-university_a' or data.role == 'universitytypegroup-degree_admin' %}
+			<div class="degree-container-admin-area ms-3">
+				{% for degree in data.degrees %}
+					<div class="d-flex justify-content-between align-items-center">
+						<div>
+							<a class="h3" target="_blank" href="{{ degree.link }}">{{ degree.title }}</a>
+						</div>
+						<div>
+							<a href="{{ degree.edit_link }}" class="btn btn-secondary btn-sm" title='Edit Programme Information'>Edit</a>
+							<!-- <a href="{{ degree.translation_link }}" class="btn btn-warning btn-sm">Language</a> -->
+
+							<a href="{{ degree.delete_link }}" class="btn btn-danger btn-sm">Delete</a>
+							{% if data.role != 'universitytypegroup-subject_admi' %}
+								<a href="{{ degree.create_subject_link }}" class="btn btn-success btn-sm">Create IEC</a>
+							{% endif %}
+							<button class="btn btn-link btn-sm toggle-subjects" data-bs-toggle="collapse" data-bs-target="#subjects-degree-{{ loop.index }}" aria-expanded="false" aria-controls="subjects-degree-{{ loop.index }}">
+								Show IECs
+							</button>
+						</div>
+					</div>
+					<div id="subjects-degree-{{ loop.index }}" class="collapse mt-2">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>IEC</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for subject in degree.subjects %}
+									<tr>
+										<td>
+											<a href="{{ subject.link }}" target="_blank">{{ subject.title }}</a>
+										</td>
+										<td>
+											<a href="{{ subject.edit_link }}" class="btn btn-secondary btn-sm">Edit</a>
+											<!-- <a href="{{ subject.translation_link }}" class="btn btn-warning btn-sm">Language</a> -->
+
+											<a href="{{ subject.delete_link }}" class="btn btn-danger btn-sm">Delete</a>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					<hr>
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<!-- Mostrar asignaturas para Subject Admin -->
+		{% if data.role == 'universitytypegroup-subject_admi' %}
+			<div class="ms-3">
+				{% if data.subjects_by_degree is not empty %}
+					{% for degree_id, degree in data.subjects_by_degree %}
+						<div class="degree-container-admin-area ms-3">
+							<div class="d-flex justify-content-between align-items-center">
+								<div>
+									<a class="h3" href="{{ degree.degree_link }}" target="_blank">{{ degree.degree_title }}</a>
+								</div>
+								<div>
+									<button class="btn btn-link btn-sm toggle-subjects" data-bs-toggle="collapse" data-bs-target="#subjects-degree-{{ loop.index }}" aria-expanded="false" aria-controls="subjects-degree-{{ loop.index }}">
+										Show IECs
+									</button>
+								</div>
+							</div>
+							<div id="subjects-degree-{{ loop.index }}" class="collapse mt-2">
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>Subject</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for subject in degree.subjects %}
+											<tr>
+												<td>
+													<a href="{{ subject.link }}" target="_blank">{{ subject.title }}</a>
+												</td>
+												<td>
+													<a href="{{ subject.edit_link }}" class="btn btn-secondary btn-sm">Edit</a>
+													<!-- <a href="{{ subject.translation_link }}" class="btn btn-warning btn-sm">Language</a> -->
+													<a href="{{ subject.delete_link }}" class="btn btn-danger btn-sm">Delete</a>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<hr>
+					{% endfor %}
+				{% else %}
+					<p>No subjects found for this user.</p>
+				{% endif %}
+			</div>
+		{% endif %}
+
+
+		{% if data.role == 'universitytypegroup-university_a' and data.campuses is not empty %}
+			<div class="ms-3 mt-5">
+				<div class="d-flex align-items-center mb-2">
+					<h3 class="mb-0 me-2">Campuses</h3>
+					<a href="{{ data.university.create_campus_link }}" class="btn btn-success btn-sm">Create Campus</a>
+				</div>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Campus</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for campus in data.campuses %}
+							<tr>
+								<td>
+									<h5>{{campus.title}}</h5>
+								</td>
+								<td>
+									<a href="{{ campus.edit_link }}" class="btn btn-secondary btn-sm">Edit</a>
+									<a href="{{ campus.delete_link }}" class="btn btn-danger btn-sm">Delete</a>
+									<a href="{{ campus.edit_rs_link }}" class="btn btn-warning btn-sm">Edit RS</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
+
+
+	</div>
+
+	<!-- Tab de usuarios -->
+	{% if data.role == 'universitytypegroup-university_a' %}
+		<div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+			<div class="degree-container-admin-area ms-3">
+				<div class="d-flex justify-content-between align-items-center">
+					<h3 class="mb-0">Users</h3>
+					<div class="d-flex">
+						<a href="{{ data.create_user_link }}" class="btn btn-success btn-sm me-2">Create User</a>
+						<button class="btn btn-link btn-sm toggle-users" data-bs-toggle="collapse" data-bs-target="#group-members" aria-expanded="false" aria-controls="group-members">
+							Show Users
+						</button>
+					</div>
+				</div>
+
+				<div id="group-members" class="mt-2 show">
+
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Role</th>
+								<th>Entities</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for member in data.group_members %}
+								<tr>
+									<td>{{ member.name }}</td>
+									<td>{{ member.roles|join(', ') }}</td>
+									<td>
+										{% if member.entities is not empty %}
+											<ul class="list-unstyled">
+												{% for entity in member.entities %}
+													<li>
+														<a href="{{ entity.link }}">{{ entity.title }}</a>
+													</li>
+												{% endfor %}
+											</ul>
+										{% else %}
+											<span>No associated entities</span>
+										{% endif %}
+									</td>
+									<td>
+										<a href="{{ member.edit_link }}" class="btn btn-secondary btn-sm">Edit</a>
+										<a href="{{ member.delete_link }}" class="btn btn-danger btn-sm">Delete</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+
+
+</div>

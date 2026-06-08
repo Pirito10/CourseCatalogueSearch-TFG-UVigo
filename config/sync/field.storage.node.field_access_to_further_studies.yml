@@ -1,0 +1,19 @@
+uuid: f92d17d2-b408-45b8-9a56-0339960348d8
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_access_to_further_studies
+field_name: field_access_to_further_studies
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

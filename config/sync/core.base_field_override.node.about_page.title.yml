@@ -1,0 +1,18 @@
+uuid: 2cd2e49a-7f8f-48aa-99c5-cca963e968e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.about_page
+id: node.about_page.title
+field_name: title
+entity_type: node
+bundle: about_page
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

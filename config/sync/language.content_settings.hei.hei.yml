@@ -1,0 +1,11 @@
+uuid: 75e50c45-7ac1-4f9f-970b-f3d3d63e46bb
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_institutions
+id: hei.hei
+target_entity_type_id: hei
+target_bundle: hei
+default_langcode: site_default
+language_alterable: false

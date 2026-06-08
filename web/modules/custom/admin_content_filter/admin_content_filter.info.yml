@@ -1,0 +1,8 @@
+name: 'Admin Content Filter'
+type: module
+description: 'Alters the content view to show only editable entities for non-admin users.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:node
+version: 1.0

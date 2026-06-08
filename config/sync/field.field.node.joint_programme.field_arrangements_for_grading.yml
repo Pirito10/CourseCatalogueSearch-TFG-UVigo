@@ -1,0 +1,24 @@
+uuid: dab20571-6a67-4766-b4c8-9ab4306010d4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_arrangements_for_grading
+    - filter.format.basic_html
+    - node.type.joint_programme
+  module:
+    - text
+id: node.joint_programme.field_arrangements_for_grading
+field_name: field_arrangements_for_grading
+entity_type: node
+bundle: joint_programme
+label: 'Arrangements for grading'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

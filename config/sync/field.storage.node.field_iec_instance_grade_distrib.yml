@@ -1,0 +1,19 @@
+uuid: 51862a57-03f6-4267-b222-c16f1279b9ac
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_iec_instance_grade_distrib
+field_name: field_iec_instance_grade_distrib
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,4 @@
+label: 'Zobrazit na titulní stránce'
+settings:
+  on_label: Zapnuto
+  off_label: Vypnuto

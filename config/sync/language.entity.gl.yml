@@ -1,0 +1,9 @@
+uuid: 58e4738f-4053-442d-9ab5-3d6d9808ed4e
+langcode: en
+status: true
+dependencies: {  }
+id: gl
+label: Galician
+direction: ltr
+weight: 10
+locked: false

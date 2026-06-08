@@ -1,0 +1,1256 @@
+{% set institution = view.result[0]._entity %}
+
+
+{% set university_primary_color = institution.field_primary_color[0].color %}
+{% set university_text_color = institution.field_text_color[0].color %}
+{% set university_emphasis_text_color = institution.field_emphasis_text_color[0].color %}
+
+{% set current_language = view.result[0].node_field_data_langcode %}
+
+{% if institution.hasTranslation(current_language) %}
+	{% set institution = institution.getTranslation(current_language) %}
+
+{% endif %}
+
+{% if view.result|length == 1 and view.result[0]._relationship_entities['reverse__node__field_ou_institution'] is null %}{% endif %}
+
+{% set aa_results = drupal_view_result('academic_authority', 'block_1') %}
+
+
+<style>:root
+{
+	--university_primary_color: {{university_primary_color}}
+	;
+	--university_text_color: {{university_text_color}}
+	;
+	--university_emphasis_text_color: {{university_emphasis_text_color}}
+	;
+}</style>{#
+																			<div class="university-menu-block">
+																			{{ page.header }}</div>#}<div class="rs-header ">
+<div class="my-custom-container-2">
+	<div class="page-band">
+		<h1 class="rs-title">{{ 'INSTITUTIONAL INFORMATION'|t }}</h1>
+	</div>
+</div></div><nav id="fixed-navbar" class="fixed-navbar navbar-expand-lg bg-black">
+<div
+	class="my-custom-constainer">
+	<!-- Menú desplegable para pantallas pequeñas -->
+	<div class="dropdown d-lg-none w-100">
+		{% set first_menu_section = menu_sections|first %}
+		{% set dropdown_label = first_menu_section.label|default('Menu'|t) %}
+		<button id="rsDropdownButton" class="btn btn-secondary dropdown-toggle w-100 fw-bold bg-black border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			{{ dropdown_label }}
+		</button>
+
+		<ul
+			class="dropdown-menu w-100 text-center" aria-labelledby="rsDropdownButton">
+			<!--
+															<li>
+																<a class="dropdown-item fw-bold" href="#description">{{ 'Description'|t }}</a>
+															</li>
+															<li>
+																<a class="dropdown-item fw-bold" href="#academic-authorities">{{ 'Authorities'|t }}</a>
+															</li>
+															<li>
+																<a class="dropdown-item fw-bold" href="#admission">{{ 'Admission'|t }}</a>
+															</li>
+															<li>
+																<a class="dropdown-item fw-bold" href="#ects-allocation-policty">{{ 'ECTS Policies'|t }}</a>
+															</li>
+															<li>
+																<a class="dropdown-item fw-bold" href="#mobility">{{ 'Mobility'|t }}</a>
+															</li>
+															<li>
+																<a class="dropdown-item fw-bold" href="#campuses">{{ 'Campuses'|t }}</a>
+															</li>
+															<li>
+																<a class="dropdown-item fw-bold" href="#organizational-units">{{ 'Org. Units'|t }}</a>
+															</li>
+															-->
+
+
+			{% for section in menu_sections %}
+				<li class="nav-item">
+					<a class="dropdown-item fw-bold" href="#{{ section.id }}">
+						{{ section.label }}
+					</a>
+				</li>
+
+				{% if section.id == 'description' %}
+					{% if aa_results|length > 0 %}
+						<li class="nav-item">
+							<a class="dropdown-item fw-bold" href="#academic-authorities">
+								{{ 'Contacts'|t }}
+							</a>
+						</li>
+
+					{% endif %}
+				{% endif %}
+
+			{% endfor %}
+
+
+			{% if campuses is not empty %}
+				<li class="nav-item">
+					<a class="dropdown-item fw-bold" href="#campuses">
+						{{ 'Campuses'|t }}
+					</a>
+				</li>
+			{% endif %}
+
+			{% if  not (view.result|length == 1 and view.result[0]._relationship_entities['reverse__node__field_ou_institution'] is null) %}
+				<li class="nav-item">
+					<a class="dropdown-item fw-bold" href="#organizational-units">
+						{{ 'Org. Units'|t }}
+					</a>
+				</li>
+			{% endif %}
+
+
+		</ul>
+	</div>
+
+	<!-- Menú de pestañas visible en pantallas grandes -->
+	<ul
+		class="nav nav-tabs justify-content-center d-none d-lg-flex">
+
+		<!--
+										<li class="nav-item">
+											<a class="nav-link nav-link-rs-menu fw-bold" href="#description">{{ 'Description'|t }}</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link nav-link-rs-menu  fw-bold" href="#academic-authorities">{{ 'Authorities'|t }}</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link nav-link-rs-menu  fw-bold" href="#admission">{{ 'Admission'|t }}</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link nav-link-rs-menu  fw-bold" href="#ects-allocation-policy">{{ 'ECTS Policies'|t }}</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link nav-link-rs-menu  fw-bold" href="#mobility">{{ 'Mobility'|t }}</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link nav-link-rs-menu  fw-bold" href="#campuses">{{ 'Campuses'|t }}</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link nav-link-rs-menu fw-bold" href="#organizational-units">{{ 'Org. Units'|t }}</a>
+										</li>
+										-->
+
+
+		{% for section in menu_sections %}
+			<li class="nav-item">
+				<a class="nav-link nav-link-rs-menu fw-bold " href="#{{ section.id }}">
+					{{ section.label }}
+				</a>
+			</li>
+
+			{% if section.id == 'description' %}
+				{% if aa_results|length > 0 %}
+					<li class="nav-item">
+						<a class="nav-link nav-link-rs-menu fw-bold" href="#academic-authorities">
+							{{ 'Contacts'|t }}
+						</a>
+					</li>
+
+				{% endif %}
+			{% endif %}
+
+
+		{% endfor %}
+
+		{% if campuses is not empty %}
+			<li class="nav-item">
+				<a class="nav-link nav-link-rs-menu fw-bold" href="#campuses">
+					{{ 'Campuses'|t }}
+				</a>
+			</li>
+		{% endif %}
+
+		{% if  not (view.result|length == 1 and view.result[0]._relationship_entities['reverse__node__field_ou_institution'] is null) %}
+			<li class="nav-item">
+				<a class="nav-link nav-link-rs-menu fw-bold" href="#organizational-units">
+					{{ 'Org. Units'|t }}
+				</a>
+			</li>
+		{% endif %}
+
+
+	</ul>
+	{#{ dump(institution_vocab_labels_str) }}
+				
+					{{dump(institution.field_example_vocabularies.value | render)}#}
+
+</div></nav><div class="university-banner">
+{% if institution.field_institution_picture is not empty %}
+	{% if institution.field_institution_picture is not empty %}
+		{% set file = institution.field_institution_picture.entity %}
+		{% if file %}
+			{% set uri = file.getFileUri() %}
+			{% set image_url = file_url(uri) %}
+			<div class='university-photo'>
+				<img src="{{ image_url }}" alt="University Logo" class="university-img"/>
+			</div>
+		{% endif %}
+	{% endif %}
+{% endif %}</div><div class="container-fluid">
+<div class="section-container">
+	<div class="my-custom-container-2">
+
+		<div class="spacer"></div>
+		<div class="university-details">
+
+			<h1 class="section-title">{{institution.title.value}}</h1>
+
+			{% if country_name %}
+				<h5 style="color: red;">{{country_name}}</h5>
+			{% else %}
+				<p>
+					<strong>{{ 'Country'|t }}:</strong>
+					{{ 'Not available'|t }}</p>
+			{% endif %}
+
+			{% set current_language = institution.langcode.value %}
+
+			<div
+				class="row" id="description" style="scroll-margin-top: 200px;">
+				<!-- Parte izquierda con información de la universidad -->
+				<div class="col-12 col-lg-8 order-2 order-lg-1">
+					{% if institution.field_information.value is not empty %}
+
+						<div class="university-info">
+							<p>{{ institution.field_information.value | raw}}</p>
+						</div>
+					{% else %}
+						<p>
+							<strong>{{ 'Information'|t }}:</strong>
+							{{ 'Not available'|t }}</p>
+					{% endif %}
+
+					{#{dump(institution.field_institution_map[0].lon)}#}
+
+
+					<!-- Academic Terms debajo de la info -->
+					<div class="mt-4">
+						{% if institution.field_admission_language_policy is not empty %}
+							<h4 class="subsection-title">{{ 'Languages'|t }}</h4>
+							<p>{{ institution.field_admission_language_policy.value | raw}}</p>
+						{% endif %}
+
+						{% if institution.field_academic_calendar.value is defined and institution.field_academic_calendar.value %}
+
+							<h4 class="subsection-title">{{ 'Academic Calendar'|t }}</h4>
+
+							{{institution.field_academic_calendar.value | raw}}
+						{% endif %}
+					</div>
+				</div>
+
+				<!-- Parte derecha con logo y contacto -->
+				<div class="col-12 col-lg-4 order-1 order-lg-2">
+
+					<div
+						class="degree-sidebar bg-light p-4">
+
+						<!-- Logo (field_logo como media) -->
+						<div class="d-flex justify-content-center">
+							{% if institution.field_logo.entity.uri.value is defined %}
+								<img src="{{ file_url(institution.field_logo.entity.uri.value) }}" alt="{{ institution.label() }} logo" class="institution-logo">
+							{% endif %}
+
+						</div>
+						<div class="institution-card-information">
+
+							{% if institution.field_institution_webpage.uri is defined and institution.field_institution_webpage.uri %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-globe me-2 mt-1"></i>
+									<p class="mb-0">
+										<a href="{{ institution.field_institution_webpage.uri }}" target="_blank">
+											{{ institution.field_institution_webpage.title ?: institution.field_institution_webpage.uri }}
+										</a>
+									</p>
+								</div>
+							{% endif %}
+
+							{% if institution.field_institution_email.value is defined and institution.field_institution_email.value %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-envelope me-2 mt-1"></i>
+									<p class="mb-0">
+										<a href="mailto:{{ institution.field_institution_email.value }}" class="text-dark text-decoration-none">
+											{{ institution.field_institution_email.value }}
+										</a>
+									</p>
+								</div>
+							{% endif %}
+
+
+							{% if institution.field_institution_phone.value is defined and institution.field_institution_phone.value %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-phone-alt me-2 mt-1"></i>
+									<p class="mb-0">
+										<a href="tel:{{ institution.field_institution_phone.value }}" class="text-dark text-decoration-none">
+											{{ institution.field_institution_phone.value }}
+										</a>
+									</p>
+								</div>
+							{% endif %}
+
+
+							{% if institution.field_institution_address.value is defined and institution.field_institution_address.value %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-map-marker-alt me-2 mt-1"></i>
+									<p class="mb-0">{{ institution.field_institution_address.value }}</p>
+								</div>
+							{% endif %}
+
+
+							{% set coords = [] %}
+							{% if institution.hasField('field_institution_map') and institution.field_institution_map.value %}
+								{% set point = institution.field_institution_map.value %}
+								{% if point %}
+									{% set coords = point|replace({'POINT(':'','POINT (':'', ')':''})|trim|split(' ') %}
+								{% endif %}
+							{% endif %}
+							{% if coords is not empty %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-map-marker-alt me-2 mt-1"></i>
+									<p class="mb-0">{{ coords[1]|default('') }},
+										{{ coords[0]|default('') }}</p>
+								</div>
+							{% endif %}
+
+              {% if general_information_alliance %}
+                {% set alliance_logo = general_information_alliance.field_alliance_logo.entity %}
+                <div class="institution-alliance-membership">
+                  <p class="institution-alliance-membership__label">{{ 'Member of alliance:'|t }}</p>
+                  <a href="{{ path('view.alliance_institutions.page_1', {'arg_0': general_information_alliance.id()}) }}" class="institution-alliance-membership__link">
+                    {% if alliance_logo %}
+                      <img src="{{ file_url(alliance_logo.getFileUri()) }}" alt="{{ general_information_alliance.label() }}">
+                    {% else %}
+                      <span>{{ general_information_alliance.label() }}</span>
+                    {% endif %}
+                  </a>
+                </div>
+              {% endif %}
+
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</div>
+</div>
+
+
+{% if aa_results|length > 0 %}
+	{{ drupal_block('views_block:academic_authority-block_1') }}
+{% endif %}
+
+
+<div class="section-container">
+	<div class="my-custom-container-2" id="mobility" style="scroll-margin-top: 150px;">
+
+		{% set has_incoming = institution.field_mobility_incoming_students is not empty %}
+		{% set has_outgoing = institution.field_mobility_outgoing_students is not empty %}
+
+		{% if has_incoming or has_outgoing %}
+			<h2 class="section-title text-center">{{ 'Mobility'|t }}</h2>
+
+			{# Nav tabs #}
+			{% if has_incoming and has_outgoing %}
+				<ul class="nav nav-tabs justify-content-center" id="mobilityTabs-{{ institution.id() }}" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="tab-incoming-{{ institution.id() }}" data-bs-toggle="tab" data-bs-target="#pane-incoming-{{ institution.id() }}" type="button" role="tab" aria-controls="pane-incoming-{{ institution.id() }}" aria-selected="true">
+							{{ 'Incoming students'|t }}
+						</button>
+					</li>
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab-outgoing-{{ institution.id() }}" data-bs-toggle="tab" data-bs-target="#pane-outgoing-{{ institution.id() }}" type="button" role="tab" aria-controls="pane-outgoing-{{ institution.id() }}" aria-selected="false">
+							{{ 'Outgoing students'|t }}
+						</button>
+					</li>
+				</ul>
+			{% endif %}
+
+			{# Tab contents #}
+			<div class="tab-content pt-3" id="mobilityTabsContent-{{ institution.id() }}">
+				{% if has_incoming %}
+					<div class="tab-pane fade show active" id="pane-incoming-{{ institution.id() }}" role="tabpanel" aria-labelledby="tab-incoming-{{ institution.id() }}">
+						{{ institution.field_mobility_incoming_students.value|raw }}
+					</div>
+				{% endif %}
+
+				{% if has_outgoing %}
+					<div class="tab-pane fade {{ has_incoming ? '' : 'show active' }}" id="pane-outgoing-{{ institution.id() }}" role="tabpanel" aria-labelledby="tab-outgoing-{{ institution.id() }}">
+						{{ institution.field_mobility_outgoing_students.value|raw }}
+						{% if institution.field_recognition_outgoing is not empty %}
+							<h3 class="subsection-title mt-3">{{ 'Recognition process for outgoing students'|t }}</h3>
+							<p>{{ institution.field_recognition_outgoing.value|raw }}</p>
+						{% endif %}
+						<div class="d-flex flex-column gap-2">
+
+
+							{% if institution.field_recognition_process_phone.value is defined and institution.field_recognition_process_phone.value %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-phone-alt me-2 mt-1"></i>
+									<p class="mb-0">
+										<a href="tel:{{ institution.field_recognition_process_phone.value }}" class="text-dark text-decoration-none">
+											{{ institution.field_recognition_process_phone.value }}
+										</a>
+									</p>
+								</div>
+							{% endif %}
+
+							{% if institution.field_recognition_process_email.value is defined and institution.field_recognition_process_email.value %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-envelope me-2 mt-1"></i>
+									<p class="mb-0">
+										<a href="mailto:{{ institution.field_recognition_process_email.value }}" class="text-dark text-decoration-none">
+											{{ institution.field_recognition_process_email.value }}
+										</a>
+									</p>
+								</div>
+							{% endif %}
+
+
+							{% if institution.field_recognition_process_websit.uri is defined and institution.field_recognition_process_websit.uri %}
+								<div class="d-flex align-items-start mb-3">
+									<i class="fas fa-globe me-2 mt-1"></i>
+									<p class="mb-0">
+										<a href="{{ institution.field_recognition_process_websit.uri }}" target="_blank">
+											{{ institution.field_recognition_process_websit.title ?: institution.field_recognition_process_websit.uri }}
+										</a>
+									</p>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+			</div>
+
+		{% endif %}
+	</div>
+</div>
+
+
+<div class="section-container section-bg-grey">
+	<div class='my-custom-container-2'>
+
+		<div class="admission-section" id='admission' style="scroll-margin-top: 150px;">
+
+
+			<h2 class="section-title text-center">{{ 'Admission'|t }}</h2>
+
+			{% set has_full_degree = institution.field_admission_descipt_full is not empty or institution.field_registration_proc_full is not empty or institution.field_arrangements_recognition is not empty %}
+			{% set has_exchange = institution.field_admission_descript_exchang is not empty
+						or institution.field_registration_proc_exchange is not empty
+						or institution.field_requirements_nominations is not empty
+						or institution.field_additional_requirements is not empty
+						or institution.field_applications_autumn_term is not empty
+						or institution.field_applications_spring_term is not empty
+						or institution.field_nominations_autumn_term is not empty
+						or institution.field_nominations_spring_term is not empty
+						or institution.field_decision is not empty
+						or institution.field_transcript_of_records is not empty
+						or institution.field_application_email is not empty
+						or institution.field_application_phone is not empty
+						or institution.field_application_web is not empty %}
+			{% set has_visiting = institution.field_admission_descript_visitin is not empty or institution.field_registration_proc_visiting is not empty %}
+
+			{% if has_full_degree or has_exchange or has_visiting %}
+				<ul class="nav nav-tabs justify-content-center" id="admissionTabs-{{ institution.id() }}" role="tablist">
+					{% if has_full_degree %}
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="tab-full-degree-{{ institution.id() }}" data-bs-toggle="tab" data-bs-target="#pane-full-degree-{{ institution.id() }}" type="button" role="tab" aria-controls="pane-full-degree-{{ institution.id() }}" aria-selected="true">
+								{{ 'Full-Degree'|t }}
+							</button>
+						</li>
+					{% endif %}
+					{% if has_exchange %}
+						<li class="nav-item" role="presentation">
+							<button class="nav-link {{ has_full_degree ? '' : 'active' }}" id="tab-exchange-{{ institution.id() }}" data-bs-toggle="tab" data-bs-target="#pane-exchange-{{ institution.id() }}" type="button" role="tab" aria-controls="pane-exchange-{{ institution.id() }}" aria-selected="{{ has_full_degree ? 'false' : 'true' }}">
+								{{ 'Exchange'|t }}
+							</button>
+						</li>
+					{% endif %}
+					{% if has_visiting %}
+						<li class="nav-item" role="presentation">
+							<button class="nav-link {{ (not has_full_degree and not has_exchange) ? 'active' : '' }}" id="tab-visiting-{{ institution.id() }}" data-bs-toggle="tab" data-bs-target="#pane-visiting-{{ institution.id() }}" type="button" role="tab" aria-controls="pane-visiting-{{ institution.id() }}" aria-selected="{{ (not has_full_degree and not has_exchange) ? 'true' : 'false' }}">
+								{{ 'Visiting'|t }}
+							</button>
+						</li>
+					{% endif %}
+				</ul>
+
+				<div class="tab-content pt-3" id="admissionTabsContent-{{ institution.id() }}">
+					{% if has_full_degree %}
+						<div class="tab-pane fade show active" id="pane-full-degree-{{ institution.id() }}" role="tabpanel" aria-labelledby="tab-full-degree-{{ institution.id() }}">
+							{% if institution.field_admission_descipt_full is not empty %}
+								<h3 class="subsection-title">{{ 'Admission description for full-degree students'|t }}</h3>
+								<p>{{ institution.field_admission_descipt_full.value | raw }}</p>
+							{% endif %}
+							{% if institution.field_registration_proc_full is not empty %}
+								<h3 class="subsection-title">{{ 'Registration procedures for full-degree students'|t }}</h3>
+								<p>{{ institution.field_registration_proc_full.value | raw }}</p>
+							{% endif %}
+							{% if institution.field_arrangements_recognition is not empty %}
+								<h3 class="subsection-title">{{ 'Arrangements for the recognition of credit and prior learning'|t }}</h3>
+								<p>{{ institution.field_arrangements_recognition.value | raw }}</p>
+							{% endif %}
+						</div>
+					{% endif %}
+
+					{% if has_exchange %}
+						<div class="tab-pane fade {{ has_full_degree ? '' : 'show active' }}" id="pane-exchange-{{ institution.id() }}" role="tabpanel" aria-labelledby="tab-exchange-{{ institution.id() }}">
+							{% if institution.field_admission_descript_exchang is not empty %}
+								<h3 class="subsection-title">{{ 'Admission description for exchange students'|t }}</h3>
+								<p>{{ institution.field_admission_descript_exchang.value | raw }}</p>
+							{% endif %}
+							{% if institution.field_registration_proc_exchange is not empty %}
+								<h3 class="subsection-title">{{ 'Registration procedures for exchange students'|t }}</h3>
+								<p>{{ institution.field_registration_proc_exchange.value | raw }}</p>
+							{% endif %}
+							{% if institution.field_requirements_nominations is not empty %}
+								<h3 class="subsection-title">{{ 'Academic requirements for nominations'|t }}</h3>
+								<p>{{ institution.field_requirements_nominations.value | raw }}</p>
+							{% endif %}
+							{% if institution.field_additional_requirements is not empty %}
+								<h3 class="subsection-title">{{ 'Additional requirements'|t }}</h3>
+								<p>{{ institution.field_additional_requirements.value | raw }}</p>
+							{% endif %}
+							{% set ex_app_autumn = institution.field_applications_autumn_term is not empty and institution.field_applications_autumn_term.value is defined ? institution.field_applications_autumn_term.value|trim : '' %}
+							{% set ex_app_spring = institution.field_applications_spring_term is not empty and institution.field_applications_spring_term.value is defined ? institution.field_applications_spring_term.value|trim : '' %}
+							{% set ex_nom_autumn = institution.field_nominations_autumn_term is not empty and institution.field_nominations_autumn_term.value is defined ? institution.field_nominations_autumn_term.value|trim : '' %}
+							{% set ex_nom_spring = institution.field_nominations_spring_term is not empty and institution.field_nominations_spring_term.value is defined ? institution.field_nominations_spring_term.value|trim : '' %}
+							{% set ex_decision_weeks = institution.field_decision is not empty and institution.field_decision.value is defined ? institution.field_decision.value|trim : '' %}
+							{% set ex_transcript_weeks = institution.field_transcript_of_records is not empty and institution.field_transcript_of_records.value is defined ? institution.field_transcript_of_records.value|trim : '' %}
+							{% set app_email = institution.field_application_email is not empty and institution.field_application_email.value is defined ? institution.field_application_email.value|trim : '' %}
+							{% set app_phone = institution.field_application_phone is not empty and institution.field_application_phone.value is defined ? institution.field_application_phone.value|trim : '' %}
+							{% set app_web = '' %}
+							{% set app_web_label = '' %}
+							{% if institution.field_application_web is not empty %}
+								{% set app_web = institution.field_application_web.uri is defined and institution.field_application_web.uri ? institution.field_application_web.uri : (institution.field_application_web.value is defined ? institution.field_application_web.value : '') %}
+								{% set app_web_label = institution.field_application_web.title is defined and institution.field_application_web.title ? institution.field_application_web.title : app_web %}
+							{% endif %}
+
+							{% set month_names = {
+										'1': 'Jan', '01': 'Jan',
+										'2': 'Feb', '02': 'Feb',
+										'3': 'Mar', '03': 'Mar',
+										'4': 'Apr', '04': 'Apr',
+										'5': 'May', '05': 'May',
+										'6': 'Jun', '06': 'Jun',
+										'7': 'Jul', '07': 'Jul',
+										'8': 'Aug', '08': 'Aug',
+										'9': 'Sep', '09': 'Sep',
+										'10': 'Oct',
+										'11': 'Nov',
+										'12': 'Dec'
+									} %}
+
+							{% if ex_app_autumn or ex_app_spring or ex_nom_autumn or ex_nom_spring or ex_decision_weeks or ex_transcript_weeks or app_email or app_phone or app_web %}
+								<div class="mt-4">
+									<h3 class="subsection-title">{{ 'Exchange timeline'|t }}</h3>
+									<div class="row g-3">
+										{% if ex_nom_autumn %}
+											{% set parts = ex_nom_autumn|split('/') %}
+											{% set m = parts[0]|default('')|trim %}
+											{% set d = parts[1]|default('')|trim %}
+											<div class="col-12 col-md-6">
+												<div class="border rounded p-3 h-100 bg-white">
+													<div class="small text-muted text-uppercase">{{ 'Nominations'|t }}
+														·
+														{{ 'Autumn'|t }}</div>
+													<div class="fw-semibold">📅
+														{{ month_names[m]|default(m) }}
+														{{ d }}</div>
+												</div>
+											</div>
+										{% endif %}
+										{% if ex_nom_spring %}
+											{% set parts = ex_nom_spring|split('/') %}
+											{% set m = parts[0]|default('')|trim %}
+											{% set d = parts[1]|default('')|trim %}
+											<div class="col-12 col-md-6">
+												<div class="border rounded p-3 h-100 bg-white">
+													<div class="small text-muted text-uppercase">{{ 'Nominations'|t }}
+														·
+														{{ 'Spring'|t }}</div>
+													<div class="fw-semibold">📅
+														{{ month_names[m]|default(m) }}
+														{{ d }}</div>
+												</div>
+											</div>
+										{% endif %}
+										{% if ex_app_autumn %}
+											{% set parts = ex_app_autumn|split('/') %}
+											{% set m = parts[0]|default('')|trim %}
+											{% set d = parts[1]|default('')|trim %}
+											<div class="col-12 col-md-6">
+												<div class="border rounded p-3 h-100 bg-white">
+													<div class="small text-muted text-uppercase">{{ 'Applications'|t }}
+														·
+														{{ 'Autumn'|t }}</div>
+													<div class="fw-semibold">📅
+														{{ month_names[m]|default(m) }}
+														{{ d }}</div>
+												</div>
+											</div>
+										{% endif %}
+										{% if ex_app_spring %}
+											{% set parts = ex_app_spring|split('/') %}
+											{% set m = parts[0]|default('')|trim %}
+											{% set d = parts[1]|default('')|trim %}
+											<div class="col-12 col-md-6">
+												<div class="border rounded p-3 h-100 bg-white">
+													<div class="small text-muted text-uppercase">{{ 'Applications'|t }}
+														·
+														{{ 'Spring'|t }}</div>
+													<div class="fw-semibold">📅
+														{{ month_names[m]|default(m) }}
+														{{ d }}</div>
+												</div>
+											</div>
+										{% endif %}
+									</div>
+
+									{% if ex_decision_weeks or ex_transcript_weeks %}
+										<div class="mt-4">
+											<h3 class="subsection-title">{{ 'Timeframe'|t }}</h3>
+											<div class="row g-3">
+												{% if ex_decision_weeks %}
+													<div class="col-12 col-md-6">
+														<div class="border rounded p-3 h-100 bg-white">
+															<div class="small text-muted text-uppercase">{{ 'For decision'|t|upper }}</div>
+															<div class="fw-semibold">{{ ex_decision_weeks }}
+																{{ ex_decision_weeks == '1' ? 'week'|t : 'weeks'|t }}</div>
+														</div>
+													</div>
+												{% endif %}
+												{% if ex_transcript_weeks %}
+													<div class="col-12 col-md-6">
+														<div class="border rounded p-3 h-100 bg-white">
+															<div class="small text-muted text-uppercase">{{ 'To issue the transcript of records'|t|upper }}</div>
+															<div class="fw-semibold">{{ ex_transcript_weeks }}
+																{{ ex_transcript_weeks == '1' ? 'week'|t : 'weeks'|t }}</div>
+														</div>
+													</div>
+												{% endif %}
+											</div>
+										</div>
+									{% endif %}
+
+									{% if app_email or app_phone or app_web %}
+										<div class="mt-4">
+											<h3 class="subsection-title">{{ 'Contact'|t }}</h3>
+											<div class="d-flex flex-column gap-2">
+												{% if app_email %}
+													<a href="mailto:{{ app_email }}" class="text-decoration-none text-dark">
+														<i class="fas fa-envelope me-2"></i>
+														{{ app_email }}
+													</a>
+												{% endif %}
+												{% if app_phone %}
+													<a href="tel:{{ app_phone }}" class="text-decoration-none text-dark">
+														<i class="fas fa-phone-alt me-2"></i>
+														{{ app_phone }}
+													</a>
+												{% endif %}
+												{% if app_web %}
+													<a href="{{ app_web }}" class="text-decoration-none text-dark" target="_blank" rel="noopener noreferrer">
+														<i class="fas fa-globe me-2"></i>
+														{{ app_web_label }}
+													</a>
+												{% endif %}
+											</div>
+										</div>
+									{% endif %}
+								</div>
+							{% endif %}
+						</div>
+					{% endif %}
+
+					{% if has_visiting %}
+						<div class="tab-pane fade {{ (not has_full_degree and not has_exchange) ? 'show active' : '' }}" id="pane-visiting-{{ institution.id() }}" role="tabpanel" aria-labelledby="tab-visiting-{{ institution.id() }}">
+							{% if institution.field_admission_descript_visitin is not empty %}
+								<h3 class="subsection-title">{{ 'Admission description for visiting students'|t }}</h3>
+								<p>{{ institution.field_admission_descript_visitin.value | raw }}</p>
+							{% endif %}
+							{% if institution.field_registration_proc_visiting is not empty %}
+								<h3 class="subsection-title">{{ 'Registration procedures for visiting students'|t }}</h3>
+								<p>{{ institution.field_registration_proc_visiting.value | raw }}</p>
+							{% endif %}
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+<!--<div class="section-margin-negative"></div>-->
+<div class="section-container">
+	<div class='my-custom-container-2'>
+
+		<div class="admission-section" id='ects-policies' style="scroll-margin-top: 150px;">
+
+			<h2 class="section-title text-center">{{ 'Policies'|t }}</h2>
+
+			{% if institution.field_ects_credit_allocation_pol is not empty %}
+				<h3 class="subsection-title">{{ 'ECTS Allocation Policy'|t }}</h3>
+				<p>{{ institution.field_ects_credit_allocation_pol.value | raw }}</p>
+			{% endif %}
+
+			{% if institution.field_arrangements_guidance is not empty %}
+				<h3 class="subsection-title">{{ 'Arrangements for Academic Guidance'|t }}</h3>
+				<p>{{ institution.field_arrangements_guidance.value | raw }}</p>
+			{% endif %}
+
+
+		</div>
+	</div>
+</div>
+
+
+<!--<div class="section-margin-negative"></div>-->
+
+
+
+
+
+	<div class='section-container section-bg-grey' id="campuses" style="scroll-margin-top: 150px;">
+
+		<div class="my-custom-container-2">
+
+
+			<div class="row mb-4">
+				<div class="col-12">
+					<h2 class="section-title text-center">{{ 'Campuses'|t }}</h2>
+
+
+					{% if institution.field_general_campus_description is not empty  %}
+						<p>
+							{{institution.field_general_campus_description.value | raw}}
+						</p>
+					{% endif %}
+				</div>
+			</div>
+
+			{% if campuses is not empty %}
+
+				<!-- Contenido: Mapa + Tarjetas -->
+				<div
+					class="row">
+					<!-- Mapa -->
+					<div class="col-lg-7 col-12 mb-4 mb-lg-0">
+						<div class="map-wrapper">
+
+							{{ drupal_block('views_block:map_view-block_2') }}
+						</div>
+
+					</div>
+
+					<!-- Tarjetas -->
+					<div class="col-lg-5 col-12">
+
+						<div style="max-height: 500px; overflow-y: auto;">
+							{% for campus in campuses %}
+								{% set campus_url_language = campus.hasTranslation(current_language) ? current_language : 'en' %}
+								{% set campus_path = path('entity.node.canonical', {'node': campus.id}, {'language': language_manager.getLanguage(campus_url_language)}) %}
+								{% set parts = campus_path|trim('/')|split('/') %}
+
+
+								{# Últimos 2 segmentos son institution y campus #}
+								{% set campus_alias = parts|last %}
+								{% set institution_alias = parts[parts|length - 2] %}
+
+								<a href="{{ path('view.campus_information.page_1', { 'arg_0': institution_alias, 'arg_1': campus_alias }, {'language': language_manager.getLanguage(campus_url_language)}) }}" class="text-decoration-none text-reset">
+
+									<div class="card shadow-none mb-3 border-0 rounded-0" style="height: 123.65px; cursor: pointer;">
+										<div
+											class="row g-0">
+											<!-- Imagen -->
+											<div class="col-3" style="height: 123.65px">
+												{% if campus.field_campus_picture is not empty %}
+													<img src="{{ file_url(campus.field_campus_picture.entity.fileuri) }}" alt="{{ campus.title.value }}" class="img-fluid rounded-0 h-100 object-fit-cover">
+												{% endif %}
+											</div>
+
+											<!-- Texto -->
+											<div class="col-9">
+												<div class="card-body p-2">
+													<h5 class="card-title mb-1 text-start">{{ campus.title.value }}</h5>
+													{% if campus.field_campus_location is not empty %}
+														<p class="mb-1 text-muted small text-start">{{ campus.field_campus_location.value }}</p>
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							{% endfor %}
+						</div>
+
+
+					</div>
+
+				</div>
+
+			{% endif %}
+
+		</div>
+	
+
+
+</div></div>{% if  not (view.result|length == 1 and view.result[0]._relationship_entities['reverse__node__field_ou_institution'] is null) %}
+<div class="section-container" id='organizational-units' style="scroll-margin-top: 150px;">
+	<div
+		class="my-custom-container-2">
+
+
+		<!-- ORGANIZATIONAL UNITS SECTION -->
+		<div class="row mb-4">
+			<div class="col-12">
+				<h2 class="section-title text-center">{{ 'Organizational Units'|t }}</h2>
+
+				{% if institution.field_general_ou_description is not empty %}
+
+					<p>
+						{{institution.field_general_ou_description.value | raw}}
+					</p>
+
+				{% endif %}
+			</div>
+		</div>
+		<div
+			class="row">
+			<!-- Columna izquierda: buscador y lista -->
+			<div
+				class="col-lg-6">
+				<!-- Buscador -->
+				<div class="input-group mb-3">
+					<input type="text" class="form-control bg-light border-0" placeholder="{{ 'Type here to search'|t }}" id="ou-search">
+					<button class="btn btn-outline-secondary pe-4 ps-4 bg-black" type="button" id="search-btn">
+						<i class="fas fa-search" style="color: white;"></i>
+					</button>
+				</div>
+
+				<!-- Filtros -->
+				<div
+					class="custom-btn-group-filter-ou d-flex gap-10 mb-3 flex-wrap">
+
+					<!-- Type -->
+					<div class="dropdown">
+						<button id="type-filter-button" class="btn btn-dark btn-sm dropdown-toggle btn-whithout-border-radius" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ 'Type'|t }}
+						</button>
+						<ul class="dropdown-menu" id="filter-type">
+							<li>
+								<a class="dropdown-item" href="#" data-type="">{{ 'All'|t }}</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#" data-type="Department">{{ 'Department'|t }}</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#" data-type="Faculty">{{ 'Faculty'|t }}</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#" data-type="School">{{ 'School'|t }}</a>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Otros botones -->
+					<!-- Campus -->
+					{% if campuses|length > 1 %}
+						<div class="dropdown">
+							<button id="campus-filter-button" class="btn btn-dark btn-sm dropdown-toggle btn-whithout-border-radius" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{{ 'Campus'|t }}
+							</button>
+							<ul class="dropdown-menu" id="filter-campus">
+								<li>
+									<a class="dropdown-item" href="#" data-campus="">{{ 'All'|t }}</a>
+								</li>
+								{% for campus in campuses %}
+									{% set campus_label = campus.label %}
+									{% if campus.hasTranslation(language.getId()) %}
+										{% set campus_label = campus.getTranslation(language.getId()).label %}
+									{% endif %}
+									<li>
+										<a class="dropdown-item" href="#" data-campus="{{ campus.id() }}">
+											{{ campus_label }}
+										</a>
+									</li>
+								{% endfor %}
+							</ul>
+
+						</div>
+
+					{% endif %}
+
+				</div>
+
+
+				<!-- Lista de Organizational Units -->
+				<div id="ou-list">
+					<nav>
+						<ul
+							class="pagination justify-content-center mt-4" id="pagination-controls"><!-- Se rellenará con JS -->
+						</ul>
+					</nav>
+
+					{# Imagen por defecto de OU #}
+					{% set default_ou_image = '/themes/custom/b5subtheme/images/ou-default.png' %}
+
+					{% for row in view.result %}
+						{% set ou = row._entity %}
+						{% set organizational_unit = row._relationship_entities['reverse__node__field_ou_institution'] %}
+
+						{% if organizational_unit %}
+							{# Traducción #}
+							{% if organizational_unit.hasTranslation(current_language) %}
+								{% set organizational_unit = organizational_unit.getTranslation(current_language) %}
+							{% endif %}
+
+
+							{# Campus y su etiqueta (con traducción, si existe) #}
+							{% set campus_label = '' %}
+
+							{% if organizational_unit.hasField('field_ou_campus') 
+      and not organizational_unit.get('field_ou_campus').isEmpty() %}
+								{% set campus_entity = organizational_unit.field_ou_campus.entity %}
+								{% set campus_label = campus_entity.label %}
+								{% if campus_entity and campus_entity.hasTranslation(current_language) %}
+									{% set campus_label = campus_entity.getTranslation(current_language).label %}
+								{% endif %}
+							{% endif %}
+
+
+							{# URL de la página de info de la OU #}
+							{% set ou_path = path('entity.node.canonical', {'node': organizational_unit.id()}) %}
+							{% set parts = ou_path|trim('/')|split('/') %}
+							{% set ou_alias = parts|last %}
+							{% set institution_alias = parts[parts|length - 2] %}
+							{% set ou_info_url = path('view.organizational_unit_information.page_1', {
+      'arg_0': institution_alias,
+      'arg_1': ou_alias
+    }) %}
+
+							{# Coordenadas desde WKT #}
+							{% set coords_ou = '' %}
+							{% if organizational_unit.field_ou_map.value is defined and organizational_unit.field_ou_map.value %}
+								{% set point  = organizational_unit.field_ou_map.value %}
+								{% set coords = point|replace({'POINT(':'','POINT (':'', ')':''})|trim|split(' ') %}
+								{% set lon = coords[0]|default('') %}
+								{% set lat = coords[1]|default('') %}
+								{% set coords_ou = lat ~ ', ' ~ lon %}
+							{% endif %}
+
+							{# -------- IMAGEN --------
+																																		       Intenta sacar la URL de la imagen. Si no hay, queda vacío y el JS hará fallback. #}
+							{% set ou_image_url = '' %}
+							{% if organizational_unit.field_ou_picture is defined 
+          and organizational_unit.field_ou_picture.entity is not empty %}
+								{% set img_file = organizational_unit.field_ou_picture.entity %}
+								{% set ou_image_url = file_url(img_file.getFileUri()) %}
+
+							{% endif %}
+
+							<div class="ou-item p-3 mb-3 bg-light" data-ou-title="{{ organizational_unit.title.value|e('html_attr') }}" data-ou-type="{{ organizational_unit.field_ou_type.value|default('')|e('html_attr') }}" data-ou-area="{{ organizational_unit.field_ou_area.value|default('')|e('html_attr') }}" data-ou-description="{{ organizational_unit.field_oa_description.value|striptags|e('html_attr') }}" data-ou-address="{{ organizational_unit.field_ou_address.value|default('')|e('html_attr') }}" data-ou-gps="{{ coords_ou|e('html_attr') }}" data-ou-web="{{ organizational_unit.field_ou_web.uri|default('')|e('html_attr') }}" data-ou-web-label="{{ organizational_unit.field_ou_web.title|default('')|e('html_attr') }}" data-ou-email="{{ organizational_unit.field_ou_email.value|default('')|e('html_attr') }}" data-ou-phone="{{ organizational_unit.field_ou_phone.value|default('')|e('html_attr') }}" data-ou-campus-id="{{ organizational_unit.field_ou_campus.entity.id()|e('html_attr') }}" data-ou-campus-label="{{ campus_label|e('html_attr') }}" data-ou-url="{{ ou_info_url|e('html_attr') }}" data-ou-image="{{ ou_image_url|e('html_attr') }}" onclick="loadOUDetails(this)">
+
+								<h5 class="mb-1">{{ organizational_unit.title.value }}</h5>
+								<p class="mb-0 small ou-type">
+									{% set ou_type = organizational_unit.field_ou_type.value|default('') %}
+									{% set campus = campus_label|default('') %}
+
+									{% if ou_type %}
+										{{ ou_type }}
+									{% endif %}
+
+									{% if ou_type and campus %}
+										&nbsp;·&nbsp;
+									{% endif %}
+
+									{% if campus %}
+										<strong>{{ campus }}</strong>
+									{% endif %}
+								</p>
+
+							</div>
+						{% endif %}
+					{% else %}
+						<p>{{ 'No Organizational Units found.'|t }}</p>
+					{% endfor %}
+
+				</div>
+
+
+			</div>
+
+			<!-- Columna derecha: detalle dinámico -->
+			<div class="col-lg-6">
+				<div id="ou-details" class="bg-light h-100">
+					<p class="text-muted text-center pt-5">{{ 'Click on an Organizational Unit to see its details.'|t }}</p>
+					<!-- Aquí se rellenará dinámicamente con JS -->
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}</div><!--
+				<div class="last-update bg-black text-white p-3">
+				  <div class="section-container pt-0 pb-0">
+				    <div class="my-custom-container-2">
+				
+				      <span class="rs-source">
+				        Source: <span class="rs-source-site">Example.com</span>
+				      </span>
+				
+				      <span class="rs-last-update">
+				        <em>Last update: {{ last_updated }}</em>
+				      </span>
+				
+				    </div>
+				  </div>
+				</div>
+				--><script>
+function loadOUDetails(el) {
+document.querySelectorAll('.ou-item').forEach(item => item.classList.remove('selected'));
+el.classList.add('selected');
+
+const title = el.dataset.ouTitle || '';
+const type = el.dataset.ouType || '';
+const description = el.dataset.ouDescription || '';
+const address = el.dataset.ouAddress || '';
+const gps = el.dataset.ouGps || '';
+const web = el.dataset.ouWeb || '';
+const webLabel = el.dataset.ouWebLabel || web;
+const email = el.dataset.ouEmail || '';
+const phone = el.dataset.ouPhone || '';
+const campus = el.dataset.ouCampusLabel || '';
+const url = el.dataset.ouUrl || '#';
+const image = el.dataset.ouImage || '';
+
+const imageSrc = image ? image : '/themes/custom/b5subtheme/images/ou-default.png';
+
+// Bloques opcionales: si el valor está vacío, no se renderiza nada (ni icono ni espacio).
+const webHTML = web ? `
+      <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-globe me-2 mt-1"></i>
+        <p class="mb-0"><a href="${web}" target="_blank" rel="noopener">${webLabel}</a></p>
+      </div>
+  ` : '';
+
+const emailHTML = email ? `
+      <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-envelope me-2 mt-1"></i>
+        <p class="mb-0">${email}</p>
+      </div>
+  ` : '';
+
+const phoneHTML = phone ? `
+	  <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-phone me-2 mt-1"></i>
+        <p class="mb-0">${phone}</p>
+      </div>
+  ` : '';
+
+const addressHTML = address ? `
+	    <div class="d-flex align-items-start mt-3 mb-2">
+        <i class="fas fa-map-marker-alt me-2 mt-1"></i>
+        <p class="mb-0">${address}</p>
+      </div>
+  ` : '';
+
+const gpsHTML = gps ? `
+	   <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-location-arrow me-2 mt-1"></i>
+        <p class="mb-0">${gps}</p>
+      </div>
+  ` : '';
+
+const html = `
+    <div class="mb-3 text-center">
+      <img src="${imageSrc}" alt="Organizational Unit" class="img-fluid w-100" style="max-height: 600px; object-fit: cover;" loading="lazy">
+    </div>
+
+    <div class="p-4">
+      <h4 class="fw-bold">${title}</h4>
+
+      <div class="ou-tag-bar text-white mb-3">
+        <span class="ou-type">${
+(type || '').toUpperCase()
+}</span>
+        <!--<span class="ou-campus">${campus}</span>-->
+      </div>
+
+      <div class="mt-3">${description}</div>
+	  <br>
+
+      ${webHTML}
+      ${emailHTML}
+      ${phoneHTML}
+      ${addressHTML}
+      ${gpsHTML}
+
+      <div class="mt-5 text-center">
+        <a class="btn btn-dark see-more-ou-button" href="${url}">{{ translations[current_language]['See more'] }}</a>
+      </div>
+	 
+    </div>
+  `;
+
+const desktopDetails = document.getElementById('ou-details');
+const existingMobileDetails = document.querySelector('.ou-details-mobile');
+const isMobile = window.matchMedia('(max-width: 991.98px)').matches;
+
+if (isMobile) {
+if (desktopDetails) {
+desktopDetails.innerHTML = '';
+}
+
+const mobileDetails = existingMobileDetails || document.createElement('div');
+mobileDetails.className = 'ou-details-mobile bg-light mb-3';
+mobileDetails.innerHTML = html;
+el.insertAdjacentElement('afterend', mobileDetails);
+mobileDetails.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+} else {
+if (existingMobileDetails) {
+existingMobileDetails.remove();
+}
+
+if (desktopDetails) {
+desktopDetails.innerHTML = html;
+}
+}
+}
+
+
+/* ==========================================================
+   FILTERS + SEARCH (refactor)
+   ========================================================== */
+
+let currentCampus = '';
+let currentType = '';
+const defaultCampusLabel = '{{ 'Campus'|t|e('js') }}';
+const defaultTypeLabel = '{{ 'Type'|t|e('js') }}';
+
+const campusButton = document.getElementById('campus-filter-button');
+const typeButton = document.getElementById('type-filter-button');
+const searchInput = document.getElementById('ou-search');
+
+/** Helper: update button label and color based on active state */
+function setButton(buttonEl, hasValue, selectedLabel, defaultLabel) {
+const active = !! hasValue;
+buttonEl.textContent = active ? (selectedLabel || '').trim() : defaultLabel;
+
+// Aplicar color dinámico si está activo
+if (active) {
+buttonEl.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--university_primary_color');
+buttonEl.style.color = '#fff';
+buttonEl.style.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--university_primary_color');
+} else {
+buttonEl.style.backgroundColor = '';
+buttonEl.style.color = '';
+buttonEl.style.borderColor = '';
+}
+}
+
+/** Apply combined filters (text + type + campus) */
+function filterOUList() {
+const query = (searchInput ?. value || '').toLowerCase();
+const items = document.querySelectorAll('#ou-list .ou-item');
+
+items.forEach(item => {
+const title = item.dataset.ouTitle ?. toLowerCase() || '';
+const type = item.dataset.ouType ?. toLowerCase() || '';
+const campus = item.dataset.ouCampusId || '';
+
+const matchText = ! query || title.includes(query) || type.includes(query);
+const matchType = ! currentType || type === currentType.toLowerCase();
+const matchCampus = ! currentCampus || campus === currentCampus;
+
+item.style.display = (matchText && matchType && matchCampus) ? '' : 'none';
+});
+}
+
+/* ----- Dropdown handlers (Campus / Type) ----- */
+document.querySelectorAll('#filter-campus .dropdown-item').forEach(item => {
+item.addEventListener('click', function (e) {
+e.preventDefault();
+currentCampus = this.dataset.campus || '';
+setButton(campusButton, currentCampus, this.textContent, defaultCampusLabel);
+filterOUList();
+});
+});
+
+document.querySelectorAll('#filter-type .dropdown-item').forEach(item => {
+item.addEventListener('click', function (e) {
+e.preventDefault();
+currentType = this.dataset.type || '';
+setButton(typeButton, currentType, this.textContent, defaultTypeLabel);
+filterOUList();
+});
+});
+
+/* ----- Live search (single listener) ----- */
+searchInput.addEventListener('input', filterOUList);
+
+/* ----- Initial visual state for buttons ----- */
+setButton(campusButton, '', '', defaultCampusLabel);
+setButton(typeButton, '', '', defaultTypeLabel);
+
+/* ==========================================================
+   SIMPLE PAGINATION (unchanged)
+   ========================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+const items = document.querySelectorAll('#ou-list .ou-item');
+const itemsPerPage = 7;
+let currentPage = 1;
+
+function showPage(page) {
+const start = (page - 1) * itemsPerPage;
+const end = page * itemsPerPage;
+
+items.forEach((item, index) => {
+item.style.display = (index >= start && index < end) ? '' : 'none';
+});
+
+renderPagination(page);
+}
+
+function renderPagination(activePage) {
+const totalPages = Math.ceil(items.length / itemsPerPage) || 1;
+const pagination = document.getElementById('pagination-controls');
+if (! pagination) 
+return;
+
+
+
+pagination.innerHTML = '';
+
+for (let i = 1; i <= totalPages; i++) {
+const li = document.createElement('li');
+li.className = 'page-item' + (
+i === activePage ? ' active' : ''
+);
+li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+li.addEventListener('click', function (e) {
+e.preventDefault();
+currentPage = i;
+showPage(currentPage);
+});
+pagination.appendChild(li);
+}
+}
+
+if (items.length > 0) {
+showPage(currentPage);
+}
+});</script>

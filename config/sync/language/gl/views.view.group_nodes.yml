@@ -1,0 +1,68 @@
+label: 'Nodos de grupo'
+display:
+  default:
+    display_title: Master
+    display_options:
+      title: Nodos
+      fields:
+        title:
+          label: Título
+          separator: ', '
+        type:
+          label: 'Tipo de contido'
+          separator: ', '
+        status:
+          label: Estado
+          settings:
+            format_custom_false: 'Non publicado'
+            format_custom_true: Publicado
+          separator: ', '
+        changed:
+          label: Actualizado
+          separator: ', '
+        dropbutton:
+          label: Operacións
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Primeira'
+            last: 'Última »'
+          expose:
+            items_per_page_label: 'Elementos por páxina'
+            items_per_page_options_all_label: '- Todo -'
+            offset_label: Desprazamento
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'Contido non dispoñible'
+      arguments:
+        gid:
+          exception:
+            title: Todo
+      filters:
+        status:
+          expose:
+            label: 'Estado de publicación'
+          group_info:
+            label: 'Estado de publicación'
+            group_items:
+              1:
+                title: Publicado
+              2:
+                title: 'Non publicado'
+        type:
+          expose:
+            label: Tipo
+  page_1:
+    display_title: Páxina
+    display_options:
+      menu:
+        title: Nodos

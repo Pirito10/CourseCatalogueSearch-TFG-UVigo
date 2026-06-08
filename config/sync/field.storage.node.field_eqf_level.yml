@@ -1,0 +1,19 @@
+uuid: 13b3910f-6674-43ee-a025-1ad3b3785711
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_core
+    - node
+id: node.field_eqf_level
+field_name: field_eqf_level
+entity_type: node
+type: eqf_level
+settings: {  }
+module: ewp_core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

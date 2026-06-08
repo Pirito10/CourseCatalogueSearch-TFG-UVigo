@@ -1,0 +1,23 @@
+uuid: 1e9f0086-5572-45a2-b2db-328c5d7458af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_studies_total_months
+    - node.type.agreement
+id: node.agreement.field_studies_total_months
+field_name: field_studies_total_months
+entity_type: node
+bundle: agreement
+label: 'Student mobility for studies total months'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

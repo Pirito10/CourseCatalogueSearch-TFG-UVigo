@@ -1,0 +1,19 @@
+uuid: 4b1911c1-75cd-484f-9e98-93f4e9ba7ef3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_email
+    - node.type.individual_educational_component
+id: node.individual_educational_component.field_iec_email
+field_name: field_iec_email
+entity_type: node
+bundle: individual_educational_component
+label: E-mail
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

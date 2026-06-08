@@ -1,0 +1,231 @@
+{# dacem-footer-block.html.twig #}
+{# Nombre del nodo #}
+
+{% set university_primary_color = primary_color|default('#ff4949') %}
+
+{#{dump(last_updated)}}
+{{dump(nodebundle)}#}
+
+
+
+<!--
+
+<div class="last-update bg-black text-white p-3">
+  <div class="section-container pt-0 pb-0">
+    <div class="my-custom-container-2">
+
+      <span class="rs-source">
+        Source: <span class="rs-source-site" style="color: {{university_primary_color}};">Example.com</span>
+      </span>
+
+      <span class="rs-last-update">
+        <em>Last update: {{ last_updated }}</em>
+      </span>
+
+    </div>
+  </div>
+</div>
+
+<div class="dacem-footer-feedback py-5 text-white" style="background-color: {{university_primary_color}};">
+	<div class="container">
+		<div
+			class="row">
+			
+			<div class="col-md-6">
+				<h2 class="fw-bold" style="color: black; font-size: 32px;">{{ 'Found Something Wrong?'|t }}</h2>
+				<h2 class="fw-bold" style="font-size: 46px;">{{ 'Give Us Feedback'|t }}</h2>
+			</div>
+
+			<div class="col-md-6">
+				<form>
+					<div class="row">
+						<div class="col-6 mb-3">
+							<label for="footer-name" class="form-label" style="color: black; font-size:16px;">NAME</label>
+							<input type="text" id="footer-name" class="form-control" placeholder="Name">
+						</div>
+						<div class="col-6 mb-3">
+							<label for="footer-email" class="form-label" style="color: black; font-size:16px;">EMAIL</label>
+							<input type="email" id="footer-email" class="form-control" placeholder="Email">
+						</div>
+						<div class="col-12 mb-3">
+							<label for="footer-message" class="form-label" style="color: black; font-size:16px;">YOUR MESSAGE</label>
+							<textarea id="footer-message" class="form-control" rows="3" placeholder="Message"></textarea>
+						</div>
+						<div class="col-12 text-end">
+							<button type="submit" class="btn btn-dark px-4">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="footer-middle py-5 bg-white">
+	<div class="container">
+		<div class="row text-center text-md-start">
+			<div class="col-md-4 mb-4 mb-md-0">
+				<img src="/themes/custom/b5subtheme/images/logo_dacem.png" alt="DACEM logo" class="mb-3" style="max-width: 300px;">
+			</div>
+			<div class="col-md-4 mb-4 mb-md-0">
+				<h6 class="fw-bold">Links</h6>
+				<ul class="list-unstyled small">
+					<li>
+						<a href="#" class="text-decoration-none text-dark">About DACEM</a>
+					</li>
+					<li>
+						<a href="#" class="text-decoration-none text-dark">EU Programme</a>
+					</li>
+					<li>
+						<a href="#" class="text-decoration-none text-dark">Academic calendar</a>
+					</li>
+					<li>
+						<a href="#" class="text-decoration-none text-dark">Volunteering</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-4">
+
+				{% if institution.field_logo.entity.uri.value is defined %}
+					<img src="{{ file_url(institution.field_logo.entity.uri.value) }}" alt="{{ institution.label() }} logo" class="institution-logo">
+				{% endif %}
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="footer-bottom text-white py-3" style="background-color: #4b535a;">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-md-9 text-center text-md-start">
+				<p class="small mb-0">
+					Co-financed by the European Union. The opinions and views expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the European Education and Culture Executive Agency (EACEA). Neither the European Union nor the granting authority can be held responsible for them.
+				</p>
+			</div>
+			<div class="col-md-3 text-center text-md-end mt-3 mt-md-0">
+				<img src="/themes/custom/b5subtheme/images/ue-logo-footer.png" alt="Co-funded by the European Union" style="max-height: 40px;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="footer-bottom text-center py-2" style="background-color: black; color: #989898">
+	<p class="small mb-0 text-center">Copyright © 2025 - Designed by DACEM</p>
+</div>
+
+-->
+
+
+
+
+{% if not hide_black_band %}
+	<div class="last-update bg-black text-white py-3">
+		<div class="section-container pt-0 pb-0">
+			<div class="my-custom-container-2">
+
+				<span class="rs-source">
+					{{ 'Source'|t }}: <span class="rs-source-site" style="color: {{university_primary_color}};">{{owner}}</span>
+				</span>
+
+				<span class="rs-last-update">
+					<em>{{ 'Last update'|t }}: {{ last_updated }}</em>
+				</span>
+
+			</div>
+		</div>
+	</div>
+{% endif %}
+
+<div class="dacem-footer-feedback py-5 text-white" style="background-color: {{university_primary_color}};">
+	<div class="section-container pt-0 pb-0">
+	<div class="my-custom-container-2">
+		<div
+			class="row">
+			
+			<div class="col-md-6">
+				<h2 class="fw-bold" style="color: black; font-size: 32px;">{{ 'Found Something Wrong?'|t }}</h2>
+				<h2 class="fw-bold" style="font-size: 46px;">{{ 'Give Us Feedback'|t }}</h2>
+			</div>
+
+			<div class="col-md-6">
+				{{ feedback_form }}
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="footer-middle py-5 bg-white">
+	<div class="container">
+		<div class="row text-center text-md-start">
+			<div class="col-md-4 mb-4 mb-md-0 d-flex align-items-center justify-content-center justify-content-md-start gap-3 flex-wrap">
+				<img src="/themes/custom/b5subtheme/images/athena-logo.png" alt="Athena logo" class="athena-footer-logo mb-3" style="max-width: 180px; display: none;">
+				<img src="/themes/custom/b5subtheme/images/logo_dacem.png" alt="DACEM logo" class="mb-3" style="max-width: 220px;">
+			</div>
+			<div class="col-md-4 mb-4 mb-md-0">
+				<h6 class="fw-bold">Links</h6>
+				<ul class="list-unstyled small">
+					<li>
+						<a href="https://projects.uni-foundation.eu/dacem/"
+						class="text-decoration-none text-dark">
+						About DACEM
+						</a>
+					</li>
+					<li>
+						<a href="mailto:contact@uni-foundation.eu"
+						class="text-decoration-none text-dark">
+						manuel.caeiro@det.uvigo.es
+						</a>
+					</li>
+					</ul>
+			</div>
+			<div class="col-md-4">
+
+				{% if institution.field_logo.entity.uri.value is defined %}
+					<img src="{{ file_url(institution.field_logo.entity.uri.value) }}" alt="{{ institution.label() }} logo" class="institution-logo">
+				{% endif %}
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="footer-bottom text-white py-3" style="background-color: #4b535a;">
+	<div class="section-container pt-0 pb-0">
+	<div class="my-custom-container-2">
+		<div class="row align-items-center">
+			<div class="col-md-9 text-center text-md-start">
+				<p class="small mb-0">
+					
+
+					Co-financed by the European Union. The opinions and views expressed are however those of the author(s) and do not necessarily reflect those of the European Union nor those of the Spanish Service for the Internationalization of Education (SEPIE). Neither the European Union nor the granting authority can be held responsible for them.
+
+				</p>
+			</div>
+			<div class="col-md-3 text-center text-md-end mt-3 mt-md-0">
+				<img src="/themes/custom/b5subtheme/images/ue-logo-footer.png" alt="Co-funded by the European Union" style="max-height: 40px;">
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+
+<div class="footer-bottom text-center py-2" style="background-color: black; color: #989898">
+	<p class="small mb-0 text-center">Copyright © 2025 - Designed by DACEM</p>
+</div>
+
+<script>
+(function () {
+	var hostname = window.location.hostname.toLowerCase();
+	var athenaLogo = document.querySelector('.athena-footer-logo');
+
+	if (athenaLogo && hostname.indexOf('athena') !== -1) {
+		athenaLogo.style.display = '';
+	}
+})();
+</script>

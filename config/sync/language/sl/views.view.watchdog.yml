@@ -1,0 +1,35 @@
+label: Čuvaj
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      fields:
+        severity:
+          label: Resnost
+        type:
+          label: Vrsta
+        timestamp:
+          label: Datum
+        message:
+          label: Sporočilo
+        name:
+          label: Uporabnik
+        link:
+          label: Operacije
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Ponastavi
+      empty:
+        area:
+          admin_label: 'V zapisniku ni sporočil.'
+          content: 'V zapisniku ni sporočil.'
+      filters:
+        type:
+          expose:
+            label: Vrsta
+        severity:
+          expose:
+            label: Resnost
+  page:
+    display_title: Stran

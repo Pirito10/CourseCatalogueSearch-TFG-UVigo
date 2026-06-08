@@ -1,0 +1,19 @@
+uuid: 40145171-9e78-4e3d-a34e-80c420a5d727
+langcode: en
+status: true
+dependencies:
+  module:
+    - isced_field
+    - node
+id: node.field_ou_knowledge_area
+field_name: field_ou_knowledge_area
+entity_type: node
+type: isced_f
+settings: {  }
+module: isced_field
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

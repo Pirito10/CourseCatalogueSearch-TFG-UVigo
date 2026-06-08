@@ -1,0 +1,21 @@
+uuid: 05a83688-4e53-4660-9c30-8b4c1413fc45
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_start_date
+    - node.type.iec_instance
+  module:
+    - datetime
+id: node.iec_instance.field_start_date
+field_name: field_start_date
+entity_type: node
+bundle: iec_instance
+label: 'Start Date'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

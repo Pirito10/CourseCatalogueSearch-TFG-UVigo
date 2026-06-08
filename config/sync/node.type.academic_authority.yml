@@ -1,0 +1,18 @@
+uuid: f98adfdc-8348-45c9-83c6-8deb1559d407
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'Academic Authority'
+type: academic_authority
+description: null
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

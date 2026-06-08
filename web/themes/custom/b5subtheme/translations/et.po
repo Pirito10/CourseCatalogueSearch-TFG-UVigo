@@ -1,0 +1,727 @@
+
+msgid "CATALOGUE"
+msgstr "KATALOOG"
+
+msgid "GENERAL INFORMATION"
+msgstr "ÜLIKOOLIST"
+
+msgid "RESOURCES AND SERVICES"
+msgstr "TEENUSED"
+
+msgid "UNIVERSITY LIFE"
+msgstr "ÜLIKOOLIELU"
+
+msgid "Arts and Humanities"
+msgstr "Humanitaarteadused ja kunstid"
+
+msgid "Sciences"
+msgstr "Loodusteadused"
+
+msgid "Health Sciences"
+msgstr "Terviseteadused"
+
+msgid "Social and Legal Sciences"
+msgstr "Sotsiaal- ja õigusteadused"
+
+msgid "Engineering and Architecture"
+msgstr "Inseneeria ja arhitektuur"
+
+msgid "Apply"
+msgstr "Rakenda / Kinnita"
+
+msgid "Reset"
+msgstr "Lähtesta"
+
+msgid "Sort"
+msgstr "Sorteeri"
+
+msgid "Country"
+msgstr "Riik"
+
+msgid "Page"
+msgstr "Leht"
+
+msgid "Destination"
+msgstr "Sihtkoht"
+
+msgid "Select Home Programme"
+msgstr "Vali koduülikooli õppekava"
+
+msgid "Programme"
+msgstr "Õppekava"
+
+msgid "Course"
+msgstr "Kursus"
+
+msgid "Description"
+msgstr "Kirjeldus"
+
+msgid "General Information"
+msgstr "Üldinfo"
+
+msgid "Main Objective"
+msgstr "Peamine eesmärk"
+
+msgid "Competencies"
+msgstr "Pädevused"
+
+msgid "Qualification"
+msgstr "Kvalifikatsioon"
+
+msgid "Courses"
+msgstr "Kursused"
+
+msgid "Course edition:"
+msgstr "Kursuse versioon:"
+
+msgid "Admission"
+msgstr "Vastuvõtt"
+
+msgid "Structure and distribution of credits"
+msgstr "Õppekava struktuur ja ainepunktide jaotus"
+
+msgid "Regulations"
+msgstr "Eeskirjad"
+
+msgid "Year (1º Year, 2º Year...)"
+msgstr "Õppeaasta (1. aasta, 2. aasta...)"
+
+msgid "General data"
+msgstr "Üldandmed"
+
+msgid "Academic year"
+msgstr "Õppeaasta"
+
+msgid "Level (Degree, Bachelor, Master, PhD, Other"
+msgstr "Tase (Kõrgharidus, Bakalaureus, Magister, Doktor, Muu)"
+
+msgid "ECTS Credits"
+msgstr "ECTS punktid"
+
+msgid "Modality (In-person, Online...)"
+msgstr "Õppevorm (Lähiõpe, Veebiõpe...)"
+
+msgid "ISCED-F"
+msgstr "ISCED-F (Hariduse ja koolituse valdkondade klassifikaator)"
+
+msgid "Qualification level???"
+msgstr "Kvalifikatsioon"
+
+msgid "Study modality(Full-time, part time)"
+msgstr "Õppekoormus (Täiskoormus, osakoormus)"
+
+msgid "Professional Practices"
+msgstr "Eriala- ja tööpraktika"
+
+msgid "Coordination??"
+msgstr "Koordineerimine"
+
+msgid "By Semester"
+msgstr "Semestri kaupa"
+
+msgid "By Year"
+msgstr "Aasta kaupa"
+
+msgid "Admission Requirements"
+msgstr "Vastuvõtutingimused"
+
+msgid "Recognition of Prior Learning"
+msgstr "Varasema õpi- ja töökogemuse arvestamine (VÕTA)"
+
+msgid "Qualification Requirements"
+msgstr "Kvalifikatsiooninõuded"
+
+msgid "Assessment"
+msgstr "Hindamine"
+
+msgid "Granding Scale"
+msgstr "Hindamisskaala"
+
+msgid "Explanation of the Scale"
+msgstr "Hindamisskaala selgitus"
+
+msgid "Grade Distribution Table"
+msgstr "Hinnete jaotuse tabel"
+
+msgid "Mobility Windows"
+msgstr "Mobiilsusaken"
+
+msgid "Work Placements"
+msgstr "Praktika ettevõttes"
+
+msgid "Work-based Learning"
+msgstr "Töökohapõhine õpe"
+
+msgid "Occupational Profiles of Graduates"
+msgstr "Lõpetajate ametiprofiilid"
+
+msgid "Access to Further Studies"
+msgstr "Edasiõppimisvõimalused"
+
+msgid "Code"
+msgstr "Kood"
+
+msgid "Term"
+msgstr "Semester"
+
+msgid "Type"
+msgstr "Tüüp"
+
+msgid "Subject"
+msgstr "Õppeaine"
+
+msgid "Core"
+msgstr "Erialaaine"
+
+msgid "Mandatory"
+msgstr "Kohustuslik"
+
+msgid "Elective"
+msgstr "Valikaine"
+
+msgid "Other types"
+msgstr "Muud tüübid"
+
+msgid "Final project"
+msgstr "Lõputöö"
+
+msgid "TOTAL"
+msgstr "KOKKU"
+
+msgid "Language"
+msgstr "Õppekeel"
+
+msgid "Requirements"
+msgstr "Nõuded"
+
+msgid "Instructors"
+msgstr "Õppejõud"
+
+msgid "Course content"
+msgstr "Kursuse sisu"
+
+msgid "Learning outcomes"
+msgstr "Õpiväljundid"
+
+msgid "Recommended literature and resources"
+msgstr "Soovituslik kirjandus ja materjalid"
+
+msgid "Planned learning activities and teaching methods"
+msgstr "Õpitegevused ja õppemeetodid"
+
+msgid "Evaluation methods and criteria"
+msgstr "Hindamismeetodid ja -kriteeriumid"
+
+msgid "Field of Study (ISCED-F)"
+msgstr "Õppevaldkond (ISCED-F)"
+
+msgid "Assessment"
+msgstr "Hindamine"
+
+msgid "Avaliable for Mobility Students"
+msgstr "Avatud väliskülalisüliõpilastele"
+
+msgid "Category (Core, Mandatory, Optional, Other)"
+msgstr "Kategooria (Erialaaine, Kohustuslik, Valikaine, Muu)"
+
+msgid "Contents"
+msgstr "Sisu"
+
+msgid "Credits"
+msgstr "Ainepunktid"
+
+msgid "Modality (ELM Vocabulary, Online, Hybrid, Presential...)"
+msgstr "Õppevorm (Veebiõpe, Hübriidõpe, Lähiõpe...)"
+
+msgid "External practices"
+msgstr ""
+
+msgid "Academic Authorities"
+msgstr "Administratsioon ?"
+
+msgid "Language Policy"
+msgstr "Keelepoliitika"
+
+msgid "Languages"
+msgstr "Keeled"
+
+msgid "Enrollment Procedures"
+msgstr "Vastuvõtukord"
+
+msgid "Contacts"
+msgstr "Kontaktid"
+
+msgid "ECTS Policies"
+msgstr "ECTS poliitika"
+
+msgid "Campuses"
+msgstr "Linnakud"
+
+msgid "Org. Units"
+msgstr "Struktuuriüksused"
+
+msgid "Academic Calendar"
+msgstr "Akadeemiline kalender"
+
+msgid "Institutional Contacts"
+msgstr "Institutsionaalsed kontaktid"
+
+msgid "Mobility"
+msgstr "Mobiilsus"
+
+msgid "Authorities"
+msgstr "Juhtkond"
+
+msgid "Admission Languages"
+msgstr ""
+
+msgid "ECTS Allocation Policy"
+msgstr "EAP-de määramise põhimõtted"
+
+msgid "Incoming Students"
+msgstr "Sissetulevad üliõpilased"
+
+msgid "Outgoing Students"
+msgstr "Väljaminevad üliõpilased"
+
+msgid "Organizational Units"
+msgstr "Struktuuriüksused"
+
+msgid "Type here to search"
+msgstr "Trüki siia otsimiseks"
+
+msgid "Knowledge Area"
+msgstr "Teadusvaldkond"
+
+msgid "Campus"
+msgstr "Linnak"
+
+msgid "Click on an Organizational Unit to see its details"
+msgstr "Vajuta üksusele, et näha üksikasju"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Web"
+msgstr "Veebileht"
+
+msgid "Select Campus"
+msgstr "Vali linnak"
+
+msgid "Student affairs"
+msgstr "Õppekorraldus"
+
+msgid "Facilities"
+msgstr "Võimalused / Teenused (hooned, laborid jne)"
+
+msgid "Students mobility"
+msgstr "Mobiilsus"
+
+msgid "University life"
+msgstr "Ülikoolielu"
+
+msgid "Extra-academic activities"
+msgstr "Õppekavaväline tegevus"
+
+msgid "Students Affairs Office"
+msgstr "Õppeosakond"
+
+msgid "Financial Support for Students"
+msgstr "Stipendiumid"
+
+msgid "Insurance"
+msgstr "Kindlustus"
+
+msgid "Medical Facilities"
+msgstr "Arstiabi / Meditsiinilised teenused"
+
+msgid "Learning Facilities"
+msgstr "Õppekeskkond ja -vahendid"
+
+msgid "Sport and Leisure Facilities"
+msgstr "Spordi- ja vaba aja veetmise võimalused"
+
+msgid "Special Facilities"
+msgstr "Võimalused erivajadustega üliõpilastele"
+
+msgid "Student's Mobility"
+msgstr "Üliõpilasvahetus"
+
+msgid "Practical Information For Incoming Mobile Students"
+msgstr "Praktiline info sissetulevatele väliskülalisüliõpilastele"
+
+msgid "Cost of Living"
+msgstr "Elukallidus"
+
+msgid "Housing"
+msgstr "Majutus"
+
+msgid "Transport"
+msgstr "Transport"
+
+msgid "Meals"
+msgstr "Toitlustus"
+
+msgid "Student Associations"
+msgstr "Üliõpilasorganisatsioonid"
+
+msgid "Work placement possibilities"
+msgstr "Praktikavõimalused"
+
+msgid "Events and culture"
+msgstr "Üritused ja kultuur"
+
+msgid "For the whole institution"
+msgstr "Tervele asutusele"
+
+msgid "Source"
+msgstr "Allikas"
+
+msgid "Last update"
+msgstr "Viimati uuendatud"
+
+msgid "Found something wrong? Give us feedback"
+msgstr "Leidsid vea? Anna meile tagasisidet"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Your message"
+msgstr "Sinu sõnum"
+
+msgid "About DACEM"
+msgstr "DACEM-st"
+
+msgid "ABOUT"
+msgstr "MEIST"
+
+msgid "INSTITUTIONS"
+msgstr "ASUTUSED"
+
+msgid "CONTACT"
+msgstr "KONTAKT"
+
+msgid "Study in Europe"
+msgstr "Õpi Euroopas"
+
+msgid "FIND A PROGRAMME"
+msgstr "LEIA ÕPPEKAVA"
+
+msgid "Explore the best opportunities to study in Europe. Discover universities, programmes, and destinations tailored to your future. Your next international academic adventure starts here."
+msgstr "Avasta parimad võimalused Euroopas õppimiseks. Leia ülikoolid, õppekavad ja sihtkohad, mis on kohandatud just sinu tuleviku jaoks. Sinu järgmine rahvusvaheline akadeemiline seiklus algab siit."
+
+msgid "\"\nEXPLORE OUR UNIVERSITIES\n\nFind a new place to continue your studies, meet new people and learn a new language. Before this, you should:\n\n    Find which universities are available from your home university at your local international office.\n    Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar.\n    Assess accommodation, transportation, and daily expenses.\n    Research the local culture, student life, and opportunities for personal and professional growth.\n    Check healthcare coverage, safety, and housing availability.\n\nDon't miss the opportunity!\""
+msgstr "AVASTA MEIE ÜLIKOOLID\n\nLeia uus koht oma õpingute jätkamiseks, tutvu uute inimestega ja õpi selgeks uus keel. Enne seda peaksid sa:\n\nLeia oma koduülikooli välissuhete osakonnast, millised ülikoolid on saadaval.\nVeendu, et kursused ühtivad sinu õpingutega, neid õpetatakse sulle arusaadavas keeles ning need sobivad sinu akadeemilise kalendriga.\nHinda majutust, transporti ja igapäevaseid kulusid.\nUuri kohalikku kultuuri, tudengielu ning isikliku ja professionaalse arengu võimalusi.\nKontrolli ravikindlustuse kaetust, turvalisust ja elamispindade kättesaadavust.\n\nÄra lase võimalust käest!"
+msgid "Explore the best opportunities to study in Europe. Discover universities, programs, and destinations tailored to your future. Your next academic adventure starts here."
+msgstr "Avasta parimad võimalused Euroopas õppimiseks. Leia ülikoolid, programmid ja sihtkohad, mis sobivad sinu tulevikuga. Sinu järgmine akadeemiline seiklus algab siin."
+
+msgid "EXPLORE OUR UNIVERSITIES"
+msgstr "AVASTA MEIE ÜLIKOOLID"
+
+msgid "Find a new place to continue your studies, meet new people and learn a new language. Before this, you should:"
+msgstr "Leia uus koht, kus õpinguid jätkata, tutvu uute inimestega ja õpi uus keel. Enne seda peaksid:"
+
+msgid "Find which universities are available from your home university at your local international office."
+msgstr "Uuri oma koduülikooli rahvusvahelisest büroost, millised ülikoolid on sulle saadaval."
+
+msgid "Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar."
+msgstr "Veendu, et õppeained sobivad sinu õppekavaga, on õpetatavad sulle arusaadavas keeles ja klapivad sinu akadeemilise kalendriga."
+
+msgid "Assess accommodation, transportation, and daily expenses."
+msgstr "Hinda majutust, transporti ja igapäevaseid kulusid."
+
+msgid "Research the local culture, student life, and opportunities for personal and professional growth."
+msgstr "Uuri kohalikku kultuuri, tudengielu ning isikliku ja erialase arengu võimalusi."
+
+msgid "Check healthcare coverage, safety, and housing availability."
+msgstr "Kontrolli ravikindlustuse katvust, turvalisust ja majutuse kättesaadavust."
+
+msgid "Don't miss the opportunity!"
+msgstr "Ära lase võimalust käest!"
+
+msgid "Czech"
+msgstr "Tšehhi"
+
+msgid "English"
+msgstr "Inglise"
+
+msgid "Estonian"
+msgstr "Eesti"
+
+msgid "French"
+msgstr "Prantsuse"
+
+msgid "Greek"
+msgstr "Kreeka"
+
+msgid "Hungarian"
+msgstr "Ungari"
+
+msgid "Portuguese"
+msgstr "Portugali"
+
+msgid "Slovenian"
+msgstr "Sloveeni"
+
+msgid "Spanish"
+msgstr "Hispaania"
+
+msgid "By semester"
+msgstr "Semestri järgi"
+
+msgid "1st semester"
+msgstr "1. semester"
+
+msgid "2nd semester"
+msgstr "2. semester"
+
+msgid "Programme Type"
+msgstr "Programmi tüüp"
+
+msgid "Organizational Unit"
+msgstr "Struktuuriüksus"
+
+msgid "@count selected"
+msgstr "@count valitud"
+
+msgid "PROGRAMMES"
+msgstr "PROGRAMMID"
+msgid "Found Something Wrong?"
+msgstr "Kas leidsite midagi valesti?"
+
+msgid "Give Us Feedback"
+msgstr "Andke meile tagasisidet"
+
+msgid "Available for Mobility Students"
+msgstr "Saadaval mobiilsusüliõpilastele"
+
+msgid "Overview"
+msgstr "Ülevaade"
+
+msgid "Curriculum"
+msgstr "Õppekava"
+
+msgid "Careers"
+msgstr "Karjäärivõimalused"
+
+msgid "Practice"
+msgstr "Praktika"
+
+msgid "By term"
+msgstr "Perioodi järgi"
+
+msgid "By year"
+msgstr "Aasta järgi"
+
+msgid "1st term"
+msgstr "1. periood"
+
+msgid "2nd term"
+msgstr "2. periood"
+
+msgid "Terms"
+msgstr "Perioodid"
+
+msgid "Year"
+msgstr "Aasta"
+
+msgid "Structure and Distribution of Credits"
+msgstr "Ainepunktide struktuur ja jaotus"
+
+msgid "Grading Scale"
+msgstr "Hindamisskaala"
+
+msgid "Grading Scheme"
+msgstr "Hindamissüsteem"
+
+msgid "Grading Distribution Table"
+msgstr "Hinnete jaotuse tabel"
+
+msgid "Mobility Agreements"
+msgstr "Mobiilsuslepingud"
+
+msgid "Start Date"
+msgstr "Alguskuupäev"
+
+msgid "End Date"
+msgstr "Lõppkuupäev"
+
+msgid "Type of Credits"
+msgstr "Ainepunktide tüüp"
+
+msgid "Type of credits"
+msgstr "Ainepunktide tüüp"
+
+msgid "Fields of study"
+msgstr "Õppevaldkonnad"
+
+msgid "Mode of Learning"
+msgstr "Õppeviis"
+
+msgid "Programme Abbreviation"
+msgstr "Programmi lühend"
+
+msgid "Restricted to alliance students"
+msgstr "Piiratud alliansi üliõpilastele"
+
+msgid "Academic Year"
+msgstr "Akadeemiline aasta"
+
+msgid "Number of credits"
+msgstr "Ainepunktide arv"
+
+msgid "Status"
+msgstr "Staatus"
+
+msgid "Restricted to alliance"
+msgstr "Piiratud alliansile"
+
+msgid "Change Home Programme"
+msgstr "Muuda koduprogrammi"
+
+msgid "Clear home programme"
+msgstr "Tühjenda koduprogramm"
+
+msgid "Home programme"
+msgstr "Koduprogramm"
+
+msgid "Study in Europe with ATHENA"
+msgstr "Õpi Euroopas koos ATHENA-ga"
+
+msgid "Sport clubs/programs"
+msgstr "Spordiklubid/programmid"
+
+msgid "Language courses"
+msgstr "Keelekursused"
+
+msgid "Support for students with disabilities and special needs"
+msgstr "Tugi puuetega ja erivajadustega üliõpilastele"
+
+msgid "VISA"
+msgstr "Viisa"
+
+msgid "Student Mobility"
+msgstr "Üliõpilaste mobiilsus"
+
+msgid "University Life"
+msgstr "Ülikoolielu"
+
+msgid "Academic requirements for nominations"
+msgstr "Akadeemilised nõuded kandideerimiseks"
+
+msgid "Additional requirements"
+msgstr "Lisatingimused"
+
+msgid "Admission description for exchange students"
+msgstr "Vastuvõtu kirjeldus vahetusüliõpilastele"
+
+msgid "Admission description for full-degree students"
+msgstr "Vastuvõtu kirjeldus täisõppe üliõpilastele"
+
+msgid "Admission description for visiting students"
+msgstr "Vastuvõtu kirjeldus külalisüliõpilastele"
+
+msgid "All"
+msgstr "Kõik"
+
+msgid "Applications"
+msgstr "Avaldused"
+
+msgid "Arrangements for Academic Guidance"
+msgstr "Akadeemilise juhendamise korraldus"
+
+msgid "Arrangements for the recognition of credit and prior learning"
+msgstr "Ainepunktide ja varasema õppe tunnustamise korraldus"
+
+msgid "Autumn"
+msgstr "Sügis"
+
+msgid "Click on an Organizational Unit to see its details."
+msgstr "Klõpsake organisatsiooniüksusel, et näha selle üksikasju."
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Department"
+msgstr "Osakond"
+
+msgid "Exchange"
+msgstr "Vahetus"
+
+msgid "Exchange timeline"
+msgstr "Vahetuse ajakava"
+
+msgid "Faculty"
+msgstr "Teaduskond"
+
+msgid "For decision"
+msgstr "Otsuse tegemiseks"
+
+msgid "Full-Degree"
+msgstr "Täisõpe"
+
+msgid "INSTITUTIONAL INFORMATION"
+msgstr "INSTITUTSIONAALNE TEAVE"
+
+msgid "Incoming students"
+msgstr "Sissetulevad üliõpilased"
+
+msgid "Information"
+msgstr "Teave"
+
+msgid "Menu"
+msgstr "Menüü"
+
+msgid "No Organizational Units found."
+msgstr "Organisatsiooniüksusi ei leitud."
+
+msgid "Nominations"
+msgstr "Nominatsioonid"
+
+msgid "Not available"
+msgstr "Pole saadaval"
+
+msgid "Outgoing students"
+msgstr "Väljaminevad üliõpilased"
+
+msgid "Policies"
+msgstr "Poliitikad"
+
+msgid "Recognition process for outgoing students"
+msgstr "Tunnustamisprotsess väljaminevatele üliõpilastele"
+
+msgid "Registration procedures for exchange students"
+msgstr "Registreerimisprotseduurid vahetusüliõpilastele"
+
+msgid "Registration procedures for full-degree students"
+msgstr "Registreerimisprotseduurid täisõppe üliõpilastele"
+
+msgid "Registration procedures for visiting students"
+msgstr "Registreerimisprotseduurid külalisüliõpilastele"
+
+msgid "School"
+msgstr "Kool"
+
+msgid "Spring"
+msgstr "Kevad"
+
+msgid "Timeframe"
+msgstr "Ajakava"
+
+msgid "To issue the transcript of records"
+msgstr "Õppetulemuste väljavõtte väljastamiseks"
+
+msgid "Visiting"
+msgstr "Külalis"
+
+msgid "week"
+msgstr "nädal"
+
+msgid "weeks"
+msgstr "nädalat"
+
+msgid "Message"
+msgstr "Sõnum"

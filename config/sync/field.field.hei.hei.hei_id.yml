@@ -1,0 +1,26 @@
+uuid: fa827818-63ff-4258-b133-ab269cfd7bb8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.hei.hei_id
+  module:
+    - ewp_core
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: hOqExbS63XCn9CP-0smdpIgh27gLcnH4qAr1LjLaNhQ
+id: hei.hei.hei_id
+field_name: hei_id
+entity_type: hei
+bundle: hei
+label: 'HEI ID'
+description: 'The SCHAC identifier of this HEI.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ascii_identifier

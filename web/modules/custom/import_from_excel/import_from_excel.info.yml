@@ -1,0 +1,8 @@
+name: 'Importar Datos desde Excel'
+type: module
+description: 'Módulo personalizado para importar universidades, carreras y asignaturas desde un archivo Excel.'
+core_version_requirement: ^9 || ^10
+package: Custom
+dependencies:
+  - node
+  - group:group

@@ -1,0 +1,29 @@
+uuid: 70a1d839-7c07-4406-8671-47065106e872
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.member.field_member_institution
+    - field.field.node.member.field_member_joint_programme
+    - field.field.node.member.field_member_organizational_unit
+    - field.field.node.member.field_member_role
+    - node.type.member
+  module:
+    - user
+id: node.member.teaser
+targetEntityType: node
+bundle: member
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_member_institution: true
+  field_member_joint_programme: true
+  field_member_organizational_unit: true
+  field_member_role: true
+  langcode: true

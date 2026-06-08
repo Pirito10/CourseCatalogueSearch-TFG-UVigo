@@ -1,0 +1,23 @@
+uuid: 26d48f42-7959-4c1b-be68-246269d769ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_mobility_blended_option
+    - node.type.agreement
+id: node.agreement.field_mobility_blended_option
+field_name: field_mobility_blended_option
+entity_type: node
+bundle: agreement
+label: 'Blended mobility option for students'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

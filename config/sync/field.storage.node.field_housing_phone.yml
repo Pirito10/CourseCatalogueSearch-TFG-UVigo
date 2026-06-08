@@ -1,0 +1,19 @@
+uuid: 6013bf4f-6226-4e4b-8028-fdf95f2ee4c1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - telephone
+id: node.field_housing_phone
+field_name: field_housing_phone
+entity_type: node
+type: telephone
+settings: {  }
+module: telephone
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

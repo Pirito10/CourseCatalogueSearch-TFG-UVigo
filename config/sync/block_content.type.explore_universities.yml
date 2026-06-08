@@ -1,0 +1,8 @@
+uuid: 5d70df45-dd5e-463b-a884-b999de320bd9
+langcode: en
+status: true
+dependencies: {  }
+id: explore_universities
+label: 'Explore Universities'
+revision: false
+description: null

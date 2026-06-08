@@ -1,0 +1,23 @@
+uuid: c7187a0a-047a-4c6c-ab3d-04fffaec2b4a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_length_of_programme
+    - node.type.programme
+id: node.programme.field_length_of_programme
+field_name: field_length_of_programme
+entity_type: node
+bundle: programme
+label: 'Length of programme in academic terms'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

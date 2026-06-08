@@ -1,0 +1,137 @@
+
+
+<nav class="navbar navbar-expand-lg bg-danger sticky-top" style="height: 100px">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<div style="height: 50px; background-color: green;">
+	<div class="my-custom-container-2">
+		<div class="page-band">
+			<h1>TEXT TO TEST</h1>
+		</div>
+	</div>
+</div>
+
+
+
+
+<nav id="programme-navbar" class="programme-nav sticky-top" style="background-color: white;" data-bs-spy="scroll" data-bs-target="#programme-navbar" data-bs-offset="100">
+	<div
+
+
+		class="container-fluid">
+		<!-- Franja horizontal en pantallas pequeñas -->
+		<div
+			class="dropdown d-lg-none">
+			<!-- Botón para mostrar el menú desplegable en pantallas pequeñas -->
+			<button id="programmeDropdownButton" class="btn btn-secondary dropdown-toggle w-100 button-menu-programme" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				{{ 'General Information'|t }}
+			</button>
+
+			<!-- Menú desplegable -->
+			<ul class="dropdown-menu programme-menu w-100" aria-labelledby="programmeDropdownButton">
+				<li>
+					<a class="dropdown-item" href="#general-information">General Information</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#main-objective">Main Objective</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#competencies">Competencies</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#qualification">Qualification</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#iecs">{{ 'Courses'|t }}</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#admission">Admission</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#regulations">Regulations</a>
+				</li>
+			</ul>
+
+		</div>
+
+		<!-- Menú de pestañas visible en pantallas grandes -->
+		<ul class="nav nav-tabs justify-content-center d-none d-lg-flex">
+			<li class="nav-item">
+				<a class="nav-link active" href="#general-information">General Information</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#main-objective">Main Objective</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#competencies">Competencies</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#qualification">Qualification</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#iecs">{{ 'Courses'|t }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#admission">Admission</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#regulations">Regulations</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+
+
+
+<br><br>
+
+<h1>Test to delete</h1>
+
+{% for result in view.result %}
+   <p>{{ result._entity.title.value }}<p>
+   {{ result._entity.field_competencies.value|raw }}
+   {{ result._entity.field_programme_description.value|raw }}
+
+   {{dump(result._entity.field_programme_institution.entity.title.value)}}
+   {{dump(result._entity.field_programme_institution.entity.field_information.value)}}
+   
+    
+
+{% endfor %}
+

@@ -1,0 +1,7 @@
+name: 'Custom Views Filters'
+type: module
+description: 'Provides custom filters for Views.'
+core_version_requirement: ^10 || ^9
+package: Custom
+dependencies:
+  - drupal:views

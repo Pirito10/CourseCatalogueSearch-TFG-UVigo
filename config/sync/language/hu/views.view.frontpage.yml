@@ -1,0 +1,33 @@
+label: Címlap
+description: 'A kezdőlapon közzétett összes tartalom.'
+display:
+  default:
+    display_title: Alapértelmezés
+    display_options:
+      pager:
+        options:
+          tags:
+            next: 'Következő ›'
+            previous: '‹ Előző'
+            first: '« Első'
+            last: 'Utolsó »'
+          expose:
+            items_per_page_label: 'Elemek száma oldalanként'
+            items_per_page_options_all_label: '– Mind –'
+            offset_label: Eltolás
+      exposed_form:
+        options:
+          submit_button: Alkalmaz
+          reset_button_label: Visszaállít
+          exposed_sorts_label: Rendezés
+          sort_asc_label: Növ
+          sort_desc_label: Csökk
+      empty:
+        area_text_custom:
+          content: 'Még nem lett létrehozva címlapra kerülő tartalom. A <a target="_blank" href="https://www.drupal.org/hu/docs/user_guide/hu/index.html">Drupal 8 Kézikönyv</a> hasznos kiindulási pont lehet a webhelyépítés első lépéseihez.'
+        title:
+          title: Üdvözlet!
+  feed_1:
+    display_title: Hírcsatorna
+  page_1:
+    display_title: Oldal

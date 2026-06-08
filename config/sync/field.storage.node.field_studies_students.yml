@@ -1,0 +1,20 @@
+uuid: f251edcd-b0e7-4d2e-86de-7c171ab4a4fc
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_studies_students
+field_name: field_studies_students
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

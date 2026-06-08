@@ -1,0 +1,21 @@
+uuid: 035cdd97-d1ab-4a2f-bb20-c618443c0500
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campus_phone
+    - node.type.campus
+  module:
+    - telephone
+id: node.campus.field_campus_phone
+field_name: field_campus_phone
+entity_type: node
+bundle: campus
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

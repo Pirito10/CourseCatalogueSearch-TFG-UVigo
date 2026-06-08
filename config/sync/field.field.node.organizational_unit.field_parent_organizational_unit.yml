@@ -1,0 +1,28 @@
+uuid: f8b3c90a-4d6f-4d41-9336-11a29e8bf906
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_parent_organizational_unit
+    - node.type.organizational_unit
+id: node.organizational_unit.field_parent_organizational_unit
+field_name: field_parent_organizational_unit
+entity_type: node
+bundle: organizational_unit
+label: 'Parent Organizational Unit'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organizational_unit: organizational_unit
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,18 @@
+uuid: 297246f8-8512-46c5-963e-0f45023a572c
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.organizational_unit
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '1'
+id: node.organizational_unit
+target_entity_type_id: node
+target_bundle: organizational_unit
+default_langcode: en
+language_alterable: false

@@ -1,0 +1,35 @@
+uuid: 4d93a072-8cf8-4350-b5ef-f186d5ea7e21
+langcode: es
+status: false
+dependencies:
+  module:
+    - node
+    - system
+    - university_menu
+  theme:
+    - b5subtheme
+id: b5subtheme_universitymenublock
+theme: b5subtheme
+region: content
+weight: -12
+provider: null
+plugin: university_menu_block
+settings:
+  id: university_menu_block
+  label: 'University Menu Block'
+  label_display: '0'
+  provider: university_menu
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/*'
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+    bundles:
+      asignatura: asignatura
+      carrera: carrera
+      universidad: universidad

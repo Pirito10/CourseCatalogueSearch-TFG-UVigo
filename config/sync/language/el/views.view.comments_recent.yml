@@ -1,0 +1,15 @@
+label: 'Πρόσφατα σχόλια'
+description: 'Πρόσφατα σχόλια.'
+display:
+  default:
+    display_title: Προεπιλεγμένο
+    display_options:
+      title: 'Πρόσφατα σχόλια'
+      empty:
+        area_text_custom:
+          content: 'Δεν υπάρχουν διαθέσιμα σχόλια.'
+  block_1:
+    display_title: Μπλοκ
+    display_options:
+      block_description: 'Πρόσφατα σχόλια'
+      block_category: 'Λίστες (Views)'

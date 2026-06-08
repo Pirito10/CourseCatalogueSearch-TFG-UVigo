@@ -1,0 +1,34 @@
+uuid: 77d53cfd-61ec-4235-acaa-3cb7db6d19e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_planned_activ
+    - node.type.iec_instance
+  module:
+    - elm_vocabulary_field
+id: node.iec_instance.field_iec_instance_planned_activ
+field_name: field_iec_instance_planned_activ
+entity_type: node
+bundle: iec_instance
+label: 'Planned activity types'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    3c8bd58d62: false
+    4357e0e681: false
+    59eaf34fab: false
+    a7e556215a: false
+    b660f5dcea: false
+    bf2e3a7bae: false
+    bf5588ff84: false
+    c_5665a0ad: false
+    d46a826a39: false
+    efff75e10a: false
+    fd33e234ae: false
+    ff436ea7c9: false
+field_type: elm_controlled_vocabulary

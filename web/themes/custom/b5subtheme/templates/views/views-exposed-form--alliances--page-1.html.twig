@@ -1,0 +1,15 @@
+<form{{ attributes.addClass('alliances-exposed-form').addAttribute('data-disable-refocus', 'true') }}>
+  <div class="alliances-exposed-form__row">
+    <div class="alliances-exposed-form__field">
+      {{ form.title }}
+    </div>
+
+    <button type="submit" class="alliances-exposed-form__submit" aria-label="{{ 'Search'|t }}">
+      <i class="fas fa-search" aria-hidden="true"></i>
+    </button>
+
+    <span class="alliances-exposed-form__label">{{ 'Search'|t }}</span>
+  </div>
+
+  {% set actions = form.actions %}
+</form>

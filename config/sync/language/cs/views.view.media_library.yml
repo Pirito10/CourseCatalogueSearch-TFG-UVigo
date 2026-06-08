@@ -1,0 +1,103 @@
+display:
+  default:
+    display_title: Výchozí
+    display_options:
+      title: Média
+      fields:
+        media_bulk_form:
+          action_title: Akce
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Položek na stránku'
+            items_per_page_options_all_label: '- Vše -'
+            offset_label: Posun
+      exposed_form:
+        options:
+          submit_button: 'Použít filtry'
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      sorts:
+        created:
+          expose:
+            label: 'Nejnovější první'
+        name:
+          expose:
+            label: 'Jméno (A–Z)'
+        name_1:
+          expose:
+            label: 'Jméno (Z–A)'
+      filters:
+        status:
+          expose:
+            label: 'Stav zveřejnění'
+          group_info:
+            label: Zveřejněno
+            group_items:
+              1:
+                title: Zveřejněno
+              2:
+                title: Skryto
+        name:
+          expose:
+            label: Jméno
+        langcode:
+          expose:
+            label: 'Jazyk '
+  page:
+    display_title: Stránka
+    display_options:
+      fields:
+        media_bulk_form:
+          action_title: Akce
+        name:
+          separator: ', '
+        edit_media:
+          text: Upravit
+        delete_media:
+          text: Smazat
+  widget:
+    display_title: Widget
+    display_options:
+      arguments:
+        bundle:
+          exception:
+            title: Vše
+      filters:
+        name:
+          expose:
+            label: Jméno
+      header:
+        display_link_grid:
+          label: Mřížka
+        display_link_table:
+          label: Tabulka
+  widget_table:
+    display_options:
+      fields:
+        thumbnail__target_id:
+          label: Náhled
+        name:
+          label: Jméno
+        uid:
+          label: Autor
+        changed:
+          label: Aktualizováno
+      arguments:
+        bundle:
+          exception:
+            title: Vše
+      filters:
+        name:
+          expose:
+            label: Jméno
+      header:
+        display_link_grid:
+          label: Mřížka
+        display_link_table:
+          label: Tabulka

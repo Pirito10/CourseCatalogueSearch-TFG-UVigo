@@ -1,0 +1,38 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      fields:
+        uid:
+          label: 'Identifiant (ID) utilisateur Drupal'
+          format_plural_string: !!binary MQNAY291bnQ=
+        name:
+          separator: ', '
+        delete_link:
+          label: supprimer
+          text: supprimer
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      exposed_form:
+        options:
+          submit_button: Candidater
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      arguments:
+        provider_field:
+          exception:
+            title: Tout
+  page:
+    display_title: Page
+    display_options:
+      menu:
+        title: Externe

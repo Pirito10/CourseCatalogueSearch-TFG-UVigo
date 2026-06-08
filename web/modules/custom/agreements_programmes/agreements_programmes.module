@@ -1,0 +1,432 @@
+<?php
+
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\node\NodeInterface;
+use Isced\IscedFieldsOfStudy;
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function agreements_programmes_preprocess_views_view(array &$variables): void {
+  $view = $variables['view'];
+
+  if ($view->id() !== 'programme_information') {
+    return;
+  }
+
+  $programme = NULL;
+  $route_node = \Drupal::routeMatch()->getParameter('node');
+
+  if ($route_node instanceof NodeInterface) {
+    $programme = $route_node;
+  }
+
+  if (!$programme instanceof NodeInterface && !empty($view->result[0]->_entity)) {
+    $entity = $view->result[0]->_entity;
+
+    if ($entity instanceof NodeInterface) {
+      $programme = $entity;
+    }
+  }
+
+  if (!$programme instanceof NodeInterface || $programme->bundle() !== 'programme') {
+    return;
+  }
+
+  /** @var \Drupal\agreements_programmes\Service\AgreementProgrammeMatcher $matcher */
+  $matcher = \Drupal::service('agreements_programmes.matcher');
+
+  $variables['compatible_programmes'] = $matcher->getCompatibleProgrammesForProgramme($programme);
+  $variables['compatible_agreement_groups'] = agreements_programmes_build_agreement_groups($variables['compatible_programmes']);
+
+  $cacheability = CacheableMetadata::createFromObject($programme)
+    ->addCacheContexts(['route'])
+    ->addCacheTags([
+      'node_list:agreement',
+      'node_list:programme',
+    ]);
+  $cacheability->applyTo($variables);
+}
+
+/**
+ * Builds university-grouped agreement rows from compatible programmes.
+ */
+function agreements_programmes_build_agreement_groups(array $compatible_programmes): array {
+  $agreement_map = [];
+
+  foreach ($compatible_programmes as $item) {
+    if (empty($item['agreements']) || !is_array($item['agreements'])) {
+      continue;
+    }
+
+    foreach ($item['agreements'] as $agreement_data) {
+      if (empty($agreement_data['agreement_id']) || empty($agreement_data['target_institution_id'])) {
+        continue;
+      }
+
+      $agreement_map[(int) $agreement_data['agreement_id']] = $agreement_data;
+    }
+  }
+
+  if (!$agreement_map) {
+    return [];
+  }
+
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $agreement_nodes = $node_storage->loadMultiple(array_keys($agreement_map));
+  $groups = [];
+
+  foreach ($agreement_map as $agreement_id => $agreement_data) {
+    $agreement = $agreement_nodes[$agreement_id] ?? NULL;
+
+    if (!$agreement instanceof NodeInterface) {
+      continue;
+    }
+
+    $institution = $agreement->get('field_institution_2')->entity;
+    $agreement_orientation = agreements_programmes_get_oriented_departments($agreement);
+
+    $university_label = $institution ? $institution->label() : t('Unknown university');
+    $group_key = $institution ? (string) $institution->id() : 'unknown';
+
+    $groups[$group_key]['university'] = $university_label;
+    $groups[$group_key]['university_url'] = $institution instanceof NodeInterface
+      ? agreements_programmes_build_general_information_url($institution)
+      : '';
+    $groups[$group_key]['rows'][] = [
+      'agreement_title' => agreements_programmes_format_title($agreement->label()),
+      'contact' => agreements_programmes_format_contact_details(
+        (string) ($agreement->get('field_contact_person')->value ?? ''),
+        (string) ($agreement->get('field_agreement_email')->value ?? ''),
+        (string) ($agreement->get('field_agreement_phone')->value ?? ''),
+      ),
+      'destination_ou' => agreements_programmes_format_ou_label($agreement_orientation['target_department_label'] ?? ''),
+      'destination_ou_url' => $agreement_orientation['target_department_url'] ?? '',
+      'level_of_education' => agreements_programmes_format_level_of_education($agreement),
+      'fields_of_education' => agreements_programmes_format_field_of_education($agreement),
+      'description' => agreements_programmes_format_description(trim((string) ($agreement->get('field_agreement_observations')->value ?? ''))),
+      'spots' => agreements_programmes_format_agreement_places(
+        $agreement->get('field_studies_students')->value ?? NULL,
+        $agreement->get('field_trainership_students')->value ?? NULL,
+      ),
+      'duration' => agreements_programmes_format_agreement_duration(
+        $agreement->get('field_studies_total_months')->value ?? NULL,
+        $agreement->get('field_trainership_total_months')->value ?? NULL,
+      ),
+      'language' => agreements_programmes_format_language_details(
+        (string) ($agreement->get('field_recommended_language_level')->value ?? ''),
+        agreements_programmes_get_entity_reference_label($agreement, 'field_language_of_instruction_1'),
+        agreements_programmes_get_entity_reference_label($agreement, 'field_language_of_instruction_2'),
+      ),
+    ];
+  }
+
+  uasort($groups, static fn (array $a, array $b): int => strnatcasecmp($a['university'], $b['university']));
+
+  return array_values($groups);
+}
+
+/**
+ * Builds the General Information URL for an institution.
+ */
+function agreements_programmes_build_general_information_url(NodeInterface $institution): string {
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  $language = \Drupal::languageManager()->getLanguage($langcode);
+  $institution_for_url = $institution->hasTranslation($langcode)
+    ? $institution->getTranslation($langcode)
+    : $institution;
+
+  $canonical_url = $institution_for_url->toUrl('canonical', ['language' => $language])->toString();
+  $institution_alias = basename(trim($canonical_url, '/'));
+
+  if ($institution_alias === '' || $institution_alias === (string) $institution->id()) {
+    return '';
+  }
+
+  return \Drupal\Core\Url::fromRoute('view.general_information.page_1', [
+    'arg_0' => $institution_alias,
+  ], [
+    'language' => $language,
+  ])->toString();
+}
+
+/**
+ * Builds the Organizational Unit Information URL for an OU.
+ */
+function agreements_programmes_build_organizational_unit_information_url(NodeInterface $organizational_unit): string {
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  $language = \Drupal::languageManager()->getLanguage($langcode);
+  $ou_for_url = $organizational_unit->hasTranslation($langcode)
+    ? $organizational_unit->getTranslation($langcode)
+    : $organizational_unit;
+
+  $canonical_url = $ou_for_url->toUrl('canonical', ['language' => $language])->toString();
+  $parts = explode('/', trim($canonical_url, '/'));
+
+  if (count($parts) < 2) {
+    return '';
+  }
+
+  $ou_alias = end($parts);
+  $institution_alias = prev($parts);
+
+  if (!$institution_alias || !$ou_alias || $ou_alias === (string) $organizational_unit->id()) {
+    return '';
+  }
+
+  return \Drupal\Core\Url::fromRoute('view.organizational_unit_information.page_1', [
+    'arg_0' => $institution_alias,
+    'arg_1' => $ou_alias,
+  ], [
+    'language' => $language,
+  ])->toString();
+}
+
+/**
+ * Formats the agreement level of education.
+ */
+function agreements_programmes_format_level_of_education(NodeInterface $agreement): string {
+  if (!$agreement->hasField('field_level_of_education') || $agreement->get('field_level_of_education')->isEmpty()) {
+    return '';
+  }
+
+  $item = $agreement->get('field_level_of_education')->first();
+  if (!$item) {
+    return '';
+  }
+
+  $view = $item->view(['label' => 'hidden']);
+  $rendered = trim((string) \Drupal::service('renderer')->renderPlain($view));
+
+  return $rendered !== '' ? trim(strip_tags($rendered)) : trim((string) $item->get('value')->getValue());
+}
+
+/**
+ * Formats studies and trainerships places for display.
+ */
+function agreements_programmes_format_agreement_places($studies, $trainerships): string {
+  return agreements_programmes_format_labeled_decimal_values([
+    'studies' => $studies,
+    'trainerships' => $trainerships,
+  ]);
+}
+
+/**
+ * Formats studies and trainerships duration for display.
+ */
+function agreements_programmes_format_agreement_duration($studies, $trainerships): string {
+  return agreements_programmes_format_labeled_decimal_values([
+    'studies' => $studies,
+    'trainerships' => $trainerships,
+  ]);
+}
+
+/**
+ * Formats labeled decimal values as one item per line.
+ */
+function agreements_programmes_format_labeled_decimal_values(array $values): string {
+  $lines = [];
+
+  foreach ($values as $label => $value) {
+    $formatted = agreements_programmes_format_decimal($value);
+
+    if ($formatted !== '') {
+      $lines[] = $formatted . ' (' . $label . ')';
+    }
+  }
+
+  return implode("\n", $lines);
+}
+
+/**
+ * Formats decimal values without trailing zeroes when possible.
+ */
+function agreements_programmes_format_decimal($value): string {
+  if ($value === NULL || $value === '') {
+    return '';
+  }
+
+  $number = (float) $value;
+
+  if ((float) (int) $number === $number) {
+    return (string) (int) $number;
+  }
+
+  return rtrim(rtrim(number_format($number, 2, '.', ''), '0'), '.');
+}
+
+/**
+ * Formats agreement titles with a soft line break for narrow cells.
+ */
+function agreements_programmes_format_title(string $title): string {
+  return trim($title);
+}
+
+/**
+ * Formats contact details for display.
+ */
+function agreements_programmes_format_contact_details(string $contact, string $email, string $phone): string {
+  $lines = [];
+
+  if (trim($contact) !== '') {
+    $lines[] = trim($contact);
+  }
+
+  if (trim($email) !== '') {
+    $lines[] = 'E-mail: ' . trim($email);
+  }
+
+  if (trim($phone) !== '') {
+    $lines[] = 'Phone: ' . trim($phone);
+  }
+
+  if (!$lines) {
+    return '';
+  }
+
+  return implode("\n", $lines);
+}
+
+/**
+ * Formats descriptions with line breaks after sentences.
+ */
+function agreements_programmes_format_description(string $description): string {
+  if ($description === '') {
+    return '';
+  }
+
+  $description = trim(strip_tags($description));
+
+  if ($description === '') {
+    return '';
+  }
+
+  return preg_replace('/\s+/', ' ', $description) ?? $description;
+}
+
+/**
+ * Formats fields of education values for display.
+ */
+function agreements_programmes_format_field_of_education(NodeInterface $agreement): string {
+  if (!$agreement->hasField('field_field_of_education') || $agreement->get('field_field_of_education')->isEmpty()) {
+    return '';
+  }
+
+  $isced = new IscedFieldsOfStudy();
+  $labeled_list = $isced->getLabeledList();
+  $values = [];
+
+  foreach ($agreement->get('field_field_of_education') as $item) {
+    $value = $item->get('value')->getValue();
+
+    if ($value !== NULL && $value !== '') {
+      $code = (string) $value;
+      $label = $labeled_list[$code] ?? '';
+      $values[] = $label !== '' ? $code . ' ' . t($label) : $code;
+    }
+  }
+
+  if (!$values) {
+    return '';
+  }
+
+  return implode(', ', array_unique($values));
+}
+
+/**
+ * Resolves origin and target organizational units for one-way agreements.
+ */
+function agreements_programmes_get_oriented_departments(NodeInterface $agreement): array {
+  $origin_department = $agreement->get('field_department_partner_1')->entity;
+  $target_department = $agreement->get('field_department_partner_2')->entity;
+
+  return [
+    'origin_department_label' => $origin_department ? $origin_department->label() : '',
+    'target_department_label' => $target_department ? $target_department->label() : '',
+    'target_department_url' => $target_department instanceof NodeInterface
+      ? agreements_programmes_build_organizational_unit_information_url($target_department)
+      : '',
+  ];
+}
+
+/**
+ * Formats organizational unit labels for display.
+ */
+function agreements_programmes_format_ou_label(string $label): string {
+  if ($label === '') {
+    return '';
+  }
+
+  return trim($label);
+}
+
+/**
+ * Formats language details for display.
+ */
+function agreements_programmes_format_language_details(string $recommended_level, string $instruction_1, string $instruction_2): string {
+  $lines = [];
+
+  if ($instruction_1 !== '') {
+    $lines[] = $instruction_1;
+  }
+
+  if ($instruction_2 !== '') {
+    $lines[] = $instruction_2;
+  }
+
+  if ($recommended_level !== '') {
+    $lines[] = $recommended_level;
+  }
+
+  if (!$lines) {
+    return '';
+  }
+
+  return implode("\n", $lines);
+}
+
+/**
+ * Returns the label of a single-value entity reference field.
+ */
+function agreements_programmes_get_entity_reference_label(NodeInterface $node, string $field_name): string {
+  if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+    return '';
+  }
+
+  $entity = $node->get($field_name)->entity;
+
+  return $entity ? trim($entity->label()) : '';
+}
+
+/**
+ * Wraps text every N words using hard line breaks.
+ */
+function agreements_programmes_wrap_words(string $text, int $words_per_line): string {
+  $parts = preg_split('/\s+/', trim($text)) ?: [];
+
+  if (!$parts) {
+    return $text;
+  }
+
+  $lines = [];
+
+  foreach (array_chunk($parts, $words_per_line) as $chunk) {
+    $lines[] = implode(' ', $chunk);
+  }
+
+  return implode("\n", $lines);
+}
+
+/**
+ * Wraps long lines while preserving existing line breaks.
+ */
+function agreements_programmes_wrap_text(string $text, int $line_length): string {
+  $lines = preg_split("/\r\n|\n|\r/", $text) ?: [];
+
+  foreach ($lines as &$line) {
+    $line = trim(wordwrap($line, $line_length, "\n", TRUE));
+  }
+  unset($line);
+
+  return implode("\n", $lines);
+}

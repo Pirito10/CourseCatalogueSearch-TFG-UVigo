@@ -1,0 +1,22 @@
+_core:
+  default_config_hash: hHeJoq1YIXrwI-xVq_xiv9Ys9mJcJ5jx5Wl5Qz_Kk3k
+field_exclude:
+  - index_key
+  - id
+  - uuid
+  - langcode
+  - created
+  - changed
+  - status
+  - contact
+remote_exclude:
+  - id
+  - uuid
+  - langcode
+  - status
+  - created
+  - changed
+  - contact
+remote_include:
+  - city
+  - country

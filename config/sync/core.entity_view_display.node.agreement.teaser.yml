@@ -1,0 +1,63 @@
+uuid: 63860bbc-f7c9-456f-b54d-7add466e378e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.agreement.field_agreement_email
+    - field.field.node.agreement.field_agreement_observations
+    - field.field.node.agreement.field_agreement_phone
+    - field.field.node.agreement.field_contact_person
+    - field.field.node.agreement.field_department_partner_1
+    - field.field.node.agreement.field_department_partner_2
+    - field.field.node.agreement.field_duration_from_year
+    - field.field.node.agreement.field_duration_to_year
+    - field.field.node.agreement.field_field_of_education
+    - field.field.node.agreement.field_field_of_education_clarifi
+    - field.field.node.agreement.field_institution_1
+    - field.field.node.agreement.field_institution_2
+    - field.field.node.agreement.field_language_of_instruction_1
+    - field.field.node.agreement.field_language_of_instruction_2
+    - field.field.node.agreement.field_level_of_education
+    - field.field.node.agreement.field_mobility_blended_option
+    - field.field.node.agreement.field_recommended_language_level
+    - field.field.node.agreement.field_studies_students
+    - field.field.node.agreement.field_studies_total_months
+    - field.field.node.agreement.field_trainership_students
+    - field.field.node.agreement.field_trainership_total_months
+    - node.type.agreement
+  module:
+    - user
+id: node.agreement.teaser
+targetEntityType: node
+bundle: agreement
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_agreement_email: true
+  field_agreement_observations: true
+  field_agreement_phone: true
+  field_contact_person: true
+  field_department_partner_1: true
+  field_department_partner_2: true
+  field_duration_from_year: true
+  field_duration_to_year: true
+  field_field_of_education: true
+  field_field_of_education_clarifi: true
+  field_institution_1: true
+  field_institution_2: true
+  field_language_of_instruction_1: true
+  field_language_of_instruction_2: true
+  field_level_of_education: true
+  field_mobility_blended_option: true
+  field_recommended_language_level: true
+  field_studies_students: true
+  field_studies_total_months: true
+  field_trainership_students: true
+  field_trainership_total_months: true
+  langcode: true

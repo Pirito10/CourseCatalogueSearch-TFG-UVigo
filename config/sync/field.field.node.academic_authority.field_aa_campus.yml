@@ -1,0 +1,29 @@
+uuid: 018b6a24-d6ff-427d-954e-04469026a6c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_aa_campus
+    - node.type.academic_authority
+    - node.type.campus
+id: node.academic_authority.field_aa_campus
+field_name: field_aa_campus
+entity_type: node
+bundle: academic_authority
+label: Campus
+description: 'Fill in only if this Academic Authority belongs to the Campus.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      campus: campus
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

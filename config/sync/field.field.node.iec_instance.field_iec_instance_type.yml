@@ -1,0 +1,35 @@
+uuid: 51a0ca5b-2181-443a-a22d-ba74b19a4d34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_type
+    - node.type.iec_instance
+  module:
+    - elm_vocabulary_field
+id: node.iec_instance.field_iec_instance_type
+field_name: field_iec_instance_type
+entity_type: node
+bundle: iec_instance
+label: Type
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    05053c1cbe: false
+    0f7dac46ca: false
+    11252a5207: false
+    17744a2647: false
+    63f9f6180c: false
+    65a4cf5de2: false
+    74a4a268e8: false
+    77b99de990: false
+    79343569f3: false
+    7e1ac538db: false
+    8b965da2d4: false
+    b2434ca358: false
+    c_170b037d: false
+field_type: elm_controlled_vocabulary

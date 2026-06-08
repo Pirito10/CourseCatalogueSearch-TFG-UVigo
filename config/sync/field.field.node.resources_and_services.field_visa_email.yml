@@ -1,0 +1,19 @@
+uuid: c6fe301a-28b4-4854-aa23-a50e47f56476
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_visa_email
+    - node.type.resources_and_services
+id: node.resources_and_services.field_visa_email
+field_name: field_visa_email
+entity_type: node
+bundle: resources_and_services
+label: 'VISA - email'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

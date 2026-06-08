@@ -1,0 +1,24 @@
+uuid: 7e4ac4f7-e06c-458b-bc59-1f21aca2c06b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_registration_proc_full
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_registration_proc_full
+field_name: field_registration_proc_full
+entity_type: node
+bundle: institution
+label: 'Registration procedures for full-degree students'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

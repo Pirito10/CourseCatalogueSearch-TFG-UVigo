@@ -1,0 +1,51 @@
+display:
+  default:
+    display_title: Nadřízené
+    display_options:
+      exposed_form:
+        options:
+          submit_button: 'Přihlásit se'
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« První'
+            last: 'Poslední »'
+          expose:
+            items_per_page_label: 'Položek na stránku'
+            items_per_page_options_all_label: '- Vše -'
+            offset_label: Posun
+      fields:
+        label:
+          label: Popisek
+          separator: ', '
+        person_given_names:
+          separator: ', '
+        person_family_name:
+          separator: ', '
+        person_gender:
+          separator: ', '
+        phone_number:
+          label: 'Telefonní číslo'
+        email:
+          label: E-mail
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        role_description:
+          separator: ', '
+      filters:
+        label:
+          expose:
+            label: Popisek
+      title: Kontakty
+  contact_list:
+    display_options:
+      menu:
+        title: Kontakty

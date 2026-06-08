@@ -1,0 +1,10 @@
+uuid: cf264843-44b7-4d9b-82f5-e0b38e2eae16
+langcode: es
+status: true
+dependencies: {  }
+id: university_admin
+label: 'University Admin'
+weight: 8
+is_admin: null
+permissions:
+  - 'administer permissions'

@@ -1,0 +1,943 @@
+{{ attach_library('b5subtheme/course_buttons') }}
+{{ attach_library('b5subtheme/degree_menu_scroll') }}
+
+
+{# Obtener la entidad de contenido desde la vista #}
+
+{% set entity = view.result[0]._entity %}
+
+{#{dump(entity)}}
+
+{#{{dump(entity)}}
+
+{# Obtener el idioma actual basado en la URL, NO en la interfaz #}
+{#{% set current_current_language = entity.get('langcode').value %}#}
+{#{% set current_current_language = language_manager.getCurrentLanguage().getId() %}#}
+{#{% set current_current_language = view.result[0].node_field_data_langcode %}#}
+
+{% set current_language = view.result[0].node_field_data_langcode %}
+
+
+{# Verificar si la entidad tiene una traducción en el idioma de la URL #}
+	{% if entity.hasTranslation(current_language) %}
+	{% set translated_entity = entity.getTranslation(current_language) %}
+
+{% else %}
+	{% set translated_entity = entity %}
+
+{% endif %}
+
+
+{#{dump(translated_entity.field_elm_vocabulary_test)}}
+
+{#% if translated_entity.field_ejemplo_para_taxonomia.entity %}
+  {% set term = translated_entity.field_ejemplo_para_taxonomia.entity %}
+  {% set t = term.hasTranslation(current_language) ? term.getTranslation(current_language) : term %}
+  {{ t.label }} {# o {{ t.name.value }} #}
+{#% endif %}
+
+
+
+
+
+{#{{dump(translated_entity.field_nivel_de_cualificacion.value)}}#}
+
+
+{#
+{% set current_language = language_manager.getCurrentLanguage().getId() %}
+
+{% set entity = view.result[0]._entity %}
+{{dump(entity)}}
+
+{% if entity is defined %}
+  {% set current_language = entity.get('langcode').value %}
+  {{ current_language }}
+{% endif %}
+
+
+{% if entity.hasTranslation(current_language) %}
+	{% set translated_entity = entity.getTranslation(current_language) %}
+{% else %}
+	{% set translated_entity = entity %}
+{% endif %}
+#}
+
+{% set institution = entity.field_programme_institution.entity %}
+
+{% set programme_ou = null %}
+{% set programme_ou_url = '' %}
+{% if translated_entity.hasField('field_programme_ou') and not translated_entity.get('field_programme_ou').isEmpty() %}
+	{% set programme_ou = translated_entity.field_programme_ou.entity %}
+	{% if programme_ou.hasTranslation(current_language) %}
+		{% set programme_ou = programme_ou.getTranslation(current_language) %}
+	{% endif %}
+
+	{% set programme_ou_path = path('entity.node.canonical', {'node': programme_ou.id()}, {'langcode': current_language}) %}
+	{% set programme_ou_path_parts = programme_ou_path|trim('/')|split('/') %}
+	{% if programme_ou_path_parts|length >= 2 %}
+		{% set programme_ou_alias = programme_ou_path_parts|last %}
+		{% set programme_ou_institution_alias = programme_ou_path_parts[programme_ou_path_parts|length - 2] %}
+		{% set programme_ou_url = path('view.organizational_unit_information.page_1', {
+			'arg_0': programme_ou_institution_alias,
+			'arg_1': programme_ou_alias
+		}, {'langcode': current_language}) %}
+	{% endif %}
+{% endif %}
+
+{% set institution_primary_color = institution.field_primary_color[0].color %}
+{% set institution_text_color = institution.field_text_color[0].color %}
+{% set institution_emphasis_text_color = institution.field_emphasis_text_color[0].color %}
+
+		{% if translations is defined %}
+
+	{% else %}
+		No translations loaded.
+{% endif %}
+
+
+<style>:root
+{
+	--university_primary_color: {{institution_primary_color}}
+	;
+	--university_text_color: {{institution_text_color}}
+	;
+	--university_emphasis_text_color: {{institution_emphasis_text_color}}
+	;
+}</style>{% set curriculum = programme_curriculum|default({
+  'years': {
+    '1': {'id': '1', 'label': 'Year 1'|t},
+    '2': {'id': '2', 'label': 'Year 2'|t},
+    '3': {'id': '3', 'label': 'Year 3'|t},
+    '4': {'id': '4', 'label': 'Year 4'|t}
+  },
+  'terms': {
+    1: {'id': 1, 'label': 'Term 1'|t},
+    2: {'id': 2, 'label': 'Term 2'|t}
+  },
+  'term_short_labels': {
+    '1': '1',
+    '2': '2'
+  }
+}) %}{% set cuatrimestres_curso = curriculum.term_short_labels %}{% set courses = curriculum.years %}{% set credit_types = [
+  'Core',
+  'Mandatory',
+  'Optional',
+  'Other',
+] %}{# Inicialización del array credits #}{% set credits = {} %}{% for course_id, course in courses %}
+{% set credits = credits|merge({ (course_id): {'Core': 0, 'Mandatory': 0, 'Optional': 0, 'Other': 0} }) %}
+{% endfor %}{% for row in view.result %}
+{% set iec = row._relationship_entities['reverse__node__field_iec_programme'] %}
+
+{% if iec.hasTranslation(current_language) %}
+	{% set translated_iec = iec.getTranslation(current_language) %}
+
+{% else %}
+
+	{% set translated_iec = iec %}
+{% endif %}
+{% set course_id = translated_iec.field_iec_year[0].value %}
+{% set credit_type = translated_iec.field_iec_type[0].value|trim %}
+{% set credit_value = translated_iec.field_iec_credits[0].value|number_format(2, '.', '') %}
+
+
+{% if course_id in credits|json_encode(constant('JSON_PRETTY_PRINT')) and credit_type|capitalize in credits[course_id]|json_encode(constant('JSON_PRETTY_PRINT')) %}
+	{% set credits = credits|merge({ (course_id): credits[course_id]|merge({ (credit_type)|capitalize: credits[course_id][credit_type|capitalize] + credit_value }) }) %}
+	{% else %}
+	<!--<pre>Condition not met for Course ID: "{{ course_id }}" and Credit Type: "{{ credit_type }}"</pre>-->
+{% endif %}{% endfor %}<div class="programme-page">
+
+
+<div class="rs-header ">
+	<div class="my-custom-container-2">
+		<div class="page-band">
+			<h1 class="rs-title">{{ translated_entity.title.value|raw }}</h1>
+		</div>
+	</div>
+</div>
+
+<nav id="programme-navbar" class="programme-nav" style="background-color: white;" data-bs-spy="scroll" data-bs-target="#programme-navbar" data-bs-offset="0">
+	<div
+
+
+		class="container-fluid">
+		<!-- Franja horizontal en pantallas pequeñas -->
+		<div
+			class="dropdown d-lg-none">
+			<!-- Botón para mostrar el menú desplegable en pantallas pequeñas -->
+			<button id="programmeDropdownButton" class="btn btn-secondary dropdown-toggle w-100 button-menu-programme" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				{{ 'Overview'|t }}
+			</button>
+
+			<!-- Menú desplegable -->
+			<ul class="dropdown-menu programme-menu w-100" aria-labelledby="programmeDropdownButton">
+				<li>
+					<a class="dropdown-item" href="#presentation">{{ 'Overview'|t }}</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#structure">{{ 'Curriculum'|t }}</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#admission-requirements">{{ 'Admission'|t }}</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#grading-scale">{{ 'Assessment'|t }}</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#work-placements">{{ 'Practice'|t }}</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#occupational-profiles">{{ 'Careers'|t }}</a>
+				</li>
+				<li>
+					<a class="dropdown-item" href="#mobility">{{ 'Mobility'|t }}</a>
+				</li>
+			</ul>
+
+		</div>
+
+		<!-- Menú de pestañas visible en pantallas grandes -->
+		<ul class="nav nav-tabs justify-content-center d-none d-lg-flex">
+			<li class="nav-item">
+				<a class="nav-link active" href="#presentation">{{ 'Overview'|t }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#structure">{{ 'Curriculum'|t }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#admission-requirements">{{ 'Admission'|t }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#grading-scale">{{ 'Assessment'|t }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#work-placements">{{ 'Practice'|t }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#occupational-profiles">{{ 'Careers'|t }}</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="#mobility">{{ translations[current_language]['Mobility'] }}</a>
+			</li>
+		</ul>
+		</div>
+	</nav>
+
+	{% if programme_ou %}
+		<div class="my-custom-container-2 mt-3">
+			<div class="d-flex">
+				{% if programme_ou_url %}
+					<a href="{{ programme_ou_url }}" class="ou-tag px-3 py-1 text-decoration-none" style="background-color: {{ institution_primary_color }}; color: {{ institution_emphasis_text_color }}; border: 2px solid {{ institution_primary_color }}; border-radius: 0;">
+						{{ programme_ou.title.value }}
+					</a>
+				{% else %}
+					<span class="ou-tag px-3 py-1" style="background-color: {{ institution_primary_color }}; color: {{ institution_emphasis_text_color }}; border: 2px solid {{ institution_primary_color }}; border-radius: 0;">
+						{{ programme_ou.title.value }}
+					</span>
+				{% endif %}
+			</div>
+		</div>
+	{% endif %}
+
+
+	{#
+	{% if translated_entity.field_degree_pdf %}
+  <ul>
+    {% for item in translated_entity.field_degree_pdf %}
+      {% if item.entity is not empty %}
+        {% set file = item.entity %}
+		<!--{{dump(file)}}
+		{{dump(file.uri.value)}}
+		{{dump(file.filename.value)}}-->
+        <li>
+          <a href="{{ file.uri.value | file_url  }}" target="_blank" download>
+            {{file.filename.value}}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}
+#}
+
+
+<div class="section-container">
+	<div class="my-custom-container-2">
+
+
+		<div class="scrollspy-example" data-bs-spy="scroll" data-bs-target="#programme-navbar" data-bs-root-margin="0px 0px -60%" tabindex="0">
+
+			<div class="row">
+
+				{% if attachment_after %}
+					<div class="col-sm-12 col-md-12 col-xl-4 order-1 order-xl-2">
+						{{ attachment_after }}
+					</div>
+				{% endif %}
+
+
+				<div class="col-sm-12 col-md-12 col-xl-8 order-2 order-xl-1">
+					{% if translated_entity.field_programme_description.value is not empty %}
+						<div class="programme-section" id="presentation" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title m-0">{{ translations[current_language]['Presentation'] }}</h3>
+							{{ translated_entity.field_programme_description.value|raw }}
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_main_objective.value is not empty %}
+						<div class="programme-section" id="main-objective" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ translations[current_language]['Main Objective'] }}</h3>
+							{{ translated_entity.field_main_objective.value|raw }}
+						</div>
+					{% endif %}
+					{% if translated_entity.field_competencies.value is not empty %}
+						<div class="programme-section" id="competencies" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ translations[current_language]['Competencies'] }}</h3>
+							{{ translated_entity.field_competencies.value|raw }}
+						</div>
+					{% endif %}
+					{% if translated_entity.field_programme_learn_outcomes.value is not empty %}
+						<div class="programme-section" id="learning-outcomes" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Learning Outcomes'|t }}</h3>
+							{{ translated_entity.field_programme_learn_outcomes.value|raw }}
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_programme_qualification.value is not empty %}
+						<div class="programme-section" id="qualification" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ translations[current_language]['Qualification'] }}</h3>
+							{{ translated_entity.field_programme_qualification.value|raw }}
+						</div>
+					{% endif %}
+
+
+					{% if translated_entity.field_distribution_of_credits.value is not empty %}
+						<div class="programme-section" id="structure" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">
+								{{ 'Structure and Distribution of Credits'|t }}
+							</h3>
+
+
+							{{ translated_entity.field_distribution_of_credits.value|raw }}
+
+						</div>
+					{% endif %}
+
+
+					<div class="programme-section" id="iecs" style="text-align: justify; scroll-margin-top: 150px;">
+						<h3 class="subsection-title">{{ 'Courses'|t }}</h3>
+
+						{# === TABS NAV: By course / By semester === #}
+						<ul class="nav nav-tabs justify-content-center mb-3" id="iecsTabs" role="tablist">
+
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="tab-by-semester" data-bs-toggle="tab" data-bs-target="#pane-by-semester" type="button" role="tab" aria-controls="pane-by-semester" aria-selected="false">
+									{{ 'By term'|t }}
+								</button>
+							</li>
+
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="tab-by-course" data-bs-toggle="tab" data-bs-target="#pane-by-course" type="button" role="tab" aria-controls="pane-by-course" aria-selected="true">
+									{{ 'By year'|t }}
+								</button>
+							</li>
+
+						</ul>
+
+						<div class="tab-content" id="iecsTabsContent">
+
+							<div
+								class="tab-pane fade show active" id="pane-by-semester" role="tabpanel" aria-labelledby="tab-by-semester">
+
+								{# Terms declared by the programme structure. #}
+								{% set semester_terms = curriculum.terms %}
+
+
+								{# --- BOTONES DE SEMESTRE (como los de course) --- #}
+								<div class="custom-btn-group btn-group btn-group-adjustment mb-3" role="group" aria-label="{{ 'Terms'|t }}">
+									{% for term, term_info in semester_terms %}
+										{% set is_default_term = loop.first %}
+										<button type="button" class="btn btn-outline-primary toggle-button {{ is_default_term ? '' : 'collapsed' }}" data-bs-toggle="collapse" data-bs-target="#semester{{ term }}" aria-expanded="{{ is_default_term ? 'true' : 'false' }}" aria-controls="semester{{ term }}">
+											{{ term_info.label }}
+										</button>
+
+										{# Versión móvil: tabla dentro del propio loop (como en courses) #}
+										<div class="courses-container d-block d-sm-block d-md-none d-lg-none">
+											<div id="semester{{ term }}" class="collapse {{ is_default_term ? 'show' : '' }}" aria-expand>
+												<h4 class="subsection-title">{{ term_info.label }}</h4>
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>{{ translations[current_language]['Code'] }}</th>
+															<th>{{ translations[current_language]['Name'] }}</th>
+															<th>{{ 'Year'|t }}</th>
+															<th>{{ 'Term'|t }}</th>
+															<th>{{ translations[current_language]['ECTS'] }}</th>
+															<th>{{ translations[current_language]['Type'] }}</th>
+															<th>{{ 'Mobility'|t }}</th>
+														</tr>
+													</thead>
+													<tbody>
+														{% for row in view.result %}
+															{% set iec = row._relationship_entities['reverse__node__field_iec_programme'] %}
+															{% set iec_terms = [] %}
+															{% for iec_term_item in iec.field_iec_term %}
+																{% set iec_terms = iec_terms|merge([iec_term_item.value ~ '']) %}
+															{% endfor %}
+
+															{% if (term ~ '') in iec_terms or '0' in iec_terms %}
+
+																{% if iec.hasTranslation(current_language) %}
+																	{% set translated_iec = iec.getTranslation(current_language) %}
+																{% else %}
+																	{% set translated_iec = iec %}
+																{% endif %}
+
+
+																<tr>
+																	<td>
+																		{% if translated_iec.field_iec_code is not empty %}
+																			{{ translated_iec.field_iec_code[0].value }}
+																		{% else %}
+																			{{ 'Sin codigo'|t }}
+																		{% endif %}
+																	</td>
+																	<td>
+																		<a href="/{{ row.custom_url }}">
+																			{{ translated_iec.title.value }}
+																		</a>
+																	</td>
+																	<td>
+																		{# Curso al que pertenece (usamos courses[year]) #}
+																		{% set course_year = translated_iec.field_iec_year[0].value %}
+																		{% if course_year in courses|keys %}
+																			{{ courses[course_year].label }}
+																		{% else %}
+																			{{ '-' }}
+																		{% endif %}
+																	</td>
+																	<td>{{ cuatrimestres_curso[term] ?? term }}</td>
+																	<td>
+																		{% if translated_iec.field_iec_credits is not empty %}
+																			{{ translated_iec.field_iec_credits[0].value }}
+																		{% else %}
+																			{{ '0' }}
+																		{% endif %}
+																	</td>
+																	<td>
+																		{% if translated_iec.field_iec_type is not empty %}
+																			{{ translations[current_language][translated_iec.field_iec_type[0].value] }}
+																		{% else %}
+																			{{ 'Sin tipo'|t }}
+																		{% endif %}
+																	</td>
+																	<td>
+																		{{ translated_iec.field_iec_avaliable_for_mobility is not empty and translated_iec.field_iec_avaliable_for_mobility[0].value == '1' ? 'Yes'|t : 'No'|t }}
+																	</td>
+																</tr>
+															{% endif %}
+														{% endfor %}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+
+								{# --- Versión escritorio: tablas debajo, como en By course --- #}
+								<div class="courses-container d-none d-md-block d-lg-block">
+									{% for term, term_info in semester_terms %}
+										<div id="semester{{ term }}" class="collapse {{ loop.first ? 'show' : '' }}">
+											<h4 class="subsection-title">{{ term_info.label }}</h4>
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th>{{ translations[current_language]['Code'] }}</th>
+														<th>{{ translations[current_language]['Name'] }}</th>
+														<th>{{ 'Year'|t }}</th>
+														<th>{{ 'Term'|t }}</th>
+														<th>{{ translations[current_language]['ECTS'] }}</th>
+														<th>{{ translations[current_language]['Type'] }}</th>
+														<th>{{ 'Mobility'|t }}</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for row in view.result %}
+														{% set iec = row._relationship_entities['reverse__node__field_iec_programme'] %}
+														{% set iec_terms = [] %}
+														{% for iec_term_item in iec.field_iec_term %}
+															{% set iec_terms = iec_terms|merge([iec_term_item.value ~ '']) %}
+														{% endfor %}
+
+														{% if (term ~ '') in iec_terms or '0' in iec_terms %}
+
+															{% if iec.hasTranslation(current_language) %}
+																{% set translated_iec = iec.getTranslation(current_language) %}
+															{% else %}
+																{% set translated_iec = iec %}
+															{% endif %}
+
+															<tr>
+																<td>
+																	{% if translated_iec.field_iec_code is not empty %}
+																		{{ translated_iec.field_iec_code[0].value }}
+																	{% else %}
+																		{{ 'Sin codigo'|t }}
+																	{% endif %}
+																</td>
+																<td>
+																	<a href="/{{ row.custom_url }}">
+																		{{ translated_iec.title.value }}
+																	</a>
+																</td>
+																<td>
+																	{% set course_year = translated_iec.field_iec_year[0].value %}
+																	{% if course_year in courses|keys %}
+																		{{ courses[course_year].label }}
+																	{% else %}
+																		{{ '-' }}
+																	{% endif %}
+																</td>
+																<td>{{ cuatrimestres_curso[term] ?? term }}</td>
+																<td>
+																	{% if translated_iec.field_iec_credits is not empty %}
+																		{{ translated_iec.field_iec_credits[0].value }}
+																	{% else %}
+																		{{ '0' }}
+																	{% endif %}
+																</td>
+																<td>
+																	{% if translated_iec.field_iec_type is not empty %}
+																		{{ translations[current_language][translated_iec.field_iec_type[0].value] }}
+																	{% else %}
+																		{{ 'Sin tipo'|t }}
+																	{% endif %}
+																</td>
+																<td>
+																	{{ translated_iec.field_iec_avaliable_for_mobility is not empty and translated_iec.field_iec_avaliable_for_mobility[0].value == '1' ? 'Yes'|t : 'No'|t }}
+																</td>
+															</tr>
+														{% endif %}
+													{% endfor %}
+												</tbody>
+											</table>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+
+
+							{# =========================
+																					       TAB 1: BY COURSE (lo que ya tenías)
+																					       ========================= #}
+							<div
+								class="tab-pane fade" id="pane-by-course" role="tabpanel" aria-labelledby="tab-by-course">
+
+								<!-- Contenedor de los botones de los cursos -->
+								<div class="custom-btn-group btn-group btn-group-adjustment mb-3" role="group" aria-label="{{ 'Courses'|t }}">
+									{% for course_id, course in courses %}
+										<button type="button" class="btn btn-outline-primary toggle-button {{ loop.first ? '' : 'collapsed' }}" data-bs-toggle="collapse" data-bs-target="#course{{ loop.index }}" aria-expanded="{{ loop.first ? 'true' : 'false' }}" aria-controls="course{{ loop.index }}">
+											{{ course.label }}
+										</button>
+
+										{# Versión móvil (tablas dentro de cada botón) #}
+										<div class="courses-container d-block d-sm-block d-md-none d-lg-none">
+											<div id="course{{ loop.index }}" class="collapse {{ loop.first ? 'show' : '' }}">
+												<h4 class="subsection-title">{{ course.label }}</h4>
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th>{{ translations[current_language]['Code'] }}</th>
+															<th>{{ translations[current_language]['Name'] }}</th>
+															<th>{{ 'Term'|t }}</th>
+															<th>{{ translations[current_language]['ECTS'] }}</th>
+															<th>{{ translations[current_language]['Type'] }}</th>
+															<th>{{ 'Mobility'|t }}</th>
+														</tr>
+													</thead>
+													<tbody>
+														{% for row in view.result %}
+															{% set iec = row._relationship_entities['reverse__node__field_iec_programme'] %}
+
+															{% if iec.hasTranslation(current_language) %}
+																{% set translated_iec = iec.getTranslation(current_language) %}
+															{% else %}
+																{% set translated_iec = iec %}
+															{% endif %}
+
+															{% set iec_years = [] %}
+															{% for iec_year_item in translated_iec.field_iec_year %}
+																{% set iec_years = iec_years|merge([iec_year_item.value ~ '']) %}
+															{% endfor %}
+
+															{% if (course_id ~ '') in iec_years or '0' in iec_years %}
+																<tr>
+																	<td>
+																		{% if translated_iec.field_iec_code is not empty %}
+																			{{ translated_iec.field_iec_code[0].value|t|capitalize }}
+																		{% else %}
+																			{{ 'Sin codigo'|t }}
+																		{% endif %}
+																	</td>
+																	<td>
+																		<a href="/{{ row.custom_url }}">
+																			{{ translated_iec.title.value }}
+																		</a>
+																	</td>
+																	<td>{{ cuatrimestres_curso[translated_iec.field_iec_term[0].value] ?? translated_iec.field_iec_term[0].value }}</td>
+																	<td>
+																		{% if translated_iec.field_iec_credits is not empty %}
+																			{{ translated_iec.field_iec_credits[0].value|t|capitalize }}
+																		{% else %}
+																			{{ 0 }}
+																		{% endif %}
+																	</td>
+																	<td>
+																		{% if translated_iec.field_iec_type is not empty %}
+																			{{ translations[current_language][translated_iec.field_iec_type[0].value] }}
+																		{% else %}
+																			{{ 'Sin tipo'|t }}
+																		{% endif %}
+																	</td>
+																	<td>
+																		{{ translated_iec.field_iec_avaliable_for_mobility is not empty and translated_iec.field_iec_avaliable_for_mobility[0].value == '1' ? 'Yes'|t : 'No'|t }}
+																	</td>
+																</tr>
+															{% endif %}
+														{% endfor %}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+
+								<!-- Contenedor de las tablas colapsables, siempre debajo de los botones (desktop) -->
+								<div class="courses-container d-none d-md-block d-lg-block">
+									{% for course_id, course in courses %}
+										<div id="course{{ loop.index }}" class="collapse {{ loop.first ? 'show' : '' }}">
+											<h4 class="subsection-title">{{ course.label }}</h4>
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th>{{ translations[current_language]['Code'] }}</th>
+														<th>{{ translations[current_language]['Name'] }}</th>
+														<th>{{ 'Term'|t }}</th>
+														<th>{{ translations[current_language]['ECTS'] }}</th>
+														<th>{{ translations[current_language]['Type'] }}</th>
+														<th>{{ 'Mobility'|t }}</th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for row in view.result %}
+														{% set iec = row._relationship_entities['reverse__node__field_iec_programme'] %}
+
+														{% if iec.hasTranslation(current_language) %}
+															{% set translated_iec = iec.getTranslation(current_language) %}
+														{% else %}
+															{% set translated_iec = iec %}
+														{% endif %}
+
+														{% set iec_years = [] %}
+														{% for iec_year_item in translated_iec.field_iec_year %}
+															{% set iec_years = iec_years|merge([iec_year_item.value ~ '']) %}
+														{% endfor %}
+
+														{% if (course_id ~ '') in iec_years or '0' in iec_years %}
+															<tr>
+																<td>
+																	{% if translated_iec.field_iec_code is not empty %}
+																		{{ translated_iec.field_iec_code[0].value|t|capitalize }}
+																	{% else %}
+																		{{ 'Sin codigo'|t }}
+																	{% endif %}
+																</td>
+																<td>
+																	<a href="/{{ row.custom_url }}">
+																		{{ translated_iec.title.value }}
+																	</a>
+																</td>
+																<td>{{ cuatrimestres_curso[translated_iec.field_iec_term[0].value] ?? translated_iec.field_iec_term[0].value }}</td>
+																<td>
+																	{% if translated_iec.field_iec_credits is not empty %}
+																		{{ translated_iec.field_iec_credits[0].value }}
+																	{% else %}
+																		{{ '0' }}
+																	{% endif %}
+																</td>
+																<td>
+																	{% if translated_iec.field_iec_type is not empty %}
+																		{{ translations[current_language][translated_iec.field_iec_type[0].value] }}
+																	{% else %}
+																		{{ 'Sin tipo'|t }}
+																	{% endif %}
+																</td>
+																<td>
+																	{{ translated_iec.field_iec_avaliable_for_mobility is not empty and translated_iec.field_iec_avaliable_for_mobility[0].value == '1' ? 'Yes'|t : 'No'|t }}
+																</td>
+															</tr>
+														{% endif %}
+													{% endfor %}
+												</tbody>
+											</table>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+
+							{# =========================
+																					       TAB 2: BY SEMESTER (ordenado por field_iec_term)
+																					       ========================= #}
+							{# =========================
+																					   TAB 2: BY SEMESTER (botones + tablas por semestre)
+																					   ========================= #}
+
+
+						</div>
+					</div>
+
+
+					{% if translated_entity.field_programme_requirements.value is not empty %}
+						<div class="programme-section" id="admission-requirements" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Admission Requirements'|t }}</h3>
+							{{ translated_entity.field_programme_requirements.value|raw }}
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_arrangments_recognition.value is not empty %}
+						<div class="programme-section" id="recognition-prior-learning" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Recognition of Prior Learning'|t }}</h3>
+							{{ translated_entity.field_arrangments_recognition.value|raw }}
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_qualification_requirements.value is not empty %}
+						<div class="programme-section" id="qualification-requirements" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Qualification Requirements'|t }}</h3>
+							{{ translated_entity.field_qualification_requirements.value|raw }}
+						</div>
+					{% endif %}
+
+
+					{% if translated_entity.field_programme_grading_scale.value is not empty or translated_entity.field_programme_explanation_scal.value is not empty or translated_entity.field_programme_grading_table.value is not empty %}
+						<div class="programme-section" id="assessment" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Assessment'|t }}</h3>
+							<br>
+
+							{% if translated_entity.field_programme_grading_scale.value is not empty %}
+								<div class="programme-section ms-5" id="grading-scale" style="text-align: justify; scroll-margin-top: 150px;">
+									<h4 class="subsection-title">{{ 'Grading Scale'|t }}</h4>
+									{{ translated_entity.field_programme_grading_scale.value|raw }}
+								</div>
+							{% endif %}
+
+
+							{% if translated_entity.field_programme_grading_scheme.value is not empty %}
+								<div class="programme-section ms-5" id="grade-distribution-table" style="text-align: justify; scroll-margin-top: 150px;">
+									<h4 class="subsection-title">{{ 'Grading Scheme'|t }}</h4>
+									{{ translated_entity.field_programme_grading_scheme.value|raw }}
+								</div>
+							{% endif %}
+
+
+							{% if translated_entity.field_programme_grading_table.value is not empty %}
+								<div class="programme-section ms-5" id="grade-distribution-table" style="text-align: justify; scroll-margin-top: 150px;">
+									<h4 class="subsection-title">{{ 'Grading Distribution Table'|t }}</h4>
+									{{ translated_entity.field_programme_grading_table.value|raw }}
+								</div>
+							{% endif %}
+
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_programme_work_placements.value is not empty %}
+						<div class="programme-section" id="work-placements" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Work Placements'|t }}</h3>
+							{{ translated_entity.field_programme_work_placements.value|raw }}
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_work_based_learning.value is not empty %}
+						<div class="programme-section" id="work-based-learning" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Work-based Learning'|t }}</h3>
+							{{ translated_entity.field_work_based_learning.value|raw }}
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_occupational_profiles.value is not empty %}
+						<div class="programme-section" id="occupational-profiles" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Occupational Profiles of Graduates'|t }}</h3>
+							{{ translated_entity.field_occupational_profiles.value|raw }}
+						</div>
+					{% endif %}
+
+						{% if translated_entity.field_access_to_further_studies.value is not empty %}
+							<div class="programme-section" id="access-further-studies" style="text-align: justify; scroll-margin-top: 150px;">
+								<h3 class="subsection-title">{{ 'Access to Further Studies'|t }}</h3>
+								{{ translated_entity.field_access_to_further_studies.value|raw }}
+							</div>
+						{% endif %}
+
+					{% if translated_entity.field_programme_mobility.value is not empty %}
+						<div class="programme-section" id="mobility" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ translations[current_language]['Mobility'] }}</h3>
+							{{ translated_entity.field_programme_mobility.value|raw }}
+						</div>
+					{% endif %}
+
+					{% if translated_entity.field_programme_mobility_windows.value is not empty %}
+						<div class="programme-section" id="mobility-windows" style="text-align: justify; scroll-margin-top: 150px;">
+							<h3 class="subsection-title">{{ 'Mobility Windows'|t }}</h3>
+							{{ translated_entity.field_programme_mobility_windows.value|raw }}
+						</div>
+					{% endif %}
+
+
+					</div>
+
+
+			</div>
+
+			{% if compatible_agreement_groups is defined %}
+				{% if compatible_agreement_groups %}
+					<div class="programme-section compatible-programmes" id="compatible-programmes" style="scroll-margin-top: 150px;">
+						<h3 class="subsection-title">{{ 'Mobility Agreements'|t }}</h3>
+
+						{% for group in compatible_agreement_groups %}
+							<div class="compatible-programmes__group">
+									<h4>
+										{% if group.university_url %}
+											<a href="{{ group.university_url }}" target="_blank" rel="noopener noreferrer">{{ group.university }}</a>
+										{% else %}
+											{{ group.university }}
+										{% endif %}
+								</h4>
+
+								<div class="compatible-programmes__table-wrap">
+									<table class="compatible-programmes__table table table-sm">
+										<thead>
+											<tr>
+												<th>Agreement</th>
+												<th>Places</th>
+												<th>Duration (months)</th>
+												<th>Languages</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for row in group.rows %}
+												<tr>
+													<td>
+														<strong>{{ row.agreement_title|nl2br }}</strong><br>
+														{% if row.contact %}
+															<strong>Contact person:</strong> {{ row.contact|nl2br }}<br>
+															{% endif %}
+															{% if row.destination_ou %}
+																<strong>Destination OU:</strong>
+																{% if row.destination_ou_url %}
+																	<a href="{{ row.destination_ou_url }}" target="_blank" rel="noopener noreferrer">{{ row.destination_ou }}</a>
+																{% else %}
+																	{{ row.destination_ou|nl2br }}
+																{% endif %}
+																<br>
+															{% endif %}
+															{% if row.level_of_education %}
+																<strong>Level of education:</strong> {{ row.level_of_education }}<br>
+															{% endif %}
+															{% if row.fields_of_education %}
+																<strong>Fields of education:</strong> {{ row.fields_of_education|nl2br }}<br>
+															{% endif %}
+														{% if row.description %}
+															<strong>Observations:</strong> {{ row.description|nl2br }}
+														{% endif %}
+													</td>
+													<td>{{ row.spots ? row.spots|nl2br : '-' }}</td>
+													<td>{{ row.duration ? row.duration|nl2br : '-' }}</td>
+													<td>{{ row.language ? row.language|nl2br : '-' }}</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+			{% endif %}
+
+
+		</div>
+
+
+
+	</div>
+
+	<!--
+	
+	
+	-->
+	<!--
+	
+	
+	-->
+	<!--
+	
+	
+	-->
+
+
+		
+		
+
+
+	</div>
+</div></div></div><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script><!--
+			<script>
+			
+			(function () {
+			  const menu = document.getElementById('block-b5subtheme-institutionmenublock');
+			  if (!menu) return;
+			
+			  // Crea un "spacer" para evitar salto cuando fijamos el menú
+			  const spacer = document.createElement('div');
+			  spacer.style.height = menu.offsetHeight + 'px';
+			  spacer.style.display = 'none';
+			  menu.parentNode.insertBefore(spacer, menu);
+			
+			  const getAdminOffset = () =>
+			    parseInt(getComputedStyle(document.documentElement)
+			      .getPropertyValue('--drupal-displace-offset-top')) || 0;
+			
+			  let originalTop = menu.getBoundingClientRect().top + window.scrollY - getAdminOffset();
+			
+			  function onScrollOrResize() {
+			    const adminOffset = getAdminOffset();
+			
+			    if (window.scrollY >= originalTop) {
+			      menu.style.position = 'fixed';
+			      menu.style.top = adminOffset + 'px';
+			      menu.style.left = '0';
+			      menu.style.right = '0';
+			      menu.style.width = '100%';
+			      menu.style.zIndex = '9999';
+			      spacer.style.display = 'block';           // evita salto
+			    } else {
+			      menu.style.position = 'static';
+			      spacer.style.display = 'none';
+			    }
+			  }
+			
+			  window.addEventListener('scroll', onScrollOrResize);
+			  window.addEventListener('resize', () => {
+			    // Recalcula alturas y punto de anclaje en resize
+			    spacer.style.display = 'none';
+			    menu.style.position = 'static';
+			    spacer.style.height = menu.offsetHeight + 'px';
+			    originalTop = menu.getBoundingClientRect().top + window.scrollY - getAdminOffset();
+			    onScrollOrResize();
+			  });
+			
+			  // Primer cálculo
+			  onScrollOrResize();
+			})();
+			
+			</script>
+			-->

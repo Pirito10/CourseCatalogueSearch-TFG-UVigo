@@ -1,0 +1,26 @@
+uuid: c99a8f29-903f-4d46-be02-f33c053b0214
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_flexible_address
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: zNb7-U2x_X7rqvKz4mhm_UQCqohLcM6tpa9grqFnsV4
+id: hei.street_address
+field_name: street_address
+entity_type: hei
+type: ewp_flexible_address
+settings:
+  max_length_long: 255
+  max_length_short: 16
+module: ewp_flexible_address
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

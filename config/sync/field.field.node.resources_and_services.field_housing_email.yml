@@ -1,0 +1,19 @@
+uuid: ec24c29c-4794-4acc-9776-262d4691d95d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_housing_email
+    - node.type.resources_and_services
+id: node.resources_and_services.field_housing_email
+field_name: field_housing_email
+entity_type: node
+bundle: resources_and_services
+label: 'Housing - email'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

@@ -1,0 +1,29 @@
+uuid: 492868c5-16cf-47df-8a47-4256d65ed262
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_type_of_hei
+    - node.type.institution
+    - taxonomy.vocabulary.type_of_hei
+id: node.institution.field_type_of_hei
+field_name: field_type_of_hei
+entity_type: node
+bundle: institution
+label: Type
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      type_of_hei: type_of_hei
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

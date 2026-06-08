@@ -1,0 +1,25 @@
+uuid: f12086a3-73f6-4899-b511-fe9cc4805d25
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_mode_of_study
+    - node.type.programme
+  module:
+    - elm_vocabulary_field
+id: node.programme.field_programme_mode_of_study
+field_name: field_programme_mode_of_study
+entity_type: node
+bundle: programme
+label: 'Mode of Study'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    67395e6b5a: false
+    72a0ab92fa: false
+    f230bae523: false
+field_type: elm_controlled_vocabulary

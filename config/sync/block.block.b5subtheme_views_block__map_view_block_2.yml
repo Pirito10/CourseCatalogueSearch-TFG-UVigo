@@ -1,0 +1,29 @@
+uuid: 06dd025a-b6c7-4ed2-9319-2638ff68578b
+langcode: en
+status: false
+dependencies:
+  config:
+    - views.view.map_view
+  module:
+    - system
+    - views
+  theme:
+    - b5subtheme
+id: b5subtheme_views_block__map_view_block_2
+theme: b5subtheme
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:map_view-block_2'
+settings:
+  id: 'views_block:map_view-block_2'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/general-information/*'

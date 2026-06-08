@@ -1,0 +1,153 @@
+{% set langcode = language.getId() %}
+{% set entity = row._entity %}
+
+{% if entity.hasTranslation(langcode) %}
+  {% set entity = entity.getTranslation(langcode) %}
+{% endif %}
+
+
+<div class="degree-sidebar bg-light p-4">
+<div class="row g-3 mx-0">
+
+
+
+  {# -------------------------
+     Columna 1: General Data
+     ------------------------- #}
+  <div class="col-12 col-md-6 col-xl-12">
+    <h3 class="subsection-title m-0 mb-3">
+      {{ 'General Data'|t }}
+    </h3>
+
+    
+
+    {% if fields.field_iec_code is defined and fields.field_iec_code.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Code'|t }}:</strong>
+        {{ fields.field_iec_code.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_type_of_credits is defined and fields.field_iec_type_of_credits.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Type of credits'|t }}:</strong>
+        {{ fields.field_iec_type_of_credits.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_credits is defined and fields.field_iec_credits.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Number of credits'|t }}:</strong>
+        {{ fields.field_iec_credits.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_engagement_hours is defined and fields.field_iec_engagement_hours.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Engagement hours'|t }}:</strong>
+        {{ fields.field_iec_engagement_hours.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_fields_of_study is defined and fields.field_fields_of_study.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'ISCED-F'|t }}:</strong>
+        {{ fields.field_fields_of_study.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_type is defined and fields.field_iec_type.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Status'|t }}:</strong>
+        {{ fields.field_iec_type.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_elm_type is defined and fields.field_iec_elm_type.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Type'|t }}:</strong>
+        {{ fields.field_iec_elm_type.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_year is defined and fields.field_iec_year.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Academic Year'|t }}:</strong>
+        {{ fields.field_iec_year.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_term is defined and fields.field_iec_term.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Term'|t }}:</strong>
+        {{ fields.field_iec_term.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_modality is defined and fields.field_iec_modality.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Modality'|t }}:</strong>
+        {{ fields.field_iec_modality.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_language_of_instructio is defined and fields.field_iec_language_of_instructio.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Languages'|t }}:</strong>
+        {{ fields.field_iec_language_of_instructio.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_avaliable_for_mobility is defined and fields.field_iec_avaliable_for_mobility.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Available for Mobility Students'|t }}:</strong>
+        {{ fields.field_iec_avaliable_for_mobility.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_restricted_alliance is defined and fields.field_iec_restricted_alliance.content|render|striptags|trim %}
+      <div class="degree-info-item mb-2">
+        <strong>{{ 'Restricted to alliance'|t }}:</strong>
+        {{ fields.field_iec_restricted_alliance.content }}
+      </div>
+    {% endif %}
+  </div>
+
+  {# -------------------------
+     Columna 2: Coordination
+     ------------------------- #}
+  <div class="col-12 col-md-6 col-xl-12">
+    <h3 class="mt-4 mt-md-0 mt-xl-4">
+      {{ 'Coordination'|t }}
+    </h3>
+
+    {% if fields.field_iec_coordinator is defined and fields.field_iec_coordinator.content|render|striptags|trim %}
+      <div class="degree-info-item mb-1">
+        <i class=""></i> {{ fields.field_iec_coordinator.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_phone is defined and fields.field_iec_phone.content|render|striptags|trim %}
+      <div class="degree-info-item mb-1">
+        <i class="fa fa-phone"></i> {{ fields.field_iec_phone.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_email is defined and fields.field_iec_email.content|render|striptags|trim %}
+      <div class="degree-info-item mb-1">
+        <i class="fa fa-envelope"></i> {{ fields.field_iec_email.content }}
+      </div>
+    {% endif %}
+
+    {% if fields.field_iec_web is defined and fields.field_iec_web.content|render|striptags|trim %}
+      <div class="d-flex align-items-start mb-3">
+        <i class="fas fa-globe me-2 mt-1"></i>
+        <p class="mb-0">
+          {{ fields.field_iec_web.content }}
+        </p>
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+</div>

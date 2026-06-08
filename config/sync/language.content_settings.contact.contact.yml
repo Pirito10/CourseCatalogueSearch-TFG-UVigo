@@ -1,0 +1,11 @@
+uuid: 188b12f7-3499-4458-ac8d-7d96a3dec8be
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_contact
+id: contact.contact
+target_entity_type_id: contact
+target_bundle: contact
+default_langcode: site_default
+language_alterable: false

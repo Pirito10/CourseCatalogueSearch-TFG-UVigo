@@ -1,0 +1,19 @@
+uuid: 0cf5eabf-7f0d-422c-a52e-7be7f5449a1b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_coordinator
+    - node.type.individual_educational_component
+id: node.individual_educational_component.field_iec_coordinator
+field_name: field_iec_coordinator
+entity_type: node
+bundle: individual_educational_component
+label: Coordinator
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

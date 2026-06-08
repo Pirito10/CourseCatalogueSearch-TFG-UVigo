@@ -1,0 +1,14 @@
+uuid: 08573adb-4398-4d38-bf25-d90a35117475
+langcode: es
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+  module:
+    - user
+id: universitytypegroup-9376111be951
+group_type: universitytypegroup
+content_plugin: group_membership
+plugin_config:
+  group_cardinality: 1
+  entity_cardinality: 1

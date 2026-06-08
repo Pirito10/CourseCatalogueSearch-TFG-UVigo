@@ -1,0 +1,4 @@
+label: 'Group relationship'
+relationships:
+  'group_relationship:langcode:language':
+    label: Language

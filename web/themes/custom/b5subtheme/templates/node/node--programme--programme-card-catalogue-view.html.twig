@@ -1,0 +1,100 @@
+{# entity = node Programme en view mode "catalogue card" #}
+{% set programme = node %}
+
+{# === INSTITUTION (primer ítem si fuera múltiple) === #}
+{% set inst_field = programme.field_programme_institution ?? null %}
+{% set institution = null %}
+{% if inst_field is not empty %}
+  {% if inst_field.entity is defined and inst_field.entity %}
+    {% set institution = inst_field.entity %}
+  {% elseif inst_field.0 is defined and inst_field.0.entity is defined %}
+    {% set institution = inst_field.0.entity %}
+  {% endif %}
+{% endif %}
+
+{# === LOGO institución (seguro) === #}
+{% set logo_uri = null %}
+{% if institution and institution.field_logo is defined and institution.field_logo.entity is defined and institution.field_logo.entity %}
+  {% set logo_file = institution.field_logo.entity %}
+  {% set logo_uri = logo_file.uri.value|default(logo_file.fileuri|default(null)) %}
+{% endif %}
+
+{# === LEVEL / ECTS === #}
+{% set raw_level = programme.field_programme_level.value|default('')|lower %}
+{% set level_code = {'bachelor':'B','master':'M','phd':'PhD'}[raw_level]|default(raw_level ? raw_level|slice(0,1)|upper : '') %}
+{% set ects = programme.field_credits.value|default(null) %}
+
+{# === AREA (lista o taxonomía; si hay varios, toma el primero) === #}
+{% set area_label = null %}
+{% if programme.field_programme_area is defined and programme.field_programme_area is not empty %}
+  {# Caso lista de texto #}
+  {% if programme.field_programme_area.value is defined and programme.field_programme_area.value %}
+    {% set area_key = programme.field_programme_area.value %}
+    {% set area_label = programme_area_labels[area_key]|default(area_key) %}
+  {% else %}
+    {# Caso referencia a término (posible multi) #}
+    {% set term = null %}
+    {% if programme.field_programme_area.entity is defined and programme.field_programme_area.entity %}
+      {% set term = programme.field_programme_area.entity %}
+    {% elseif programme.field_programme_area.0 is defined and programme.field_programme_area.0.entity is defined %}
+      {% set term = programme.field_programme_area.0.entity %}
+    {% endif %}
+    {% if term %}
+      {% set area_label = term.label %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+{# === COUNTRY (código -> nombre con country_list) === #}
+{% set country_code = null %}
+{% if institution %}
+  {% if institution.field_institution_country is defined and institution.field_institution_country.value %}
+    {% set country_code = institution.field_institution_country.value %}
+  {% elseif institution.field_address is defined and institution.field_address.country_code is defined and institution.field_address.country_code %}
+    {% set country_code = institution.field_address.country_code %}
+  {% endif %}
+{% endif %}
+{% set country_name = country_code ? (country_list[country_code]|default(country_code)) : null %}
+
+<a href="{{ path('entity.node.canonical', {'node': programme.id}) }}" class="text-decoration-none text-reset">
+  <div class="card shadow-none mb-3 border-0 rounded-0" style="height:123.65px;cursor:pointer;">
+    <div class="row g-0">
+      <!-- Logo -->
+      <div class="col-3" style="height:123.65px;">
+        {% if logo_uri %}
+          <img src="{{ file_url(logo_uri) }}" alt="{{ institution ? institution.label : '' }}" class="img-fluid rounded-0 h-100 object-fit-contain p-2">
+        {% else %}
+          <div class="bg-light d-flex align-items-center justify-content-center h-100">
+            <span class="text-muted small">No logo</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Texto -->
+      <div class="col-9">
+        <div class="card-body p-2">
+          <h5 class="card-title mb-1 text-start">{{ programme.label }}</h5>
+
+          <div class="programme-meta d-flex align-items-center mb-2">
+            {% if level_code %}<strong>{{ level_code }}</strong>{% endif %}
+            {% if ects %}<span class="mx-2">·</span><span class="fst-italic">{{ ects }} ECTS</span>{% endif %}
+            {% if area_label %}<span class="mx-2">·</span><span>{{ area_label }}</span>{% endif %}
+          </div>
+
+          <div class="ou-tag-bar d-flex gap-2">
+            {% if institution %}
+              <span class="ou-tag px-3 py-1" style="background-color:#F44743;color:#fff;border-radius:0;">
+                {{ institution.label }}
+              </span>
+            {% endif %}
+            {% if country_name %}
+              <span class="ou-tag px-3 py-1" style="background-color:black;color:white;border:2px solid black;border-radius:0;">
+                {{ country_name }}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>

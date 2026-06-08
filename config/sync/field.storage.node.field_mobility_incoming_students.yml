@@ -1,0 +1,19 @@
+uuid: 9b13acd2-2a71-42c1-a78b-d4c7f53a9240
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_mobility_incoming_students
+field_name: field_mobility_incoming_students
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

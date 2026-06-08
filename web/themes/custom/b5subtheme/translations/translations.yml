@@ -1,0 +1,1025 @@
+en:
+
+
+  Name: 'Name'
+  Contacts: 'Contacts'
+
+  #University View Search and Filters
+  PROGRAMMES: 'PROGRAMMES'
+  SUBJECTS: 'SUBJECTS'
+  CATALOGUE: 'CATALOGUE'
+  LANGUAGE: 'LANGUAGE'
+  LEVEL: 'LEVEL'
+  Bachelor: 'Bachelor'
+  Master: 'Master'
+  Spanish: 'Spanish'
+  English: 'English'
+  Search: 'Search'
+
+
+
+
+  #Degree Menu and Sections
+  General Information: 'General Information'
+  Presentation: 'Presentation'
+  Main Objective: 'Main Objective'
+  Competencies: 'Competencies'
+  Qualification: 'Qualification'
+  Subjects: 'Subjects'
+  Admission: 'Admission'
+  Regulations: 'Regulations'
+  Structure and Distribution of credits: 'Structure and Distribution of credits'
+  
+  #Degree General Information
+  General Data: 'General Data'
+  Professional Practices: 'Professional Practices'
+  ECTS Credits: 'ECTS Credits'
+  Coordination: 'Coordination'
+  Academic Course: 'Academic Course'
+  Level: 'Level'
+  Modality: 'Modality'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Qualification Level'
+  Study Modality: 'Study Modality'
+  presencial: 'In person'
+  online: 'Online'
+  grado: 'Bachelor'
+  master: 'Master'
+  yes: 'Yes'
+  no: 'No'
+  si: 'Yes'
+
+
+  #Degree Structure and Distributions of credits.
+  Course: 'Course'
+  core: 'Core'
+  mandatory: 'Mandatory'
+  optional: 'Optional'
+  Nucleo: 'Core'
+  Obligatorio: 'Mandatory'
+  Opcional: 'Optional'
+  Practicas externas: 'External Practices'
+  Proyecto final: 'Final Project'
+  TOTAL: 'TOTAL'
+  Code: 'Code'
+  Subject: 'Subject'
+  Quarter: 'Quarter'
+  ECTS: 'ECTS'
+  Category: 'Category'
+  
+
+
+  #Courses. Change in future
+  1º Year: '1º Year'
+  2º Year: '2º Year'
+  3º Year: '3º Year'
+  4º Year: '4º Year'
+
+
+
+#SUBJECT
+  Description: 'Description'
+  Period: 'Period'
+  Requirements: 'Requirements'
+  Language: 'Language'
+  Instructors: 'Instructors'
+  Contents: 'Contents'
+  Learning Outcomes: 'Learning Outcomes'
+  Recommended Readings and Tools: 'Recommended Readings and Tools'
+  Planned Activities: 'Planned Activities'
+  Assessment Methods and Criteria: 'Assessment Methods and Criteria'
+  in_person: 'In person'
+
+
+###CAMPUS INFORMATION
+  Academic Authorities : 'Academic Authorities'
+  Programmes: 'Programmes'
+  Organizational Units: 'Organizational Units'
+  Category here to search: 'Category here to search'
+  Click on an Organizational Unit to see its details. : 'Click on an Organizational Unit to see its details.'
+  See more: 'See more'
+
+
+
+  Mobility: 'Mobility'
+  Type: 'Type'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+  Length of Programme: 'Length of Programme'
+  Languages: 'Languages'
+
+es:
+
+
+ 
+  Contacts: 'Contactos'
+
+
+  #Vista Universidad Filtros e Búsqueda
+  PROGRAMMES: 'CARRERAS'
+  SUBJECTS: 'ASIGNATURAS'
+  CATALOGUE: 'CATÁLOGO'
+  LANGUAGE: 'IDIOMA'
+  LEVEL: 'NIVEL'
+  Bachelor: 'Grado'
+  Master: 'Máster'
+  Spanish: 'Español'
+  English: 'Inglés'
+  Search: 'Buscar'
+
+
+  #Menu Carrera e Apartados
+  General Information: 'Información General'
+  Presentation: 'Presentación'
+  Main Objective: 'Objetivo Principal'
+  Competencies: 'Competencias'
+  Qualification: 'Cualificación'
+  Subjects: 'Asignaturas'
+  Admission: 'Admisión'
+  Regulations: 'Normativas'
+  Structure and Distribution of credits: 'Estructura y Distribución de créditos'
+
+
+  #Información General Carrera
+  General Data: 'Datos Generales'
+  Professional Practices: 'Prácticas Profesionales'
+  ECTS Credits: 'Créditos ECTS'
+  Coordination: 'Coordinación'
+  Academic Course: 'Curso Académico'
+  Level: 'Nivel'
+  Modality: 'Modalidad'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Nivel de Cualificación'
+  Study Modality: 'Modalidad de estudio'
+  presencial: 'Presencial'
+  online: 'Online'
+  grado: 'Grado'
+  master: 'Máster'
+  yes: 'Si'
+  no: 'No'
+  si: 'Si'
+
+
+  #Carrera Estructura y distribución de creditos
+  Course: 'Curso'
+  core: 'Núcleo'
+  mandatory: 'Obligatorio'
+  optional: 'Opcional'
+  Nucleo: 'Núcleo'
+  Obligatorio: 'Obligatorio'
+  Opcional: 'Opcional'
+  Practicas externas: 'Prácticas externas'
+  Proyecto final: 'Proyecto final'
+  TOTAL: 'TOTAL'
+  Code: 'Código'
+  Subject: 'Asignatura'
+  Quarter: 'Cuatrimestre'
+  ECTS: 'ECTS'
+  Category: 'Tipo'
+
+  #Cursos, cambiar nun futuro
+  1º Course: '1º Curso'
+  2º Course: '2º Curso'
+  3º Course: '3º Curso'
+  4º Course: '4º Curso'
+  1º Year: '1º Curso'
+  2º Year: '2º Curso'
+  3º Year: '3º Curso'
+  4º Year: '4º Curso'
+
+
+  #ASIGNATURA
+  Description: 'PRESENTACIÓN'
+  Period: 'Cuatrimestre'
+  Requirements: 'Requisitos'
+  Language: 'Idioma'
+  Instructors: 'PROFESORES'
+  Contents: 'CONTENIDO DE LA ASIGNATURA'
+  Learning Outcomes: 'RESULTADOS DE APRENDIZAJE'
+  Recommended Readings and Tools: 'LECTURAS Y HERRAMIENTAS RECOMENDADAS'
+  Planned Activities: 'ACTIVIDADES PLANIFICADAS'
+  Assessment Methods and Criteria: 'MÉTODOS Y CRITERIOS DE EVALUACIÓN'
+  in_person: 'Presencial'
+
+  Academic Authorities: 'Autoridades Académicas'
+  Programmes: 'Programas'
+  Organizational Units: 'Unidades Organizativas'
+  Category here to search: 'Escribe aquí para buscar'
+  Click on an Organizational Unit to see its details. : 'Haz click en una Unidad Organizativa para ver sus detalles'
+  See more: 'Ver más'
+
+  Mobility: 'Mobility'
+  Type: 'Tipo'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+  Length of Programme: 'Length of Programme'
+  Languages: 'Idiomas'
+
+
+
+
+fr: # Francés
+
+  Contacts: 'Contacts'
+
+  #Vue Université Filtres et Recherche
+  PROGRAMMES: 'DIPLÔMES'
+  SUBJECTS: 'SUJETS'
+  CATALOGUE: 'CATALOGUE'
+  LANGUAGE: 'LANGUE'
+  LEVEL: 'NIVEAU'
+  Bachelor: 'Licence'
+  Master: 'Master'
+  Spanish: 'Espagnol'
+  English: 'Anglais'
+  Search: 'Rechercher'
+
+  #Menu Diplôme et Sections
+  General Information: 'Informations Générales'
+  Presentation: 'Présentation'
+  Main Objective: 'Objectif Principal'
+  Competencies: 'Compétences'
+  Qualification: 'Qualification'
+  Subjects: 'Sujets'
+  Admission: 'Admission'
+  Regulations: 'Règlements'
+  Structure and Distribution of credits: 'Structure et Répartition des crédits'
+
+  #Informations Générales Diplôme
+  General Data: 'Données Générales'
+  Professional Practices: 'Pratiques Professionnelles'
+  ECTS Credits: 'Crédits ECTS'
+  Coordination: 'Coordination'
+  Academic Course: 'Cours Académique'
+  Level: 'Niveau'
+  Modality: 'Modalité'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Niveau de Qualification'
+  Study Modality: 'Modalité d’Étude'
+  presencial: 'En présentiel'
+  online: 'En ligne'
+  grado: 'Licence'
+  master: 'Master'
+  yes: 'Oui'
+  no: 'Non'
+  si: 'Oui'
+
+  #Structure et Répartition des crédits
+  Course: 'Cours'
+  core: 'Noyau'
+  mandatory: 'Obligatoire'
+  optional: 'Optionnel'
+  Nucleo: 'Noyau'
+  Obligatorio: 'Obligatoire'
+  Opcional: 'Optionnel'
+  Practicas externas: 'Pratiques externes'
+  Proyecto final: 'Projet final'
+  TOTAL: 'TOTAL'
+  Code: 'Code'
+  Subject: 'Sujet'
+  Quarter: 'Trimestre'
+  ECTS: 'ECTS'
+  Category: 'Category'
+
+  #Cours
+  1º Course: '1º Cours'
+  2º Course: '2º Cours'
+  3º Course: '3º Cours'
+  4º Course: '4º Cours'
+  1º Year: '1re année'
+  2º Year: '2e année'
+  3º Year: '3e année'
+  4º Year: '4e année'
+
+  #SUJET
+  Description: 'PRÉSENTATION'
+  Period: 'Période'
+  Requirements: 'Exigences'
+  Language: 'Langue'
+  Instructors: 'ENSEIGNANTS'
+  SUBJECT CONTENT: 'CONTENU DU SUJET'
+  Learning Outcomes: 'RÉSULTATS D’APPRENTISSAGE'
+  Recommended Readings and Tools: 'LECTURES ET OUTILS RECOMMANDÉS'
+  Planned Activities: 'ACTIVITÉS PLANIFIÉES'
+  Assessment Methods and Criteria: 'MÉTHODES ET CRITÈRES D’ÉVALUATION'
+  in_person: 'En présentiel'
+
+  Academic Authorities: 'Autorités académiques'
+  Programmes: 'Programmes'
+  Organizational Units: 'Unités organisationnelles'
+  Category here to search: 'Tapez ici pour rechercher'
+  Click on an Organizational Unit to see its details. : 'Cliquez sur une Unité organisationnelle pour voir ses détails'
+  See more: 'Voir plus'
+
+  Mobility: 'Mobility'
+  Type: 'Type'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+  Lenght of Programme: 'Lenght of Programme'
+
+
+
+pt-pt: # Portugués
+
+  Contacts: 'Contacts'
+
+  #Pesquisa e Filtros da Universidade
+  PROGRAMMES: 'GRAUS'
+  SUBJECTS: 'DISCIPLINAS'
+  CATALOGUE: 'CATÁLOGO'
+  LANGUAGE: 'IDIOMA'
+  LEVEL: 'NÍVEL'
+  Bachelor: 'Licenciatura'
+  Master: 'Mestrado'
+  Spanish: 'Espanhol'
+  English: 'Inglês'
+  Search: 'Pesquisar'
+
+  #Menu Grau e Secções
+  General Information: 'Informações Gerais'
+  Presentation: 'Apresentação'
+  Main Objective: 'Objetivo Principal'
+  Competencies: 'Competências'
+  Qualification: 'Qualificação'
+  Subjects: 'Disciplinas'
+  Admission: 'Admissão'
+  Regulations: 'Regulamentos'
+  Structure and Distribution of credits: 'Estrutura e Distribuição de Créditos'
+
+  #Informações Gerais do Grau
+  General Data: 'Dados Gerais'
+  Professional Practices: 'Práticas Profissionais'
+  ECTS Credits: 'Créditos ECTS'
+  Coordination: 'Coordenação'
+  Academic Course: 'Ano Académico'
+  Level: 'Nível'
+  Modality: 'Modalidade'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Nível de Qualificação'
+  Study Modality: 'Modalidade de Estudo'
+  presencial: 'Presencial'
+  online: 'Online'
+  grado: 'Licenciatura'
+  master: 'Mestrado'
+  yes: 'Sim'
+  no: 'Não'
+  si: 'Sim'
+
+  #Estrutura e Distribuição de Créditos
+  Course: 'Curso'
+  core: 'Núcleo'
+  mandatory: 'Obrigatório'
+  optional: 'Opcional'
+  Nucleo: 'Núcleo'
+  Obligatorio: 'Obrigatório'
+  Opcional: 'Opcional'
+  Practicas externas: 'Práticas Externas'
+  Proyecto final: 'Projeto Final'
+  TOTAL: 'TOTAL'
+  Code: 'Código'
+  Subject: 'Disciplina'
+  Quarter: 'Trimestre'
+  ECTS: 'ECTS'
+  Category: 'Tipo'
+
+  #Cursos
+  1º Course: '1º Ano'
+  2º Course: '2º Ano'
+  3º Course: '3º Ano'
+  4º Course: '4º Ano'
+  1º Year: '1º Ano'
+  2º Year: '2º Ano'
+  3º Year: '3º Ano'
+  4º Year: '4º Ano'
+
+  #DISCIPLINA
+  Description: 'APRESENTAÇÃO'
+  Period: 'Período'
+  Requirements: 'Requisitos'
+  Language: 'Idioma'
+  Instructors: 'PROFESSORES'
+  SUBJECT CONTENT: 'CONTEÚDO DA DISCIPLINA'
+  Learning Outcomes: 'RESULTADOS DE APRENDIZAGEM'
+  Recommended Readings and Tools: 'LEITURAS E FERRAMENTAS RECOMENDADAS'
+  Planned Activities: 'ATIVIDADES PLANEJADAS'
+  Assessment Methods and Criteria: 'MÉTODOS E CRITÉRIOS DE AVALIAÇÃO'
+  in_person: 'Presencial'
+
+
+  Academic Authorities: 'Autoridades Académicas'
+  Programmes: 'Programas'
+  Organizational Units: 'Unidades Organizacionais'
+  Category here to search: 'Escreva aqui para pesquisar'
+  Click on an Organizational Unit to see its details. : 'Clique numa Unidade Organizacional para ver os seus detalhes'
+  See more: 'Ver mais'
+
+  Mobility: 'Mobility'
+  Type: 'Τύπος'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+
+
+
+
+
+el: # Griego
+
+  Contacts: 'Contacts'
+
+  #Προβολή Πανεπιστημίου, Φίλτρα και Αναζήτηση
+  PROGRAMMES: 'ΠΤΥΧΙΑ'
+  SUBJECTS: 'ΜΑΘΗΜΑΤΑ'
+  CATALOGUE: 'ΚΑΤΑΛΟΓΟΣ'
+  LANGUAGE: 'ΓΛΩΣΣΑ'
+  LEVEL: 'ΕΠΙΠΕΔΟ'
+  Bachelor: 'Πτυχίο'
+  Master: 'Μεταπτυχιακό'
+  Spanish: 'Ισπανικά'
+  English: 'Αγγλικά'
+  Search: 'Αναζήτηση'
+
+  #Μενού Πτυχίου και Ενότητες
+  General Information: 'Γενικές Πληροφορίες'
+  Presentation: 'Παρουσίαση'
+  Main Objective: 'Κύριος Στόχος'
+  Competencies: 'Δεξιότητες'
+  Qualification: 'Προσόν'
+  Subjects: 'Μαθήματα'
+  Admission: 'Εισαγωγή'
+  Regulations: 'Κανονισμοί'
+  Structure and Distribution of credits: 'Δομή και Κατανομή Πιστωτικών Μονάδων'
+
+  #Γενικές Πληροφορίες Πτυχίου
+  General Data: 'Γενικά Δεδομένα'
+  Professional Practices: 'Επαγγελματικές Πρακτικές'
+  ECTS Credits: 'Πιστωτικές Μονάδες ECTS'
+  Coordination: 'Συντονισμός'
+  Academic Course: 'Ακαδημαϊκό Έτος'
+  Level: 'Επίπεδο'
+  Modality: 'Μορφή'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Επίπεδο Προσόντων'
+  Study Modality: 'Μορφή Σπουδών'
+  presencial: 'Δια ζώσης'
+  online: 'Διαδικτυακό'
+  grado: 'Πτυχίο'
+  master: 'Μεταπτυχιακό'
+  yes: 'Ναι'
+  no: 'Όχι'
+  si: 'Ναι'
+
+  #Δομή και Κατανομή Πιστωτικών Μονάδων
+  Course: 'Μάθημα'
+  core: 'Πυρήνας'
+  mandatory: 'Υποχρεωτικό'
+  optional: 'Επιλογής'
+  Nucleo: 'Πυρήνας'
+  Obligatorio: 'Υποχρεωτικό'
+  Opcional: 'Επιλογής'
+  Practicas externas: 'Εξωτερικές Πρακτικές'
+  Proyecto final: 'Τελικό Έργο'
+  TOTAL: 'ΣΥΝΟΛΟ'
+  Code: 'Κωδικός'
+  Subject: 'Μάθημα'
+  Quarter: 'Τρίμηνο'
+  ECTS: 'ECTS'
+  Category: 'Τύπος'
+
+  #Μαθήματα
+  1º Course: '1º Έτος'
+  2º Course: '2º Έτος'
+  3º Course: '3º Έτος'
+  4º Course: '4º Έτος'
+  1º Year: '1ο Έτος'
+  2º Year: '2ο Έτος'
+  3º Year: '3ο Έτος'
+  4º Year: '4ο Έτος'
+
+  #ΜΑΘΗΜΑ
+  Description: 'ΠΑΡΟΥΣΙΑΣΗ'
+  Period: 'Περίοδος'
+  Requirements: 'Απαιτήσεις'
+  Language: 'Γλώσσα'
+  Instructors: 'ΔΙΔΑΣΚΟΝΤΕΣ'
+  SUBJECT CONTENT: 'ΠΕΡΙΕΧΟΜΕΝΟ ΜΑΘΗΜΑΤΟΣ'
+  Learning Outcomes: 'ΜΑΘΗΣΙΑΚΑ ΑΠΟΤΕΛΕΣΜΑΤΑ'
+  Recommended Readings and Tools: 'ΠΡΟΤΕΙΝΟΜΕΝΑ ΒΙΒΛΙΑ ΚΑΙ ΕΡΓΑΛΕΙΑ'
+  Planned Activities: 'ΠΡΟΓΡΑΜΜΑΤΙΣΜΕΝΕΣ ΔΡΑΣΤΗΡΙΟΤΗΤΕΣ'
+  Assessment Methods and Criteria: 'ΜΕΘΟΔΟΙ ΚΑΙ ΚΡΙΤΗΡΙΑ ΑΞΙΟΛΟΓΗΣΗΣ'
+  in_person: 'Δια ζώσης'
+
+  Academic Authorities: 'Ακαδημαϊκές αρχές'
+  Programmes: 'Προγράμματα'
+  Organizational Units: 'Οργανωτικές μονάδες'
+  Category here to search: 'Πληκτρολογήστε εδώ για αναζήτηση'
+  Click on an Organizational Unit to see its details. : 'Κάντε κλικ σε μια Οργανωτική Μονάδα για να δείτε τις λεπτομέρειες της'
+  See more: 'Δείτε περισσότερα'
+
+  Mobility: 'Mobility'
+  Type: 'Typ'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+
+
+cs: # Checo
+
+  Contacts: 'Contacts'
+
+  #Pohled na univerzitu, filtry a vyhledávání
+  PROGRAMMES: 'STUPNĚ'
+  SUBJECTS: 'PŘEDMĚTY'
+  CATALOGUE: 'KATALOG'
+  LANGUAGE: 'JAZYK'
+  LEVEL: 'ÚROVEŇ'
+  Bachelor: 'Bakalář'
+  Master: 'Magistr'
+  Spanish: 'Španělština'
+  English: 'Angličtina'
+  Search: 'Hledat'
+
+  #Nabídka oborů a sekcí
+  General Information: 'Obecné informace'
+  Presentation: 'Prezentace'
+  Main Objective: 'Hlavní cíl'
+  Competencies: 'Kompetence'
+  Qualification: 'Kvalifikace'
+  Subjects: 'Předměty'
+  Admission: 'Přijímací řízení'
+  Regulations: 'Předpisy'
+  Structure and Distribution of credits: 'Struktura a rozdělení kreditů'
+
+  #Obecné informace o oboru
+  General Data: 'Obecná data'
+  Professional Practices: 'Odborné praxe'
+  ECTS Credits: 'Kredity ECTS'
+  Coordination: 'Koordinace'
+  Academic Course: 'Akademický rok'
+  Level: 'Úroveň'
+  Modality: 'Režim'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Úroveň kvalifikace'
+  Study Modality: 'Režim studia'
+  presencial: 'Přítomný'
+  online: 'Online'
+  grado: 'Bakalář'
+  master: 'Magistr'
+  yes: 'Ano'
+  no: 'Ne'
+  si: 'Ano'
+
+  #Struktura a rozdělení kreditů
+  Course: 'Kurz'
+  core: 'Jádro'
+  mandatory: 'Povinné'
+  optional: 'Volitelné'
+  Nucleo: 'Jádro'
+  Obligatorio: 'Povinné'
+  Opcional: 'Volitelné'
+  Practicas externas: 'Externí praxe'
+  Proyecto final: 'Závěrečný projekt'
+  TOTAL: 'CELKEM'
+  Code: 'Kód'
+  Subject: 'Předmět'
+  Quarter: 'Čtvrtletí'
+  ECTS: 'ECTS'
+  Category: 'Typ'
+
+  #Kurzy
+  1º Course: '1. Kurz'
+  2º Course: '2. Kurz'
+  3º Course: '3. Kurz'
+  4º Course: '4. Kurz'
+  1º Year: '1. ročník'
+  2º Year: '2. ročník'
+  3º Year: '3. ročník'
+  4º Year: '4. ročník'
+
+  #PŘEDMĚT
+  Description: 'PREZENTACE'
+  Period: 'Období'
+  Requirements: 'Požadavky'
+  Language: 'Jazyk'
+  Instructors: 'INSTRUKTOŘI'
+  SUBJECT CONTENT: 'OBSAH PŘEDMĚTU'
+  Learning Outcomes: 'VÝSLEDKY UČENÍ'
+  Recommended Readings and Tools: 'DOPORUČENÁ ČTENÍ A NÁSTROJE'
+  Planned Activities: 'PLÁNOVANÉ AKTIVITY'
+  Assessment Methods and Criteria: 'METODY A KRITÉRIA HODNOCENÍ'
+  in_person: 'Přítomný'
+
+  Academic Authorities: 'Akademické orgány'
+  Programmes: 'Programy'
+  Organizational Units: 'Organizační jednotky'
+  Category here to search: 'Pište sem pro vyhledávání'
+  Click on an Organizational Unit to see its details. : 'Klikněte na organizační jednotku pro zobrazení detailů'
+  See more: 'Zobrazit více'
+
+  Mobility: 'Mobility'
+  Type: 'Tip'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+
+
+
+
+
+sl: # Esloveno
+
+  Contacts: 'Contacts'
+
+  #Pogled na univerzo, filtri in iskanje
+  PROGRAMMES: 'STOPNJE'
+  SUBJECTS: 'PREDMETI'
+  CATALOGUE: 'KATALOG'
+  LANGUAGE: 'JEZIK'
+  LEVEL: 'RAVEN'
+  Bachelor: 'Diploma'
+  Master: 'Magisterij'
+  Spanish: 'Španščina'
+  English: 'Angleščina'
+  Search: 'Iskanje'
+
+  #Meni stopnje in oddelki
+  General Information: 'Splošne informacije'
+  Presentation: 'Predstavitev'
+  Main Objective: 'Glavni cilj'
+  Competencies: 'Kompetence'
+  Qualification: 'Kvalifikacija'
+  Subjects: 'Predmeti'
+  Admission: 'Sprejem'
+  Regulations: 'Predpisi'
+  Structure and Distribution of credits: 'Struktura in razdelitev kreditov'
+
+  #Splošne informacije o stopnjah
+  General Data: 'Splošni podatki'
+  Professional Practices: 'Poklicne prakse'
+  ECTS Credits: 'ECTS krediti'
+  Coordination: 'Koordinacija'
+  Academic Course: 'Akademsko leto'
+  Level: 'Raven'
+  Modality: 'Način'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Raven kvalifikacije'
+  Study Modality: 'Način študija'
+  presencial: 'Osebno'
+  online: 'Na spletu'
+  grado: 'Diploma'
+  master: 'Magisterij'
+  yes: 'Da'
+  no: 'Ne'
+  si: 'Da'
+
+  #Struktura in razdelitev kreditov
+  Course: 'Tečaj'
+  core: 'Jedro'
+  mandatory: 'Obvezno'
+  optional: 'Izbirno'
+  Nucleo: 'Jedro'
+  Obligatorio: 'Obvezno'
+  Opcional: 'Izbirno'
+  Practicas externas: 'Zunanje prakse'
+  Proyecto final: 'Zaključni projekt'
+  TOTAL: 'SKUPAJ'
+  Code: 'Koda'
+  Subject: 'Predmet'
+  Quarter: 'Četrtletje'
+  ECTS: 'ECTS'
+  Category: 'Tip'
+
+  #Tečaji
+  1º Course: '1º Tečaj'
+  2º Course: '2º Tečaj'
+  3º Course: '3º Tečaj'
+  4º Course: '4º Tečaj'
+  1º Year: '1. letnik'
+  2º Year: '2. letnik'
+  3º Year: '3. letnik'
+  4º Year: '4. letnik'
+
+  #PREDMET
+  Description: 'PREDSTAVITEV'
+  Period: 'Obdobje'
+  Requirements: 'Zahteve'
+  Language: 'Jezik'
+  Instructors: 'INŠTRUKTORJI'
+  SUBJECT CONTENT: 'VSEBINA PREDMETA'
+  Learning Outcomes: 'UČNI IZIDI'
+  Recommended Readings and Tools: 'PRIPOROČENO GRADIVO IN ORODJA'
+  Planned Activities: 'NAČRTOVANE AKTIVNOSTI'
+  Assessment Methods and Criteria: 'METODE IN KRITERIJI VREDNOTENJA'
+  in_person: 'Osebno'
+
+
+  Academic Authorities: 'Akademske oblasti'
+  Programmes: 'Programi'
+  Organizational Units: 'Organizacijske enote'
+  Category here to search: 'Vnesite tukaj za iskanje'
+  Click on an Organizational Unit to see its details. : 'Kliknite na organizacijsko enoto za ogled podrobnosti'
+  See more: 'Poglej več'
+
+  Mobility: 'Mobility'
+  Type: 'Típus'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+
+
+hu: # Húngaro
+
+  Contacts: 'Contacts'
+
+  #Egyetemi nézet, szűrők és keresés
+  PROGRAMMES: 'FOKOZATOK'
+  SUBJECTS: 'TANTÁRGYAK'
+  CATALOGUE: 'KATALÓGUS'
+  LANGUAGE: 'NYELV'
+  LEVEL: 'SZINT'
+  Bachelor: 'Alapképzés'
+  Master: 'Mesterképzés'
+  Spanish: 'Spanyol'
+  English: 'Angol'
+  Search: 'Keresés'
+
+  #Fokozatok menüje és szakaszai
+  General Information: 'Általános Információk'
+  Presentation: 'Bemutatás'
+  Main Objective: 'Fő Cél'
+  Competencies: 'Kompetenciák'
+  Qualification: 'Képesítés'
+  Subjects: 'Tantárgyak'
+  Admission: 'Felvétel'
+  Regulations: 'Szabályzatok'
+  Structure and Distribution of credits: 'Kreditstruktúra és -elosztás'
+
+  #Általános Információk Fokozat
+  General Data: 'Általános adatok'
+  Professional Practices: 'Szakmai gyakorlatok'
+  ECTS Credits: 'ECTS kredit'
+  Coordination: 'Koordináció'
+  Academic Course: 'Akadémiai év'
+  Level: 'Szint'
+  Modality: 'Módozat'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Képesítési szint'
+  Study Modality: 'Tanulmányi mód'
+  presencial: 'Személyes'
+  online: 'Online'
+  grado: 'Alapképzés'
+  master: 'Mesterképzés'
+  yes: 'Igen'
+  no: 'Nem'
+  si: 'Igen'
+
+  #Kreditstruktúra és -elosztás
+  Course: 'Tantárgy'
+  core: 'Mag'
+  mandatory: 'Kötelező'
+  optional: 'Választható'
+  Nucleo: 'Mag'
+  Obligatorio: 'Kötelező'
+  Opcional: 'Választható'
+  Practicas externas: 'Külső gyakorlatok'
+  Proyecto final: 'Záróprojekt'
+  TOTAL: 'ÖSSZESEN'
+  Code: 'Kód'
+  Subject: 'Tantárgy'
+  Quarter: 'Negyedév'
+  ECTS: 'ECTS'
+  Category: 'Típus'
+
+  #Tantárgyak
+  1º Course: '1. Év'
+  2º Course: '2. Év'
+  3º Course: '3. Év'
+  4º Course: '4. Év'
+  1º Year: '1. évfolyam'
+  2º Year: '2. évfolyam'
+  3º Year: '3. évfolyam'
+  4º Year: '4. évfolyam'
+
+  #TANTÁRGY
+  Description: 'BEMUTATÁS'
+  Period: 'Időszak'
+  Requirements: 'Követelmények'
+  Language: 'Nyelv'
+  Instructors: 'OKTATÓK'
+  SUBJECT CONTENT: 'TANTÁRGY TARTALMA'
+  Learning Outcomes: 'TANULÁSI EREDMÉNYEK'
+  Recommended Readings and Tools: 'AJÁNLOTT OLVASMÁNYOK ÉS ESZKÖZÖK'
+  Planned Activities: 'TERVEZETT TEVÉKENYSÉGEK'
+  Assessment Methods and Criteria: 'ÉRTÉKELÉSI MÓDSZEREK ÉS KRITÉRIUMOK'
+  in_person: 'Személyes'
+
+  Academic Authorities: 'Akadémiai hatóságok'
+  Programmes: 'Programok'
+  Organizational Units: 'Szervezeti egységek'
+  Category here to search: 'Írjon ide a kereséshez'
+  Click on an Organizational Unit to see its details. : 'Kattintson egy szervezeti egységre a részletek megtekintéséhez'
+  See more: 'Továbbiak'
+
+  Mobility: 'Mobility'
+  Type: 'Tüüp'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+
+
+
+
+et: # Estonio
+
+  Contacts: 'Contacts'
+
+  #Ülikooli vaade, filtrid ja otsing
+  PROGRAMMES: 'KRAADID'
+  SUBJECTS: 'AINED'
+  CATALOGUE: 'KATALOOG'
+  LANGUAGE: 'KEEL'
+  LEVEL: 'TASE'
+  Bachelor: 'Bakalaureus'
+  Master: 'Magister'
+  Spanish: 'Hispaania'
+  English: 'Inglise'
+  Search: 'Otsi'
+
+  #Kraadi menüü ja jaotised
+  General Information: 'Üldinfo'
+  Presentation: 'Esitlus'
+  Main Objective: 'Põhieesmärk'
+  Competencies: 'Pädevused'
+  Qualification: 'Kvalifikatsioon'
+  Subjects: 'Ained'
+  Admission: 'Sisseastumine'
+  Regulations: 'Määrused'
+  Structure and Distribution of credits: 'Struktuur ja ainepunktide jaotus'
+
+  #Üldinfo kraadide kohta
+  General Data: 'Üldandmed'
+  Professional Practices: 'Professionaalsed praktikad'
+  ECTS Credits: 'ECTS ainepunktid'
+  Coordination: 'Koordineerimine'
+  Academic Course: 'Akadeemiline aasta'
+  Level: 'Tase'
+  Modality: 'Vorm'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Kvalifikatsiooni tase'
+  Study Modality: 'Õppevorm'
+  presencial: 'Kohapeal'
+  online: 'Veebis'
+  grado: 'Bakalaureus'
+  master: 'Magister'
+  yes: 'Jah'
+  no: 'Ei'
+  si: 'Jah'
+
+  #Struktuur ja ainepunktide jaotus
+  Course: 'Kursus'
+  core: 'Tuumik'
+  mandatory: 'Kohustuslik'
+  optional: 'Valikuline'
+  Nucleo: 'Tuumik'
+  Obligatorio: 'Kohustuslik'
+  Opcional: 'Valikuline'
+  Practicas externas: 'Välispraktikad'
+  Proyecto final: 'Lõpp-projekt'
+  TOTAL: 'KOKKU'
+  Code: 'Kood'
+  Subject: 'Aine'
+  Quarter: 'Kvartal'
+  ECTS: 'ECTS'
+  Category: 'Tüüp'
+
+  #Kursused
+  1º Course: '1º Kursus'
+  2º Course: '2º Kursus'
+  3º Course: '3º Kursus'
+  4º Course: '4º Kursus'
+  1º Year: '1. õppeaasta'
+  2º Year: '2. õppeaasta'
+  3º Year: '3. õppeaasta'
+  4º Year: '4. õppeaasta'
+
+  #AINE
+  Description: 'ESITLUS'
+  Period: 'Periood'
+  Requirements: 'Nõuded'
+  Language: 'Keel'
+  Instructors: 'ÕPETAJAD'
+  SUBJECT CONTENT: 'AINE SISU'
+  Learning Outcomes: 'ÕPIVÄLJUNDID'
+  Recommended Readings and Tools: 'SOOVITATUD LUGEMIS- JA TÖÖRIISTAD'
+  Planned Activities: 'PLANEERITUD TEGEVUSED'
+  Assessment Methods and Criteria: 'HINDAMISMEETODID JA KRITEERIUMID'
+  in_person: 'Kohapeal'
+
+  Academic Authorities: 'Akadeemilised võimud'
+  Programmes: 'Programmid'
+  Organizational Units: 'Organisatsiooniüksused'
+  Category here to search: 'Sisesta siia otsinguks'
+  Click on an Organizational Unit to see its details. : 'Klõpsa organisatsiooniüksusel, et näha selle üksikasju'
+  See more: 'Vaata veel'
+
+  Mobility: 'Mobility'
+  Type: 'Tipo'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'
+  
+
+
+gl: # Gallego
+
+  Contacts: 'Contacts'
+
+  #Vista da universidade, filtros e busca
+  PROGRAMMES: 'TITULACIÓNS'
+  SUBJECTS: 'ASIGNATURAS'
+  CATALOGUE: 'CATÁLOGO'
+  LANGUAGE: 'IDIOMA'
+  LEVEL: 'NIVEL'
+  Bachelor: 'Grao'
+  Master: 'Mestrado'
+  Spanish: 'Español'
+  English: 'Inglés'
+  Search: 'Buscar'
+
+  #Menú de titulación e seccións
+  General Information: 'Información Xeral'
+  Presentation: 'Presentación'
+  Main Objective: 'Obxectivo Principal'
+  Competencies: 'Competencias'
+  Qualification: 'Cualificación'
+  Subjects: 'Asignaturas'
+  Admission: 'Admisión'
+  Regulations: 'Normativas'
+  Structure and Distribution of credits: 'Estrutura e Distribución de Créditos'
+
+  #Información Xeral da Titulación
+  General Data: 'Datos Xerais'
+  Professional Practices: 'Prácticas Profesionais'
+  ECTS Credits: 'Créditos ECTS'
+  Coordination: 'Coordinación'
+  Academic Course: 'Curso Académico'
+  Level: 'Nivel'
+  Modality: 'Modalidade'
+  ISCED-F: 'ISCED-F'
+  Qualification Level: 'Nivel de Cualificación'
+  Study Modality: 'Modalidade de Estudo'
+  presencial: 'Presencial'
+  online: 'En liña'
+  grado: 'Grao'
+  master: 'Mestrado'
+  yes: 'Si'
+  no: 'Non'
+  si: 'Si'
+
+  #Estrutura e Distribución de Créditos
+  Course: 'Curso'
+  core: 'Núcleo'
+  mandatory: 'Obrigatorio'
+  optional: 'Opcional'
+  Nucleo: 'Núcleo'
+  Obligatorio: 'Obrigatorio'
+  Opcional: 'Opcional'
+  Practicas externas: 'Prácticas externas'
+  Proyecto final: 'Proxecto final'
+  TOTAL: 'TOTAL'
+  Code: 'Código'
+  Subject: 'Asignatura'
+  Quarter: 'Cuatrimestre'
+  ECTS: 'ECTS'
+  Category: 'Tipo'
+
+  #Cursos
+  1º Course: '1º Curso'
+  2º Course: '2º Curso'
+  3º Course: '3º Curso'
+  4º Course: '4º Curso'
+  1º Year: '1º Curso'
+  2º Year: '2º Curso'
+  3º Year: '3º Curso'
+  4º Year: '4º Curso'
+
+  #ASIGNATURA
+  Description: 'PRESENTACIÓN'
+  Period: 'Período'
+  Requirements: 'Requisitos'
+  Language: 'Idioma'
+  Instructors: 'DOCENTES'
+  SUBJECT CONTENT: 'CONTIDO DA ASIGNATURA'
+  Learning Outcomes: 'RESULTADOS DE APRENDIZAXE'
+  Recommended Readings and Tools: 'LECTURAS E FERRAMENTAS RECOMENDADAS'
+  Planned Activities: 'ACTIVIDADES PLANIFICADAS'
+  Assessment Methods and Criteria: 'MÉTODOS E CRITERIOS DE AVALIACIÓN'
+  in_person: 'Presencial'
+
+  Mobility: 'Mobility'
+  Allow Mobility: 'Allow Mobility'
+  Academic Contacts: 'Academic Contacts'
+  Avaliable for Mobility Students: 'Avaliable for Mobility Students'

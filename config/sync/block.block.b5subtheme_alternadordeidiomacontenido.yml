@@ -1,0 +1,20 @@
+uuid: 073a83f7-75c4-4a28-9d11-add197788b8b
+langcode: es
+status: false
+dependencies:
+  module:
+    - language
+  theme:
+    - b5subtheme
+id: b5subtheme_alternadordeidiomacontenido
+theme: b5subtheme
+region: header
+weight: 0
+provider: null
+plugin: 'language_block:language_content'
+settings:
+  id: 'language_block:language_content'
+  label: 'Alternador de idioma (Contenido)'
+  label_display: visible
+  provider: language
+visibility: {  }

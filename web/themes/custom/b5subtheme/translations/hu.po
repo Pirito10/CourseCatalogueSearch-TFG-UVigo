@@ -1,0 +1,638 @@
+
+msgid "CATALOGUE"
+msgstr "Katalógus"
+
+msgid "GENERAL INFORMATION"
+msgstr "Szervezeti információk"
+
+msgid "RESOURCES AND SERVICES"
+msgstr "Egyéb információk"
+
+msgid "UNIVERSITY LIFE"
+msgstr "Egyetemi élet"
+
+msgid "Arts and Humanities"
+msgstr "Humán tudományok"
+
+msgid "Sciences"
+msgstr "Természettudományok"
+
+msgid "Health Sciences"
+msgstr "Orvostudomány"
+
+msgid "Social and Legal Sciences"
+msgstr "Társadalomtudományok"
+
+msgid "Engineering and Architecture"
+msgstr "Mérnöki tudományok"
+
+msgid "Apply"
+msgstr "Alkalmaz"
+
+msgid "Reset"
+msgstr "Visszaállít"
+
+msgid "Sort"
+msgstr "Rendezés"
+
+msgid "Country"
+msgstr "Ország"
+
+msgid "Page"
+msgstr "Oldal"
+
+msgid "Destination"
+msgstr "Cél"
+
+msgid "Select Home Programme"
+msgstr "Szak saját egyetemen"
+
+msgid "Programme"
+msgstr "Szak"
+
+msgid "Course"
+msgstr "Kurzus"
+
+msgid "Description"
+msgstr "Leirás"
+
+msgid "General Information"
+msgstr "Általános információk"
+
+msgid "Main Objective"
+msgstr "Fő célok"
+
+msgid "Competencies"
+msgstr "Kompetenciák"
+
+msgid "Qualification"
+msgstr "Képesités"
+
+msgid "Courses"
+msgstr "Kurzusok"
+
+msgid "Course edition:"
+msgstr "Kurzusváltozat:"
+
+msgid "Admission"
+msgstr "Jelentkezési feltételek"
+
+msgid "Structure and distribution of credits"
+msgstr "Felépités és kredit eloszlás"
+
+msgid "Regulations"
+msgstr "Előirások"
+
+msgid "Year (1º Year, 2º Year...)"
+msgstr "Kurzusok"
+
+msgid "General data"
+msgstr "Általános információk"
+
+msgid "Academic year"
+msgstr "Képzési év"
+
+msgid "Level (Degree, Bachelor, Master, PhD, Other"
+msgstr "Képzési szint"
+
+msgid "ECTS Credits"
+msgstr "ECTS kreditek"
+
+msgid "Modality (In-person, Online...)"
+msgstr "Tanitási mód"
+
+msgid "ISCED-F"
+msgstr "ISCED-F kód"
+
+msgid "Qualification level???"
+msgstr "Képzés szintje"
+
+msgid "Study modality(Full-time, part time)"
+msgstr "Tagozat (levelező / nappali)"
+
+msgid "Professional Practices"
+msgstr "Szakmai gyakorlat"
+
+msgid "Coordination??"
+msgstr "Koordináció??"
+
+msgid "By Semester"
+msgstr "Félév szerint"
+
+msgid "By Year"
+msgstr "Év szerint"
+
+msgid "Admission Requirements"
+msgstr "Jelentkezési feltételek"
+
+msgid "Recognition of Prior Learning"
+msgstr "Megszerzett tudás elismerése"
+
+msgid "Qualification Requirements"
+msgstr "Minősítés megszerzésének feltételei"
+
+msgid "Assessment"
+msgstr "Értékelés"
+
+msgid "Granding Scale"
+msgstr "Osztályozási rendszer"
+
+msgid "Explanation of the Scale"
+msgstr "Osztályozási rendszer magyarázata"
+
+msgid "Grade Distribution Table"
+msgstr "Érdemjegy eloszlási adatok"
+
+msgid "Mobility Windows"
+msgstr "Mobilitási időszakok"
+
+msgid "Work Placements"
+msgstr "Gyakornoki elhelyezés"
+
+msgid "Work-based Learning"
+msgstr "Munkaalapú tanulás"
+
+msgid "Occupational Profiles of Graduates"
+msgstr "Végzősök munkaköri profiljai"
+
+msgid "Access to Further Studies"
+msgstr "Továbbképzési lehetőségek"
+
+msgid "Code"
+msgstr "Kód"
+
+msgid "Term"
+msgstr "Félév"
+
+msgid "Type"
+msgstr "Tipus"
+
+msgid "Subject"
+msgstr "Tantárgyak"
+
+msgid "Core"
+msgstr "Kötelező tárgy"
+
+msgid "Mandatory"
+msgstr "Kötelező"
+
+msgid "Elective"
+msgstr "Választható"
+
+msgid "Other types"
+msgstr "Szakmai gyakorlat"
+
+msgid "Final project"
+msgstr "Diplomamunka"
+
+msgid "TOTAL"
+msgstr "Összesen"
+
+msgid "Language"
+msgstr "Nyelv"
+
+msgid "Requirements"
+msgstr "Követelmények"
+
+msgid "Instructors"
+msgstr "Oktatók"
+
+msgid "Course content"
+msgstr "Tantárgy tartalma"
+
+msgid "Learning outcomes"
+msgstr "Tanulási célok"
+
+msgid "Recommended literature and resources"
+msgstr "Ajánlott irodalom és erőforrások"
+
+msgid "Planned learning activities and teaching methods"
+msgstr "Tantárgy felépitése"
+
+msgid "Evaluation methods and criteria"
+msgstr "Értékelési módok és kritériumok"
+
+msgid "Field of Study (ISCED-F)"
+msgstr "Szakterület (ISCED-F)"
+
+msgid "Assessment"
+msgstr "Értékelés"
+
+msgid "Avaliable for Mobility Students"
+msgstr "Elérhető érkező diákoknak"
+
+msgid "Category (Core, Mandatory, Optional, Other)"
+msgstr "Kategória (kötelező / kötelezően választható / szabadon választható / egyéb)"
+
+msgid "Contents"
+msgstr "Kurzus tartalma"
+
+msgid "Credits"
+msgstr "Kreditpont"
+
+msgid "Modality (ELM Vocabulary, Online, Hybrid, Presential...)"
+msgstr "Oktatási mód (jelenléti / online / hibrid)"
+
+msgid "External practices"
+msgstr "intézményen kívüli gyakorlat"
+
+msgid "Academic Authorities"
+msgstr "Felügyeleti szervek (???)"
+
+msgid "Enrollment Procedures"
+msgstr "Jelentkezés módja"
+
+msgid "Contacts"
+msgstr "Kapcsolattartó"
+
+msgid "ECTS Policies"
+msgstr "ECTS-eljárások és szabályok"
+
+msgid "Campuses"
+msgstr "Kampuszok"
+
+msgid "Org. Units"
+msgstr "Szervezeti egységek"
+
+msgid "Academic Calendar"
+msgstr "Tanulmányi naptár"
+
+msgid "Institutional Contacts"
+msgstr "Szervezeti kapcsolattartók"
+
+msgid "Mobility"
+msgstr "Mobilitás"
+
+msgid "Authorities"
+msgstr "Hatóságok"
+
+msgid "Admission Languages"
+msgstr ""
+
+msgid "ECTS Allocation Policy"
+msgstr "ECTS-pont kiosztási szabályzat"
+
+msgid "Incoming Students"
+msgstr "Bejövő hallgatók"
+
+msgid "Outgoing Students"
+msgstr "Kimenő hallgatók"
+
+msgid "Organizational Units"
+msgstr "Szervezeti egységek"
+
+msgid "Type here to search"
+msgstr "Írjon a kereséshez"
+
+msgid "Knowledge Area"
+msgstr "Szakterület"
+
+msgid "Campus"
+msgstr "Kampusz"
+
+msgid "Click on an Organizational Unit to see its details"
+msgstr "Kattintson a szervezeti egységre további információkért"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Telefonszám"
+
+msgid "Web"
+msgstr "Webcím"
+
+msgid "ABOUT"
+msgstr "Rólunk"
+
+msgid "INSTITUTIONS"
+msgstr "Intézmények"
+
+msgid "CONTACT"
+msgstr "Elérhetőség"
+
+msgid "Explore the best opportunities to study in Europe. Discover universities, programs, and destinations tailored to your future. Your next academic adventure starts here."
+msgstr "Fedezze fel a legjobb európai tanulási lehetőségeket. Ismerje meg a jövőjéhez igazított egyetemeket, képzéseket és úti célokat. A következő tudományos kalandja itt kezdődik."
+
+msgid "Study in Europe"
+msgstr "Tanulj Európában"
+
+msgid "FIND A PROGRAMME"
+msgstr "KERESS KÉPZÉST"
+
+msgid "EXPLORE OUR UNIVERSITIES"
+msgstr "FEDEZD FEL EGYETEMEINKET"
+
+msgid "Find a new place to continue your studies, meet new people and learn a new language. Before this, you should:"
+msgstr "Találj egy új helyet a tanulmányaid folytatásához, ismerkedj meg új emberekkel, és tanulj meg egy új nyelvet. Mielőtt belevágnál, érdemes:"
+
+msgid "Find which universities are available from your home university at your local international office."
+msgstr "Tájékozódj a saját egyetemed nemzetközi irodájában, hogy mely egyetemek érhetők el."
+
+msgid "Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar."
+msgstr "Győződj meg róla, hogy a tantárgyak illeszkednek a képzésedhez, olyan nyelven oktatják őket, amelyet értesz, és beleillenek a tanulmányi naptáradba."
+
+msgid "Assess accommodation, transportation, and daily expenses."
+msgstr "Mérd fel a szállást, a közlekedést és a mindennapi kiadásokat."
+
+msgid "Research the local culture, student life, and opportunities for personal and professional growth."
+msgstr "Ismerd meg a helyi kultúrát, a hallgatói életet, valamint a személyes és szakmai fejlődési lehetőségeket."
+
+msgid "Check healthcare coverage, safety, and housing availability."
+msgstr "Ellenőrizd az egészségügyi fedezetet, a biztonságot és a szálláslehetőségek elérhetőségét."
+
+msgid "Don't miss the opportunity!"
+msgstr "Ne hagyd ki a lehetőséget!"
+
+msgid "Czech"
+msgstr "Cseh"
+
+msgid "English"
+msgstr "Angol"
+
+msgid "Estonian"
+msgstr "Észt"
+
+msgid "French"
+msgstr "Francia"
+
+msgid "Greek"
+msgstr "Görög"
+
+msgid "Hungarian"
+msgstr "Magyar"
+
+msgid "Portuguese"
+msgstr "Portugál"
+
+msgid "Slovenian"
+msgstr "Szlovén"
+
+msgid "Spanish"
+msgstr "Spanyol"
+
+msgid "By semester"
+msgstr "Félév szerint"
+
+msgid "1st semester"
+msgstr "1. félév"
+
+msgid "2nd semester"
+msgstr "2. félév"
+
+msgid "Languages"
+msgstr "Nyelvek"
+
+msgid "Programme Type"
+msgstr "Képzéstípus"
+
+msgid "Organizational Unit"
+msgstr "Szervezeti egység"
+
+msgid "@count selected"
+msgstr "@count kiválasztva"
+
+msgid "PROGRAMMES"
+msgstr "PROGRAMOK"
+msgid "Found Something Wrong?"
+msgstr "Talált valami hibát?"
+
+msgid "Give Us Feedback"
+msgstr "Küldjön visszajelzést"
+
+msgid "Available for Mobility Students"
+msgstr "Elérhető mobilitási hallgatók számára"
+
+msgid "Overview"
+msgstr "Áttekintés"
+
+msgid "Curriculum"
+msgstr "Tanterv"
+
+msgid "Careers"
+msgstr "Karrierlehetőségek"
+
+msgid "Practice"
+msgstr "Gyakorlat"
+
+msgid "By term"
+msgstr "Időszak szerint"
+
+msgid "By year"
+msgstr "Év szerint"
+
+msgid "1st term"
+msgstr "1. időszak"
+
+msgid "2nd term"
+msgstr "2. időszak"
+
+msgid "Terms"
+msgstr "Időszakok"
+
+msgid "Year"
+msgstr "Év"
+
+msgid "Structure and Distribution of Credits"
+msgstr "A kreditek szerkezete és elosztása"
+
+msgid "Grading Scale"
+msgstr "Értékelési skála"
+
+msgid "Grading Scheme"
+msgstr "Értékelési rendszer"
+
+msgid "Grading Distribution Table"
+msgstr "Érdemjegy-eloszlási táblázat"
+
+msgid "Mobility Agreements"
+msgstr "Mobilitási megállapodások"
+
+msgid "Start Date"
+msgstr "Kezdés dátuma"
+
+msgid "End Date"
+msgstr "Befejezés dátuma"
+
+msgid "Type of Credits"
+msgstr "Kreditek típusa"
+
+msgid "Type of credits"
+msgstr "Kreditek típusa"
+
+msgid "Fields of study"
+msgstr "Tanulmányi területek"
+
+msgid "Mode of Learning"
+msgstr "Tanulási mód"
+
+msgid "Programme Abbreviation"
+msgstr "Program rövidítése"
+
+msgid "Restricted to alliance students"
+msgstr "Csak a szövetség hallgatói számára"
+
+msgid "Academic Year"
+msgstr "Akadémiai év"
+
+msgid "Number of credits"
+msgstr "Kreditek száma"
+
+msgid "Status"
+msgstr "Állapot"
+
+msgid "Restricted to alliance"
+msgstr "Csak a szövetség számára"
+
+msgid "Change Home Programme"
+msgstr "Hazai program módosítása"
+
+msgid "Clear home programme"
+msgstr "Hazai program törlése"
+
+msgid "Home programme"
+msgstr "Hazai program"
+
+msgid "Study in Europe with ATHENA"
+msgstr "Tanuljon Európában az ATHENA-val"
+
+msgid "Sport clubs/programs"
+msgstr "Sportklubok/programok"
+
+msgid "Language courses"
+msgstr "Nyelvtanfolyamok"
+
+msgid "Support for students with disabilities and special needs"
+msgstr "Támogatás fogyatékossággal élő és speciális igényű hallgatóknak"
+
+msgid "VISA"
+msgstr "Vízum"
+
+msgid "Student Mobility"
+msgstr "Hallgatói mobilitás"
+
+msgid "University Life"
+msgstr "Egyetemi élet"
+
+msgid "Academic requirements for nominations"
+msgstr "Akadémiai követelmények a jelölésekhez"
+
+msgid "Additional requirements"
+msgstr "További követelmények"
+
+msgid "Admission description for exchange students"
+msgstr "Felvételi leírás cserehallgatók számára"
+
+msgid "Admission description for full-degree students"
+msgstr "Felvételi leírás teljes képzésben részt vevő hallgatók számára"
+
+msgid "Admission description for visiting students"
+msgstr "Felvételi leírás vendéghallgatók számára"
+
+msgid "All"
+msgstr "Összes"
+
+msgid "Applications"
+msgstr "Jelentkezések"
+
+msgid "Arrangements for Academic Guidance"
+msgstr "Az akadémiai tanácsadás rendje"
+
+msgid "Arrangements for the recognition of credit and prior learning"
+msgstr "A kreditek és az előzetes tanulmányok elismerésének rendje"
+
+msgid "Autumn"
+msgstr "Ősz"
+
+msgid "Click on an Organizational Unit to see its details."
+msgstr "Kattintson egy szervezeti egységre a részletek megtekintéséhez."
+
+msgid "Contact"
+msgstr "Kapcsolat"
+
+msgid "Department"
+msgstr "Tanszék"
+
+msgid "Exchange"
+msgstr "Csereprogram"
+
+msgid "Exchange timeline"
+msgstr "Csereprogram ütemezése"
+
+msgid "Faculty"
+msgstr "Kar"
+
+msgid "For decision"
+msgstr "Döntéshez"
+
+msgid "Full-Degree"
+msgstr "Teljes képzés"
+
+msgid "INSTITUTIONAL INFORMATION"
+msgstr "INTÉZMÉNYI INFORMÁCIÓK"
+
+msgid "Incoming students"
+msgstr "Bejövő hallgatók"
+
+msgid "Information"
+msgstr "Információ"
+
+msgid "Menu"
+msgstr "Menü"
+
+msgid "No Organizational Units found."
+msgstr "Nem találhatók szervezeti egységek."
+
+msgid "Nominations"
+msgstr "Jelölések"
+
+msgid "Not available"
+msgstr "Nem elérhető"
+
+msgid "Outgoing students"
+msgstr "Kimenő hallgatók"
+
+msgid "Policies"
+msgstr "Szabályzatok"
+
+msgid "Recognition process for outgoing students"
+msgstr "Elismerési folyamat kimenő hallgatók számára"
+
+msgid "Registration procedures for exchange students"
+msgstr "Regisztrációs eljárások cserehallgatók számára"
+
+msgid "Registration procedures for full-degree students"
+msgstr "Regisztrációs eljárások teljes képzésben részt vevő hallgatók számára"
+
+msgid "Registration procedures for visiting students"
+msgstr "Regisztrációs eljárások vendéghallgatók számára"
+
+msgid "School"
+msgstr "Iskola"
+
+msgid "Spring"
+msgstr "Tavasz"
+
+msgid "Timeframe"
+msgstr "Időkeret"
+
+msgid "To issue the transcript of records"
+msgstr "A tanulmányi eredmények kivonatának kiadásához"
+
+msgid "Visiting"
+msgstr "Vendég"
+
+msgid "week"
+msgstr "hét"
+
+msgid "weeks"
+msgstr "hét"
+
+msgid "Message"
+msgstr "Üzenet"
+
+msgid "Source"
+msgstr "Forrás"
+
+msgid "Last update"
+msgstr "Utolsó frissítés"

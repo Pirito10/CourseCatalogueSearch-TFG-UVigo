@@ -1,0 +1,11 @@
+uuid: 6efe1b3a-a022-4a74-ba85-f99da2c85147
+langcode: es
+status: true
+dependencies: {  }
+id: universitytypegroup
+label: UniversityTypeGroup
+description: ''
+new_revision: true
+creator_membership: true
+creator_wizard: true
+creator_roles: {  }

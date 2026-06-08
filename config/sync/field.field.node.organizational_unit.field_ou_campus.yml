@@ -1,0 +1,29 @@
+uuid: bbb4a63e-eb44-4a5e-8b42-cd89d453075b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ou_campus
+    - node.type.campus
+    - node.type.organizational_unit
+id: node.organizational_unit.field_ou_campus
+field_name: field_ou_campus
+entity_type: node
+bundle: organizational_unit
+label: Campus
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      campus: campus
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

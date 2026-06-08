@@ -1,0 +1,24 @@
+uuid: 061575c2-2a93-4b97-923e-bcb45e4c8203
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_admission_descript_exchang
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_admission_descript_exchang
+field_name: field_admission_descript_exchang
+entity_type: node
+bundle: institution
+label: 'Admission description for exchange students'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

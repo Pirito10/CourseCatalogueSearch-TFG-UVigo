@@ -1,0 +1,36 @@
+label: Sõnastik
+description: 'Kogu sisu, tähestikuliselt.'
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      fields:
+        title:
+          label: Pealkiri
+        name:
+          label: Autor
+        changed:
+          label: 'Viimati uuendatud'
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Kirjeid lehel'
+            items_per_page_options_all_label: '- Kõik -'
+            offset_label: Nihe
+      exposed_form:
+        options:
+          submit_button: 'Rakenda / Kinnita'
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+  attachment_1:
+    display_title: Manus
+  page_1:
+    display_title: Leht
+    display_options:
+      menu:
+        title: Sõnastik

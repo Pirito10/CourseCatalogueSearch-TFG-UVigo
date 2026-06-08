@@ -1,0 +1,19 @@
+uuid: 0c79d6d3-3bbb-4593-a384-bb283859bcd4
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_recognition_process_websit
+field_name: field_recognition_process_websit
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

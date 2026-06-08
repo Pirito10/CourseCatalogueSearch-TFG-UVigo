@@ -1,0 +1,8 @@
+settings:
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
+        0:
+          label: 'Golo besedilo'
+        9:
+          label: PHP

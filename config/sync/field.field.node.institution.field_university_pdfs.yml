@@ -1,0 +1,27 @@
+uuid: 00350d27-7d14-49bb-bb58-6fd5eecf10cf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_university_pdfs
+    - node.type.institution
+  module:
+    - file
+id: node.institution.field_university_pdfs
+field_name: field_university_pdfs
+entity_type: node
+bundle: institution
+label: 'University PDFs'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt pdf'
+  max_filesize: ''
+  description_field: false
+field_type: file

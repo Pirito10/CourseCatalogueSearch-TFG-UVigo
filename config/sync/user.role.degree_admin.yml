@@ -1,0 +1,16 @@
+uuid: 8710905e-b443-40ae-9d8f-f7fd06fb1d6b
+langcode: es
+status: true
+dependencies:
+  module:
+    - field_permissions
+    - group
+    - system
+id: degree_admin
+label: 'Degree Admin'
+weight: 6
+is_admin: null
+permissions:
+  - 'access content'
+  - 'access group overview'
+  - 'access private fields'

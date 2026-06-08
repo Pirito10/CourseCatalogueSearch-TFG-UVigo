@@ -1,0 +1,20 @@
+uuid: 6dc25145-1098-4d75-baf3-6ce552b99b4f
+langcode: en
+status: true
+dependencies:
+  module:
+    - elm_vocabulary_field
+    - node
+id: node.field_iec_instance_mode_delivery
+field_name: field_iec_instance_mode_delivery
+entity_type: node
+type: elm_controlled_vocabulary
+settings:
+  vocabulary: learning_assessment
+module: elm_vocabulary_field
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

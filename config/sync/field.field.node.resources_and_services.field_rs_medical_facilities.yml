@@ -1,0 +1,24 @@
+uuid: 2405175d-297e-447a-b2dd-9a449b4b93ef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_medical_facilities
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_rs_medical_facilities
+field_name: field_rs_medical_facilities
+entity_type: node
+bundle: resources_and_services
+label: 'Medical Facilities'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

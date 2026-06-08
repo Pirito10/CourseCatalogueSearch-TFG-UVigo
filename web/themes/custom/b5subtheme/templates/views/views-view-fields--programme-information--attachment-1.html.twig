@@ -1,0 +1,216 @@
+{#
+  Programme sidebar attachment (Fields).
+  Layout (col-*) is handled in page template.
+#}
+
+
+
+
+<div class="degree-sidebar-wrapper">
+  <div class="degree-sidebar bg-light">
+    <div class="row g-3 mx-0">
+
+      {# -------------------------
+         Column 1: General Data
+         ------------------------- #}
+      <div class="col-12 col-md-6 col-xl-12">
+
+        {% set professional_practices_value = row._entity.field_professional_practices.value ?? null %}
+        {% set has_professional_practices =
+          (fields.field_professional_practices is defined and fields.field_professional_practices.content|render|striptags|trim)
+          or professional_practices_value is not null
+        %}
+
+        {% set has_general_data =
+         (fields.field_programme_abbreviation is defined and fields.field_programme_abbreviation.content|render|striptags|trim)
+          or (fields.field_programme_start_date is defined and fields.field_programme_start_date.content|render|striptags|trim)
+          or (fields.field_programme_end_date is defined and fields.field_programme_end_date.content|render|striptags|trim)
+          or (fields.field_programme_type_of_credits is defined and fields.field_programme_type_of_credits.content|render|striptags|trim)
+          or (fields.field_programme_level is defined and fields.field_programme_level.content|render|striptags|trim)
+          or (fields.field_credits is defined and fields.field_credits.content|render|striptags|trim)
+          or (fields.field_length_of_programme is defined and fields.field_length_of_programme.content|render|striptags|trim)
+          or (fields.field_programme_language_of_inst is defined and fields.field_programme_language_of_inst.content|render|striptags|trim)
+          or (fields.field_programme_mode_of_learning is defined and fields.field_programme_mode_of_learning.content|render|striptags|trim)
+          or (fields.field_isced_f is defined and fields.field_isced_f.content|render|striptags|trim)
+          or (fields.field_qualification_level is defined and fields.field_qualification_level.content|render|striptags|trim)
+          or (fields.field_programme_mode_of_study is defined and fields.field_programme_mode_of_study.content|render|striptags|trim)
+          or has_professional_practices
+          or (fields.field_avaliable_for_mobility is defined and fields.field_avaliable_for_mobility.content|render|striptags|trim)
+          or (fields.field_programme_restricted_allia is defined and fields.field_programme_restricted_allia.content|render|striptags|trim)
+        %}
+
+        {% if has_general_data %}
+          <h3 class="subsection-title m-0 mb-3">{{ 'General Data'|t }}</h3>
+        {% endif %}
+
+        {% if fields.field_programme_abbreviation is defined and fields.field_programme_abbreviation.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Programme Abbreviation'|t }}:</strong>
+            {{ fields.field_programme_abbreviation.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_start_date is defined and fields.field_programme_start_date.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Start Date'|t }}:</strong>
+            {{ fields.field_programme_start_date.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_end_date is defined and fields.field_programme_end_date.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'End Date'|t }}:</strong>
+            {{ fields.field_programme_end_date.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_type_of_credits is defined and fields.field_programme_type_of_credits.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Type of Credits'|t }}:</strong>
+            {{ fields.field_programme_type_of_credits.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_credits is defined and fields.field_credits.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'ECTS Credits'|t }}:</strong>
+            {{ fields.field_credits.content }}
+          </div>
+        {% endif %}
+
+         {% if fields.field_eqf_level is defined and fields.field_eqf_level.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Level'|t }}:</strong>
+            {{ fields.field_eqf_level.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_level is defined and fields.field_programme_level.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Modality'|t }}:</strong>
+            {{ fields.field_programme_level.content }}
+          </div>
+        {% endif %}
+
+        
+
+        {% if fields.field_length_of_programme is defined and fields.field_length_of_programme.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Length of Programme'|t }}:</strong>
+            {{ fields.field_length_of_programme.content }}
+          </div>
+        {% endif %}
+
+        {# Languages: configure the field in Views as comma-separated labels #}
+        {% if fields.field_programme_language_of_inst is defined and fields.field_programme_language_of_inst.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Languages'|t }}:</strong>
+            {{ fields.field_programme_language_of_inst.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_isced_f is defined and fields.field_isced_f.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Fields of study'|t }}:</strong>
+            {{ fields.field_isced_f.content }}
+          </div>
+        {% endif %}
+
+
+        {% if fields.field_programme_mode_of_learning is defined and fields.field_programme_mode_of_learning.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Mode of Learning'|t }}:</strong>
+            {{ fields.field_programme_mode_of_learning.content }}
+          </div>
+        {% endif %}
+
+        
+
+        {% if fields.field_qualification_level is defined and fields.field_qualification_level.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Level'|t }}:</strong>
+            {{ fields.field_qualification_level.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_mode_of_study is defined and fields.field_programme_mode_of_study.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Study Modality'|t }}:</strong>
+            {{ fields.field_programme_mode_of_study.content }}
+          </div>
+        {% endif %}
+
+        {% if has_professional_practices %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Professional Practices'|t }}:</strong>
+            {% if fields.field_professional_practices is defined and fields.field_professional_practices.content|render|striptags|trim %}
+              {{ fields.field_professional_practices.content }}
+            {% else %}
+              {{ professional_practices_value == '1' ? 'Yes'|t : 'No'|t }}
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if fields.field_avaliable_for_mobility is defined and fields.field_avaliable_for_mobility.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Available for Mobility Students'|t }}:</strong>
+            {{ fields.field_avaliable_for_mobility.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_restricted_allia is defined and fields.field_programme_restricted_allia.content|render|striptags|trim %}
+          <div class="degree-info-item mb-2">
+            <strong>{{ 'Restricted to alliance students'|t }}:</strong>
+            {{ fields.field_programme_restricted_allia.content }}
+          </div>
+        {% endif %}
+      </div>
+
+      {# -------------------------
+         Column 2: Coordination
+         ------------------------- #}
+      <div class="col-12 col-md-6 col-xl-12">
+
+        {% set has_coordination =
+          (fields.field_coordinator is defined and fields.field_coordinator.content|render|striptags|trim)
+          or (fields.field_programme_phone is defined and fields.field_programme_phone.content|render|striptags|trim)
+          or (fields.field_email is defined and fields.field_email.content|render|striptags|trim)
+          or (fields.field_programme_web is defined and fields.field_programme_web.content|render|striptags|trim)
+        %}
+
+        {% if has_coordination %}
+          <h3 class="mt-4 mt-md-0 mt-xl-4">{{ 'Coordination'|t }}</h3>
+        {% endif %}
+
+        {% if fields.field_coordinator is defined and fields.field_coordinator.content|render|striptags|trim %}
+          <div class="degree-info-item mb-1">
+           
+            {{ fields.field_coordinator.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_phone is defined and fields.field_programme_phone.content|render|striptags|trim %}
+          <div class="degree-info-item mb-1">
+            <i class="fa fa-phone"></i> {{ fields.field_programme_phone.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_email is defined and fields.field_email.content|render|striptags|trim %}
+          <div class="degree-info-item mb-1">
+            <i class="fa fa-envelope"></i> {{ fields.field_email.content }}
+          </div>
+        {% endif %}
+
+        {% if fields.field_programme_web is defined and fields.field_programme_web.content|render|striptags|trim %}
+          <div class="d-flex align-items-start mb-3">
+            <i class="fas fa-globe me-2 mt-1"></i>
+            <p class="mb-0">
+              {{ fields.field_programme_web.content }}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+uuid: 6d503788-dd74-48a3-98c9-be07509aebb8
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.joint_programme.field_arrangements_for_grading
+    - field.field.node.joint_programme.field_form_of_the_diploma
+    - field.field.node.joint_programme.field_joint_alliance
+    - field.field.node.joint_programme.field_joint_description
+    - field.field.node.joint_programme.field_mobility_structure
+    - field.field.node.joint_programme.field_programme
+    - node.type.joint_programme
+  module:
+    - user
+id: node.joint_programme.teaser
+targetEntityType: node
+bundle: joint_programme
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_arrangements_for_grading: true
+  field_form_of_the_diploma: true
+  field_joint_alliance: true
+  field_joint_description: true
+  field_mobility_structure: true
+  field_programme: true
+  langcode: true

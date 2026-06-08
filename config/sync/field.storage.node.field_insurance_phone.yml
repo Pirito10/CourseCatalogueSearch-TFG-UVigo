@@ -1,0 +1,19 @@
+uuid: b6f865e8-2bed-43b8-a89c-5ab43f393303
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - telephone
+id: node.field_insurance_phone
+field_name: field_insurance_phone
+entity_type: node
+type: telephone
+settings: {  }
+module: telephone
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

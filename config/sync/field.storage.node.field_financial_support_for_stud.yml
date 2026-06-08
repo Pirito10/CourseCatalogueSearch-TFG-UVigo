@@ -1,0 +1,19 @@
+uuid: cbf21099-e18d-4ab6-a368-6d6bc15d6cfd
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_financial_support_for_stud
+field_name: field_financial_support_for_stud
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

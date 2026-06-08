@@ -1,0 +1,21 @@
+uuid: b5ebd8c0-22cf-4d4a-a1dd-de073871f7bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_agreement_phone
+    - node.type.agreement
+  module:
+    - telephone
+id: node.agreement.field_agreement_phone
+field_name: field_agreement_phone
+entity_type: node
+bundle: agreement
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

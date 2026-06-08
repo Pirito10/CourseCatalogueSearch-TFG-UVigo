@@ -1,0 +1,28 @@
+uuid: b695d96c-a710-444c-934f-15bbbca91a49
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.hei.logo_url
+  module:
+    - ewp_core
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: mo2NF76dca2CRbCUl8mlogRctpjLGHsLDSY4EK8RKTA
+id: hei.hei.logo_url
+field_name: logo_url
+entity_type: hei
+bundle: hei
+label: 'Logo URL'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: ewp_https

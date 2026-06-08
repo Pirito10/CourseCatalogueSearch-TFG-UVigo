@@ -1,0 +1,724 @@
+
+msgid "CATALOGUE"
+msgstr "Katalog"
+
+msgid "GENERAL INFORMATION"
+msgstr "O univerzi"
+
+msgid "RESOURCES AND SERVICES"
+msgstr ""
+
+msgid "UNIVERSITY LIFE"
+msgstr "Študentsko življenje"
+
+msgid "Arts and Humanities"
+msgstr "Družboslovje in humanistika"
+
+msgid "Sciences"
+msgstr "Naravoslovne vede"
+
+msgid "Health Sciences"
+msgstr "Zdravstvene vede"
+
+msgid "Social and Legal Sciences"
+msgstr "Pravo"
+
+msgid "Engineering and Architecture"
+msgstr "Inženirske vede in arhitektura"
+
+msgid "Apply"
+msgstr "Prijava"
+
+msgid "Reset"
+msgstr "Ponastavi"
+
+msgid "Sort"
+msgstr "Razvrsti"
+
+msgid "Country"
+msgstr "Država"
+
+msgid "Page"
+msgstr "Stran"
+
+msgid "Destination"
+msgstr "Destinacija"
+
+msgid "Select Home Programme"
+msgstr "Izberi domači program"
+
+msgid "Programme"
+msgstr "Program"
+
+msgid "Course"
+msgstr "Predmet"
+
+msgid "Description"
+msgstr "Opis"
+
+msgid "General Information"
+msgstr "Splošne informacije"
+
+msgid "Main Objective"
+msgstr "Glavni cilj"
+
+msgid "Competencies"
+msgstr "Kompetence"
+
+msgid "Qualification"
+msgstr "Kvalifikacija"
+
+msgid "Courses"
+msgstr "Predmeti"
+
+msgid "Course edition:"
+msgstr "Izvedba predmeta:"
+
+msgid "Admission"
+msgstr "Vpis"
+
+msgid "Structure and distribution of credits"
+msgstr "Struktura in razporeditev kreditnih točk"
+
+msgid "Regulations"
+msgstr "Pravilniki"
+
+msgid "Year (1º Year, 2º Year...)"
+msgstr "Letnik (1. letnik, 2. letnik …)"
+
+msgid "General data"
+msgstr "Splošne informacije"
+
+msgid "Academic year"
+msgstr "Študijsko leto"
+
+msgid "Level (Degree, Bachelor, Master, PhD, Other"
+msgstr "Stopnja (dodiplomski, magistrski, doktorski, drugo)"
+
+msgid "ECTS Credits"
+msgstr "Kreditne točke ECTS"
+
+msgid "Modality (In-person, Online...)"
+msgstr "Način izvajanja (v živo, spletno …)"
+
+msgid "ISCED-F"
+msgstr "ISCED-F"
+
+msgid "Qualification level???"
+msgstr "Raven kvalifikacije"
+
+msgid "Study modality(Full-time, part time)"
+msgstr "Način študija (redni, izredni)"
+
+msgid "Professional Practices"
+msgstr "Praksa"
+
+msgid "Coordination??"
+msgstr "Koordinacija"
+
+msgid "By Semester"
+msgstr "Po semestru"
+
+msgid "By Year"
+msgstr "Po letniku"
+
+msgid "Admission Requirements"
+msgstr "Pogoji za vpis"
+
+msgid "Recognition of Prior Learning"
+msgstr "Priznavanje predhodno pridobljenega znanja"
+
+msgid "Qualification Requirements"
+msgstr "Pogoji za vpis v program"
+
+msgid "Assessment"
+msgstr "Ocenjevanje"
+
+msgid "Granding Scale"
+msgstr "Ocenjevalna lestvica"
+
+msgid "Explanation of the Scale"
+msgstr "Razlaga ocenjevalne lestvice"
+
+msgid "Grade Distribution Table"
+msgstr "Tabela ocenjevalne lestvice"
+
+msgid "Mobility Windows"
+msgstr "Okna mobilnosti"
+
+msgid "Work Placements"
+msgstr "Delovna praksa"
+
+msgid "Work-based Learning"
+msgstr "Učenje na delovnem mestu"
+
+msgid "Occupational Profiles of Graduates"
+msgstr "Možnosti za zaposlitev"
+
+msgid "Access to Further Studies"
+msgstr "Nadaljevanje študija"
+
+msgid "Code"
+msgstr "Koda"
+
+msgid "Term"
+msgstr "Semester"
+
+msgid "Type"
+msgstr "Vrsta"
+
+msgid "Subject"
+msgstr "Predmet"
+
+msgid "Core"
+msgstr "Temeljni"
+
+msgid "Mandatory"
+msgstr "Obvezni"
+
+msgid "Elective"
+msgstr "Izbirni"
+
+msgid "Other types"
+msgstr "Druge vrste"
+
+msgid "Final project"
+msgstr "Zaključni projekt"
+
+msgid "TOTAL"
+msgstr "SKUPAJ"
+
+msgid "Language"
+msgstr "Jezik"
+
+msgid "Requirements"
+msgstr "Pogoji"
+
+msgid "Instructors"
+msgstr "Nosilec predmeta"
+
+msgid "Course content"
+msgstr "Vsebina predmeta"
+
+msgid "Learning outcomes"
+msgstr "Študijski rezultati"
+
+msgid "Recommended literature and resources"
+msgstr "Priporočena literatura in viri"
+
+msgid "Planned learning activities and teaching methods"
+msgstr "Metode poučevanja in učenja"
+
+msgid "Evaluation methods and criteria"
+msgstr "Načini in merila ocenjevanja"
+
+msgid "Field of Study (ISCED-F)"
+msgstr "Področje študija (ISCED-F)"
+
+msgid "Avaliable for Mobility Students"
+msgstr "Na voljo za dohodne študente"
+
+msgid "Category (Core, Mandatory, Optional, Other)"
+msgstr "Kategorija (temeljni, obvezni, izbirni, drugo)"
+
+msgid "Contents"
+msgstr "Vsebina"
+
+msgid "Credits"
+msgstr "Kreditne točke"
+
+msgid "Modality (ELM Vocabulary, Online, Hybrid, Presential...)"
+msgstr "Način izvajanja (spletno, hibridno, v živo)"
+
+msgid "External practices"
+msgstr ""
+
+msgid "Academic Authorities"
+msgstr "Organi univerze"
+
+msgid "Language Policy"
+msgstr "Jezikovna politika"
+
+msgid "Languages"
+msgstr "Jeziki"
+
+msgid "Enrollment Procedures"
+msgstr "Postopki vpisa"
+
+msgid "Contacts"
+msgstr "Kontakti"
+
+msgid "ECTS Policies"
+msgstr "Pravilniki ECTS"
+
+msgid "Campuses"
+msgstr "Kampusi"
+
+msgid "Org. Units"
+msgstr "Organizacijske enote"
+
+msgid "Academic Calendar"
+msgstr "Akademski koledar"
+
+msgid "Institutional Contacts"
+msgstr "Institucionalni kontakti"
+
+msgid "Mobility"
+msgstr "Mobilnost"
+
+msgid "Authorities"
+msgstr "Organi"
+
+msgid "Admission Languages"
+msgstr "Jezik vpisa"
+
+msgid "ECTS Allocation Policy"
+msgstr "Politika dodeljevanja ECTS"
+
+msgid "Incoming Students"
+msgstr "Dohodni študenti"
+
+msgid "Outgoing Students"
+msgstr "Odhodni študenti"
+
+msgid "Organizational Units"
+msgstr "Organizacijske enote"
+
+msgid "Type here to search"
+msgstr "Vnesite za iskanje"
+
+msgid "Knowledge Area"
+msgstr "Področje znanja"
+
+msgid "Campus"
+msgstr "Kampus"
+
+msgid "Click on an Organizational Unit to see its details"
+msgstr "Kliknite organizacijsko enoto za podrobnosti"
+
+msgid "Email"
+msgstr "E-pošta"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Web"
+msgstr "Splet"
+
+msgid "Select Campus"
+msgstr "Izberi kampus"
+
+msgid "Student affairs"
+msgstr "Študentske zadeve"
+
+msgid "Facilities"
+msgstr "Infrastruktura"
+
+msgid "Students mobility"
+msgstr "Mobilnost študentov"
+
+msgid "University life"
+msgstr "Univerzitetno življenje"
+
+msgid "Extra-academic activities"
+msgstr "Obštudijske dejavnosti"
+
+msgid "Students Affairs Office"
+msgstr "Služba za študentske zadeve"
+
+msgid "Financial Support for Students"
+msgstr "Finančna podpora študentom"
+
+msgid "Insurance"
+msgstr "Zavarovanje"
+
+msgid "Medical Facilities"
+msgstr "Zdravstvene storitve"
+
+msgid "Learning Facilities"
+msgstr "Študijski prostori"
+
+msgid "Sport and Leisure Facilities"
+msgstr "Športne in prostočasne dejavnosti"
+
+msgid "Special Facilities"
+msgstr "Posebne zmogljivosti"
+
+msgid "Student's Mobility"
+msgstr "Mobilnost študentov"
+
+msgid "Practical Information For Incoming Mobile Students"
+msgstr "Praktične informacije za gostujoče študente"
+
+msgid "Cost of Living"
+msgstr "Stroški bivanja"
+
+msgid "Housing"
+msgstr "Namestitev"
+
+msgid "Transport"
+msgstr "Prevoz"
+
+msgid "Meals"
+msgstr "Prehrana"
+
+msgid "Student Associations"
+msgstr "Študentska društva"
+
+msgid "Work placement possibilities"
+msgstr "Možnosti za zaposlitev"
+
+msgid "Events and culture"
+msgstr "Dogodki in kultura"
+
+msgid "For the whole institution"
+msgstr "Za celotno institucijo"
+
+msgid "Source"
+msgstr "Vir"
+
+msgid "Last update"
+msgstr "Zadnja posodobitev"
+
+msgid "Found something wrong? Give us feedback"
+msgstr "Ste našli napako? Pošljite povratne informacije"
+
+msgid "Name"
+msgstr "Ime"
+
+msgid "Your message"
+msgstr "Vaše sporočilo"
+
+msgid "About DACEM"
+msgstr "O projektu DACEM"
+
+msgid "ABOUT"
+msgstr "O NAS"
+
+msgid "INSTITUTIONS"
+msgstr "INSTITUCIJE"
+
+msgid "CONTACT"
+msgstr "KONTAKT"
+
+msgid "Study in Europe"
+msgstr "Študiraj v Evropi"
+
+msgid "FIND A PROGRAMME"
+msgstr "NAJDI PROGRAM"
+
+msgid "Explore the best opportunities to study in Europe. Discover universities, programmes, and destinations tailored to your future. Your next international academic adventure starts here."
+msgstr "Raziščite najboljše priložnosti za študij v Evropi. Odkrijte univerze, programe in destinacije, prilagojene vaši prihodnosti. Vaša mednarodna akademska pustolovščina se začne tukaj."
+
+msgid "\"\nEXPLORE OUR UNIVERSITIES\n\nFind a new place to continue your studies, meet new people and learn a new language. Before this, you should:\n\n    Find which universities are available from your home university at your local international office.\n    Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar.\n    Assess accommodation, transportation, and daily expenses.\n    Research the local culture, student life, and opportunities for personal and professional growth.\n    Check healthcare coverage, safety, and housing availability.\n\nDon't miss the opportunity!\""
+msgstr "RAZIŠČITE NAŠE UNIVERZE\nPoiščite novo okolje za nadaljevanje študija, spoznajte nove ljudi in se naučite novega jezika. Pred tem:\nPri matični mednarodni pisarni preverite, katere destinacije so vam na voljo.\nPreverite, ali se predmeti ujemajo z vašim študijskim programom, so poučevani v jeziku, ki ga razumete, in ustrezajo vašemu akademskemu koledarju.\nOcenite stroške nastanitve, prevoza in vsakodnevnega življenja.\nRaziščite lokalno kulturo, študentsko življenje ter priložnosti za osebni in poklicni razvoj.\nPreverite kritje zdravstvenega zavarovanja ter varnost in razpoložljivost nastanitev.\nNe zamudite priložnosti!"
+msgid "Explore the best opportunities to study in Europe. Discover universities, programs, and destinations tailored to your future. Your next academic adventure starts here."
+msgstr "Raziščite najboljše priložnosti za študij v Evropi. Odkrijte univerze, programe in destinacije, prilagojene vaši prihodnosti. Vaša naslednja akademska pustolovščina se začne tukaj."
+
+msgid "EXPLORE OUR UNIVERSITIES"
+msgstr "RAZIŠČITE NAŠE UNIVERZE"
+
+msgid "Find a new place to continue your studies, meet new people and learn a new language. Before this, you should:"
+msgstr "Poiščite nov kraj za nadaljevanje študija, spoznajte nove ljudi in se naučite novega jezika. Pred tem morate:"
+
+msgid "Find which universities are available from your home university at your local international office."
+msgstr "V mednarodni pisarni svoje matične univerze preverite, katere univerze so vam na voljo."
+
+msgid "Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar."
+msgstr "Prepričajte se, da se predmeti ujemajo z vašim študijskim programom, so poučevani v jeziku, ki ga razumete, in ustrezajo vašemu akademskemu koledarju."
+
+msgid "Assess accommodation, transportation, and daily expenses."
+msgstr "Ocenite nastanitev, prevoz in vsakodnevne stroške."
+
+msgid "Research the local culture, student life, and opportunities for personal and professional growth."
+msgstr "Raziščite lokalno kulturo, študentsko življenje ter priložnosti za osebno in poklicno rast."
+
+msgid "Check healthcare coverage, safety, and housing availability."
+msgstr "Preverite zdravstveno zavarovanje, varnost in razpoložljivost nastanitev."
+
+msgid "Don't miss the opportunity!"
+msgstr "Ne zamudite priložnosti!"
+
+msgid "Czech"
+msgstr "Češčina"
+
+msgid "English"
+msgstr "Angleščina"
+
+msgid "Estonian"
+msgstr "Estonščina"
+
+msgid "French"
+msgstr "Francoščina"
+
+msgid "Greek"
+msgstr "Grščina"
+
+msgid "Hungarian"
+msgstr "Madžarščina"
+
+msgid "Portuguese"
+msgstr "Portugalščina"
+
+msgid "Slovenian"
+msgstr "Slovenščina"
+
+msgid "Spanish"
+msgstr "Španščina"
+
+msgid "By semester"
+msgstr "Po semestru"
+
+msgid "1st semester"
+msgstr "1. semester"
+
+msgid "2nd semester"
+msgstr "2. semester"
+
+msgid "Programme Type"
+msgstr "Vrsta programa"
+
+msgid "Organizational Unit"
+msgstr "Organizacijska enota"
+
+msgid "@count selected"
+msgstr "@count izbranih"
+
+msgid "PROGRAMMES"
+msgstr "PROGRAMI"
+msgid "Found Something Wrong?"
+msgstr "Ste našli napako?"
+
+msgid "Give Us Feedback"
+msgstr "Pošljite nam povratne informacije"
+
+msgid "Available for Mobility Students"
+msgstr "Na voljo za študente na mobilnosti"
+
+msgid "Overview"
+msgstr "Pregled"
+
+msgid "Curriculum"
+msgstr "Učni načrt"
+
+msgid "Careers"
+msgstr "Karierne možnosti"
+
+msgid "Practice"
+msgstr "Praksa"
+
+msgid "By term"
+msgstr "Po obdobju"
+
+msgid "By year"
+msgstr "Po letu"
+
+msgid "1st term"
+msgstr "1. obdobje"
+
+msgid "2nd term"
+msgstr "2. obdobje"
+
+msgid "Terms"
+msgstr "Obdobja"
+
+msgid "Year"
+msgstr "Leto"
+
+msgid "Structure and Distribution of Credits"
+msgstr "Struktura in razporeditev kreditov"
+
+msgid "Grading Scale"
+msgstr "Ocenjevalna lestvica"
+
+msgid "Grading Scheme"
+msgstr "Sistem ocenjevanja"
+
+msgid "Grading Distribution Table"
+msgstr "Tabela porazdelitve ocen"
+
+msgid "Mobility Agreements"
+msgstr "Sporazumi o mobilnosti"
+
+msgid "Start Date"
+msgstr "Datum začetka"
+
+msgid "End Date"
+msgstr "Datum konca"
+
+msgid "Type of Credits"
+msgstr "Vrsta kreditov"
+
+msgid "Type of credits"
+msgstr "Vrsta kreditov"
+
+msgid "Fields of study"
+msgstr "Področja študija"
+
+msgid "Mode of Learning"
+msgstr "Način učenja"
+
+msgid "Programme Abbreviation"
+msgstr "Okrajšava programa"
+
+msgid "Restricted to alliance students"
+msgstr "Omejeno na študente zavezništva"
+
+msgid "Academic Year"
+msgstr "Akademsko leto"
+
+msgid "Number of credits"
+msgstr "Število kreditov"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Restricted to alliance"
+msgstr "Omejeno na zavezništvo"
+
+msgid "Change Home Programme"
+msgstr "Spremeni domači program"
+
+msgid "Clear home programme"
+msgstr "Počisti domači program"
+
+msgid "Home programme"
+msgstr "Domači program"
+
+msgid "Study in Europe with ATHENA"
+msgstr "Študirajte v Evropi z ATHENA"
+
+msgid "Sport clubs/programs"
+msgstr "Športni klubi/programi"
+
+msgid "Language courses"
+msgstr "Jezikovni tečaji"
+
+msgid "Support for students with disabilities and special needs"
+msgstr "Podpora študentom z invalidnostmi in posebnimi potrebami"
+
+msgid "VISA"
+msgstr "Vizum"
+
+msgid "Student Mobility"
+msgstr "Študentska mobilnost"
+
+msgid "University Life"
+msgstr "Univerzitetno življenje"
+
+msgid "Academic requirements for nominations"
+msgstr "Akademske zahteve za nominacije"
+
+msgid "Additional requirements"
+msgstr "Dodatne zahteve"
+
+msgid "Admission description for exchange students"
+msgstr "Opis sprejema za izmenjalne študente"
+
+msgid "Admission description for full-degree students"
+msgstr "Opis sprejema za študente celotnega študijskega programa"
+
+msgid "Admission description for visiting students"
+msgstr "Opis sprejema za gostujoče študente"
+
+msgid "All"
+msgstr "Vse"
+
+msgid "Applications"
+msgstr "Prijave"
+
+msgid "Arrangements for Academic Guidance"
+msgstr "Ureditve za akademsko svetovanje"
+
+msgid "Arrangements for the recognition of credit and prior learning"
+msgstr "Ureditve za priznavanje kreditnih točk in predhodnega učenja"
+
+msgid "Autumn"
+msgstr "Jesen"
+
+msgid "Click on an Organizational Unit to see its details."
+msgstr "Kliknite organizacijsko enoto za ogled podrobnosti."
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Department"
+msgstr "Oddelek"
+
+msgid "Exchange"
+msgstr "Izmenjava"
+
+msgid "Exchange timeline"
+msgstr "Časovnica izmenjave"
+
+msgid "Faculty"
+msgstr "Fakulteta"
+
+msgid "For decision"
+msgstr "Za odločitev"
+
+msgid "Full-Degree"
+msgstr "Celoten študijski program"
+
+msgid "INSTITUTIONAL INFORMATION"
+msgstr "INSTITUCIONALNE INFORMACIJE"
+
+msgid "Incoming students"
+msgstr "Prihajajoči študenti"
+
+msgid "Information"
+msgstr "Informacije"
+
+msgid "Menu"
+msgstr "Meni"
+
+msgid "No Organizational Units found."
+msgstr "Ni najdenih organizacijskih enot."
+
+msgid "Nominations"
+msgstr "Nominacije"
+
+msgid "Not available"
+msgstr "Ni na voljo"
+
+msgid "Outgoing students"
+msgstr "Odhajajoči študenti"
+
+msgid "Policies"
+msgstr "Politike"
+
+msgid "Recognition process for outgoing students"
+msgstr "Postopek priznavanja za odhajajoče študente"
+
+msgid "Registration procedures for exchange students"
+msgstr "Postopki registracije za izmenjalne študente"
+
+msgid "Registration procedures for full-degree students"
+msgstr "Postopki registracije za študente celotnega študijskega programa"
+
+msgid "Registration procedures for visiting students"
+msgstr "Postopki registracije za gostujoče študente"
+
+msgid "School"
+msgstr "Šola"
+
+msgid "Spring"
+msgstr "Pomlad"
+
+msgid "Timeframe"
+msgstr "Časovni okvir"
+
+msgid "To issue the transcript of records"
+msgstr "Za izdajo prepisa ocen"
+
+msgid "Visiting"
+msgstr "Gostujoči"
+
+msgid "week"
+msgstr "teden"
+
+msgid "weeks"
+msgstr "tedni"
+
+msgid "Message"
+msgstr "Sporočilo"

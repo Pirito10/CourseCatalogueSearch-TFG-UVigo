@@ -1,0 +1,34 @@
+# Dependencias PHP (regeneradas con composer install)
+/vendor/
+
+# Drupal core y módulos/temas contrib (gestionados por Composer)
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/libraries/
+
+# Ficheros subidos por usuarios
+/web/sites/default/files/
+
+# Settings con credenciales
+/web/sites/default/settings.php
+/web/sites/default/settings.local.php
+/web/sites/default/settings.ddev.php
+
+# Volcados de base de datos
+*.sql
+*.sql.gz
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Notas locales de desarrollo
+NOTAS.md
+CAMBIOS.md
+/.editorconfig
+/.gitattributes

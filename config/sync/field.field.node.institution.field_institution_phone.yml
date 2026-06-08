@@ -1,0 +1,21 @@
+uuid: 02ccaf84-f0da-4981-b32f-df5408c247c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution_phone
+    - node.type.institution
+  module:
+    - telephone
+id: node.institution.field_institution_phone
+field_name: field_institution_phone
+entity_type: node
+bundle: institution
+label: 'Institution Phone'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

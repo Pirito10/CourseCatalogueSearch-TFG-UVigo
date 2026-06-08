@@ -1,0 +1,16 @@
+settings:
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
+        0:
+          label: 'Texto sen formato'
+        4:
+          label: CSS
+        6:
+          label: HTML
+        8:
+          label: JavaScript
+        9:
+          label: PHP
+        13:
+          label: XML

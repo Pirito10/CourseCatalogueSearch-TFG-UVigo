@@ -1,0 +1,24 @@
+uuid: dc3c9d09-b2ea-4094-8efc-f1e35202fbe3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_meals
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_rs_meals
+field_name: field_rs_meals
+entity_type: node
+bundle: resources_and_services
+label: Meals
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

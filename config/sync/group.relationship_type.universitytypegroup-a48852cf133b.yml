@@ -1,0 +1,17 @@
+uuid: 30886148-c164-48e9-9fe0-4de5a7af60cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - node.type.academic_authority
+  module:
+    - gnode
+    - node
+id: universitytypegroup-a48852cf133b
+group_type: universitytypegroup
+content_plugin: 'group_node:academic_authority'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

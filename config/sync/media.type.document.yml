@@ -1,0 +1,16 @@
+uuid: 479c9118-753a-42a9-9c39-7e96df607d3b
+langcode: es
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: _D9q3XSnP6ik9we9UuoTvZsQKPuYNp_G9PfwVtWzgnQ
+id: document
+label: Document
+description: 'Un archivo o documento subido, como por ejemplo un PDF.'
+source: file
+queue_thumbnail_downloads: false
+new_revision: true
+source_configuration:
+  source_field: field_media_document
+field_map:
+  name: name

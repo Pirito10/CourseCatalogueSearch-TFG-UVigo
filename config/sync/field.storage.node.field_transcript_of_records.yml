@@ -1,0 +1,20 @@
+uuid: 879e6683-131b-438f-aff2-1617715c7599
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_transcript_of_records
+field_name: field_transcript_of_records
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

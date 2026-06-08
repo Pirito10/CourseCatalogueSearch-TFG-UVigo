@@ -1,0 +1,27 @@
+uuid: b42cc383-d99d-45f5-b18f-65fe8356c3fd
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_iec_type_of_credits
+field_name: field_iec_type_of_credits
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: ects
+      label: ECTS
+    -
+      value: ecvet
+      label: ECVET
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

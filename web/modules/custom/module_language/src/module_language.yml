@@ -1,0 +1,12 @@
+name: 'Module language'
+type: module
+description: 'A custom module to demonstrate language manager access in Twig.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:language
+  - drupal:locale
+  - drupal:content_translation
+  - drupal:language_switcher
+  - drupal:node
+version: 1.0

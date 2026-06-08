@@ -1,0 +1,19 @@
+uuid: c2a0881c-4627-416c-8fa4-6e5069558e69
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution_role
+    - node.type.academic_authority
+id: node.academic_authority.field_institution_role
+field_name: field_institution_role
+entity_type: node
+bundle: academic_authority
+label: 'Institution Role'
+description: 'Fill in only if this Academic Authority has a role in the Institution.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

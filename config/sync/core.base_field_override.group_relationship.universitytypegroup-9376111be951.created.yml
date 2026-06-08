@@ -1,0 +1,18 @@
+uuid: e6a72046-d29a-4fed-be76-45d77f9e9af9
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.universitytypegroup-9376111be951
+id: group_relationship.universitytypegroup-9376111be951.created
+field_name: created
+entity_type: group_relationship
+bundle: universitytypegroup-9376111be951
+label: 'Created on'
+description: 'The time that the group relationship was created.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

@@ -1,0 +1,25 @@
+uuid: 4c47e01e-97d7-4fe8-85b6-fcc3161163d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.hei.other_id
+  module:
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: DpQ5BuUIXC5h4cSt2GCVzI26VEb13TUAKyHOQZGJDWw
+id: hei.hei.other_id
+field_name: other_id
+entity_type: hei
+bundle: hei
+label: 'Other IDs'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_other_hei_id

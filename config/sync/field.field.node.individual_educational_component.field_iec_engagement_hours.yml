@@ -1,0 +1,23 @@
+uuid: 79999aca-38db-4fa2-aadd-5fcb3cbc15f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_engagement_hours
+    - node.type.individual_educational_component
+id: node.individual_educational_component.field_iec_engagement_hours
+field_name: field_iec_engagement_hours
+entity_type: node
+bundle: individual_educational_component
+label: 'Engagement hours'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

@@ -1,0 +1,19 @@
+uuid: 5eb4ed78-5d2b-4629-816e-9119ff8533cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campus_email
+    - node.type.campus
+id: node.campus.field_campus_email
+field_name: field_campus_email
+entity_type: node
+bundle: campus
+label: E-mail
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

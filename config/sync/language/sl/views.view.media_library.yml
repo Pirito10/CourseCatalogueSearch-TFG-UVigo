@@ -1,0 +1,67 @@
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      fields:
+        media_bulk_form:
+          action_title: Akcija
+      exposed_form:
+        options:
+          reset_button_label: Ponastavi
+      filters:
+        status:
+          group_info:
+            label: Objavljeno
+            group_items:
+              1:
+                title: Objavljeno
+        name:
+          expose:
+            label: Ime
+        langcode:
+          expose:
+            label: Jezik
+  page:
+    display_title: Stran
+    display_options:
+      fields:
+        media_bulk_form:
+          action_title: Akcija
+        edit_media:
+          text: Uredi
+        delete_media:
+          text: Izbriši
+  widget:
+    display_title: Gradnik
+    display_options:
+      arguments:
+        bundle:
+          exception:
+            title: Vsi
+      filters:
+        name:
+          expose:
+            label: Ime
+      header:
+        display_link_table:
+          label: Tabela
+  widget_table:
+    display_options:
+      fields:
+        name:
+          label: Ime
+        uid:
+          label: Avtor
+        changed:
+          label: Posodobljeno
+      arguments:
+        bundle:
+          exception:
+            title: Vsi
+      filters:
+        name:
+          expose:
+            label: Ime
+      header:
+        display_link_table:
+          label: Tabela

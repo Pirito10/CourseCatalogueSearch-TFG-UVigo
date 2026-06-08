@@ -1,0 +1,9 @@
+uuid: 6c7da51a-a83f-4138-b883-fa45f398bf00
+langcode: en
+status: true
+dependencies: {  }
+name: 'Languages of Instuction'
+vid: languages_of_instuction
+description: null
+weight: 0
+new_revision: false

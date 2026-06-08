@@ -1,0 +1,26 @@
+uuid: baf98f21-56d4-403a-888e-59c7fdf3605f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.street_address
+  module:
+    - ewp_contact
+    - ewp_flexible_address
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: '-i-RAH0cZFKSt51KLNKk8V84tEvgtlGg4tV2yw5POZM'
+id: contact.contact.street_address
+field_name: street_address
+entity_type: contact
+bundle: contact
+label: 'Street address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_flexible_address

@@ -1,0 +1,8 @@
+name: 'Dacem Menu'
+type: module
+description: 'Provides a dynamic menu for Dacem'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:block
+  - drupal:views

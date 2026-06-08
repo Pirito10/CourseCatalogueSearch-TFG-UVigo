@@ -1,0 +1,82 @@
+label: 'Nós do grupo'
+display:
+  default:
+    display_title: Principal
+    display_options:
+      title: Nós
+      fields:
+        title:
+          label: Título
+          separator: ', '
+        type:
+          label: 'Tipo de conteúdo'
+          separator: ', '
+        status:
+          label: Estado
+          settings:
+            format_custom_false: 'Não publicado'
+            format_custom_true: Publicado
+          separator: ', '
+        changed:
+          label: Atualizado
+          separator: ', '
+        view_group_relationship:
+          admin_label: 'Ver link de relação'
+          text: 'Ver relação'
+        edit_group_relationship:
+          admin_label: 'Editar link de relação'
+          text: 'Editar relação'
+        delete_group_relationship:
+          text: 'Eliminar relação'
+        edit_node:
+          label: 'Link to edit Content'
+          text: 'Edit node'
+        delete_node:
+          label: 'Link to delete Content'
+          text: 'Eliminar nó'
+        dropbutton:
+          label: Operações
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Primeira'
+            last: 'Última »'
+          expose:
+            items_per_page_label: 'Itens por página'
+            items_per_page_options_all_label: '- Todos -'
+            offset_label: Deslocamento
+      exposed_form:
+        options:
+          submit_button: Candidatar-se
+          reset_button_label: Atualizar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'Conteúdo não disponível'
+      arguments:
+        gid:
+          exception:
+            title: Todos
+      filters:
+        status:
+          expose:
+            label: 'Estado da publicação'
+          group_info:
+            label: 'Estado da publicação'
+            group_items:
+              1:
+                title: Publicado
+              2:
+                title: 'Não publicado'
+        type:
+          expose:
+            label: Tipo
+  page_1:
+    display_title: Página
+    display_options:
+      menu:
+        title: Nós

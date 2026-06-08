@@ -1,0 +1,20 @@
+uuid: c42ff320-eda7-4919-bd1c-24086b6aa52d
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_iec_engagement_hours
+field_name: field_iec_engagement_hours
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

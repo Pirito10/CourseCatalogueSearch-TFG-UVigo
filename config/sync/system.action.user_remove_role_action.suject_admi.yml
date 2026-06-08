@@ -1,0 +1,14 @@
+uuid: 7bdb0130-4e75-4aa8-816f-782aa399788d
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.suject_admi
+  module:
+    - user
+id: user_remove_role_action.suject_admi
+label: 'Elimina el rol Suject Admi al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: suject_admi

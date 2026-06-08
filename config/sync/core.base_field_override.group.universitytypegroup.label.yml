@@ -1,0 +1,18 @@
+uuid: a1d51798-2a92-4233-934c-2573af526045
+langcode: es
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+id: group.universitytypegroup.label
+field_name: label
+entity_type: group
+bundle: universitytypegroup
+label: Título
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

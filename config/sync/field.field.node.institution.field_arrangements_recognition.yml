@@ -1,0 +1,24 @@
+uuid: c339c42f-bc22-445d-a494-6054f14d2c99
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_arrangements_recognition
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_arrangements_recognition
+field_name: field_arrangements_recognition
+entity_type: node
+bundle: institution
+label: 'Arrangements for the recognition of credit mobility and prior learning'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

@@ -1,0 +1,7 @@
+services:
+  admin_area.english_admin_route_subscriber:
+    class: Drupal\admin_area\EventSubscriber\EnglishAdminRouteSubscriber
+    arguments:
+      - '@language_manager'
+    tags:
+      - { name: event_subscriber }

@@ -1,0 +1,21 @@
+uuid: f5166353-0855-4c52-bb7c-6e400b47d892
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_fields_of_study
+    - node.type.individual_educational_component
+  module:
+    - isced_field
+id: node.individual_educational_component.field_fields_of_study
+field_name: field_fields_of_study
+entity_type: node
+bundle: individual_educational_component
+label: 'Fields of study'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: isced_f

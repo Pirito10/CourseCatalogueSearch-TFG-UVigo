@@ -1,0 +1,22 @@
+uuid: 750dce4b-c5dc-45e8-81ce-5b0aea838757
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.iec_instance
+id: node.iec_instance.status
+field_name: status
+entity_type: node
+bundle: iec_instance
+label: Published
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

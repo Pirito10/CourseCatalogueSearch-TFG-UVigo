@@ -1,0 +1,24 @@
+uuid: b7c9f4a2-19ee-43eb-aae4-6a3ba45682f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instructors
+    - filter.format.basic_html
+    - node.type.individual_educational_component
+  module:
+    - text
+id: node.individual_educational_component.field_iec_instructors
+field_name: field_iec_instructors
+entity_type: node
+bundle: individual_educational_component
+label: Instructors
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

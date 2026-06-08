@@ -1,0 +1,23 @@
+uuid: b1adb626-f34a-4ac6-8a40-01d5d863a1f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_joint_programme
+    - node.type.programme
+id: node.programme.field_joint_programme
+field_name: field_joint_programme
+entity_type: node
+bundle: programme
+label: 'Joint Programme'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

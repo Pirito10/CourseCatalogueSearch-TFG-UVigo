@@ -1,0 +1,74 @@
+label: Χρήστες
+description: 'Εύρεση και διαχείριση χρηστών που αλληλεπιδρούν με τον ιστοτόπο σας.'
+display:
+  default:
+    display_title: Προεπιλεγμένο
+    display_options:
+      title: Χρήστες
+      fields:
+        user_bulk_form:
+          label: 'Μαζική ενημέρωση'
+        name:
+          label: 'Όνομα χρήστη'
+        status:
+          label: Κατάσταση
+          settings:
+            format_custom_false: Αποκλεισμένος
+            format_custom_true: Ενεργό
+        roles_target_id:
+          label: Ρόλοι
+        created:
+          label: 'Μέλος για'
+        access:
+          label: 'Τελευταία προσπέλαση'
+        operations:
+          label: Λειτουργίες
+        mail:
+          separator: ', '
+      pager:
+        options:
+          tags:
+            next: 'Επόμενο ›'
+            previous: '‹ Προηγούμενο'
+          expose:
+            items_per_page_label: 'Είδη ανά σελίδα'
+            items_per_page_options_all_label: '- Όλα -'
+            offset_label: Αντιστάθμιση
+      exposed_form:
+        options:
+          submit_button: Φίλτρο
+          reset_button_label: Επαναφορά
+          exposed_sorts_label: 'Ταξινόμηση κατά'
+          sort_asc_label: Αύξ
+          sort_desc_label: Φθί
+      empty:
+        area_text_custom:
+          content: 'Κανένας διαθέσιμος χρήστης.'
+      filters:
+        combine:
+          expose:
+            label: 'Το όνομα ή το επίθετο περιέχει'
+        status:
+          group_info:
+            label: Κατάσταση
+            group_items:
+              1:
+                title: Ενεργό
+              2:
+                title: Αποκλεισμένος
+        roles_target_id:
+          expose:
+            label: Ρόλος
+        permission:
+          expose:
+            label: Άδεια
+      use_more_text: περισσότερα
+  page_1:
+    display_title: Σελίδα
+    display_options:
+      menu:
+        title: Λίστα
+        description: 'Εύρεση και διαχείριση χρηστών που αλληλεπιδρούν με τον ιστοτόπο σας.'
+      tab_options:
+        title: Χρήστες
+        description: 'Διαχείριση λογαριασμών χρηστών, ρόλων και αδειών'

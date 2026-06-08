@@ -1,0 +1,29 @@
+uuid: d39f409d-7fcf-4922-8c5c-9ffafc8254bd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_language_of_instruction_1
+    - node.type.agreement
+    - taxonomy.vocabulary.languages_of_instuction
+id: node.agreement.field_language_of_instruction_1
+field_name: field_language_of_instruction_1
+entity_type: node
+bundle: agreement
+label: 'Language of instruction 1'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      languages_of_instuction: languages_of_instuction
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

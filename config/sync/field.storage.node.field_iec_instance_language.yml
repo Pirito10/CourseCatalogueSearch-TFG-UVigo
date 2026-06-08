@@ -1,0 +1,20 @@
+uuid: 012db267-5a00-457c-b17c-ce7f1bfc5df6
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+id: node.field_iec_instance_language
+field_name: field_iec_instance_language
+entity_type: node
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

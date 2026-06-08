@@ -1,0 +1,26 @@
+uuid: 6d3e47a3-3c25-44c2-981c-612a5457c8c4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - filter.format.basic_html
+    - node.type.about_page
+  module:
+    - text
+id: node.about_page.body
+field_name: body
+entity_type: node
+bundle: about_page
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats:
+    - basic_html
+field_type: text_with_summary

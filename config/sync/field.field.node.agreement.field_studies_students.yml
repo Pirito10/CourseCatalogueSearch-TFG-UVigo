@@ -1,0 +1,23 @@
+uuid: 9d5ed891-6b0b-47b6-a248-7894f473264b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_studies_students
+    - node.type.agreement
+id: node.agreement.field_studies_students
+field_name: field_studies_students
+entity_type: node
+bundle: agreement
+label: 'Student mobility for studies students'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

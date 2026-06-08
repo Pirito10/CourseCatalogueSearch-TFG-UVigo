@@ -1,0 +1,30 @@
+uuid: 68433d05-48ac-487e-91f1-eec5b242c526
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_form_of_the_diploma
+field_name: field_form_of_the_diploma
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: joint
+      label: Joint
+    -
+      value: double
+      label: Double
+    -
+      value: multiple
+      label: Multiple
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

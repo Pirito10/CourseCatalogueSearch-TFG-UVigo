@@ -1,0 +1,17 @@
+uuid: 532c2a02-3f13-435f-a1c9-854bec187538
+langcode: en
+status: true
+dependencies:
+  module:
+    - openid_connect_eufidp
+id: euf_idp
+label: 'EUF IdP'
+plugin: eufidp
+settings:
+  client_id: eufidp_client_id
+  client_secret: eufidp_client_secret
+  iss_allowed_domains: ''
+  environment: production
+  scopes:
+    - openid
+    - email

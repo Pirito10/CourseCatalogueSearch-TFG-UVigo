@@ -1,0 +1,971 @@
+{% set campus = view.result[0]._entity %}
+{% set institution = view.result[0]._relationship_entities['field_campus_institution'] %}
+{#{dump(campus)}#}
+{% set current_language = view.result[0].node_field_data_langcode %}
+
+{% if campus.hasTranslation(current_language) %}
+	{% set campus = campus.getTranslation(current_language) %}
+
+{% endif %}
+
+
+{% set university_primary_color = institution.field_primary_color[0].color %}
+{% set university_text_color = institution.field_text_color[0].color %}
+{% set university_emphasis_text_color = institution.field_emphasis_text_color[0].color %}
+
+{% if institution.hasTranslation(current_language) %}
+	{% set institution = institution.getTranslation(current_language) %}
+
+{% endif %}
+
+
+<style>:root
+{
+	--university_primary_color: {{university_primary_color}}
+	;
+	--university_text_color: {{university_text_color}}
+	;
+	--university_emphasis_text_color: {{university_emphasis_text_color}}
+	;
+}</style><div class="rs-header ">
+<div class="my-custom-container-2">
+	<div class="page-band">
+		<h1 class="rs-title">CAMPUSES</h1>
+	</div>
+</div></div><div class="section-container">
+<div class="my-custom-container-2">
+
+	<h1 class="section-title mb-3">{{ campus.title.value }}</h1>
+
+
+	<div class="d-flex mb-3">
+		{% if institution.title.value is defined %}
+			<span class="ou-tag px-3 py-1" style="background-color: {{ university_primary_color }}; color: #fff; border-radius: 0;">
+				{{ institution.title.value }}
+			</span>
+		{% endif %}
+
+		{% if institution_country_name %}
+			<span class="ou-tag px-3 py-1" style="background-color: #fff; color: {{ university_primary_color }}; border: 2px solid {{ university_primary_color }}; border-radius: 0;">
+				{{ institution_country_name }}
+			</span>
+		{% endif %}
+	</div>
+
+
+	<div class="row">
+		<div class="col-lg-6">
+
+
+			{{campus.field_campus_description.value | raw}}
+
+
+			{% if view.result[0]._relationship_entities['reverse__node__field_aa_campus'] %}
+				{% set list_academic_authorities = [] %}
+
+				{#{dump(view.result)}}{{dump(campus.field_campus_description.value)}#}
+				<h3 class="subsection-title">{{ 'Academic Contacts'|t }}</h3>
+				<br>
+
+				<div class="vstack gap-3 mb-5">
+					{% for row in view.result %}
+
+
+						{% set authority = row._relationship_entities['reverse__node__field_aa_campus'] %}
+						{% if  authority.id not in list_academic_authorities %}
+							{% set list_academic_authorities = list_academic_authorities|merge([authority.id]) %}
+
+							{% if authority %}
+								{% if authority.hasTranslation(current_language) %}
+									{% set authority = authority.getTranslation(current_language) %}
+								{% endif %}
+
+								
+
+								{% set media = authority.field_ac_photo.entity ?? null %}
+								{% set image = media ? media.uri.value : null %}
+								{% set role = authority.field_campus_role.value ?? '' %}
+								{% set name = authority.title.value %}
+
+								<div class="d-flex align-items-center gap-3">
+									{% if image %}
+										<img src="{{ file_url(image) }}" alt="{{ name }}" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;">
+									{% else %}
+										<img src="/themes/custom/b5subtheme/images/default-profile.jpg" alt="{{ name }}" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;">
+									{% endif %}
+
+										<div>
+											<div class="fw-semibold">{{ name }}</div>
+											{% if role %}
+												<div class="text-muted text-uppercase small">{{ role }}</div>
+											{% endif %}
+											{% set aa_web = authority.field_aa_web is not empty and authority.field_aa_web.uri is defined ? authority.field_aa_web.uri : '' %}
+											{% set aa_email = authority.field_aa_email is not empty and authority.field_aa_email.value is defined ? authority.field_aa_email.value : '' %}
+											{% set aa_phone = authority.field_aa_phone is not empty and authority.field_aa_phone.value is defined ? authority.field_aa_phone.value : '' %}
+												<div class="authority-icons d-flex align-items-center gap-3 mt-2">
+													{% if aa_web %}
+														<a href="{{ aa_web }}"
+														   class="authority-icon"
+														   target="_blank"
+														   rel="noopener noreferrer"
+														   data-bs-toggle="tooltip"
+														   data-bs-placement="top"
+														   title="{{ aa_web }}">
+															<i class="fas fa-globe"></i>
+														</a>
+													{% endif %}
+													{% if aa_email %}
+														<a href="mailto:{{ aa_email }}"
+														   class="authority-icon"
+														   data-bs-toggle="tooltip"
+														   data-bs-placement="top"
+														   title="{{ aa_email }}">
+															<i class="fas fa-envelope"></i>
+														</a>
+													{% endif %}
+													{% if aa_phone %}
+														<a href="tel:{{ aa_phone }}"
+														   class="authority-icon"
+														   data-bs-toggle="tooltip"
+														   data-bs-placement="top"
+														   title="{{ aa_phone }}">
+															<i class="fas fa-phone-alt"></i>
+														</a>
+													{% endif %}
+
+											{% if authority.field_mobility_contact.value %}
+												<span class="text-muted small ms-2">
+												&middot; {{ 'Mobility'|t }}
+												</span>
+											{% endif %}
+
+										</div>
+
+
+									</div>
+
+									
+
+									
+								</div>
+								
+
+							{% endif %}
+
+						{% endif %}
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+
+		<div
+			class="col-lg-6">
+			{# 1) Imagen del campus (con fallback) #}
+			<div class="mb-0 text-center">
+				{% set campus_image_url = '/themes/custom/b5subtheme/images/ou-default.png' %}
+
+				{% set campus_base = campus %}
+				{% set campus_tr = campus_base %}
+				{% if current_language is defined and campus_base.hasTranslation(current_language) %}
+					{% set campus_tr = campus_base.getTranslation(current_language) %}
+				{% endif %}
+
+				{% if campus_tr.hasField('field_campus_picture') and (not campus_tr.get('field_campus_picture').isEmpty()) %}
+					{% set file = campus_tr.get('field_campus_picture').entity %}
+					{% if file %}
+						{% set campus_image_url = file_url(file.uri.value) %}
+						{# o estilo de imagen: {% set campus_image_url = image_style('ou_detail', file.uri.value) %} #}
+					{% endif %}
+				{% elseif campus_base.hasField('field_campus_picture') and (not campus_base.get('field_campus_picture').isEmpty()) %}
+					{% set file = campus_base.get('field_campus_picture').entity %}
+					{% if file %}
+						{% set campus_image_url = file_url(file.uri.value) %}
+					{% endif %}
+				{% endif %}
+
+				<img src="{{ campus_image_url }}" alt="{{ campus_tr.label }}" class="img-fluid w-100" style="max-height: 350px; object-fit: cover;">
+			</div>
+
+			{# 2) Caja negra con datos (mantengo los mismos campos que tenías) #}
+			<div
+				class="bg-black text-white pt-4 pb-4 ps-4 pe-4">
+
+				{# Website #}
+				{% if campus_tr.hasField('field_campus_web') and campus_tr.field_campus_web.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-globe me-2 mt-1"></i>
+						<p class="mb-0">
+							<a href="{{ campus_tr.field_campus_web.uri ?? campus_tr.field_campus_web.value }}" target="_blank" rel="noopener" style="color: {{university_primary_color}}">
+								{{ campus_tr.field_campus_web.title ?? campus_tr.field_campus_web.value }}
+							</a>
+						</p>
+					</div>
+				{% endif %}
+
+
+				{# Email #}
+				{% if campus_tr.hasField('field_campus_email') and campus_tr.field_campus_email.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-envelope me-2 mt-1"></i>
+						<p class="mb-0">
+							<a href="mailto:{{ campus_tr.field_campus_email.value }} " style="color: {{university_primary_color}}">
+								{{ campus_tr.field_campus_email.value }}
+							</a>
+						</p>
+					</div>
+				{% endif %}
+
+
+				{# Phone #}
+				{% if campus_tr.hasField('field_campus_phone') and campus_tr.field_campus_phone.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-phone me-2 mt-1"></i>
+						<p class="mb-0">{{ campus_tr.field_campus_phone.value }}</p>
+					</div>
+				{% endif %}
+
+				{# Address #}
+				{% if campus_tr.hasField('field_campus_address') and campus_tr.field_campus_address.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-map-marker-alt me-2 mt-1"></i>
+						<p class="mb-0">{{ campus_tr.field_campus_address.value }}</p>
+					</div>
+				{% endif %}
+
+				{% set coords = [] %}
+				{% if campus_tr.hasField('field_map') and campus_tr.field_map.value %}
+					{% set point = campus_tr.field_map.value %}
+					{% if point %}
+						{% set coords = point|replace({'POINT(':'','POINT (':'', ')':''})|trim|split(' ') %}
+					{% endif %}
+				{% endif %}
+				{% if coords is not empty %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-map-marker-alt me-2 mt-1"></i>
+						<p class="mb-0">{{ coords[1]|default('') }},
+							{{ coords[0]|default('') }}</p>
+					</div>
+				{% endif %}
+			</div>
+
+			{# 3) Mapa debajo (mismo que tenías, solo reubicado) #}
+			<div class="map-wrapper" style="">
+				{{ drupal_view('map_view', 'block_3', campus.id) }}
+			</div>
+		</div>
+
+
+	</div>
+</div></div><!--<img src="/themes/custom/b5subtheme/images/general_information_campuses_map.png" alt="Mapa de campus" class="img-fluid h-100 w-100 object-fit-cover rounded shadow">--><div class='section-container section-bg-grey'>
+
+{% if area_meta|length > 0 %}
+	<div class='my-custom-container-2'>
+		<h2 class="section-title text-center">{{ translations[current_language]['Programmes'] }}</h3>
+			
+		<div class="accordion" id="accordionPanelsStayOpenExample">
+			{% for area_key, meta in area_meta %}
+			
+				{% set B = programmes_by_area[area_key]['B']|default([]) %}
+				{% set M = programmes_by_area[area_key]['M']|default([]) %}
+				{% set D = programmes_by_area[area_key]['PhD']|default([]) %}
+
+				{# 1) Lista única ordenada: primero B, luego M, luego PhD #}
+				{% set ordered = B|merge(M)|merge(D) %}
+				{% set total = ordered|length %}
+
+				{# Si solo hay un área, expandirla #}
+				{% set expanded = (area_meta|length == 1) %}
+
+				{% if total > 0 %}
+					{% set cid = 'acc-' ~ loop.index ~ '-' ~ area_key|replace({' ':'-'}) %}
+
+					<div class="accordion-item mb-2">
+						<h2 class="accordion-header" id="{{ cid }}-head">
+							<button class="accordion-button {{ expanded ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ cid }}-body" aria-expanded="false" aria-controls="{{ cid }}-body">
+								{% if meta.icon is defined and meta.icon %}
+									<i class="{{ meta.icon }}"></i>
+								{% endif %}
+								<span class="fw-semibold">{{ meta.label|default(area_key)|upper }}</span>
+								<span class="ms-auto small fw-bold">
+									B
+									{{ B|length }}
+									· M
+									{{ M|length }}
+									· PhD
+									{{ D|length }}
+								</span>
+							</button>
+						</h2>
+
+						<div id="{{ cid }}-body" class="accordion-collapse collapse {{ expanded ? 'show' : '' }}" aria-labelledby="{{ cid }}-head">
+							<div
+								class="accordion-body">
+
+								{# 2) Columnas automáticas (2 si <=18; 3 si >18) #}
+								{% set cols = total > 18 ? 3 : 2 %}
+								{% set per_col = (total / cols)|round(0, 'ceil') %}
+
+								<div class="row g-4">
+									{% for c in 0..(cols-1) %}
+										{% set slice = ordered|slice(c*per_col, per_col) %}
+										{% if slice|length %}
+											<div class="col-md-{{ 12 // cols }}">
+												<ul class="list-unstyled mb-0">
+													{% for p in slice %}
+														{# 3) Prefijo por nivel (B / M / PhD) #}
+														{#{dump(p)}#}
+														{% set lvl_raw = p.level_code|default(p.level|default('')) %}
+														{#{dump(lvl_raw)}#}
+														{% set lvl = lvl_raw|lower %}
+												
+
+															{% if lvl starts with '6' %}
+															{% set prefix = 'B' %}
+														{% elseif lvl starts with '7' %}
+															{% set prefix = 'M' %}
+														{% elseif lvl starts with '8' %}
+															{% set prefix = 'PhD' %}
+														{% endif %}
+
+														<li class="mb-2">
+															{% if prefix == 'B' %}
+																<span class="fw-bold me-1 text-dark">{{ prefix }}</span>
+															{% else %}
+																<span class="fw-bold me-1" style="color: var(--university_primary_color)">{{ prefix }}</span>
+															{% endif %}&middot;
+
+															<a href="{{ p.programme_url }}" class="text-reset text-decoration-none ms-1">{{ p.label }}</a>
+
+															{% if p.interuniversity is defined and p.interuniversity %}
+																<em class="text-danger ms-2">Interuniversity</em>
+															{% endif %}
+
+															{% if p.ects is defined and p.ects %}
+																<span class="text-muted ms-2">{{ p.ects }}
+																	ECTS</span>
+															{% endif %}
+														</li>
+													{% endfor %}
+												</ul>
+											</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
+</div></div></div><div class="section-container"><div class='my-custom-container-2'>
+<div class='text-align-center'>
+
+
+	{#ORGANIZATIONAL UNITS#}
+	{#ORGANIZATIONAL UNITS#}
+	{#ORGANIZATIONAL UNITS#}
+	{#ORGANIZATIONAL UNITS#}
+	{#ORGANIZATIONAL UNITS#}
+	{#ORGANIZATIONAL UNITS#}
+	{#ORGANIZATIONAL UNITS#}
+	{#ORGANIZATIONAL UNITS#}
+
+
+		{% if view.result[0]._relationship_entities['reverse__node__field_ou_campus'] %}
+			<h2 class="section-title text-center"> {{translations[current_language]['Organizational Units']}}</h2>
+	</div>
+	{{campus.field_general_ou_campus_descript.value | raw}}
+
+	<br><br>
+	<div class="map-wrapper mb-5" style="">
+		{{ drupal_view('map_view', 'block_6', campus.id) }}
+	</div>
+
+	<div
+		class="row">
+		<!-- Columna izquierda: buscador y lista -->
+		<div
+			class="col-lg-6">
+			<!-- Buscador -->
+			<div class="input-group mb-3">
+				<input type="text" class="form-control bg-light border-0" placeholder="Type here to search" id="ou-search">
+				<button class="btn btn-outline-secondary pe-4 ps-4 bg-black" type="button" id="search-btn">
+					<i class="fas fa-search" style="color: white;"></i>
+				</button>
+			</div>
+
+			<!-- Filtros -->
+			<div
+				class="custom-btn-group-filter-ou d-flex gap-10 mb-3 flex-wrap">
+				<!-- Type -->
+				<div class="dropdown">
+					<button id="type-filter-button" class="btn btn-dark btn-sm dropdown-toggle btn-whithout-border-radius" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Type
+					</button>
+					<ul class="dropdown-menu" id="filter-type">
+						<li>
+							<a class="dropdown-item" href="#" data-type="">All</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" data-type="Department">Department</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" data-type="Faculty">Faculty</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="#" data-type="School">School</a>
+						</li>
+						<!-- Añade aquí tus tipos reales -->
+					</ul>
+				</div>
+
+				<!-- Campus 
+								<div class="dropdown">
+									<button id="campus-filter-button" class="btn btn-dark btn-sm dropdown-toggle btn-whithout-border-radius" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+										Campus
+									</button>
+									<ul class="dropdown-menu" id="filter-campus">
+										<li>
+											<a class="dropdown-item" href="#" data-campus="">All</a>
+										</li>
+										{% for campus in campuses %}
+											{% set campus_label = campus.label %}
+											{% if campus.hasTranslation(language.getId()) %}
+												{% set campus_label = campus.getTranslation(language.getId()).label %}
+											{% endif %}
+											<li>
+												<a class="dropdown-item" href="#" data-campus="{{ campus.id() }}">
+													{{ campus_label }}
+												</a>
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+								-->
+			</div>
+
+			<!-- Lista de Organizational Units -->
+			<div id="ou-list">
+				<nav>
+					<ul class="pagination justify-content-center mt-4" id="pagination-controls"><!-- Se rellenará con JS --></ul>
+				</nav>
+
+				{% set list_ous = [] %}
+				{% set list_ous = list_ous|merge([organizational_unit.id]) %}
+
+				{% for row in view.result %}
+					{% set ou = row._entity %}
+					{% set organizational_unit = row._relationship_entities['reverse__node__field_ou_campus'] %}
+
+					{% if organizational_unit.id not in list_ous %}
+						{% set list_ous = list_ous|merge([organizational_unit.id]) %}
+
+						{% if organizational_unit.hasTranslation(current_language) %}
+							{% set organizational_unit = organizational_unit.getTranslation(current_language) %}
+						{% endif %}
+
+						{% set campus_entity = organizational_unit.field_ou_campus.entity %}
+						{% set campus_label = campus_entity.label %}
+						{% if campus_entity.hasTranslation(current_language) %}
+							{% set campus_label = campus_entity.getTranslation(current_language).label %}
+						{% endif %}
+
+						{% if organizational_unit.hasTranslation(current_language) %}
+							{% set ou_for_path = organizational_unit.getTranslation(current_language) %}
+							{% set lang_for_path = current_language %}
+						{% else %}
+							{% set ou_for_path = organizational_unit.getTranslation('en') %}
+							{% set lang_for_path = 'en' %}
+						{% endif %}
+
+						{# Alias canónico de la OU en el idioma correcto #}
+						{% set ou_path = path('entity.node.canonical', {'node': ou_for_path.id()}, {'langcode': lang_for_path}) %}
+						{% set parts = ou_path|trim('/')|split('/') %}
+						{% set ou_alias = parts|last %}
+						{% set institution_alias = parts[parts|length - 2] %}
+
+						{# Enlace final a la vista #}
+						{% set ou_info_url = path('view.organizational_unit_information.page_1', {
+            'arg_0': institution_alias,
+            'arg_1': ou_alias
+          }, {'langcode': lang_for_path}) %}
+
+						{% set coords_ou = '' %}
+						{% if organizational_unit.field_ou_map.value is defined and organizational_unit.field_ou_map.value %}
+							{% set point  = organizational_unit.field_ou_map.value %}
+							{# WKT -> "POINT (lon lat)" #}
+							{% set coords = point|replace({'POINT(':'','POINT (':'', ')':''})|trim|split(' ') %}
+							{% set lon = coords[0]|default('') %}
+							{% set lat = coords[1]|default('') %}
+							{% set coords_ou = lat ~ ', ' ~ lon %}
+						{% endif %}
+
+						{# -------- IMAGEN --------
+												       Intenta sacar la URL de la imagen. Si no hay, queda vacío y el JS hará fallback. #}
+						{% set ou_image_url = '' %}
+						{% if organizational_unit.field_ou_picture is defined 
+          and organizational_unit.field_ou_picture.entity is not empty %}
+							{% set img_file = organizational_unit.field_ou_picture.entity %}
+							{# Opción A: URL directa del archivo #}
+							{% set ou_image_url = file_url(img_file.getFileUri()) %}
+
+						{# Opción B (recomendada): usar un estilo de imagen si tienes uno creado, p.ej. 'ou_detail' #}
+							{# {% set ou_image_url = image_style('ou_detail', img_file.getFileUri()) %} #}
+						{% endif %}
+
+						<div
+							class="ou-item p-3 mb-3 bg-light" data-ou-title="{{ organizational_unit.title.value }}" data-ou-type="{{ organizational_unit.field_ou_type.value }}" data-ou-area="{{ organizational_unit.field_ou_area.value }}" data-ou-description="{{ organizational_unit.field_oa_description.value|striptags }}" data-ou-address="{{ organizational_unit.field_ou_address.value }}" data-ou-gps="{{ coords_ou }}" data-ou-web="{{ organizational_unit.field_ou_web.uri }}" data-ou-web-label="{{ organizational_unit.field_ou_web.title }}" data-ou-email="{{ organizational_unit.field_ou_email.value }}" data-ou-phone="{{ organizational_unit.field_ou_phone.value }}" data-ou-campus-id="{{ organizational_unit.field_ou_campus.entity.id() }}" data-ou-campus-label="{{ campus_label }}" data-ou-url="{{ ou_info_url }}" data-ou-image="{{ ou_image_url|e('html_attr') }}" onclick="loadOUDetails(this)">
+
+							<!-- Título de la unidad organizativa -->
+							<h5 class="mb-1">{{ organizational_unit.title.value }}</h5>
+
+							<!-- Tipo de la unidad organizativa -->
+							<p class="mb-0 small ou-type">
+								{% if organizational_unit.field_ou_type.value is defined %}
+									{{ organizational_unit.field_ou_type.value }}
+								{% endif %}
+								&nbsp;·&nbsp;
+								<strong>{{ campus_label }}</strong>
+							</p>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+
+		<!-- Columna derecha: detalle dinámico -->
+		<div class="col-lg-6">
+			<div id="ou-details" class="bg-light h-100">
+				<p class="text-muted text-center pt-5">{{ translations[current_language]['Click on an Organizational Unit to see its details.'] }}</p>
+
+				<!-- Aquí se rellenará dinámicamente con JS -->
+			</div>
+		</div>
+	</div>
+</div></div></div>{% endif %}</div>{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}{#SCRIPTS#}<script>
+// =======================
+// DETALLES (misma lógica) + estilos como en el JS base
+// =======================
+function loadOUDetails(el) {
+document.querySelectorAll('.ou-item').forEach(item => item.classList.remove('selected'));
+el.classList.add('selected');
+
+const title = el.dataset.ouTitle || '';
+const type = el.dataset.ouType || '';
+const description = el.dataset.ouDescription || '';
+const address = el.dataset.ouAddress || '';
+const gps = el.dataset.ouGps || '';
+const web = el.dataset.ouWeb || '';
+const webLabel = el.dataset.ouWebLabel || web;
+const email = el.dataset.ouEmail || '';
+const phone = el.dataset.ouPhone || '';
+const campus = el.dataset.ouCampusLabel || '';
+const url = el.dataset.ouUrl || '#';
+const image = el.dataset.ouImage || '';
+
+const imageSrc = image ? image : '/themes/custom/b5subtheme/images/ou-default.png';
+
+// ✅ Bloques opcionales: si el valor está vacío, no se renderiza nada (ni icono ni espacio).
+const webHTML = web ? `
+      <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-globe me-2 mt-1"></i>
+        <p class="mb-0"><a href="${web}" target="_blank" rel="noopener">${webLabel}</a></p>
+      </div>
+  ` : '';
+
+const emailHTML = email ? `
+      <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-envelope me-2 mt-1"></i>
+        <p class="mb-0">${email}</p>
+      </div>
+  ` : '';
+
+const phoneHTML = phone ? `
+	  <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-phone me-2 mt-1"></i>
+        <p class="mb-0">${phone}</p>
+      </div>
+  ` : '';
+
+const addressHTML = address ? `
+	    <div class="d-flex align-items-start mt-3 mb-2">
+        <i class="fas fa-map-marker-alt me-2 mt-1"></i>
+        <p class="mb-0">${address}</p>
+      </div>
+  ` : '';
+
+const gpsHTML = gps ? `
+	   <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-location-arrow me-2 mt-1"></i>
+        <p class="mb-0">${gps}</p>
+      </div>
+  ` : '';
+
+const html = `
+    <div class="mb-3 text-center">
+      <img src="${imageSrc}" alt="Organizational Unit" class="img-fluid w-100" style="max-height: 600px; object-fit: cover;" loading="lazy">
+    </div>
+
+    <div class="p-4">
+      <h4 class="fw-bold">${title}</h4>
+
+      <div class="ou-tag-bar text-white mb-3">
+        <span class="ou-type">${
+(type || '').toUpperCase()
+}</span>
+        <!--<span class="ou-campus">${campus}</span>-->
+      </div>
+
+      <div class="mt-3">${description}</div>
+	  <br>
+
+      ${webHTML}
+      ${emailHTML}
+      ${phoneHTML}
+      ${addressHTML}
+      ${gpsHTML}
+
+      <div class="mt-5 text-center">
+        <a class="btn btn-dark see-more-ou-button" href="${url}">{{ translations[current_language]['See more'] }}</a>
+      </div>
+	 
+    </div>
+  `;
+
+const desktopDetails = document.getElementById('ou-details');
+const existingMobileDetails = document.querySelector('.ou-details-mobile');
+const isMobile = window.matchMedia('(max-width: 991.98px)').matches;
+
+if (isMobile) {
+if (desktopDetails) {
+desktopDetails.innerHTML = '';
+}
+
+const mobileDetails = existingMobileDetails || document.createElement('div');
+mobileDetails.className = 'ou-details-mobile bg-light mb-3';
+mobileDetails.innerHTML = html;
+el.insertAdjacentElement('afterend', mobileDetails);
+mobileDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+} else {
+if (existingMobileDetails) {
+existingMobileDetails.remove();
+}
+
+if (desktopDetails) {
+desktopDetails.innerHTML = html;
+}
+}
+}
+
+
+// =======================
+// FILTROS + BUSCADOR (mismo funcionamiento)
+// Añadimos SOLO estética: texto del botón = etiqueta elegida (sin prefijo)
+// y color activo con --university_primary_color
+// =======================
+let currentCampus = '';
+let currentType = '';
+
+// Botones (respetamos clases existentes)
+// const campusButton = document.getElementById('campus-filter-button');
+const typeButton = document.getElementById('type-filter-button');
+
+// Helper para aplicar/quitar color activo sin cambiar clases
+function setActiveButtonStyle(btn, active) {
+const root = getComputedStyle(document.documentElement);
+const uniColor = root.getPropertyValue('--university_primary_color') || '';
+if (active) {
+btn.style.backgroundColor = uniColor;
+btn.style.borderColor = uniColor;
+btn.style.color = '#fff';
+} else {
+btn.style.backgroundColor = '';
+btn.style.borderColor = '';
+btn.style.color = '';
+}
+}
+
+// CAMPUS
+document.querySelectorAll('#filter-campus .dropdown-item').forEach(item => {
+item.addEventListener('click', function (e) {
+e.preventDefault();
+currentCampus = this.dataset.campus || '';
+// Texto = solo etiqueta elegida; si vacío, vuelve al label por defecto
+campusButton.textContent = currentCampus ? this.textContent.trim() : 'Campus';
+// Estilo activo
+setActiveButtonStyle(campusButton, !! currentCampus);
+filterOUList();
+});
+});
+
+// 🔍 Buscador en tiempo real (mismo comportamiento)
+document.getElementById('ou-search').addEventListener('input', function () {
+const query = this.value.toLowerCase();
+const items = document.querySelectorAll('#ou-list .ou-item');
+
+items.forEach(item => {
+const title = item.dataset.ouTitle ?. toLowerCase() || '';
+const type = item.dataset.ouType ?. toLowerCase() || '';
+item.style.display = (title.includes(query) || type.includes(query)) ? '' : 'none';
+});
+});
+
+// TYPE
+document.querySelectorAll('#filter-type .dropdown-item').forEach(item => {
+item.addEventListener('click', function (e) {
+e.preventDefault();
+currentType = this.dataset.type || '';
+typeButton.textContent = currentType ? this.textContent.trim() : 'Type';
+setActiveButtonStyle(typeButton, !! currentType);
+filterOUList();
+});
+});
+
+// Filtro general (combina búsqueda + tipo + campus)
+function filterOUList() {
+const query = document.getElementById('ou-search').value.toLowerCase();
+const items = document.querySelectorAll('#ou-list .ou-item');
+
+items.forEach(item => {
+const title = item.dataset.ouTitle ?. toLowerCase() || '';
+const type = item.dataset.ouType ?. toLowerCase() || '';
+const campus = item.dataset.ouCampusId || '';
+
+const matchText = title.includes(query);
+const matchType = ! currentType || type === currentType.toLowerCase();
+const matchCampus = ! currentCampus || campus === currentCampus;
+
+item.style.display = (matchText && matchType && matchCampus) ? '' : 'none';
+});
+}
+
+// Duplicado de listener de búsqueda (lo mantenemos tal cual para no tocar funcionamiento)
+document.getElementById('ou-search').addEventListener('input', filterOUList);
+
+// =======================
+// PAGINACIÓN (mismo funcionamiento; itemsPerPage=2 como enviaste)
+// =======================
+document.addEventListener("DOMContentLoaded", function () {
+const items = document.querySelectorAll("#ou-list .ou-item");
+const itemsPerPage = 7;
+let currentPage = 1;
+
+function showPage(page) {
+const start = (page - 1) * itemsPerPage;
+const end = page * itemsPerPage;
+
+items.forEach((item, index) => {
+item.style.display = (index >= start && index < end) ? '' : 'none';
+});
+
+renderPagination(page);
+}
+
+function renderPagination(activePage) {
+const totalPages = Math.ceil(items.length / itemsPerPage);
+const pagination = document.getElementById("pagination-controls");
+pagination.innerHTML = '';
+
+for (let i = 1; i <= totalPages; i++) {
+const li = document.createElement("li");
+li.className = "page-item" + (
+i === activePage ? " active" : ""
+);
+li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+li.addEventListener("click", function (e) {
+e.preventDefault();
+currentPage = i;
+showPage(currentPage);
+});
+pagination.appendChild(li);
+}
+}
+
+if (items.length > 0) {
+showPage(currentPage);
+}
+
+// Estado inicial de botones (sin color activo)
+setActiveButtonStyle(campusButton, false);
+setActiveButtonStyle(typeButton, false);
+setActiveButtonStyle(areaButton, false);
+});</script><!-- ===================== --><!-- JS PROGRAMMES (estilos solo; misma lógica) --><!-- ===================== --><script>
+(function () {
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+const input = $('#programmeSearch');
+const btn = $('#programmeSearchBtn');
+const menuArea = $('#filter-programme-area');
+const btnArea = $('#programme-area-filter-button');
+const menuLevel = $('#filter-level');
+const btnLevel = $('#level-filter-button');
+const btnAZ = document.querySelector('.btn.btn-danger.btn-sm');
+
+const norm = s => (s || '').toString().trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const slug = s => norm(s).replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+
+const state = {
+q: '',
+area: '',
+level: '',
+az: false
+};
+
+const groups = [];
+document.querySelectorAll('h5.text-uppercase.fw-bold.mt-5.mb-3').forEach(h5 => {
+const row = h5.nextElementSibling;
+if (row && row.classList.contains('row')) 
+groups.push({h5, row});
+
+
+});
+
+function cardMatches(card) {
+const name = norm(card.dataset.name);
+const area = slug(card.dataset.programmeArea || '');
+const level = slug(card.dataset.level || '');
+
+const okQ = ! state.q || name.includes(state.q) || slug(card.dataset.programmeArea || '').includes(state.q) || slug(card.dataset.level || '').includes(state.q);
+
+const okArea = ! state.area || area === state.area;
+const okLevel = ! state.level || level === state.level;
+return okQ && okArea && okLevel;
+}
+
+function applyFilter() {
+const cards = $$('.programme-card');
+cards.forEach(card => {
+const show = cardMatches(card);
+card.closest('.col').style.display = show ? '' : 'none';
+});
+groups.forEach(({h5, row}) => {
+const visible = row.querySelectorAll(':scope > .col:not([style*="display: none"])').length > 0;
+h5.style.display = visible ? '' : 'none';
+row.style.display = visible ? '' : 'none';
+});
+if (state.az) 
+sortAZ();
+
+
+}
+
+function sortAZ() {
+groups.forEach(({row}) => {
+const visibles = $$('.col', row).filter(c => c.style.display !== 'none');
+visibles.sort((a, b) => {
+const na = norm(a.querySelector('.programme-card').dataset.name);
+const nb = norm(b.querySelector('.programme-card').dataset.name);
+return na.localeCompare(nb);
+});
+visibles.forEach(col => row.appendChild(col));
+});
+}
+
+// ===== Estética de botones de filtro (sin tocar clases / lógica) =====
+function setActiveBtnStyle(btn, active) {
+const uniColor = getComputedStyle(document.documentElement).getPropertyValue('--university_primary_color') || '';
+if (! btn) 
+return;
+
+
+if (active) {
+btn.textContent = btn.textContent.trim(); // ya se actualiza más abajo con el label elegido
+btn.style.backgroundColor = uniColor;
+btn.style.borderColor = uniColor;
+btn.style.color = '#fff';
+} else {
+btn.style.backgroundColor = '';
+btn.style.borderColor = '';
+btn.style.color = '';
+}
+}
+
+let t;
+if (input) {
+input.addEventListener('input', () => {
+clearTimeout(t);
+t = setTimeout(() => {
+state.q = norm(input.value);
+applyFilter();
+}, 120);
+});
+}
+if (btn) {
+btn.addEventListener('click', e => {
+e.preventDefault();
+state.q = norm(input ? input.value : '');
+applyFilter();
+});
+}
+
+if (menuArea && btnArea) {
+menuArea.addEventListener('click', e => {
+const a = e.target.closest('a[data-programme-area]');
+if (! a) 
+return;
+
+
+e.preventDefault();
+state.area = a.dataset.programmeArea ? slug(a.dataset.programmeArea) : '';
+// Solo el nombre de la opción
+btnArea.textContent = state.area ? a.textContent.trim() : 'Knowledge Area';
+setActiveBtnStyle(btnArea, !! state.area);
+applyFilter();
+});
+// estado inicial
+setActiveBtnStyle(btnArea, false);
+}
+
+if (menuLevel && btnLevel) {
+menuLevel.addEventListener('click', e => {
+const a = e.target.closest('a[data-type]');
+if (! a) 
+return;
+
+
+e.preventDefault();
+state.level = a.dataset.type ? slug(a.dataset.type) : '';
+// Solo el nombre de la opción
+btnLevel.textContent = state.level ? a.textContent.trim() : 'Level';
+setActiveBtnStyle(btnLevel, !! state.level);
+applyFilter();
+});
+// estado inicial
+setActiveBtnStyle(btnLevel, false);
+}
+
+// Botón A-Z: dejamos su comportamiento/clases tal cual (rojo)
+if (btnAZ) {
+btnAZ.addEventListener('click', e => {
+e.preventDefault();
+state.az = ! state.az;
+btnAZ.classList.toggle('btn-outline-danger', state.az);
+btnAZ.classList.toggle('btn-danger', ! state.az);
+if (state.az) 
+sortAZ();
+
+
+});
+}
+})();</script><script>
+// Mantener scroll en acordeón (sin cambios de lógica)
+(function () {
+const keepScroll = () => {
+const y = window.scrollY;
+window.requestAnimationFrame(() => window.scrollTo(0, y));
+};
+
+document.querySelectorAll('.accordion .collapse').forEach(el => {
+el.addEventListener('shown.bs.collapse', keepScroll);
+el.addEventListener('hidden.bs.collapse', keepScroll);
+});
+
+document.querySelectorAll('.accordion [data-bs-toggle="collapse"]').forEach(tr => {
+if (tr.tagName === 'A') {
+tr.addEventListener('click', e => e.preventDefault());
+}
+});
+})();</script>

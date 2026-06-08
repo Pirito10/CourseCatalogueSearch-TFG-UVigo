@@ -1,0 +1,127 @@
+uuid: 229d0706-b081-4254-a24d-4e5b0b5be324
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.institution.field_abbreviation
+    - field.field.node.institution.field_academic_calendar
+    - field.field.node.institution.field_additional_requirements
+    - field.field.node.institution.field_admission_descipt_full
+    - field.field.node.institution.field_admission_descript_exchang
+    - field.field.node.institution.field_admission_descript_visitin
+    - field.field.node.institution.field_admission_description
+    - field.field.node.institution.field_admission_language_policy
+    - field.field.node.institution.field_admission_languages
+    - field.field.node.institution.field_admission_registration
+    - field.field.node.institution.field_application_email
+    - field.field.node.institution.field_application_phone
+    - field.field.node.institution.field_application_web
+    - field.field.node.institution.field_applications_autumn_term
+    - field.field.node.institution.field_applications_spring_term
+    - field.field.node.institution.field_arrangements_guidance
+    - field.field.node.institution.field_arrangements_recognition
+    - field.field.node.institution.field_decision
+    - field.field.node.institution.field_ects_credit_allocation_pol
+    - field.field.node.institution.field_emphasis_text_color
+    - field.field.node.institution.field_erasmus_code
+    - field.field.node.institution.field_general_campus_description
+    - field.field.node.institution.field_general_ou_description
+    - field.field.node.institution.field_information
+    - field.field.node.institution.field_institution_address
+    - field.field.node.institution.field_institution_alliance
+    - field.field.node.institution.field_institution_card_image
+    - field.field.node.institution.field_institution_country
+    - field.field.node.institution.field_institution_email
+    - field.field.node.institution.field_institution_map
+    - field.field.node.institution.field_institution_phone
+    - field.field.node.institution.field_institution_picture
+    - field.field.node.institution.field_institution_webpage
+    - field.field.node.institution.field_logo
+    - field.field.node.institution.field_mobility_incoming_students
+    - field.field.node.institution.field_mobility_outgoing_students
+    - field.field.node.institution.field_nominations_autumn_term
+    - field.field.node.institution.field_nominations_spring_term
+    - field.field.node.institution.field_primary_color
+    - field.field.node.institution.field_recognition_outgoing
+    - field.field.node.institution.field_recognition_process_email
+    - field.field.node.institution.field_recognition_process_phone
+    - field.field.node.institution.field_recognition_process_websit
+    - field.field.node.institution.field_registration_proc_exchange
+    - field.field.node.institution.field_registration_proc_full
+    - field.field.node.institution.field_registration_proc_visiting
+    - field.field.node.institution.field_requirements_nominations
+    - field.field.node.institution.field_shac_code
+    - field.field.node.institution.field_text_color
+    - field.field.node.institution.field_transcript_of_records
+    - field.field.node.institution.field_type_of_hei
+    - field.field.node.institution.field_university_pdfs
+    - field.field.node.institution.field_urls
+    - node.type.institution
+  module:
+    - user
+id: node.institution.teaser
+targetEntityType: node
+bundle: institution
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_abbreviation: true
+  field_academic_calendar: true
+  field_additional_requirements: true
+  field_admission_descipt_full: true
+  field_admission_descript_exchang: true
+  field_admission_descript_visitin: true
+  field_admission_description: true
+  field_admission_language_policy: true
+  field_admission_languages: true
+  field_admission_registration: true
+  field_application_email: true
+  field_application_phone: true
+  field_application_web: true
+  field_applications_autumn_term: true
+  field_applications_spring_term: true
+  field_arrangements_guidance: true
+  field_arrangements_recognition: true
+  field_decision: true
+  field_ects_credit_allocation_pol: true
+  field_emphasis_text_color: true
+  field_erasmus_code: true
+  field_general_campus_description: true
+  field_general_ou_description: true
+  field_information: true
+  field_institution_address: true
+  field_institution_alliance: true
+  field_institution_card_image: true
+  field_institution_country: true
+  field_institution_email: true
+  field_institution_map: true
+  field_institution_phone: true
+  field_institution_picture: true
+  field_institution_webpage: true
+  field_logo: true
+  field_mobility_incoming_students: true
+  field_mobility_outgoing_students: true
+  field_nominations_autumn_term: true
+  field_nominations_spring_term: true
+  field_primary_color: true
+  field_recognition_outgoing: true
+  field_recognition_process_email: true
+  field_recognition_process_phone: true
+  field_recognition_process_websit: true
+  field_registration_proc_exchange: true
+  field_registration_proc_full: true
+  field_registration_proc_visiting: true
+  field_requirements_nominations: true
+  field_shac_code: true
+  field_text_color: true
+  field_transcript_of_records: true
+  field_type_of_hei: true
+  field_university_pdfs: true
+  field_urls: true
+  langcode: true

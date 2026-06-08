@@ -1,0 +1,19 @@
+uuid: 461d59ff-764b-4100-b45c-89f0427269ca
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_practical_information_for
+field_name: field_practical_information_for
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,24 @@
+uuid: 4dc028e6-7627-4b00-a262-72f0a593a6a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_grading_table
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_programme_grading_table
+field_name: field_programme_grading_table
+entity_type: node
+bundle: programme
+label: 'Grading distribution table'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

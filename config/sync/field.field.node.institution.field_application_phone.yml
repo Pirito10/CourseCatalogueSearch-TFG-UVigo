@@ -1,0 +1,21 @@
+uuid: 6a2f897e-9a48-411a-b17d-3aa0dbffcafb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_application_phone
+    - node.type.institution
+  module:
+    - telephone
+id: node.institution.field_application_phone
+field_name: field_application_phone
+entity_type: node
+bundle: institution
+label: 'Application procedures phone'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

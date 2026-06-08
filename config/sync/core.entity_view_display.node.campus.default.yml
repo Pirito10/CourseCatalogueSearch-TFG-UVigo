@@ -1,0 +1,135 @@
+uuid: c704d359-c0b6-43fc-bef9-9e631f237314
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.campus.body
+    - field.field.node.campus.field_campus_abbreviation
+    - field.field.node.campus.field_campus_address
+    - field.field.node.campus.field_campus_description
+    - field.field.node.campus.field_campus_email
+    - field.field.node.campus.field_campus_institution
+    - field.field.node.campus.field_campus_location
+    - field.field.node.campus.field_campus_phone
+    - field.field.node.campus.field_campus_picture
+    - field.field.node.campus.field_campus_web
+    - field.field.node.campus.field_general_ou_campus_descript
+    - field.field.node.campus.field_map
+    - node.type.campus
+  module:
+    - geofield
+    - image
+    - link
+    - text
+    - user
+id: node.campus.default
+targetEntityType: node
+bundle: campus
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_campus_abbreviation:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 123
+    region: content
+  field_campus_address:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 122
+    region: content
+  field_campus_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_campus_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_campus_institution:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_campus_location:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 113
+    region: content
+  field_campus_phone:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_campus_picture:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_campus_web:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_general_ou_campus_descript:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_map:
+    type: geofield_default
+    label: above
+    settings:
+      output_format: wkt
+      output_escape: true
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

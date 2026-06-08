@@ -1,0 +1,107 @@
+<?php
+
+
+
+/**
+ * Implements hook_preprocess_block() to add a button to the local actions block.
+ */
+function create_user_group_preprocess_block(&$variables) {
+  //\Drupal::messenger()->addMessage('Hook preprocess block.');
+  
+
+  // Verificar si es el bloque de acciones locales (local actions).
+  if ($variables['plugin_id'] == 'local_actions_block') {
+    //\Drupal::messenger()->addMessage('Estamos en el bloque de acciones locales.');
+
+    // Obtener la ruta actual para asegurarnos de que estamos en la página de miembros del grupo.
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    \Drupal::messenger()->addMessage('Actual route: ' . $route_name);
+
+    if (strpos($route_name, 'view.group_members') !== false) {
+      //\Drupal::messenger()->addMessage('Estamos en la pestaña Miembros del grupo.');
+
+      // Verificar si el bloque contiene el enlace "Añadir miembro".
+      if (isset($variables['content']['group.add_member'])) {
+        //\Drupal::messenger()->addMessage('Botón "Añadir miembro" encontrado.');
+
+       // Deshabilitar el botón añadiendo clases CSS para simular el estado deshabilitado
+       //$variables['content']['group.add_member']['#link']['localized_options']['attributes']['class'][] = 'button--disabled';
+       // Evitar que el enlace funcione al hacer clic
+       //$variables['content']['group.add_member']['#link']['localized_options']['attributes']['onclick'] = 'return false;';
+       //$variables['content']['group.add_member']['#link']['localized_options']['attributes']['style'] = 'pointer-events: none; opacity: 0.5;';
+       
+
+        //\Drupal::messenger()->addMessage('Botón "Añadir miembro" deshabilitado.');
+      }
+      // Obtener el grupo desde la ruta.
+      $group = \Drupal::routeMatch()->getParameter('group');
+      if ($group) {
+        //\Drupal::messenger()->addMessage('Grupo encontrado: ' . $group->label());
+        
+
+        // Verificar que el usuario actual tiene el rol University Admin en el grupo.
+        $current_user = \Drupal::currentUser();
+        $membership = $group->getMember($current_user);
+
+        if ($membership) {
+          //\Drupal::messenger()->addMessage('Membresía encontrada.');
+
+          // Obtener los roles del miembro y asegurarnos de que sean strings.
+          $roles = array_map(function ($role) {
+            return $role->id();
+          }, $membership->getRoles());
+
+          //\Drupal::messenger()->addMessage('Roles de usuario: ' . implode(', ', $roles));
+
+          if (in_array('universitytypegroup-university_a', $roles)) {
+            //\Drupal::messenger()->addMessage('Usuario con rol University Admin detectado.');
+
+            // Crear el HTML del botón.
+            $button_html = '<li><a href="/group/' . $group->id() . '/create-user" class="button button-action">Create user</a></li>';
+
+            // Comprobar si el bloque tiene la clave #markup
+            if (isset($variables['content']['#markup'])) {
+              // Si existe, añadir el botón al contenido del bloque de acciones locales.
+              $variables['content']['#markup'] .= $button_html;
+              //\Drupal::messenger()->addMessage('Botón "Crear usuario" añadido a las acciones locales.');
+            } else {
+              // Si no existe #markup, crearlo
+              $variables['content']['#markup'] = $button_html;
+              //\Drupal::messenger()->addMessage('No se encontró #markup, así que se creó.');
+            }
+          }
+        } else {
+          //\Drupal::messenger()->addMessage('No se encontró membresía del usuario actual en este grupo.');
+        }
+      } else {
+        //\Drupal::messenger()->addMessage('No se encontró grupo en la ruta.');
+      }
+    }
+  }
+
+}
+
+
+
+
+
+
+/**
+ * Implements hook_page_alter().
+ */
+function create_user_group_page_alter(&$page) {
+  // Este mensaje debería aparecer en todas las páginas.
+  //\Drupal::messenger()->addMessage(t('hook_page_alter ejecutado en la ruta actual.'));
+
+  // Verificar la ruta actual para depurar.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  //\Drupal::messenger()->addMessage(t('Ruta actual: @route', ['@route' => $route_name]));
+}
+
+
+/**
+ * Implements hook_page_top().
+ */
+function create_user_group_page_top(array &$page_top) {
+  //\Drupal::messenger()->addMessage(t('Hook page top.'));
+}

@@ -1,0 +1,42 @@
+uuid: 9c82825d-eedf-4ca7-8ab3-fc02a512d5c8
+langcode: es
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+    - filter.format.restricted_html
+  module:
+    - admin_toolbar_search
+    - comment
+    - content_translation
+    - file
+    - filter
+    - media
+    - search
+    - system
+    - toolbar
+_core:
+  default_config_hash: cFrlqjtkTfvY3RGccjJkPf1SGIfJ942IrxTLWAO4mgA
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access comments'
+  - 'access content'
+  - 'access toolbar'
+  - 'administer account settings'
+  - 'cancel account'
+  - 'change own username'
+  - 'delete own files'
+  - 'post comments'
+  - 'search content'
+  - 'select account cancellation method'
+  - 'skip comment approval'
+  - 'translate editable entities'
+  - 'use admin toolbar search'
+  - 'use text format basic_html'
+  - 'use text format restricted_html'
+  - 'view media'
+  - 'view the administration theme'
+  - 'view user email addresses'

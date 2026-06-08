@@ -1,0 +1,7 @@
+name: 'University Menu'
+type: module
+description: 'Provides a dynamic menu for each university.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - drupal:block

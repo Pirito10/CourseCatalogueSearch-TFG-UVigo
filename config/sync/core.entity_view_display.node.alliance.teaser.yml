@@ -1,0 +1,35 @@
+uuid: 0b1238f6-31f7-4199-87e8-efcfb7063af6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.alliance.field_alliance_address
+    - field.field.node.alliance.field_alliance_description
+    - field.field.node.alliance.field_alliance_email
+    - field.field.node.alliance.field_alliance_logo
+    - field.field.node.alliance.field_alliance_phone
+    - field.field.node.alliance.field_alliance_picture
+    - field.field.node.alliance.field_alliance_webpage
+    - node.type.alliance
+  module:
+    - user
+id: node.alliance.teaser
+targetEntityType: node
+bundle: alliance
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_alliance_address: true
+  field_alliance_description: true
+  field_alliance_email: true
+  field_alliance_logo: true
+  field_alliance_phone: true
+  field_alliance_picture: true
+  field_alliance_webpage: true
+  langcode: true

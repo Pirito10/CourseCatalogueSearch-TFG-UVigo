@@ -1,0 +1,18 @@
+uuid: 6f3c6251-e8f4-4996-9e2d-eb9e8e020c21
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.joint_programme
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: node.joint_programme
+target_entity_type_id: node
+target_bundle: joint_programme
+default_langcode: site_default
+language_alterable: true

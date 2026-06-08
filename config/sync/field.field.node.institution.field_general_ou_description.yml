@@ -1,0 +1,24 @@
+uuid: 354d50d5-c0f8-4410-851b-759082fedff6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_general_ou_description
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_general_ou_description
+field_name: field_general_ou_description
+entity_type: node
+bundle: institution
+label: 'General Organizational Units Description'
+description: 'Introductory text that will be displayed before the list of organizational units.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

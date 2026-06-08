@@ -1,0 +1,19 @@
+uuid: 068f84b9-b1f9-48e8-94cf-70b6bf329ddf
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_rs_campus
+field_name: field_rs_campus
+entity_type: node
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

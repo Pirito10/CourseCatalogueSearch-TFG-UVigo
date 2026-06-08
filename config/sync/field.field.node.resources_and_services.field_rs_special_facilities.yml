@@ -1,0 +1,24 @@
+uuid: 5d3b97ef-cdd8-4e2e-9bb4-efc443a5f33b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_special_facilities
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_rs_special_facilities
+field_name: field_rs_special_facilities
+entity_type: node
+bundle: resources_and_services
+label: 'Special Facilities'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

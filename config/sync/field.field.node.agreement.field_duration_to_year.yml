@@ -1,0 +1,19 @@
+uuid: f8f13731-8371-4f6a-8e7c-1feb9fab5c68
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_duration_to_year
+    - node.type.agreement
+id: node.agreement.field_duration_to_year
+field_name: field_duration_to_year
+entity_type: node
+bundle: agreement
+label: 'Duration of the agreement to academic year'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

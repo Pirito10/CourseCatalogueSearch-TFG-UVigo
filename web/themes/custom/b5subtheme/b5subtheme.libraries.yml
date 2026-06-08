@@ -1,0 +1,47 @@
+global-styling:
+  css:
+    theme:
+      https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap: {}
+      https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap: {}
+
+      css/style.css: {}
+      https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css: { type: external }
+
+global-scripts:
+  version: 1.x
+  js:
+    js/custom-scroll.js: {}
+    js/course_buttons.js: {}
+    js/university_menu_behavior.js: {}
+    js/catalogue_buttons.js: {}
+    js/degree_menu_scroll.js: {}
+    js/campus-selection.js: {}
+    js/rs_submenu_scroll.js: {}
+    
+  dependencies:
+    #- core/jquery
+
+university_carousel:
+  version: 1.x
+  js:
+    js/university-carousel.js: {}
+  dependencies:
+   # - core/jquery
+
+
+search-programme-sort:
+  js:
+    js/search-programme-sort.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupal.ajax
+    #- core/jquery
+    - core/once
+
+
+iec_mobility_autosubmit:
+  js:
+    js/iec-mobility-autosubmit.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

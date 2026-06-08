@@ -1,0 +1,18 @@
+uuid: 9447061f-6914-4df6-8eeb-7eb5a74cc880
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.cuatrimestre
+id: taxonomy_term.cuatrimestre.name
+field_name: name
+entity_type: taxonomy_term
+bundle: cuatrimestre
+label: Nombre
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,125 @@
+uuid: 7a2a0323-9233-497a-8ed4-65c912e9dbbd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.hei.hei.abbreviation
+    - field.field.hei.hei.contact
+    - field.field.hei.hei.hei_id
+    - field.field.hei.hei.logo_url
+    - field.field.hei.hei.mailing_address
+    - field.field.hei.hei.mobility_factsheet_url
+    - field.field.hei.hei.name
+    - field.field.hei.hei.other_id
+    - field.field.hei.hei.street_address
+    - field.field.hei.hei.website_url
+  module:
+    - ewp_core
+    - ewp_flexible_address
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: M8zRFUyytdVEdS2e4FC6gDlEX-8fmbMTGMenoTS0ecc
+id: hei.hei.default
+targetEntityType: hei
+bundle: hei
+mode: default
+content:
+  abbreviation:
+    type: string_textfield
+    weight: -16
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  contact:
+    type: entity_reference_autocomplete
+    weight: -10
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  hei_id:
+    type: ascii_identifier_default
+    weight: -19
+    region: content
+    settings:
+      size: 64
+      placeholder: ''
+    third_party_settings: {  }
+  index_key:
+    type: string_textfield
+    weight: 100
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  label:
+    type: string_textfield
+    weight: -20
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 10
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  logo_url:
+    type: ewp_https_default
+    weight: -12
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  mailing_address:
+    type: ewp_flexible_address_default
+    weight: -14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  mobility_factsheet_url:
+    type: ewp_http_lang_default
+    weight: -11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  name:
+    type: ewp_string_lang_default
+    weight: -17
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  other_id:
+    type: ewp_other_hei_id_default
+    weight: -18
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  street_address:
+    type: ewp_flexible_address_default
+    weight: -15
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  website_url:
+    type: ewp_http_lang_default
+    weight: -13
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

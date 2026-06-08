@@ -1,0 +1,21 @@
+uuid: c0f20852-fc53-4d70-93cc-b043ac16152a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_end_date
+    - node.type.iec_instance
+  module:
+    - datetime
+id: node.iec_instance.field_end_date
+field_name: field_end_date
+entity_type: node
+bundle: iec_instance
+label: 'End Date'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

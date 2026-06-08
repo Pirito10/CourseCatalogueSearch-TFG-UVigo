@@ -1,0 +1,25 @@
+uuid: c460d083-8a3d-4da3-9714-806da8f6a06c
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - user.role.authenticated
+id: universitytypegroup-auxiliar
+label: Auxiliar
+weight: -2
+admin: false
+scope: outsider
+global_role: authenticated
+group_type: universitytypegroup
+permissions:
+  - 'view group_node:academic_authority entity'
+  - 'view group_node:agreement entity'
+  - 'view group_node:campus entity'
+  - 'view group_node:iec_instance entity'
+  - 'view group_node:individual_educational_component entity'
+  - 'view group_node:institution entity'
+  - 'view group_node:joint_programme entity'
+  - 'view group_node:organizational_unit entity'
+  - 'view group_node:programme entity'
+  - 'view group_node:resources_and_services entity'

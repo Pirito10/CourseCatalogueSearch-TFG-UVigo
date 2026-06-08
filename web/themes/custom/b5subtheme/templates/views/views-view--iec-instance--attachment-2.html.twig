@@ -1,0 +1,60 @@
+{% set iec = view.result[0]._entity.field_iec.entity %}
+{% set programme = iec ? iec.field_iec_programme.entity : null %}
+{% set institution = programme ? programme.field_programme_institution.entity : null %}
+
+{% set university_primary_color = institution.field_primary_color[0].color %}
+
+<style>:root
+{
+	--university_primary_color: {{university_primary_color}}
+	;
+	
+}</style>
+
+
+
+
+{% if view.result|length > 0 %}
+  {# Path actual: /en/iec-instance/622 -> nos quedamos con 622 #}
+  {% set current_path = path('<current>') %}
+  {% set current_id = current_path|trim('/')|split('/')|last %}
+
+  {# Texto por defecto del botón #}
+  {% set current_label = 'Select'|t %}
+
+  {# Primera pasada: encuentra el label de la instancia actual #}
+  {% for row in view.result %}
+    {% set instance = row._entity %}
+    {% if instance and (instance.id|striptags|trim == current_id) %}
+      {% set current_label = instance.label %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="subject-edition-band">
+    <div class="subject-edition-label">{{ 'Course edition:'|t }}</div>
+
+    <div class="dropdown subject-edition-dropdown">
+      <button
+        class="subject-edition-btn dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+        {{ current_label }}
+      </button>
+
+      <ul class="dropdown-menu dropdown-menu-dark w-100">
+        {% for row in view.result %}
+          {% set instance = row._entity %}
+          {% if instance %}
+            <li>
+              <a class="dropdown-item {% if (instance.id|striptags|trim == current_id) %}active{% endif %}"
+                 href="/iec-instance/{{ instance.id }}">
+                {{ instance.label }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endif %}

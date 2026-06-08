@@ -1,0 +1,19 @@
+uuid: 566d9f65-dccd-431a-ba3c-8c95d7bad35e
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_visa_website
+field_name: field_visa_website
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

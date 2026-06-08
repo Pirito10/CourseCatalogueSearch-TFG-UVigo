@@ -1,0 +1,29 @@
+uuid: d98029f3-218e-46c5-89e3-f0d0b1124021
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_mode_of_learning
+    - node.type.programme
+  module:
+    - elm_vocabulary_field
+id: node.programme.field_programme_mode_of_learning
+field_name: field_programme_mode_of_learning
+entity_type: node
+bundle: programme
+label: 'Mode of Learning'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    729f3bed4b: false
+    7813801c77: false
+    9191af2ed9: false
+    920fbb3cbe: false
+    c_3a90b26d: false
+    e92d221e4d: false
+    ed4c557045: false
+field_type: elm_controlled_vocabulary

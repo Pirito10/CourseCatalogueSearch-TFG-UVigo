@@ -1,0 +1,21 @@
+uuid: d93cbf85-04cd-4af3-8828-0203e26e1c3f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_insurance_phone
+    - node.type.resources_and_services
+  module:
+    - telephone
+id: node.resources_and_services.field_insurance_phone
+field_name: field_insurance_phone
+entity_type: node
+bundle: resources_and_services
+label: 'Insurance - phone'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

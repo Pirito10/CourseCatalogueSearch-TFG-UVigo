@@ -1,0 +1,162 @@
+admin_area.admin_menu:
+  title: 'Content'
+  description: 'Custom admin menu for managing entities'
+  parent: system.admin
+  menu_name: admin
+  route_name: <none>
+  weight: 10
+
+
+
+
+
+admin_area.my_academic_authorities_link:
+  title: 'My Contacts'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'academic_authority'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 12
+
+
+admin_area.my_iec_link:
+  title: 'My Courses'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'iec'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 10
+
+
+admin_area.my_iec_instances_link:
+  title: 'My Course Editions'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'iec_instance'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 11
+
+
+admin_area.my_programmes_link:
+  title: 'My Programmes'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'programme'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 9
+
+admin_area.my_organizational_unit_link:
+  title: 'My Organizational Units'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'organizational_unit'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 8
+
+
+admin_area.my_rs_link:
+  title: 'My Resources and Services'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'rs'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 7
+
+admin_area.my_campus_link:
+  title: 'My Campuses'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'campus'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 6
+
+admin_area.my_institution_link:
+  title: 'My Institution'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'institution'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 5
+
+
+
+admin_area.my_users_link:
+  title: 'Users'
+  route_name: <none> # No tiene ruta, sirve solo como contenedor
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 4
+
+
+# Listado sin contenido
+admin_area.my_users_no_content_link:
+  title: 'List users (no content)'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'users'
+  parent: admin_area.my_users_link
+  menu_name: admin
+  weight: 1
+
+# Listado con contenido
+#admin_area.my_users_with_content_link:
+  #title: 'List users (with content)'
+  #route_name: admin_area.my_entity_page
+  #route_parameters:
+    #entity_type: 'users_content'
+  #parent: admin_area.my_users_link
+  #menu_name: admin
+  #weight: 2
+
+# Subentrada: Crear usuario
+admin_area.create_user_link:
+  title: 'Create user'
+  route_name: admin_area.redirect_create_user
+  parent: admin_area.my_users_link
+  menu_name: admin
+  weight: 3
+
+admin_area.my_agreements_link:
+  title: 'My Agreements'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'agreement'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 13
+
+admin_area.my_joint_programmes_link:
+  title: 'My Joint Programmes'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'joint_programme'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 14
+
+admin_area.my_memberships_link:
+  title: 'My Memberships'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'member'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 15
+
+admin_area.available_joint_programmes_link:
+  title: 'Other Joint Programmes'
+  route_name: admin_area.my_entity_page
+  route_parameters:
+    entity_type: 'available_joint_programmes'
+  parent: admin_area.admin_menu
+  menu_name: admin
+  weight: 16
+

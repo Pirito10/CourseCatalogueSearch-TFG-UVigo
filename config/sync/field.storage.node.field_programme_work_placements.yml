@@ -1,0 +1,19 @@
+uuid: 1b809edb-ae8f-4f8f-9626-0fbd9ba7af59
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_programme_work_placements
+field_name: field_programme_work_placements
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

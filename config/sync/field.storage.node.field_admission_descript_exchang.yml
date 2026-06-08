@@ -1,0 +1,19 @@
+uuid: 5e1e49fa-19dd-48e7-adb6-913452de4003
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_admission_descript_exchang
+field_name: field_admission_descript_exchang
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

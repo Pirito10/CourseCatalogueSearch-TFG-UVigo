@@ -1,0 +1,20 @@
+uuid: 913a9a2a-bad9-43c1-9f05-4de073c75b70
+langcode: en
+status: true
+dependencies:
+  module:
+    - elm_vocabulary_field
+    - node
+id: node.field_programme_mode_of_learning
+field_name: field_programme_mode_of_learning
+entity_type: node
+type: elm_controlled_vocabulary
+settings:
+  vocabulary: learning_assessment
+module: elm_vocabulary_field
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,9 @@
+uuid: ae7e5469-1ad9-42dc-b96f-8a32fa23b848
+langcode: en
+status: true
+dependencies: {  }
+name: 'Knowledge Areas'
+vid: knowledge_areas
+description: null
+weight: 0
+new_revision: false

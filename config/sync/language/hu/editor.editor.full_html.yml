@@ -1,0 +1,26 @@
+settings:
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
+        0:
+          label: 'Egyszerű szöveg'
+        1:
+          label: C
+        4:
+          label: CSS
+        5:
+          label: Diff
+        6:
+          label: HTML
+        7:
+          label: Java
+        8:
+          label: JavaScript
+        9:
+          label: PHP
+        10:
+          label: Python
+        11:
+          label: Ruby
+        13:
+          label: XML

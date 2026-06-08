@@ -1,0 +1,23 @@
+uuid: e6e1df6e-c8f4-4d90-bf10-776d1d2f2b81
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_avaliable_for_mobility
+    - node.type.programme
+id: node.programme.field_avaliable_for_mobility
+field_name: field_avaliable_for_mobility
+entity_type: node
+bundle: programme
+label: 'Available for Mobility Students'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

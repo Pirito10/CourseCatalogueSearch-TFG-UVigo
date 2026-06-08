@@ -1,0 +1,16 @@
+uuid: 88b2a05b-2c53-42a7-af66-fd49560638e2
+langcode: en
+status: true
+dependencies: {  }
+name: main_page
+label: 'Main Page'
+triggers:
+  login: login
+destination_path: 'internal:/'
+pages_type: 0
+pages: ''
+language: ''
+roles:
+  authenticated: authenticated
+weight: 0
+enabled: true

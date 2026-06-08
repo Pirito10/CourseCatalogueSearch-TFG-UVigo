@@ -1,0 +1,21 @@
+uuid: ba6d1cd3-9fff-44aa-8ea2-fbced3cfe8a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_housing_phone
+    - node.type.resources_and_services
+  module:
+    - telephone
+id: node.resources_and_services.field_housing_phone
+field_name: field_housing_phone
+entity_type: node
+bundle: resources_and_services
+label: 'Housing - phone'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

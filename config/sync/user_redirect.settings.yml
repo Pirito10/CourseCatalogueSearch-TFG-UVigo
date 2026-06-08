@@ -1,0 +1,38 @@
+login:
+  authenticated:
+    redirect_url: /
+    weight: '-10'
+  content_editor:
+    redirect_url: ''
+    weight: '-10'
+  administrator:
+    redirect_url: ''
+    weight: '-10'
+  degree_admin:
+    redirect_url: ''
+    weight: '-10'
+  suject_admi:
+    redirect_url: ''
+    weight: '-10'
+  university_admin:
+    redirect_url: ''
+    weight: '-10'
+logout:
+  authenticated:
+    redirect_url: ''
+    weight: '-10'
+  content_editor:
+    redirect_url: ''
+    weight: '-10'
+  administrator:
+    redirect_url: ''
+    weight: '-10'
+  degree_admin:
+    redirect_url: ''
+    weight: '-10'
+  suject_admi:
+    redirect_url: ''
+    weight: '-10'
+  university_admin:
+    redirect_url: ''
+    weight: '-10'

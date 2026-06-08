@@ -1,0 +1,727 @@
+
+msgid "CATALOGUE"
+msgstr "ΚΑΤΑΛΟΓΟΣ"
+
+msgid "GENERAL INFORMATION"
+msgstr "ΘΕΣΜΙΚΕΣ ΠΛΗΡΟΦΟΡΙΕΣ"
+
+msgid "RESOURCES AND SERVICES"
+msgstr "ΠΟΡΟΙ ΚΑΙ ΥΠΗΡΕΣΙΕΣ"
+
+msgid "UNIVERSITY LIFE"
+msgstr "ΖΩΗ ΣΤΟ ΠΑΝΕΠΙΣΤΗΜΙΟ"
+
+msgid "Arts and Humanities"
+msgstr "Τέχνες και Ανθρωπιστικές Επιστήμες"
+
+msgid "Sciences"
+msgstr "Επιστήμες"
+
+msgid "Health Sciences"
+msgstr "Επιστήμες Υγείας"
+
+msgid "Social and Legal Sciences"
+msgstr "Κοινωνικές και Νομικές Επιστήμες"
+
+msgid "Engineering and Architecture"
+msgstr "Μηχανική και Αρχιτεκτονική"
+
+msgid "Apply"
+msgstr "Εφαρμογή"
+
+msgid "Reset"
+msgstr "Επαναφορά"
+
+msgid "Sort"
+msgstr "Ταξινόμηση"
+
+msgid "Country"
+msgstr "Χώρα"
+
+msgid "Page"
+msgstr "Σελίδα"
+
+msgid "Destination"
+msgstr "Προορισμός"
+
+msgid "Select Home Programme"
+msgstr "Επιλογή Αρχικής Σελίδας Προγράμματος"
+
+msgid "Programme"
+msgstr "Πρόγραμμα"
+
+msgid "Course"
+msgstr "Μάθημα"
+
+msgid "Description"
+msgstr "Περιγραφή"
+
+msgid "General Information"
+msgstr "Γενικές Πληροφορίες"
+
+msgid "Main Objective"
+msgstr "Κύριος Στόχος"
+
+msgid "Competencies"
+msgstr "Αρμοδιότητες"
+
+msgid "Qualification"
+msgstr "Προσόντα"
+
+msgid "Courses"
+msgstr "Μαθήματα"
+
+msgid "Course edition:"
+msgstr "Έκδοση μαθήματος:"
+
+msgid "Admission"
+msgstr "Είσοδος"
+
+msgid "Structure and distribution of credits"
+msgstr "Δομή και κατανομή των πιστώσεων"
+
+msgid "Regulations"
+msgstr "Κανονισμοί"
+
+msgid "Year (1º Year, 2º Year...)"
+msgstr "Έτος (1º Έτος, 2º Έτος...)"
+
+msgid "General data"
+msgstr "Γενικά στοιχεία"
+
+msgid "Academic year"
+msgstr "Ακαδημαϊκό έτος"
+
+msgid "Level (Degree, Bachelor, Master, PhD, Other"
+msgstr "Επίπεδο (Πτυχίο, Bachelor, Master, PhD, Άλλο)"
+
+msgid "ECTS Credits"
+msgstr "Μονάδες ECTS"
+
+msgid "Modality (In-person, Online...)"
+msgstr "Τρόπος λειτουργίας (προσωπικά, διαδικτυακά...)"
+
+msgid "ISCED-F"
+msgstr "ISCED-F"
+
+msgid "Qualification level???"
+msgstr "Επίπεδο προσόντων"
+
+msgid "Study modality(Full-time, part time)"
+msgstr "Τρόπος σπουδών (Πλήρης, μερικής απασχόλησης)"
+
+msgid "Professional Practices"
+msgstr "Επαγγελματικές Πρακτικές"
+
+msgid "Coordination??"
+msgstr "Συντονισμός"
+
+msgid "By Semester"
+msgstr "Ανά Εξάμηνο"
+
+msgid "By Year"
+msgstr "Ανά Έτος"
+
+msgid "Admission Requirements"
+msgstr "Απαιτήσεις Εισαγωγής"
+
+msgid "Recognition of Prior Learning"
+msgstr "Αναγνώριση Προηγούμενης Μάθησης"
+
+msgid "Qualification Requirements"
+msgstr "Απαιτήσεις Προσόντων"
+
+msgid "Assessment"
+msgstr "Αξιολόγηση"
+
+msgid "Granding Scale"
+msgstr "Κλίμακα Ανώτατης Βαθμολογίας"
+
+msgid "Explanation of the Scale"
+msgstr "Επεξήγηση της Κλίμακας"
+
+msgid "Grade Distribution Table"
+msgstr "Πίνακας Κατανομής Βαθμών"
+
+msgid "Mobility Windows"
+msgstr "Παράθυρα Κινητικότητας"
+
+msgid "Work Placements"
+msgstr "Τοποθετήσεις σε Εργασία"
+
+msgid "Work-based Learning"
+msgstr "Μάθηση στον Χώρο Εργασίας"
+
+msgid "Occupational Profiles of Graduates"
+msgstr "Επαγγελματικά Προφίλ Αποφοίτων"
+
+msgid "Access to Further Studies"
+msgstr "Πρόσβαση σε Περαιτέρω Σπουδές"
+
+msgid "Code"
+msgstr "Κωδικός"
+
+msgid "Term"
+msgstr "Περίοδος"
+
+msgid "Type"
+msgstr "Τύπος"
+
+msgid "Subject"
+msgstr "Θέμα"
+
+msgid "Core"
+msgstr "Πυρήνας"
+
+msgid "Mandatory"
+msgstr "Υποχρεωτικός"
+
+msgid "Elective"
+msgstr "Επιλογής"
+
+msgid "Other types"
+msgstr "Άλλοι τύποι"
+
+msgid "Final project"
+msgstr "Τελική εργασία"
+
+msgid "TOTAL"
+msgstr "ΣΥΝΟΛΟ"
+
+msgid "Language"
+msgstr "Γλώσσα"
+
+msgid "Requirements"
+msgstr "Απαιτήσεις"
+
+msgid "Instructors"
+msgstr "Εκπαιδευτές"
+
+msgid "Course content"
+msgstr "Περιεχόμενο μαθήματος"
+
+msgid "Learning outcomes"
+msgstr "Μαθησιακά αποτελέσματα"
+
+msgid "Recommended literature and resources"
+msgstr "Προτεινόμενη βιβλιογραφία και πηγές"
+
+msgid "Planned learning activities and teaching methods"
+msgstr "Προγραμματισμένες μαθησιακές δραστηριότητες και μέθοδοι διδασκαλίας"
+
+msgid "Evaluation methods and criteria"
+msgstr "Μέθοδοι και κριτήρια αξιολόγησης"
+
+msgid "Field of Study (ISCED-F)"
+msgstr "Πεδίο Σπουδών (ISCED-F)"
+
+msgid "Assessment"
+msgstr "Αξιολόγηση"
+
+msgid "Avaliable for Mobility Students"
+msgstr "Διαθέσιμο για Φοιτητές Κινητικότητας"
+
+msgid "Category (Core, Mandatory, Optional, Other)"
+msgstr "Κατηγορία (Βασικό, Υποχρεωτικό, Προαιρετικό, Άλλο)"
+
+msgid "Contents"
+msgstr "Περιεχόμενα"
+
+msgid "Credits"
+msgstr "Πιστωτικές Μονάδες"
+
+msgid "Modality (ELM Vocabulary, Online, Hybrid, Presential...)"
+msgstr "Τύπος (Λεξιλόγιο ELM, Διαδικτυακό, Υβριδικό, Με παρουσιάσεις...)"
+
+msgid "External practices"
+msgstr "Εξωτερικές πρακτικές"
+
+msgid "Academic Authorities"
+msgstr "Ακαδημαϊκές Αρχές"
+
+msgid "Language Policy"
+msgstr "Γλωσσική Πολιτική"
+
+msgid "Languages"
+msgstr "Γλώσσες"
+
+msgid "Enrollment Procedures"
+msgstr "Διαδικασίες Εγγραφής"
+
+msgid "Contacts"
+msgstr "Επαφές"
+
+msgid "ECTS Policies"
+msgstr "Πολιτικές ECTS"
+
+msgid "Campuses"
+msgstr "Πανεπιστημιουπόλεις"
+
+msgid "Org. Units"
+msgstr "Οργανωτικές Μονάδες"
+
+msgid "Academic Calendar"
+msgstr "Ακαδημαϊκό Ημερολόγιο"
+
+msgid "Institutional Contacts"
+msgstr "Επαφές Ιδρύματος"
+
+msgid "Mobility"
+msgstr "Κινητικότητα"
+
+msgid "Authorities"
+msgstr "Αρχές"
+
+msgid "Admission Languages"
+msgstr "Γλώσσες Εισαγωγής"
+
+msgid "ECTS Allocation Policy"
+msgstr "Πολιτική Κατανομής ECTS"
+
+msgid "Incoming Students"
+msgstr "Εισερχόμενοι Φοιτητές"
+
+msgid "Outgoing Students"
+msgstr "Εξερχόμενοι Φοιτητές"
+
+msgid "Organizational Units"
+msgstr "Οργανωτικές Μονάδες"
+
+msgid "Type here to search"
+msgstr "Πληκτρολογήστε εδώ για αναζήτηση"
+
+msgid "Knowledge Area"
+msgstr "Περιοχή Γνώσεων"
+
+msgid "Campus"
+msgstr "Πανεπιστημιούπολη"
+
+msgid "Click on an Organizational Unit to see its details"
+msgstr "Κάντε κλικ σε μια Οργανωτική Μονάδα για να δείτε τις λεπτομέρειές της"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Τηλέφωνο"
+
+msgid "Web"
+msgstr "Ιστοσελίδα"
+
+msgid "Select Campus"
+msgstr "Επιλογή Πανεπιστημιούπολης"
+
+msgid "Student affairs"
+msgstr "Φοιτητικές Υποθέσεις"
+
+msgid "Facilities"
+msgstr "Εγκαταστάσεις"
+
+msgid "Students mobility"
+msgstr "Κινητικότητα Φοιτητών"
+
+msgid "University life"
+msgstr "Πανεπιστημιακή ζωή"
+
+msgid "Extra-academic activities"
+msgstr "Εξωακαδημαϊκές δραστηριότητες"
+
+msgid "Students Affairs Office"
+msgstr "Γραφείο Φοιτητικών Υποθέσεων"
+
+msgid "Financial Support for Students"
+msgstr "Οικονομική Υποστήριξη Φοιτητών"
+
+msgid "Insurance"
+msgstr "Ασφάλιση"
+
+msgid "Medical Facilities"
+msgstr "Ιατρικές Εγκαταστάσεις"
+
+msgid "Learning Facilities"
+msgstr "Εγκαταστάσεις Μάθησης"
+
+msgid "Sport and Leisure Facilities"
+msgstr "Αθλητικές Εγκαταστάσεις και Εγκαταστάσεις Αναψυχής"
+
+msgid "Special Facilities"
+msgstr "Ειδικές Εγκαταστάσεις"
+
+msgid "Student's Mobility"
+msgstr "Κινητικότητα Φοιτητών"
+
+msgid "Practical Information For Incoming Mobile Students"
+msgstr "Πρακτικές Πληροφορίες για Εισερχόμενους Φοιτητές Κινητικότητας"
+
+msgid "Cost of Living"
+msgstr "Κόστος Διαβίωσης"
+
+msgid "Housing"
+msgstr "Στέγαση"
+
+msgid "Transport"
+msgstr "Μεταφορά"
+
+msgid "Meals"
+msgstr "Γεύματα"
+
+msgid "Student Associations"
+msgstr "Φοιτητικοί Σύλλογοι"
+
+msgid "Work placement possibilities"
+msgstr "Δυνατότητες πρακτικής άσκησης"
+
+msgid "Events and culture"
+msgstr "Εκδηλώσεις και πολιτισμός"
+
+msgid "For the whole institution"
+msgstr "Για ολόκληρο το ίδρυμα"
+
+msgid "Source"
+msgstr "Πηγή"
+
+msgid "Last update"
+msgstr "Τελευταία ενημέρωση"
+
+msgid "Found something wrong? Give us feedback"
+msgstr "Βρήκατε κάτι λάθος; Πείτε μας τα σχόλιά σας"
+
+msgid "Name"
+msgstr "Όνομα"
+
+msgid "Your message"
+msgstr "Το μήνυμά σας"
+
+msgid "About DACEM"
+msgstr "Σχετικά με το DACEM"
+
+msgid "ABOUT"
+msgstr "ΣΧΕΤΙΚΑ ΜΕ"
+
+msgid "INSTITUTIONS"
+msgstr "ΘΕΣΜΟΙ"
+
+msgid "CONTACT"
+msgstr "ΕΠΑΦΗ"
+
+msgid "Study in Europe"
+msgstr "Σπουδές στην Ευρώπη"
+
+msgid "FIND A PROGRAMME"
+msgstr "ΒΡΕΙΤΕ ΕΝΑ ΠΡΟΓΡΑΜΜΑ"
+
+msgid "Explore the best opportunities to study in Europe. Discover universities, programmes, and destinations tailored to your future. Your next international academic adventure starts here."
+msgstr "Εξερευνήστε τις καλύτερες ευκαιρίες για σπουδές στην Ευρώπη. Ανακαλύψτε πανεπιστήμια, προγράμματα και προορισμούς προσαρμοσμένους στο μέλλον σας. Η επόμενη ακαδημαϊκή σας περιπέτεια ξεκινά εδώ."
+
+msgid "\"\nEXPLORE OUR UNIVERSITIES\n\nFind a new place to continue your studies, meet new people and learn a new language. Before this, you should:\n\n    Find which universities are available from your home university at your local international office.\n    Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar.\n    Assess accommodation, transportation, and daily expenses.\n    Research the local culture, student life, and opportunities for personal and professional growth.\n    Check healthcare coverage, safety, and housing availability.\n\nDon't miss the opportunity!\""
+msgstr "ΕΞΕΡΕΥΝΗΣΤΕ ΤΑ ΠΑΝΕΠΕΙΣΤΗΜΙΑ ΜΑΣ\n\nΒρείτε ένα νέο μέρος για να συνεχίσετε τις σπουδές σας, να γνωρίσετε νέους ανθρώπους και να μάθετε μια νέα γλώσσα. Πριν από αυτό, θα πρέπει:\n\n Βρείτε ποια πανεπιστήμια είναι διαθέσιμα από το πανεπιστήμιο της χώρας σας στο τοπικό γραφείο διεθνών σχέσεων.\n Βεβαιωθείτε ότι τα μαθήματα ευθυγραμμίζονται με το πτυχίο σας, διδάσκονται σε μια γλώσσα που καταλαβαίνετε και ταιριάζουν στο ακαδημαϊκό σας ημερολόγιο.\n Αξιολογήστε τη διαμονή, τη μεταφορά και τα καθημερινά έξοδα.\n Ερευνήστε την τοπική κουλτούρα, τη φοιτητική ζωή και τις ευκαιρίες για προσωπική και επαγγελματική ανάπτυξη.\n Ελέγξτε την κάλυψη υγειονομικής περίθαλψης, την ασφάλεια και τη διαθεσιμότητα στέγασης.\n\nΜη χάσεις την ευκαιρία!»"
+msgid "Explore the best opportunities to study in Europe. Discover universities, programs, and destinations tailored to your future. Your next academic adventure starts here."
+msgstr "Εξερευνήστε τις καλύτερες ευκαιρίες για σπουδές στην Ευρώπη. Ανακαλύψτε πανεπιστήμια, προγράμματα και προορισμούς προσαρμοσμένους στο μέλλον σας. Η επόμενη ακαδημαϊκή σας περιπέτεια ξεκινά εδώ."
+
+msgid "EXPLORE OUR UNIVERSITIES"
+msgstr "ΕΞΕΡΕΥΝΗΣΤΕ ΤΑ ΠΑΝΕΠΙΣΤΗΜΙΑ ΜΑΣ"
+
+msgid "Find a new place to continue your studies, meet new people and learn a new language. Before this, you should:"
+msgstr "Βρείτε ένα νέο μέρος για να συνεχίσετε τις σπουδές σας, να γνωρίσετε νέους ανθρώπους και να μάθετε μια νέα γλώσσα. Πριν από αυτό, θα πρέπει:"
+
+msgid "Find which universities are available from your home university at your local international office."
+msgstr "Δείτε ποια πανεπιστήμια είναι διαθέσιμα από το πανεπιστήμιο προέλευσής σας στο τοπικό γραφείο διεθνών σχέσεων."
+
+msgid "Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar."
+msgstr "Βεβαιωθείτε ότι τα μαθήματα ταιριάζουν με το πρόγραμμα σπουδών σας, διδάσκονται σε γλώσσα που κατανοείτε και ταιριάζουν στο ακαδημαϊκό σας ημερολόγιο."
+
+msgid "Assess accommodation, transportation, and daily expenses."
+msgstr "Αξιολογήστε τη διαμονή, τις μετακινήσεις και τα καθημερινά έξοδα."
+
+msgid "Research the local culture, student life, and opportunities for personal and professional growth."
+msgstr "Ερευνήστε την τοπική κουλτούρα, τη φοιτητική ζωή και τις ευκαιρίες προσωπικής και επαγγελματικής ανάπτυξης."
+
+msgid "Check healthcare coverage, safety, and housing availability."
+msgstr "Ελέγξτε την υγειονομική κάλυψη, την ασφάλεια και τη διαθεσιμότητα στέγασης."
+
+msgid "Don't miss the opportunity!"
+msgstr "Μην χάσετε την ευκαιρία!"
+
+msgid "Czech"
+msgstr "Τσεχικά"
+
+msgid "English"
+msgstr "Αγγλικά"
+
+msgid "Estonian"
+msgstr "Εσθονικά"
+
+msgid "French"
+msgstr "Γαλλικά"
+
+msgid "Greek"
+msgstr "Ελληνικά"
+
+msgid "Hungarian"
+msgstr "Ουγγρικά"
+
+msgid "Portuguese"
+msgstr "Πορτογαλικά"
+
+msgid "Slovenian"
+msgstr "Σλοβενικά"
+
+msgid "Spanish"
+msgstr "Ισπανικά"
+
+msgid "By semester"
+msgstr "Ανά εξάμηνο"
+
+msgid "1st semester"
+msgstr "1ο εξάμηνο"
+
+msgid "2nd semester"
+msgstr "2ο εξάμηνο"
+
+msgid "Programme Type"
+msgstr "Τύπος προγράμματος"
+
+msgid "Organizational Unit"
+msgstr "Οργανωτική Μονάδα"
+
+msgid "@count selected"
+msgstr "@count επιλεγμένα"
+
+msgid "PROGRAMMES"
+msgstr "ΠΡΟΓΡΑΜΜΑΤΑ"
+msgid "Found Something Wrong?"
+msgstr "Βρήκατε κάτι λάθος;"
+
+msgid "Give Us Feedback"
+msgstr "Στείλτε μας σχόλια"
+
+msgid "Available for Mobility Students"
+msgstr "Διαθέσιμο για φοιτητές κινητικότητας"
+
+msgid "Overview"
+msgstr "Επισκόπηση"
+
+msgid "Curriculum"
+msgstr "Πρόγραμμα σπουδών"
+
+msgid "Careers"
+msgstr "Επαγγελματικές προοπτικές"
+
+msgid "Practice"
+msgstr "Πρακτική"
+
+msgid "By term"
+msgstr "Ανά περίοδο"
+
+msgid "By year"
+msgstr "Ανά έτος"
+
+msgid "1st term"
+msgstr "1η περίοδος"
+
+msgid "2nd term"
+msgstr "2η περίοδος"
+
+msgid "Terms"
+msgstr "Περίοδοι"
+
+msgid "Year"
+msgstr "Έτος"
+
+msgid "Structure and Distribution of Credits"
+msgstr "Δομή και κατανομή πιστωτικών μονάδων"
+
+msgid "Grading Scale"
+msgstr "Κλίμακα βαθμολόγησης"
+
+msgid "Grading Scheme"
+msgstr "Σύστημα βαθμολόγησης"
+
+msgid "Grading Distribution Table"
+msgstr "Πίνακας κατανομής βαθμολογιών"
+
+msgid "Mobility Agreements"
+msgstr "Συμφωνίες κινητικότητας"
+
+msgid "Start Date"
+msgstr "Ημερομηνία έναρξης"
+
+msgid "End Date"
+msgstr "Ημερομηνία λήξης"
+
+msgid "Type of Credits"
+msgstr "Τύπος πιστωτικών μονάδων"
+
+msgid "Type of credits"
+msgstr "Τύπος πιστωτικών μονάδων"
+
+msgid "Fields of study"
+msgstr "Πεδία σπουδών"
+
+msgid "Mode of Learning"
+msgstr "Τρόπος μάθησης"
+
+msgid "Programme Abbreviation"
+msgstr "Συντομογραφία προγράμματος"
+
+msgid "Restricted to alliance students"
+msgstr "Περιορίζεται σε φοιτητές της συμμαχίας"
+
+msgid "Academic Year"
+msgstr "Ακαδημαϊκό έτος"
+
+msgid "Number of credits"
+msgstr "Αριθμός πιστωτικών μονάδων"
+
+msgid "Status"
+msgstr "Κατάσταση"
+
+msgid "Restricted to alliance"
+msgstr "Περιορίζεται στη συμμαχία"
+
+msgid "Change Home Programme"
+msgstr "Αλλαγή προγράμματος προέλευσης"
+
+msgid "Clear home programme"
+msgstr "Εκκαθάριση προγράμματος προέλευσης"
+
+msgid "Home programme"
+msgstr "Πρόγραμμα προέλευσης"
+
+msgid "Study in Europe with ATHENA"
+msgstr "Σπουδάστε στην Ευρώπη με το ATHENA"
+
+msgid "Sport clubs/programs"
+msgstr "Αθλητικοί σύλλογοι/προγράμματα"
+
+msgid "Language courses"
+msgstr "Μαθήματα γλωσσών"
+
+msgid "Support for students with disabilities and special needs"
+msgstr "Υποστήριξη φοιτητών με αναπηρίες και ειδικές ανάγκες"
+
+msgid "VISA"
+msgstr "Βίζα"
+
+msgid "Student Mobility"
+msgstr "Φοιτητική κινητικότητα"
+
+msgid "University Life"
+msgstr "Πανεπιστημιακή ζωή"
+
+msgid "Academic requirements for nominations"
+msgstr "Ακαδημαϊκές απαιτήσεις για υποψηφιότητες"
+
+msgid "Additional requirements"
+msgstr "Πρόσθετες απαιτήσεις"
+
+msgid "Admission description for exchange students"
+msgstr "Περιγραφή εισαγωγής για φοιτητές ανταλλαγής"
+
+msgid "Admission description for full-degree students"
+msgstr "Περιγραφή εισαγωγής για φοιτητές πλήρους τίτλου σπουδών"
+
+msgid "Admission description for visiting students"
+msgstr "Περιγραφή εισαγωγής για επισκέπτες φοιτητές"
+
+msgid "All"
+msgstr "Όλα"
+
+msgid "Applications"
+msgstr "Αιτήσεις"
+
+msgid "Arrangements for Academic Guidance"
+msgstr "Ρυθμίσεις για ακαδημαϊκή καθοδήγηση"
+
+msgid "Arrangements for the recognition of credit and prior learning"
+msgstr "Ρυθμίσεις για την αναγνώριση πιστωτικών μονάδων και προηγούμενης μάθησης"
+
+msgid "Autumn"
+msgstr "Φθινόπωρο"
+
+msgid "Click on an Organizational Unit to see its details."
+msgstr "Κάντε κλικ σε μια οργανωτική μονάδα για να δείτε τις λεπτομέρειές της."
+
+msgid "Contact"
+msgstr "Επικοινωνία"
+
+msgid "Department"
+msgstr "Τμήμα"
+
+msgid "Exchange"
+msgstr "Ανταλλαγή"
+
+msgid "Exchange timeline"
+msgstr "Χρονοδιάγραμμα ανταλλαγής"
+
+msgid "Faculty"
+msgstr "Σχολή"
+
+msgid "For decision"
+msgstr "Για απόφαση"
+
+msgid "Full-Degree"
+msgstr "Πλήρης τίτλος σπουδών"
+
+msgid "INSTITUTIONAL INFORMATION"
+msgstr "ΘΕΣΜΙΚΕΣ ΠΛΗΡΟΦΟΡΙΕΣ"
+
+msgid "Incoming students"
+msgstr "Εισερχόμενοι φοιτητές"
+
+msgid "Information"
+msgstr "Πληροφορίες"
+
+msgid "Menu"
+msgstr "Μενού"
+
+msgid "No Organizational Units found."
+msgstr "Δεν βρέθηκαν οργανωτικές μονάδες."
+
+msgid "Nominations"
+msgstr "Υποψηφιότητες"
+
+msgid "Not available"
+msgstr "Δεν είναι διαθέσιμο"
+
+msgid "Outgoing students"
+msgstr "Εξερχόμενοι φοιτητές"
+
+msgid "Policies"
+msgstr "Πολιτικές"
+
+msgid "Recognition process for outgoing students"
+msgstr "Διαδικασία αναγνώρισης για εξερχόμενους φοιτητές"
+
+msgid "Registration procedures for exchange students"
+msgstr "Διαδικασίες εγγραφής για φοιτητές ανταλλαγής"
+
+msgid "Registration procedures for full-degree students"
+msgstr "Διαδικασίες εγγραφής για φοιτητές πλήρους τίτλου σπουδών"
+
+msgid "Registration procedures for visiting students"
+msgstr "Διαδικασίες εγγραφής για επισκέπτες φοιτητές"
+
+msgid "School"
+msgstr "Σχολείο"
+
+msgid "Spring"
+msgstr "Άνοιξη"
+
+msgid "Timeframe"
+msgstr "Χρονικό πλαίσιο"
+
+msgid "To issue the transcript of records"
+msgstr "Για την έκδοση αναλυτικής βαθμολογίας"
+
+msgid "Visiting"
+msgstr "Επισκέπτης"
+
+msgid "week"
+msgstr "εβδομάδα"
+
+msgid "weeks"
+msgstr "εβδομάδες"
+
+msgid "Message"
+msgstr "Μήνυμα"

@@ -1,0 +1,21 @@
+uuid: f31d4ab9-838f-44ba-afe6-5bf65a3136a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ou_map
+    - node.type.organizational_unit
+  module:
+    - geofield
+id: node.organizational_unit.field_ou_map
+field_name: field_ou_map
+entity_type: node
+bundle: organizational_unit
+label: 'GPS Coordinates'
+description: "Enter the latitude and longitude in decimal degrees format. Example: Latitude: 42.170115 Longitude: -8.688152.\r\nYou can obtain these values from Google Maps."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: geofield

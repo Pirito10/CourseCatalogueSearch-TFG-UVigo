@@ -1,0 +1,591 @@
+{% set organizational_unit = view.result[0]._entity %}
+
+{% set current_language = view.result[0].node_field_data_langcode %}
+
+{% if organizational_unit.hasTranslation(current_language) %}
+	{% set organizational_unit = organizational_unit.getTranslation(current_language) %}
+
+{% endif %}
+
+
+{% set institution = view.result[0]._relationship_entities['field_ou_institution'] %}
+{% set campus = view.result[0]._relationship_entities['field_ou_campus'] %}
+{#{dump(campus)}#}
+
+{% set campus_info_url = '' %}
+{% if campus %}
+	{% if campus.hasTranslation(current_language) %}
+		{% set campus = campus.getTranslation(current_language) %}
+	{% endif %}
+	{% set campus_path = path('entity.node.canonical', {'node': campus.id()}, {'langcode': current_language}) %}
+	{% set campus_path_parts = campus_path|trim('/')|split('/') %}
+	{% set campus_alias = campus_path_parts|last %}
+	{% set institution_alias = campus_path_parts[campus_path_parts|length - 2] %}
+	{% set campus_info_url = path('view.campus_information.page_1', {
+		'arg_0': institution_alias,
+		'arg_1': campus_alias
+	}, {'langcode': current_language}) %}
+{% endif %}
+
+{% set university_primary_color = institution.field_primary_color[0].color %}
+{% set university_text_color = institution.field_text_color[0].color %}
+{% set university_emphasis_text_color = institution.field_emphasis_text_color[0].color %}
+
+
+<style>:root
+{
+	--university_primary_color: {{university_primary_color}}
+	;
+	--university_text_color: {{university_text_color}}
+	;
+	--university_emphasis_text_color: {{university_emphasis_text_color}}
+	;
+}</style><div class="rs-header ">
+<div class="my-custom-container-2">
+	<div class="page-band">
+		<h1 class="rs-title">Organizational Unit</h1>
+	</div>
+</div></div><div class='section-container'>
+<div class="my-custom-container-2">
+
+	<h1 class="section-title mb-3">{{ organizational_unit.title.value }}</h1>
+	<div class="d-flex mb-3">
+		{% if organizational_unit.field_ou_type.value is defined %}
+			<span class="ou-tag px-3 py-1" style="background-color: black; color: #fff; border-radius: 0;">
+				{{ organizational_unit.field_ou_type.value }}
+			</span>
+		{% endif %}
+
+			{% if campus.title.value is defined %}
+				<a href="{{ campus_info_url }}" class="ou-tag px-3 py-1 text-decoration-none" style="background-color: {{ university_primary_color }}; color: {{ university_emphasis_text_color }}; border: 2px solid {{ university_primary_color }}; border-radius: 0;">
+					{{ campus.title.value }}
+				</a>
+			{% endif %}
+		</div>
+
+	<br>
+
+	<div class="row">
+		<div class="col-lg-6">
+
+
+			{{organizational_unit.field_ou_description.value | raw}}
+
+			<br><br>
+
+			{% set list_academic_authorities = [] %}
+			{% if view.result[0]._relationship_entities['reverse__node__field_aa_organizational_unit'] %}
+				{#{dump(view.result)}}{{dump(campus.field_campus_description.value)}#}
+				<h4 class="mb-4 fw-bold">{{ 'Academic Contacts'|t }}</h4>
+				<div class="vstack gap-3 mb-5">
+					{% for row in view.result %}
+						{% set authority = row._relationship_entities['reverse__node__field_aa_organizational_unit'] %}
+						{% if  authority.id not in list_academic_authorities %}
+							{% set list_academic_authorities = list_academic_authorities|merge([authority.id]) %}
+
+							{% if authority %}
+								{% if authority.hasTranslation(current_language) %}
+									{% set authority = authority.getTranslation(current_language) %}
+								{% endif %}
+
+								{% set media = authority.field_ac_photo.entity ?? null %}
+								{% set image = media ? media.uri.value : null %}
+								{% set role = authority.field_organizational_unit_role.value ?? authority.field_campus_role.value ?? '' %}
+								{% set name = authority.title.value %}
+
+								<div class="d-flex align-items-center gap-3">
+									{% if image %}
+										<img src="{{ file_url(image) }}" alt="{{ name }}" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;">
+									{% else %}
+										<img src="/themes/custom/b5subtheme/images/default-profile.jpg" alt="{{ name }}" class="rounded-circle" style="width:64px; height:64px; object-fit:cover;">
+									{% endif %}
+
+										<div>
+											<div class="fw-semibold">{{ name }}</div>
+											{% if role %}
+												<div class="text-muted text-uppercase small">{{ role }}</div>
+											{% endif %}
+											{% set aa_web = authority.field_aa_web is not empty and authority.field_aa_web.uri is defined ? authority.field_aa_web.uri : '' %}
+											{% set aa_email = authority.field_aa_email is not empty and authority.field_aa_email.value is defined ? authority.field_aa_email.value : '' %}
+											{% set aa_phone = authority.field_aa_phone is not empty and authority.field_aa_phone.value is defined ? authority.field_aa_phone.value : '' %}
+												<div class="authority-icons d-flex align-items-center gap-3 mt-2">
+													{% if aa_web %}
+														<a href="{{ aa_web }}"
+														   class="authority-icon"
+														   target="_blank"
+														   rel="noopener noreferrer"
+														   data-bs-toggle="tooltip"
+														   data-bs-placement="top"
+														   title="{{ aa_web }}">
+															<i class="fas fa-globe"></i>
+														</a>
+													{% endif %}
+													{% if aa_email %}
+														<a href="mailto:{{ aa_email }}"
+														   class="authority-icon"
+														   data-bs-toggle="tooltip"
+														   data-bs-placement="top"
+														   title="{{ aa_email }}">
+															<i class="fas fa-envelope"></i>
+														</a>
+													{% endif %}
+													{% if aa_phone %}
+														<a href="tel:{{ aa_phone }}"
+														   class="authority-icon"
+														   data-bs-toggle="tooltip"
+														   data-bs-placement="top"
+														   title="{{ aa_phone }}">
+															<i class="fas fa-phone-alt"></i>
+														</a>
+													{% endif %}
+
+											{% if authority.field_mobility_contact.value %}
+												<span class="text-muted small ms-2">
+												&middot; {{ 'Mobility'|t }}
+												</span>
+											{% endif %}
+
+										</div>
+									</div>
+								</div>
+
+							{% endif %}
+
+						{% endif %}
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+		<div
+			class="col-lg-6">
+			{# Imagen de la OU, si existe; si no, fallback #}
+			<div
+				class="mb-0 text-center">
+				{# 0) Partimos de la imagen por defecto #}
+				{% set ou_image_url = '/themes/custom/b5subtheme/images/ou-default.png' %}
+
+				{# 1) Usar la traducción si existe; si no, la entidad base #}
+				{% set ou_base = organizational_unit %}
+				{% set ou_tr   = ou_base %}
+				{% if current_language is defined and ou_base.hasTranslation(current_language) %}
+					{% set ou_tr = ou_base.getTranslation(current_language) %}
+				{% endif %}
+
+				{# 2) Si la traducción tiene imagen, úsala #}
+				{% if ou_tr.hasField('field_ou_picture') and (not ou_tr.get('field_ou_picture').isEmpty()) %}
+					{% set file = ou_tr.get('field_ou_picture').entity %}
+					{% if file %}
+						{% set ou_image_url = file_url(file.uri.value) %}
+						{# o con estilo: {% set ou_image_url = image_style('ou_detail', file.uri.value) %} #}
+					{% endif %}
+
+					{# 3) Si la traducción no tiene, prueba con la base #}
+				{% elseif ou_base.hasField('field_ou_picture') and (not ou_base.get('field_ou_picture').isEmpty()) %}
+					{% set file = ou_base.get('field_ou_picture').entity %}
+					{% if file %}
+						{% set ou_image_url = file_url(file.uri.value) %}
+						{# o con estilo: {% set ou_image_url = image_style('ou_detail', file.uri.value) %} #}
+					{% endif %}
+				{% endif %}
+
+				{# 4) Render final con el mismo HTML/estilos #}
+				<img src="{{ ou_image_url }}" alt="{{ organizational_unit.label }}" class="img-fluid w-100" style="max-height: 350px; object-fit: cover;">
+			</div>
+
+
+			{# Caja negra con datos de contacto #}
+			<div
+				class="bg-black text-white pt-4 pb-4 ps-4 pe-4">
+
+				{# Website #}
+				{% if organizational_unit.hasField('field_ou_web') and organizational_unit.field_ou_web.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-globe me-2 mt-1"></i>
+						<p class="mb-0">
+							<a href="{{ organizational_unit.field_ou_web.uri ?? organizational_unit.field_ou_web.value }}" target="_blank" rel="noopener" style="color: {{university_primary_color}}">
+								{{ organizational_unit.field_ou_web.title ?? organizational_unit.field_ou_web.value }}
+							</a>
+						</p>
+					</div>
+				{% endif %}
+
+				{# Email #}
+				{% if organizational_unit.hasField('field_ou_email') and organizational_unit.field_ou_email.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-envelope me-2 mt-1"></i>
+						<p class="mb-0">
+							<a href="mailto:{{ organizational_unit.field_ou_email.value }} " style="color: {{university_primary_color}}">
+								{{ organizational_unit.field_ou_email.value }}
+							</a>
+						</p>
+					</div>
+				{% endif %}
+
+				{# Phone #}
+				{% if organizational_unit.hasField('field_ou_phone') and organizational_unit.field_ou_phone.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-phone me-2 mt-1"></i>
+						<p class="mb-0">{{ organizational_unit.field_ou_phone.value }}</p>
+					</div>
+				{% endif %}
+
+
+				{# Address #}
+				{% if organizational_unit.hasField('field_ou_address') and organizational_unit.field_ou_address.value %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-map-marker-alt me-2 mt-1"></i>
+						<p class="mb-0">{{ organizational_unit.field_ou_address.value }}</p>
+					</div>
+				{% endif %}
+
+
+				{% if organizational_unit.field_ou_map.value is defined and organizational_unit.field_ou_map.value %}
+					{% set point = organizational_unit.field_ou_map.value %}
+
+
+					{% if point %}
+						{% set coords = point|replace({'POINT(':'','POINT (':'', ')':''})|trim|split(' ') %}
+
+					{% endif %}
+					<div class="d-flex align-items-start mb-3">
+						<i class="fas fa-location-arrow me-2 mt-1"></i>
+						<p class="mb-0">{{ coords[1] }},
+							{{ coords[0] }}</p>
+					</div>
+				{% endif %}
+
+
+			</div>
+			<div class="map-wrapper" style="">
+				{{ drupal_view('map_view', 'block_4', organizational_unit.id) }}
+			</div>
+
+		</div>
+	</div>
+
+</div></div></div>{% if area_meta|length > 0 %}<div class='section-container section-bg-grey'>
+<div
+	class='my-custom-container-2'>
+	{# =========================
+			   Construcción de grupos
+			   ========================= #}
+	<div class="accordion" id="accordionOUPanelsStayOpen">
+		<h2 class="section-title text-center">{{ translations[current_language]['Programmes'] }}</h2>
+		{% for area_key, meta in area_meta %}
+			{% set B = programmes_by_area[area_key]['B']|default([]) %}
+			{% set M = programmes_by_area[area_key]['M']|default([]) %}
+			{% set D = programmes_by_area[area_key]['PhD']|default([]) %}
+
+			{% set ordered = B|merge(M)|merge(D) %}
+			{% set total = ordered|length %}
+
+			{% if total > 0 %}
+				{% set cid = 'ou-acc-' ~ loop.index ~ '-' ~ area_key|replace({' ':'-'}) %}
+				{% set expanded = (area_meta|length == 1) %}
+
+				<div class="accordion-item mb-2">
+					<h2 class="accordion-header" id="{{ cid }}-head">
+						<button class="accordion-button {{ expanded ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ cid }}-body" aria-expanded="false" aria-controls="{{ cid }}-body">
+							{% if meta.icon is defined and meta.icon %}
+								<i class="{{ meta.icon }}"></i>
+							{% endif %}
+							<span class="fw-semibold">{{ meta.label|default(area_key)|upper }}</span>
+							<span class="ms-auto small fw-bold">
+								B
+								{{ B|length }}
+								· M
+								{{ M|length }}
+								· PhD
+								{{ D|length }}
+							</span>
+						</button>
+					</h2>
+
+					<div id="{{ cid }}-body" class="accordion-collapse collapse {{ expanded ? 'show' : '' }}" aria-labelledby="{{ cid }}-head">
+						<div class="accordion-body">
+
+							{% set cols = total > 18 ? 3 : 2 %}
+							{% set per_col = (total / cols)|round(0, 'ceil') %}
+
+							<div class="row g-4">
+								{% for c in 0..(cols-1) %}
+									{% set slice = ordered|slice(c*per_col, per_col) %}
+									{% if slice|length %}
+										<div class="col-md-{{ 12 // cols }}">
+											<ul class="list-unstyled mb-0">
+												{% for p in slice %}
+													{% set lvl_raw = p.level_code|default(p.level|default('')) %}
+													{% set lvl = lvl_raw|lower %}
+
+													{% if lvl starts with '6' %}
+															{% set prefix = 'B' %}
+														{% elseif lvl starts with '7' %}
+															{% set prefix = 'M' %}
+														{% elseif lvl starts with '8' %}
+															{% set prefix = 'PhD' %}
+														{% endif %}
+
+
+													<li class="mb-2">
+														{% if prefix == 'B' %}
+															<span class="fw-bold me-1 text-dark">{{ prefix }}</span>
+														{% else %}
+															<span class="fw-bold me-1" style="color: var(--university_primary_color)">{{ prefix }}</span>
+														{% endif %}
+														&middot;
+
+														{% if p.programme_url is defined and p.programme_url %}
+															<a href="{{ p.programme_url }}" class="text-reset text-decoration-none ms-1">{{ p.label }}</a>
+														{% else %}
+															<span class="ms-1">{{ p.label }}</span>
+														{% endif %}
+
+														{% if p.interuniversity is defined and p.interuniversity %}
+															<em class="text-danger ms-2">Interuniversity</em>
+														{% endif %}
+
+														{% if p.ects is defined and p.ects %}
+															<span class="text-muted ms-2">{{ p.ects }}
+																ECTS</span>
+														{% endif %}
+													</li>
+												{% endfor %}
+											</ul>
+										</div>
+									{% endif %}
+								{% endfor %}
+							</div>
+
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+
+</div></div></div>{% endif %}{% set has_subunits = false %}{% for row in view.result %}{% set organizational_unit = attribute(row._relationship_entities, 'reverse__node__field_parent_organizational_unit') ?? null %}{% if organizational_unit %}{% set has_subunits = true %}{% endif %}{% endfor %}{% if has_subunits %}{# ... aquí todo tu bloque con buscador, lista, etc ... #}<div class="section-container"><div
+class="my-custom-container-2">
+
+
+{#<h2 class="section-title text-center">{{ translations[current_language]['Sub'] }}</h2>#}
+<h2 class="section-title text-center">
+	Sub-Units</h2>
+
+
+<div
+	class="row">
+	{# --- LISTA DE SUB-UNIDADES ORGANIZATIVAS (hijas) --- #}
+	<div class="col-lg-6">
+
+		<div class="input-group mb-3">
+			<input type="text" class="form-control bg-light border-0" placeholder="Type here to search" id="ou-search">
+			<button class="btn btn-outline-secondary pe-4 ps-4 bg-black" type="button" id="search-btn">
+				<i class="fas fa-search" style="color: white;"></i>
+			</button>
+		</div>
+
+		<div id="ou-list">
+			<nav>
+				<ul class="pagination justify-content-center mt-4" id="pagination-controls"></ul>
+			</nav>
+
+
+			{% set list_ous = [] %}
+
+			{% for row in view.result %}
+				{# 1) Obtener la relación de hijas (puede no existir) #}
+				{% set organizational_unit = attribute(row._relationship_entities, 'reverse__node__field_parent_organizational_unit') ?? null %}
+
+				{# 2) Saltar si no hay relación o si ya la hemos mostrado #}
+				{% if organizational_unit and (organizational_unit.id not in list_ous) %}
+
+					{# registrar para evitar duplicados #}
+					{% set list_ous = list_ous|merge([organizational_unit.id]) %}
+
+					{# 3) Traducción #}
+					{% if organizational_unit.hasTranslation(current_language) %}
+						{% set organizational_unit = organizational_unit.getTranslation(current_language) %}
+					{% endif %}
+
+					{# 4) Campus (opcional) #}
+					{% set campus_label = '' %}
+					{% if organizational_unit.hasField('field_ou_campus') and (not organizational_unit.get('field_ou_campus').isEmpty()) %}
+						{% set campus_entity = organizational_unit.field_ou_campus.entity %}
+						{% set campus_label = campus_entity.label %}
+						{% if campus_entity.hasTranslation(current_language) %}
+							{% set campus_label = campus_entity.getTranslation(current_language).label %}
+						{% endif %}
+					{% endif %}
+
+					{# 5) URL amigable a la vista de info #}
+					{% set ou_path = path('entity.node.canonical', {'node': organizational_unit.id()}, {'langcode': current_language}) %}
+					{% set parts = ou_path|trim('/')|split('/') %}
+					{% set ou_alias = parts|last %}
+					{% set institution_alias = parts[parts|length - 2] %}
+					{% set ou_info_url = path('view.organizational_unit_information.page_1', {
+        'arg_0': institution_alias,
+        'arg_1': ou_alias
+      }, {'langcode': current_language}) %}
+
+					{# 6) Coordenadas (si hay) #}
+					{% set coords_ou = '' %}
+					{% if organizational_unit.field_ou_map.value is defined and organizational_unit.field_ou_map.value %}
+						{% set point  = organizational_unit.field_ou_map.value %}
+						{% set coords = point|replace({'POINT(':'','POINT (':'', ')':''})|trim|split(' ') %}
+						{% set lon = coords[0]|default('') %}
+						{% set lat = coords[1]|default('') %}
+						{% set coords_ou = lat ~ ', ' ~ lon %}
+					{% endif %}
+
+					{# 7) Imagen (opcional; el JS hace fallback) #}
+					{% set ou_image_url = '' %}
+					{% if organizational_unit.hasField('field_ou_picture') and organizational_unit.field_ou_picture.entity is not empty %}
+						{% set img_file = organizational_unit.field_ou_picture.entity %}
+						{% set ou_image_url = file_url(img_file.getFileUri()) %}
+					{% endif %}
+
+					{# 8) Tarjeta #}
+					<div class="ou-item p-3 mb-3 bg-light" data-ou-title="{{ organizational_unit.title.value|e('html_attr') }}" data-ou-type="{{ organizational_unit.field_ou_type.value|default('')|e('html_attr') }}" data-ou-area="{{ organizational_unit.field_ou_area.value|default('')|e('html_attr') }}" data-ou-description="{{ organizational_unit.field_ou_description.value|default('')|striptags|e('html_attr') }}" data-ou-address="{{ organizational_unit.field_ou_address.value|default('')|e('html_attr') }}" data-ou-gps="{{ coords_ou|e('html_attr') }}" data-ou-web="{{ organizational_unit.field_ou_web.uri|default('')|e('html_attr') }}" data-ou-web-label="{{ organizational_unit.field_ou_web.title|default('')|e('html_attr') }}" data-ou-email="{{ organizational_unit.field_ou_email.value|default('')|e('html_attr') }}" data-ou-phone="{{ organizational_unit.field_ou_phone.value|default('')|e('html_attr') }}" data-ou-campus-id="{{ organizational_unit.field_ou_campus.entity.id()|default('')|e('html_attr') }}" data-ou-campus-label="{{ campus_label|e('html_attr') }}" data-ou-url="{{ ou_info_url|e('html_attr') }}" data-ou-image="{{ ou_image_url|e('html_attr') }}" onclick="loadOUDetails(this)">
+						<h5 class="mb-1">{{ organizational_unit.title.value }}</h5>
+						<p class="mb-0 small ou-type">
+							{% set ou_type = organizational_unit.field_ou_type.value|default('') %}
+							{% if ou_type %}
+								{{ ou_type }}
+							{% endif %}
+							{% if ou_type and campus_label %}&nbsp;·&nbsp;
+							{% endif %}
+							{% if campus_label %}
+								<strong>{{ campus_label }}</strong>
+							{% endif %}
+						</p>
+					</div>
+
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+
+
+	<div class="col-lg-6">
+		<div id="ou-details" class="bg-light h-100">
+			<p class="text-muted text-center pt-5">{{ translations[current_language]['Click on an Organizational Unit to see its details.'] }}</p>
+			<!-- Aquí se rellenará dinámicamente con JS -->
+		</div>
+	</div>
+
+</div></div></div>{% endif %}<script>(function () { // Congela el scroll cuando se muestra/oculta un panel de acordeón
+const keepScroll = () => {
+const y = window.scrollY;
+// reestablece inmediatamente (sin animación)
+window.requestAnimationFrame(() => window.scrollTo(0, y));
+};
+
+// Escucha eventos de Bootstrap 5
+document.querySelectorAll('.accordion .collapse').forEach(el => {
+el.addEventListener('shown.bs.collapse', keepScroll);
+el.addEventListener('hidden.bs.collapse', keepScroll);
+});
+
+// Por si algún trigger es <a href="#…">, anula el salto
+document.querySelectorAll('.accordion [data-bs-toggle="collapse"]').forEach(tr => {
+if (tr.tagName === 'A') {
+tr.addEventListener('click', e => e.preventDefault());
+}
+});
+})();</script><script>function loadOUDetails(el) {
+document.querySelectorAll('.ou-item').forEach(item => item.classList.remove('selected'));
+el.classList.add('selected');
+
+const title = el.dataset.ouTitle || '';
+const type = el.dataset.ouType || '';
+const description = el.dataset.ouDescription || '';
+const address = el.dataset.ouAddress || '';
+const gps = el.dataset.ouGps || '';
+const web = el.dataset.ouWeb || '';
+const webLabel = el.dataset.ouWebLabel || web;
+const email = el.dataset.ouEmail || '';
+const phone = el.dataset.ouPhone || '';
+const campus = el.dataset.ouCampusLabel || '';
+const url = el.dataset.ouUrl || '#';
+const image = el.dataset.ouImage || '';
+
+const imageSrc = image ? image : '/themes/custom/b5subtheme/images/ou-default.png';
+
+// ✅ Bloques opcionales: si el valor está vacío, no se renderiza nada (ni icono ni espacio).
+const webHTML = web ? `
+      <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-globe me-2 mt-1"></i>
+        <p class="mb-0"><a href="${web}" target="_blank" rel="noopener">${webLabel}</a></p>
+      </div>
+  ` : '';
+
+const emailHTML = email ? `
+      <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-envelope me-2 mt-1"></i>
+        <p class="mb-0">${email}</p>
+      </div>
+  ` : '';
+
+const phoneHTML = phone ? `
+	  <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-phone me-2 mt-1"></i>
+        <p class="mb-0">${phone}</p>
+      </div>
+  ` : '';
+
+const addressHTML = address ? `
+	    <div class="d-flex align-items-start mt-3 mb-2">
+        <i class="fas fa-map-marker-alt me-2 mt-1"></i>
+        <p class="mb-0">${address}</p>
+      </div>
+  ` : '';
+
+const gpsHTML = gps ? `
+	   <div class="d-flex align-items-start mb-2">
+        <i class="fas fa-location-arrow me-2 mt-1"></i>
+        <p class="mb-0">${gps}</p>
+      </div>
+  ` : '';
+
+const html = `
+    <div class="mb-3 text-center">
+      <img src="${imageSrc}" alt="Organizational Unit" class="img-fluid w-100" style="max-height: 600px; object-fit: cover;" loading="lazy">
+    </div>
+
+    <div class="p-4">
+      <h4 class="fw-bold">${title}</h4>
+
+      <div class="ou-tag-bar text-white mb-3">
+        <span class="ou-type">${
+(type || '').toUpperCase()
+}</span>
+        <!--<span class="ou-campus">${campus}</span>-->
+      </div>
+
+      <div class="mt-3">${description}</div>
+	  <br>
+
+      ${webHTML}
+      ${emailHTML}
+      ${phoneHTML}
+      ${addressHTML}
+      ${gpsHTML}
+
+      <div class="mt-5 text-center">
+        <a class="btn btn-dark see-more-ou-button" href="${url}">{{ translations[current_language]['See more'] }}</a>
+      </div>
+	 
+    </div>
+  `;
+
+document.getElementById('ou-details').innerHTML = html;
+}</script><script>document.getElementById('ou-search').addEventListener('input', function () {
+const query = this.value.toLowerCase();
+const items = document.querySelectorAll('#ou-list .ou-item');
+
+items.forEach(item => {
+const title = item.dataset.ouTitle ?. toLowerCase() || '';
+const type = item.dataset.ouType ?. toLowerCase() || '';
+item.style.display = (title.includes(query) || type.includes(query)) ? '' : 'none';
+});
+});</script>

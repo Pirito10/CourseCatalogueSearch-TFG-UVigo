@@ -1,0 +1,18 @@
+uuid: 72c71483-677f-48df-9786-8aa5ce4f93a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.campus
+id: node.campus.title
+field_name: title
+entity_type: node
+bundle: campus
+label: Tittle
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

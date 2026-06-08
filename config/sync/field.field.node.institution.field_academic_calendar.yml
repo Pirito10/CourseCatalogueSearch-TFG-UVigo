@@ -1,0 +1,27 @@
+uuid: ece34851-84a1-4d38-a19e-0a55dd4e181e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_academic_calendar
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_academic_calendar
+field_name: field_academic_calendar
+entity_type: node
+bundle: institution
+label: 'Academic Calendar'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: '<ul><li>Summer (June - August)</li><li>Fall Semester (September – January)</li><li>Spring Semester (March – August)</li><li>Calendar Year (March – January)</li><li>Full Year (September – August)</li></ul>'
+    format: basic_html
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

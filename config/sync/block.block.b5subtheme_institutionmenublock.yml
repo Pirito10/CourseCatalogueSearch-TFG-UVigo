@@ -1,0 +1,25 @@
+uuid: aafcc35b-0b1b-4ef9-804a-2de1f4ba4e13
+langcode: en
+status: true
+dependencies:
+  module:
+    - institution_menu
+    - system
+  theme:
+    - b5subtheme
+id: b5subtheme_institutionmenublock
+theme: b5subtheme
+region: header
+weight: 0
+provider: null
+plugin: institution_menu_block
+settings:
+  id: institution_menu_block
+  label: 'Institution Menu Block'
+  label_display: '0'
+  provider: institution_menu
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: "/catalogue/*\r\n/general-information/*\r\n/resources-and-services/*\r\n/campus-information/*\r\n/organizational-unit-information/*\r\n/catalogue/*/programmes\r\n/catalogue/*/iecs\r\n/iec-instance/*"

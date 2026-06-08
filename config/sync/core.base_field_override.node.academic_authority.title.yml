@@ -1,0 +1,18 @@
+uuid: d1d5952b-e240-4a51-800f-81dbc3ae3dd7
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.academic_authority
+id: node.academic_authority.title
+field_name: title
+entity_type: node
+bundle: academic_authority
+label: Name
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

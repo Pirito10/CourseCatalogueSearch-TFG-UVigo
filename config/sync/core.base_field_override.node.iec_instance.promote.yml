@@ -1,0 +1,22 @@
+uuid: a2edcebb-a684-4f26-8a12-9ccce2f9a509
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.iec_instance
+id: node.iec_instance.promote
+field_name: promote
+entity_type: node
+bundle: iec_instance
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

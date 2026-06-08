@@ -1,0 +1,29 @@
+uuid: fac7b9ce-7249-4e17-8208-ced0a114bb28
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_institution
+    - node.type.institution
+    - node.type.resources_and_services
+id: node.resources_and_services.field_rs_institution
+field_name: field_rs_institution
+entity_type: node
+bundle: resources_and_services
+label: Institution
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      institution: institution
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,24 @@
+uuid: 4c98fde9-1cc8-49cd-af3e-00820b04ba73
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_rs_cost_of_living
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_rs_cost_of_living
+field_name: field_rs_cost_of_living
+entity_type: node
+bundle: resources_and_services
+label: 'Cost of Living'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

@@ -1,0 +1,18 @@
+uuid: ca91a891-d769-4cac-81a0-e58686c455fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.campus
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '1'
+id: node.campus
+target_entity_type_id: node
+target_bundle: campus
+default_langcode: en
+language_alterable: false

@@ -1,0 +1,90 @@
+<?php
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_install().
+ */
+function custom_taxonomy_install() {
+  $vid = 'custom_taxonomy';
+  $vocab_label = 'Custom taxonomy';
+  $bundle = 'programme'; // Asegúrate de que el machine name del tipo es 'programme'
+  $field_name = 'field_custom_taxonomy_field';
+
+  // 1) Crear el vocabulario si no existe.
+  if (!Vocabulary::load($vid)) {
+    Vocabulary::create([
+      'vid' => $vid,
+      'name' => $vocab_label,
+      'description' => 'Reusable taxonomy for programmes.',
+    ])->save();
+  }
+
+  // 2) Crear términos de ejemplo (si no existen).
+  $examples = ['Example 1', 'Example 2', 'Example 3'];
+  foreach ($examples as $label) {
+    // Evitar duplicados por label en este vocabulario.
+    $tids = \Drupal::entityQuery('taxonomy_term')
+      ->condition('vid', $vid)
+      ->condition('name', $label)
+      ->accessCheck(TRUE)
+      ->range(0, 1)
+      ->execute();
+    if (!$tids) {
+      Term::create([
+        'vid' => $vid,
+        'name' => $label,
+      ])->save();
+    }
+  }
+
+  // 3) Si existe un field storage previo con el mismo nombre pero de otro tipo, elimínalo.
+  if ($existing = FieldStorageConfig::loadByName('node', $field_name)) {
+    if ($existing->getType() !== 'entity_reference') {
+      // Elimina instances y storage para poder recrearlo correctamente.
+      $configs = \Drupal::entityTypeManager()
+        ->getStorage('field_config')
+        ->loadByProperties(['field_name' => $field_name, 'entity_type' => 'node']);
+      foreach ($configs as $config) {
+        $config->delete();
+      }
+      $existing->delete();
+    }
+  }
+
+  // 4) Crear field storage entity_reference -> taxonomy_term (si no existe).
+  if (!FieldStorageConfig::loadByName('node', $field_name)) {
+    FieldStorageConfig::create([
+      'field_name'  => $field_name,
+      'entity_type' => 'node',
+      'type'        => 'entity_reference',
+      'settings'    => [
+        'target_type' => 'taxonomy_term',
+      ],
+      'cardinality'  => 1,       // o -1 si quieres multi-valor
+      'translatable' => TRUE,
+    ])->save();
+  }
+
+  // 5) Añadir el field instance al bundle programme (si no existe).
+  if (!FieldConfig::loadByName('node', $bundle, $field_name)) {
+    FieldConfig::create([
+      'field_name'   => $field_name,
+      'entity_type'  => 'node',
+      'bundle'       => $bundle,
+      'label'        => 'Custom taxonomy',
+      'required'     => FALSE,
+      'translatable' => TRUE,
+      'settings'     => [
+        // Handler por defecto para términos de taxonomía.
+        'handler' => 'default:taxonomy_term',
+        'handler_settings' => [
+          'target_bundles' => [$vid => $vid], // Limita al vocabulario creado
+        ],
+      ],
+    ])->save();
+  }
+}

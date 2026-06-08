@@ -1,0 +1,24 @@
+uuid: 5e0da22f-576b-4aa7-aa7e-caf5fabfd85a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_mobility
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_programme_mobility
+field_name: field_programme_mobility
+entity_type: node
+bundle: programme
+label: Mobility
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

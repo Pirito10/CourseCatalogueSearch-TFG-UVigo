@@ -1,0 +1,724 @@
+
+msgid "CATALOGUE"
+msgstr "Catalogue de formations"
+
+msgid "GENERAL INFORMATION"
+msgstr "informations institutionnelles"
+
+msgid "RESOURCES AND SERVICES"
+msgstr "services étudiants"
+
+msgid "UNIVERSITY LIFE"
+msgstr "vie du campus"
+
+msgid "Arts and Humanities"
+msgstr "Arts & Lettres"
+
+msgid "Sciences"
+msgstr "Sciences"
+
+msgid "Health Sciences"
+msgstr "Santé"
+
+msgid "Social and Legal Sciences"
+msgstr "Sciences sociales et juridiques"
+
+msgid "Engineering and Architecture"
+msgstr "Ingénierie et architecture"
+
+msgid "Apply"
+msgstr "Candidater"
+
+msgid "Reset"
+msgstr "Réinitialiser"
+
+msgid "Sort"
+msgstr "Filtrer"
+
+msgid "Country"
+msgstr "Pays"
+
+msgid "Page"
+msgstr "Page"
+
+msgid "Destination"
+msgstr "Destination"
+
+msgid "Select Home Programme"
+msgstr "Sélectionner le programme dans l'université\nd'origine"
+
+msgid "Programme"
+msgstr "Parcours"
+
+msgid "Course"
+msgstr "Cours"
+
+msgid "Description"
+msgstr "Présentation"
+
+msgid "General Information"
+msgstr "Informations générales"
+
+msgid "Main Objective"
+msgstr "Objectifs principaux"
+
+msgid "Competencies"
+msgstr "Compétences"
+
+msgid "Qualification"
+msgstr "Diplôme"
+
+msgid "Courses"
+msgstr "Cours"
+
+msgid "Course edition:"
+msgstr "Édition du cours :"
+
+msgid "Admission"
+msgstr "Conditions d'admission"
+
+msgid "Structure and distribution of credits"
+msgstr "Organisation et ECTS"
+
+msgid "Regulations"
+msgstr "Réglementation"
+
+msgid "Year (1º Year, 2º Year...)"
+msgstr "Année du parcours"
+
+msgid "General data"
+msgstr "Données clé"
+
+msgid "Academic year"
+msgstr "Calendrier académique"
+
+msgid "Level (Degree, Bachelor, Master, PhD, Other"
+msgstr "Niveau d'études (diplôme, licence,\nMaster, Doctorat, autre)"
+
+msgid "ECTS Credits"
+msgstr "Crédits ECTS"
+
+msgid "Modality (In-person, Online...)"
+msgstr "Modalités (présentiel, distanciel)"
+
+msgid "ISCED-F"
+msgstr "ISCED-F"
+
+msgid "Qualification level???"
+msgstr "Niveau de qualification"
+
+msgid "Study modality(Full-time, part time)"
+msgstr "Régime d'études"
+
+msgid "Professional Practices"
+msgstr "Application professionnelle"
+
+msgid "Coordination??"
+msgstr "Coordination"
+
+msgid "By Semester"
+msgstr "Par semestre"
+
+msgid "By Year"
+msgstr "Par an"
+
+msgid "Admission Requirements"
+msgstr "Pré-requis pour l'admission"
+
+msgid "Recognition of Prior Learning"
+msgstr "Validation des acquis de l’expérience"
+
+msgid "Qualification Requirements"
+msgstr "Conditions d’obtention du diplôme"
+
+msgid "Assessment"
+msgstr "évaluation"
+
+msgid "Granding Scale"
+msgstr "échelle de notation"
+
+msgid "Explanation of the Scale"
+msgstr "Description de l'échelle de notation"
+
+msgid "Grade Distribution Table"
+msgstr "Tableau de répartition des notes"
+
+msgid "Mobility Windows"
+msgstr "Fenêtre de mobilité"
+
+msgid "Work Placements"
+msgstr "Stages"
+
+msgid "Work-based Learning"
+msgstr "Formation en milieu professionnel"
+
+msgid "Occupational Profiles of Graduates"
+msgstr "Profils professionnels des diplômés"
+
+msgid "Access to Further Studies"
+msgstr "Accès niveau d'études supérieur"
+
+msgid "Code"
+msgstr "Code cours"
+
+msgid "Term"
+msgstr "Semestre"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Subject"
+msgstr "Discipline"
+
+msgid "Core"
+msgstr "Tronc commun"
+
+msgid "Mandatory"
+msgstr "Matières obligatoires"
+
+msgid "Elective"
+msgstr "Options au choix"
+
+msgid "Other types"
+msgstr "Autres "
+
+msgid "Final project"
+msgstr "Projet de fin d'études"
+
+msgid "TOTAL"
+msgstr "Total"
+
+msgid "Language"
+msgstr "Langues d'enseignement"
+
+msgid "Requirements"
+msgstr "Pré-requis"
+
+msgid "Instructors"
+msgstr "Intervenants"
+
+msgid "Course content"
+msgstr "Contenu des cours"
+
+msgid "Learning outcomes"
+msgstr "Acquis d'apprentissage"
+
+msgid "Recommended literature and resources"
+msgstr "Ressources documentaires conseillées"
+
+msgid "Planned learning activities and teaching methods"
+msgstr "Activités et méthodes d'enseignement"
+
+msgid "Evaluation methods and criteria"
+msgstr "Méthode et critères d'évaluation"
+
+msgid "Field of Study (ISCED-F)"
+msgstr "domaine d'études"
+
+msgid "Avaliable for Mobility Students"
+msgstr "ouvert au étudiants en mobilité"
+
+msgid "Category (Core, Mandatory, Optional, Other)"
+msgstr "Catégorie ( Enseignements fondamentaux,\nobligatoire, optionnel et autres)"
+
+msgid "Contents"
+msgstr "Contenu du cours"
+
+msgid "Credits"
+msgstr "Crédits ECTS"
+
+msgid "Modality (ELM Vocabulary, Online, Hybrid, Presential...)"
+msgstr ""
+
+msgid "External practices"
+msgstr "Autres pratiques"
+
+msgid "Academic Authorities"
+msgstr "Autorités académiques"
+
+msgid "Language Policy"
+msgstr "Niveau de langue requis"
+
+msgid "Languages"
+msgstr "Langues d'enseignement"
+
+msgid "Enrollment Procedures"
+msgstr "Modalités d'inscription"
+
+msgid "Contacts"
+msgstr "contacts"
+
+msgid "ECTS Policies"
+msgstr "Politique crédits ECTS"
+
+msgid "Campuses"
+msgstr "campus"
+
+msgid "Org. Units"
+msgstr ""
+
+msgid "Academic Calendar"
+msgstr "calendrier académique"
+
+msgid "Institutional Contacts"
+msgstr "contacts institutionnels"
+
+msgid "Mobility"
+msgstr "mobilité"
+
+msgid "Authorities"
+msgstr "autorités académiques"
+
+msgid "Admission Languages"
+msgstr "Langues exigées pour l'admission"
+
+msgid "ECTS Allocation Policy"
+msgstr "Régles d'attribution des crédits ECTS"
+
+msgid "Incoming Students"
+msgstr "étudiants en mobilité entrante"
+
+msgid "Outgoing Students"
+msgstr "étudiants en mobilité sortante"
+
+msgid "Organizational Units"
+msgstr "Facultés"
+
+msgid "Type here to search"
+msgstr "Cliquer ici pour une recherche"
+
+msgid "Knowledge Area"
+msgstr "Domaine d'études"
+
+msgid "Campus"
+msgstr "Campus"
+
+msgid "Click on an Organizational Unit to see its details"
+msgstr "Cliquer ici pour obtenir des détails sur\nles facultés d'enseignement"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Phone"
+msgstr "Téléphone"
+
+msgid "Web"
+msgstr "Site internet"
+
+msgid "Select Campus"
+msgstr "Sélectionner un campus"
+
+msgid "Student affairs"
+msgstr "Vie étudiante"
+
+msgid "Facilities"
+msgstr "Infrastructures"
+
+msgid "Students mobility"
+msgstr "Mobilité étudiante"
+
+msgid "University life"
+msgstr "Vie du campus"
+
+msgid "Extra-academic activities"
+msgstr "activités extra-scolaires"
+
+msgid "Students Affairs Office"
+msgstr "Direction des études et de la vie étudiante"
+
+msgid "Financial Support for Students"
+msgstr "Aides financières"
+
+msgid "Insurance"
+msgstr "Assurance"
+
+msgid "Medical Facilities"
+msgstr "Infrastructures santé"
+
+msgid "Learning Facilities"
+msgstr "Insfrastructures enseignement"
+
+msgid "Sport and Leisure Facilities"
+msgstr "Infrastructures sport et détente"
+
+msgid "Special Facilities"
+msgstr "Infrastructures spécifiques"
+
+msgid "Student's Mobility"
+msgstr "Mobilité étudiante"
+
+msgid "Practical Information For Incoming Mobile Students"
+msgstr "Informations pratiques pour les étudiants\n en mobilité entrante"
+
+msgid "Cost of Living"
+msgstr "Coût de la vie"
+
+msgid "Housing"
+msgstr "Logement"
+
+msgid "Transport"
+msgstr "Transport"
+
+msgid "Meals"
+msgstr "Repas"
+
+msgid "Student Associations"
+msgstr "Associations étudiantes"
+
+msgid "Work placement possibilities"
+msgstr "Recherche de stage en entreprise"
+
+msgid "Events and culture"
+msgstr "Evènements et culture"
+
+msgid "For the whole institution"
+msgstr "services offerts au sein de l'université"
+
+msgid "Source"
+msgstr "Source"
+
+msgid "Last update"
+msgstr "Dernière mise à jour"
+
+msgid "Found something wrong? Give us feedback"
+msgstr "Une remarque? donnez nous votre avis"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Your message"
+msgstr "Votre message"
+
+msgid "About DACEM"
+msgstr "A propos de DACEM"
+
+msgid "ABOUT"
+msgstr "A propos"
+
+msgid "INSTITUTIONS"
+msgstr "Etablissements"
+
+msgid "CONTACT"
+msgstr "Contact"
+
+msgid "Study in Europe"
+msgstr "Etudier en Europe"
+
+msgid "FIND A PROGRAMME"
+msgstr "Trouver un programme de mobilité"
+
+msgid "Explore the best opportunities to study in Europe. Discover universities, programmes, and destinations tailored to your future. Your next international academic adventure starts here."
+msgstr "Explorez les meilleures opportunities pour étudier en Europe. Découvrez des universités, des formations et des destinations personnalisées pour construire vitre avenir. Votre prochaine aventure en tant qu'étudiant international débute ici."
+
+msgid "\"\nEXPLORE OUR UNIVERSITIES\n\nFind a new place to continue your studies, meet new people and learn a new language. Before this, you should:\n\n    Find which universities are available from your home university at your local international office.\n    Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar.\n    Assess accommodation, transportation, and daily expenses.\n    Research the local culture, student life, and opportunities for personal and professional growth.\n    Check healthcare coverage, safety, and housing availability.\n\nDon't miss the opportunity!\""
+msgstr "Découvrez nos universités\nTrouvez où continuer vos études, faites de nouvelles connaissances\napprenez une nouvelle langue.\nPour votre projet, vous devez :\nTrouver quels établissements sont partenaires de votre université auprès de votre direction des relations internationales,"
+msgid "Explore the best opportunities to study in Europe. Discover universities, programs, and destinations tailored to your future. Your next academic adventure starts here."
+msgstr "Explorez les meilleures opportunités d'étudier en Europe. Découvrez des universités, des programmes et des destinations adaptés à votre avenir. Votre prochaine aventure académique commence ici."
+
+msgid "EXPLORE OUR UNIVERSITIES"
+msgstr "DÉCOUVREZ NOS UNIVERSITÉS"
+
+msgid "Find a new place to continue your studies, meet new people and learn a new language. Before this, you should:"
+msgstr "Trouvez un nouvel endroit pour poursuivre vos études, rencontrer de nouvelles personnes et apprendre une nouvelle langue. Avant cela, vous devriez :"
+
+msgid "Find which universities are available from your home university at your local international office."
+msgstr "Renseignez-vous auprès du bureau des relations internationales de votre université d'origine pour savoir quelles universités sont disponibles."
+
+msgid "Ensure the courses align with your degree, are taught in a language you understand, and fit your academic calendar."
+msgstr "Assurez-vous que les cours correspondent à votre diplôme, sont enseignés dans une langue que vous comprenez et s'intègrent à votre calendrier académique."
+
+msgid "Assess accommodation, transportation, and daily expenses."
+msgstr "Évaluez le logement, les transports et les dépenses quotidiennes."
+
+msgid "Research the local culture, student life, and opportunities for personal and professional growth."
+msgstr "Renseignez-vous sur la culture locale, la vie étudiante et les opportunités de développement personnel et professionnel."
+
+msgid "Check healthcare coverage, safety, and housing availability."
+msgstr "Vérifiez la couverture santé, la sécurité et la disponibilité des logements."
+
+msgid "Don't miss the opportunity!"
+msgstr "Ne manquez pas cette opportunité !"
+
+msgid "Czech"
+msgstr "Tchèque"
+
+msgid "English"
+msgstr "Anglais"
+
+msgid "Estonian"
+msgstr "Estonien"
+
+msgid "French"
+msgstr "Français"
+
+msgid "Greek"
+msgstr "Grec"
+
+msgid "Hungarian"
+msgstr "Hongrois"
+
+msgid "Portuguese"
+msgstr "Portugais"
+
+msgid "Slovenian"
+msgstr "Slovène"
+
+msgid "Spanish"
+msgstr "Espagnol"
+
+msgid "By semester"
+msgstr "Par semestre"
+
+msgid "1st semester"
+msgstr "1er semestre"
+
+msgid "2nd semester"
+msgstr "2e semestre"
+
+msgid "Programme Type"
+msgstr "Type de programme"
+
+msgid "Organizational Unit"
+msgstr "Unité organisationnelle"
+
+msgid "@count selected"
+msgstr "@count sélectionnés"
+
+msgid "PROGRAMMES"
+msgstr "PROGRAMMES"
+msgid "Found Something Wrong?"
+msgstr "Vous avez trouvé une erreur ?"
+
+msgid "Give Us Feedback"
+msgstr "Donnez-nous votre avis"
+
+msgid "Available for Mobility Students"
+msgstr "Disponible pour les étudiants en mobilité"
+
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+msgid "Curriculum"
+msgstr "Programme d'études"
+
+msgid "Careers"
+msgstr "Débouchés professionnels"
+
+msgid "Practice"
+msgstr "Pratique"
+
+msgid "By term"
+msgstr "Par période"
+
+msgid "By year"
+msgstr "Par année"
+
+msgid "1st term"
+msgstr "1re période"
+
+msgid "2nd term"
+msgstr "2e période"
+
+msgid "Terms"
+msgstr "Périodes"
+
+msgid "Year"
+msgstr "Année"
+
+msgid "Structure and Distribution of Credits"
+msgstr "Structure et répartition des crédits"
+
+msgid "Grading Scale"
+msgstr "Échelle de notation"
+
+msgid "Grading Scheme"
+msgstr "Système de notation"
+
+msgid "Grading Distribution Table"
+msgstr "Tableau de distribution des notes"
+
+msgid "Mobility Agreements"
+msgstr "Accords de mobilité"
+
+msgid "Start Date"
+msgstr "Date de début"
+
+msgid "End Date"
+msgstr "Date de fin"
+
+msgid "Type of Credits"
+msgstr "Type de crédits"
+
+msgid "Type of credits"
+msgstr "Type de crédits"
+
+msgid "Fields of study"
+msgstr "Domaines d'études"
+
+msgid "Mode of Learning"
+msgstr "Mode d'apprentissage"
+
+msgid "Programme Abbreviation"
+msgstr "Abréviation du programme"
+
+msgid "Restricted to alliance students"
+msgstr "Réservé aux étudiants de l'alliance"
+
+msgid "Academic Year"
+msgstr "Année académique"
+
+msgid "Number of credits"
+msgstr "Nombre de crédits"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Restricted to alliance"
+msgstr "Réservé à l'alliance"
+
+msgid "Change Home Programme"
+msgstr "Changer le programme d'origine"
+
+msgid "Clear home programme"
+msgstr "Effacer le programme d'origine"
+
+msgid "Home programme"
+msgstr "Programme d'origine"
+
+msgid "Study in Europe with ATHENA"
+msgstr "Étudiez en Europe avec ATHENA"
+
+msgid "Sport clubs/programs"
+msgstr "Clubs et programmes sportifs"
+
+msgid "Language courses"
+msgstr "Cours de langues"
+
+msgid "Support for students with disabilities and special needs"
+msgstr "Soutien aux étudiants en situation de handicap et ayant des besoins spécifiques"
+
+msgid "VISA"
+msgstr "Visa"
+
+msgid "Student Mobility"
+msgstr "Mobilité étudiante"
+
+msgid "University Life"
+msgstr "Vie universitaire"
+
+msgid "Academic requirements for nominations"
+msgstr "Exigences académiques pour les nominations"
+
+msgid "Additional requirements"
+msgstr "Exigences supplémentaires"
+
+msgid "Admission description for exchange students"
+msgstr "Description de l'admission pour les étudiants en échange"
+
+msgid "Admission description for full-degree students"
+msgstr "Description de l'admission pour les étudiants inscrits à un diplôme complet"
+
+msgid "Admission description for visiting students"
+msgstr "Description de l'admission pour les étudiants visiteurs"
+
+msgid "All"
+msgstr "Tous"
+
+msgid "Applications"
+msgstr "Candidatures"
+
+msgid "Arrangements for Academic Guidance"
+msgstr "Dispositions pour l'orientation académique"
+
+msgid "Arrangements for the recognition of credit and prior learning"
+msgstr "Dispositions pour la reconnaissance des crédits et des acquis antérieurs"
+
+msgid "Autumn"
+msgstr "Automne"
+
+msgid "Click on an Organizational Unit to see its details."
+msgstr "Cliquez sur une unité organisationnelle pour voir ses détails."
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Department"
+msgstr "Département"
+
+msgid "Exchange"
+msgstr "Échange"
+
+msgid "Exchange timeline"
+msgstr "Calendrier des échanges"
+
+msgid "Faculty"
+msgstr "Faculté"
+
+msgid "For decision"
+msgstr "Pour décision"
+
+msgid "Full-Degree"
+msgstr "Diplôme complet"
+
+msgid "INSTITUTIONAL INFORMATION"
+msgstr "INFORMATIONS INSTITUTIONNELLES"
+
+msgid "Incoming students"
+msgstr "Étudiants entrants"
+
+msgid "Information"
+msgstr "Information"
+
+msgid "Menu"
+msgstr "Menu"
+
+msgid "No Organizational Units found."
+msgstr "Aucune unité organisationnelle trouvée."
+
+msgid "Nominations"
+msgstr "Nominations"
+
+msgid "Not available"
+msgstr "Non disponible"
+
+msgid "Outgoing students"
+msgstr "Étudiants sortants"
+
+msgid "Policies"
+msgstr "Politiques"
+
+msgid "Recognition process for outgoing students"
+msgstr "Processus de reconnaissance pour les étudiants sortants"
+
+msgid "Registration procedures for exchange students"
+msgstr "Procédures d'inscription pour les étudiants en échange"
+
+msgid "Registration procedures for full-degree students"
+msgstr "Procédures d'inscription pour les étudiants inscrits à un diplôme complet"
+
+msgid "Registration procedures for visiting students"
+msgstr "Procédures d'inscription pour les étudiants visiteurs"
+
+msgid "School"
+msgstr "École"
+
+msgid "Spring"
+msgstr "Printemps"
+
+msgid "Timeframe"
+msgstr "Délai"
+
+msgid "To issue the transcript of records"
+msgstr "Pour délivrer le relevé de notes"
+
+msgid "Visiting"
+msgstr "Visiteur"
+
+msgid "week"
+msgstr "semaine"
+
+msgid "weeks"
+msgstr "semaines"
+
+msgid "Message"
+msgstr "Message"

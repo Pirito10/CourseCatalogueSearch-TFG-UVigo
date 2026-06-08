@@ -1,0 +1,18 @@
+uuid: 1a1b0223-e397-4a65-b0af-cc4a77b420df
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.iec_instance
+id: node.iec_instance.created
+field_name: created
+entity_type: node
+bundle: iec_instance
+label: 'Authored on'
+description: 'The date and time that the content was created.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: created

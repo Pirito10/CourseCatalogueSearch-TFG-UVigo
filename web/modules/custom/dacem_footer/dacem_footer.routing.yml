@@ -1,0 +1,7 @@
+dacem_footer.messages:
+  path: '/admin/dacem-footer/messages'
+  defaults:
+    _title: 'DACEM footer messages'
+    _controller: '\Drupal\dacem_footer\Controller\DacemFooterMessagesController::overview'
+  requirements:
+    _permission: 'administer site configuration'

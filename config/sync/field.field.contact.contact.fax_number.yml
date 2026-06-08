@@ -1,0 +1,26 @@
+uuid: 2f944a47-54b9-4b81-8ab1-3391b4ecc238
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.fax_number
+  module:
+    - ewp_contact
+    - ewp_phone_number
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: _NUZyDncRKwyMIpJNJRcM098BLiS5xdL7nG8-47HDRo
+id: contact.contact.fax_number
+field_name: fax_number
+entity_type: contact
+bundle: contact
+label: 'Fax number'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_phone_number

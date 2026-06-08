@@ -1,0 +1,24 @@
+uuid: 48059398-22ec-46c6-8c48-06e35d5d4229
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sport_clubs_programs
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_sport_clubs_programs
+field_name: field_sport_clubs_programs
+entity_type: node
+bundle: resources_and_services
+label: 'Sport Clubs/Programs'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

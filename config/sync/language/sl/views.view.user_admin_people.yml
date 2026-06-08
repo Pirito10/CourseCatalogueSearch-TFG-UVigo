@@ -1,0 +1,46 @@
+label: Uporabniki
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      title: Uporabniki
+      fields:
+        name:
+          label: 'Uporabniško ime'
+        status:
+          label: Stanje
+          settings:
+            format_custom_false: Blokiran
+            format_custom_true: Aktiven
+        roles_target_id:
+          label: Vloge
+        created:
+          label: Registriran
+        access:
+          label: 'Zadnji dostop'
+        operations:
+          label: Operacije
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Ponastavi
+      filters:
+        status:
+          group_info:
+            label: Stanje
+            group_items:
+              1:
+                title: Aktiven
+              2:
+                title: Blokiran
+        permission:
+          expose:
+            label: Dovoljenje
+      use_more_text: več
+  page_1:
+    display_title: Stran
+    display_options:
+      menu:
+        title: Seznam
+      tab_options:
+        title: Uporabniki

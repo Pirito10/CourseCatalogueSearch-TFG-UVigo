@@ -1,0 +1,29 @@
+uuid: dafc25a9-5466-488f-9028-6e5eee5fc99f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution_2
+    - node.type.agreement
+    - node.type.institution
+id: node.agreement.field_institution_2
+field_name: field_institution_2
+entity_type: node
+bundle: agreement
+label: 'Institution 2'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      institution: institution
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

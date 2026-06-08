@@ -1,0 +1,7 @@
+name: 'Add Entity to Group'
+type: module
+description: 'Automatically adds entities to the group of the user who created them, if the user is not an admin.'
+core_version_requirement: ^10
+package: Custom
+dependencies:
+  - group:group

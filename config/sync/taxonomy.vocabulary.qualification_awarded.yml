@@ -1,0 +1,9 @@
+uuid: bf731014-be07-4771-b56e-7857e2fe3733
+langcode: en
+status: true
+dependencies: {  }
+name: 'Qualification awarded'
+vid: qualification_awarded
+description: null
+weight: 0
+new_revision: false

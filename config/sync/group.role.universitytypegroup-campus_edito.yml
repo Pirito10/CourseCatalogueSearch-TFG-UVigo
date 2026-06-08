@@ -1,0 +1,21 @@
+uuid: 2cc99b81-1d60-4635-a471-ae0e632f2dcd
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+id: universitytypegroup-campus_edito
+label: 'Campus Editor'
+weight: -7
+admin: false
+scope: individual
+global_role: null
+group_type: universitytypegroup
+permissions:
+  - 'update own group_node:campus entity'
+  - 'update own group_node:resources_and_services entity'
+  - 'view group_node:campus entity'
+  - 'view group_node:iec_instance entity'
+  - 'view group_node:institution entity'
+  - 'view group_node:programme entity'
+  - 'view group_node:resources_and_services entity'

@@ -1,0 +1,24 @@
+uuid: 36a38a1a-9743-4e11-96d2-1fccb664c428
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.field.group_relationship.universitytypegroup-9376111be951.group_roles
+    - group.relationship_type.universitytypegroup-9376111be951
+id: group_relationship.universitytypegroup-9376111be951.default
+targetEntityType: group_relationship
+bundle: universitytypegroup-9376111be951
+mode: default
+content:
+  group_roles:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: -4
+    region: content
+hidden:
+  entity_id: true
+  langcode: true
+  uid: true

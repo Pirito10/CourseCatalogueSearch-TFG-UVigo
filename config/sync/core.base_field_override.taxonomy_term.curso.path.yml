@@ -1,0 +1,20 @@
+uuid: cfc1332f-932f-41fb-882c-08b56f3e7e88
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.curso
+  module:
+    - path
+id: taxonomy_term.curso.path
+field_name: path
+entity_type: taxonomy_term
+bundle: curso
+label: 'Alias de URL'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

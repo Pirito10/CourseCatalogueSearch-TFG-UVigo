@@ -1,0 +1,47 @@
+label: 'Membros do grupo'
+display:
+  default:
+    display_title: Master
+    display_options:
+      title: Membros
+      fields:
+        name:
+          label: Usuario/a
+          separator: ', '
+        group_roles:
+          label: Roles
+          separator: ', '
+        changed:
+          label: Actualizado
+          separator: ', '
+        created:
+          separator: ', '
+        dropbutton:
+          label: Operacións
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Primeira'
+            last: 'Última »'
+          expose:
+            items_per_page_label: 'Elementos por páxina'
+            items_per_page_options_all_label: '- Todo -'
+            offset_label: Desprazamento
+      exposed_form:
+        options:
+          submit_button: Aplicar
+          reset_button_label: Reiniciar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      arguments:
+        gid:
+          exception:
+            title: Todo
+  page_1:
+    display_title: Páxina
+    display_options:
+      menu:
+        title: Membros

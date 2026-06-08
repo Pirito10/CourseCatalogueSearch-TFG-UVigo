@@ -1,0 +1,54 @@
+uuid: 5fb3a03a-1020-45e7-a511-e8601058a87d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group.universitytypegroup.field_institution_profile
+    - group.type.universitytypegroup
+  module:
+    - path
+id: group.universitytypegroup.default
+targetEntityType: group
+bundle: universitytypegroup
+mode: default
+content:
+  field_institution_profile:
+    type: entity_reference_autocomplete
+    weight: 121
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  label:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  uid: true

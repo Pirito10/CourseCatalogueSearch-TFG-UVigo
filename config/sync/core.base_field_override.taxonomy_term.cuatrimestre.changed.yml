@@ -1,0 +1,18 @@
+uuid: b8c94cfe-88b8-41df-b766-849b48f06e41
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.cuatrimestre
+id: taxonomy_term.cuatrimestre.changed
+field_name: changed
+entity_type: taxonomy_term
+bundle: cuatrimestre
+label: Modificado
+description: 'La fecha en que el término fue creado por última vez.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

@@ -1,0 +1,3 @@
+services:
+  create_user_group.access_check:
+    class: Drupal\create_user_group\Access\CreateUserGroupAccessCheck

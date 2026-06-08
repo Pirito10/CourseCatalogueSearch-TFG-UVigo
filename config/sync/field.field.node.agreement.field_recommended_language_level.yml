@@ -1,0 +1,19 @@
+uuid: 9b50ba14-c913-4f00-b92f-11a7808f2388
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_recommended_language_level
+    - node.type.agreement
+id: node.agreement.field_recommended_language_level
+field_name: field_recommended_language_level
+entity_type: node
+bundle: agreement
+label: 'Recommended language level'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

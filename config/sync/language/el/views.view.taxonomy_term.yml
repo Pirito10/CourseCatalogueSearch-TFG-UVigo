@@ -1,0 +1,31 @@
+label: 'Όρος ταξινόμισης'
+description: 'Περιεχόμενο που ανήκει σε ένα συγκεκριμένο όρο ταξινόμησης.'
+display:
+  default:
+    display_title: Προεπιλεγμένο
+    display_options:
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Είδη ανά σελίδα'
+            items_per_page_options_all_label: '- Όλα -'
+            offset_label: Αντιστάθμιση
+      exposed_form:
+        options:
+          submit_button: Εφαρμογή
+          reset_button_label: Επαναφορά
+          exposed_sorts_label: 'Ταξινόμηση κατά'
+          sort_asc_label: Αύξ
+          sort_desc_label: Φθί
+      arguments:
+        tid:
+          exception:
+            title: Όλες
+          title: '{{ arguments.tid }}'
+  feed_1:
+    display_title: Ροή
+  page_1:
+    display_title: Σελίδα

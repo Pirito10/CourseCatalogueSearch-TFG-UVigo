@@ -1,0 +1,33 @@
+uuid: c3b75bd8-6162-49cb-9cd6-6627b734d894
+langcode: es
+status: true
+dependencies:
+  config:
+    - system.menu.menu-carreras
+  module:
+    - system
+    - taxonomy
+  theme:
+    - olivero
+id: olivero_menucarreras
+theme: olivero
+region: sidebar
+weight: -9
+provider: null
+plugin: 'system_menu_block:menu-carreras'
+settings:
+  id: 'system_menu_block:menu-carreras'
+  label: 'Menú Carreras'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility:
+  'entity_bundle:taxonomy_term':
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    context_mapping:
+      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+    bundles:
+      carrera: carrera

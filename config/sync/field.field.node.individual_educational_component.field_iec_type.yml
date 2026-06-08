@@ -1,0 +1,21 @@
+uuid: 690f38c3-446e-4f35-b82a-29de079e8c6d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_type
+    - node.type.individual_educational_component
+  module:
+    - options
+id: node.individual_educational_component.field_iec_type
+field_name: field_iec_type
+entity_type: node
+bundle: individual_educational_component
+label: Type
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

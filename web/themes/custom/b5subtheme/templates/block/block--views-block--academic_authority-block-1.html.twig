@@ -1,0 +1,161 @@
+{{ attach_library('b5subtheme/fontawesome') }}
+
+{% set current_language = current_language|default('en') %}
+
+{% if content['#view'].result|length > 0 %}
+
+	{# Separamos las filas en dos grupos: authorities y mobility contacts #}
+	{% set authorities = [] %}
+	{% set mobility_contacts = [] %}
+
+	{% for row in content['#view'].result %}
+
+		{% if row._entity.field_mobility_contact.value == '1' %}
+			{% set mobility_contacts = mobility_contacts|merge([row]) %}
+		{% else %}
+			{% set authorities = authorities|merge([row]) %}
+		{% endif %}
+	{% endfor %}
+
+	{% set has_authorities = authorities|length > 0 %}
+	{% set has_mobility = mobility_contacts|length > 0 %}
+
+	<div class="section-container section-bg-grey">
+		<div class="text-center my-custom-container-2 section-bg-grey" id="academic-authorities" style="scroll-margin-top: 150px;">
+			<h2 class="section-title">{{ 'Institutional Contacts'|t }}</h2>
+
+			{# Tabs solo si hay de los dos tipos #}
+			{% if has_authorities and has_mobility %}
+				<ul
+					class="nav nav-tabs justify-content-center" id="academicAuthoritiesTabs" role="tablist">
+
+					{# MOBILITY primero (por defecto) #}
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="tab-mobility-contacts" data-bs-toggle="tab" data-bs-target="#pane-mobility-contacts" type="button" role="tab" aria-controls="pane-mobility-contacts" aria-selected="true">
+							{{ 'Mobility'|t }}
+						</button>
+					</li>
+
+					{# AUTHORITIES después #}
+					<li class="nav-item" role="presentation">
+						<button class="nav-link" id="tab-authorities" data-bs-toggle="tab" data-bs-target="#pane-authorities" type="button" role="tab" aria-controls="pane-authorities" aria-selected="false">
+							{{ 'Authorities'|t }}
+						</button>
+					</li>
+
+				</ul>
+			{% endif %}
+
+			<div
+				class="tab-content pt-3" id="academicAuthoritiesTabsContent">
+
+				{# MOBILITY primero #}
+				{% if has_mobility %}
+					<div class="tab-pane fade {{ (has_authorities and has_mobility) or (has_mobility and not has_authorities) ? 'show active' : '' }}" id="pane-mobility-contacts" role="tabpanel" aria-labelledby="tab-mobility-contacts">
+						<div class="authorities-grid">
+							{% for row in mobility_contacts %}
+								{% set authority = row._entity %}
+								{% if authority.hasTranslation(current_language) %}
+									{% set authority = authority.getTranslation(current_language) %}
+								{% endif %}
+								<div class="authority-item">
+									{% set file_entity = authority.field_ac_photo.entity %}
+
+									<div class="authority-photo">
+										{% if file_entity and file_entity.uri %}
+											<img src="{{ file_url(file_entity.uri.value) }}" alt="{{ authority.title.value|default('') }}" class="img-fluid">
+										{% else %}
+											<img src="/themes/custom/b5subtheme/images/default-profile.jpg" alt="{{ authority.title.value|default('') }}" class="img-fluid">
+										{% endif %}
+									</div>
+
+									<div class="authority-info">
+										<h5>{{ authority.title.value }}</h5>
+										{% if authority.field_institution_role is not empty %}
+											<p class="text-center people-role">{{ authority.field_institution_role.value|upper }}</p>
+										{% endif %}
+										{% set aa_web = authority.field_aa_web is not empty and authority.field_aa_web.uri is defined ? authority.field_aa_web.uri : '' %}
+										{% set aa_email = authority.field_aa_email is not empty and authority.field_aa_email.value is defined ? authority.field_aa_email.value : '' %}
+										{% set aa_phone = authority.field_aa_phone is not empty and authority.field_aa_phone.value is defined ? authority.field_aa_phone.value : '' %}
+											<div class="authority-icons mt-2">
+												{% if aa_web %}
+													<a href="{{ aa_web }}" class="authority-icon me-3" target="_blank" rel="noopener noreferrer" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ aa_web }}">
+														<i class="fas fa-globe fa-lg"></i>
+													</a>
+												{% endif %}
+												{% if aa_email %}
+													<a href="mailto:{{ aa_email }}" class="authority-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ aa_email }}">
+														<i class="fas fa-envelope fa-lg"></i>
+													</a>
+												{% endif %}
+											{% if aa_phone %}
+												<a href="tel:{{ aa_phone }}" class="authority-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ aa_phone }}">
+													<i class="fas fa-phone-alt fa-lg"></i>
+												</a>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+
+				{# AUTHORITIES después #}
+				{% if has_authorities %}
+					<div class="tab-pane fade {{ (has_authorities and not has_mobility) ? 'show active' : '' }}" id="pane-authorities" role="tabpanel" aria-labelledby="tab-authorities">
+						<div class="authorities-grid">
+							{% for row in authorities %}
+								{% set authority = row._entity %}
+								{% if authority.hasTranslation(current_language) %}
+									{% set authority = authority.getTranslation(current_language) %}
+								{% endif %}
+								<div class="authority-item">
+									{% set file_entity = authority.field_ac_photo.entity %}
+
+									<div class="authority-photo">
+										{% if file_entity and file_entity.uri %}
+											<img src="{{ file_url(file_entity.uri.value) }}" alt="{{ authority.title.value|default('') }}" class="img-fluid">
+										{% else %}
+											<img src="/themes/custom/b5subtheme/images/default-profile.jpg" alt="{{ authority.title.value|default('') }}" class="img-fluid">
+										{% endif %}
+									</div>
+
+									<div class="authority-info">
+										<h5>{{ authority.title.value }}</h5>
+										{% if authority.field_institution_role is not empty %}
+											<p class="text-center people-role">{{ authority.field_institution_role.value|upper }}</p>
+										{% endif %}
+										{% set aa_web = authority.field_aa_web is not empty and authority.field_aa_web.uri is defined ? authority.field_aa_web.uri : '' %}
+										{% set aa_email = authority.field_aa_email is not empty and authority.field_aa_email.value is defined ? authority.field_aa_email.value : '' %}
+										{% set aa_phone = authority.field_aa_phone is not empty and authority.field_aa_phone.value is defined ? authority.field_aa_phone.value : '' %}
+											<div class="authority-icons mt-2">
+												{% if aa_web %}
+													<a href="{{aa_web}}" class="authority-icon me-3" target="_blank" rel="noopener noreferrer" data-bs-toggle="tooltip" data-bs-placement="top" title="{{aa_web}}">
+														<i class="fas fa-globe fa-lg"></i>
+													</a>
+												{% endif %}
+												{% if aa_email %}
+													<a href="mailto:{{ aa_email }}" class="authority-icon me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ aa_email }}">
+														<i class="fas fa-envelope fa-lg"></i>
+													</a>
+												{% endif %}
+											{% if aa_phone %}
+												<a href="tel:{{ aa_phone }}" class="authority-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ aa_phone }}">
+													<i class="fas fa-phone-alt fa-lg"></i>
+												</a>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+
+	<div class="spacer"></div>
+{% endif %}

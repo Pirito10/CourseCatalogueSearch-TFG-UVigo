@@ -1,0 +1,12 @@
+settings:
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
+        0:
+          label: 'Απλό κείμενο'
+        4:
+          label: CSS
+        6:
+          label: HTML
+        9:
+          label: PHP

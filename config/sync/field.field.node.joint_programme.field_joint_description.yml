@@ -1,0 +1,24 @@
+uuid: 96765b92-418b-4d0c-8b29-be9f073f5e7f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_joint_description
+    - filter.format.basic_html
+    - node.type.joint_programme
+  module:
+    - text
+id: node.joint_programme.field_joint_description
+field_name: field_joint_description
+entity_type: node
+bundle: joint_programme
+label: Description
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

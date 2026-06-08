@@ -1,0 +1,20 @@
+uuid: f0d8649b-c8de-42f3-a920-d9f54269f4da
+langcode: en
+status: true
+dependencies:
+  module:
+    - elm_vocabulary_field
+    - node
+id: node.field_programme_mode_of_study
+field_name: field_programme_mode_of_study
+entity_type: node
+type: elm_controlled_vocabulary
+settings:
+  vocabulary: learning_schedule
+module: elm_vocabulary_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

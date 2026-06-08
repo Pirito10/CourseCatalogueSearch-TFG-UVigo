@@ -1,0 +1,21 @@
+uuid: 6d5d6936-f7e3-4a07-980b-ba2ed5a89947
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_qualification_awarded
+    - node.type.programme
+  module:
+    - options
+id: node.programme.field_qualification_awarded
+field_name: field_qualification_awarded
+entity_type: node
+bundle: programme
+label: 'Qualification awarded'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

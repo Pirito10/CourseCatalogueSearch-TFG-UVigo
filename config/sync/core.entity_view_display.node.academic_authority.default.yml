@@ -1,0 +1,147 @@
+uuid: 4b2158df-8050-4a75-98d3-665633e03310
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.academic_authority.body
+    - field.field.node.academic_authority.field_aa_campus
+    - field.field.node.academic_authority.field_aa_email
+    - field.field.node.academic_authority.field_aa_institution
+    - field.field.node.academic_authority.field_aa_organizational_unit
+    - field.field.node.academic_authority.field_aa_phone
+    - field.field.node.academic_authority.field_aa_web
+    - field.field.node.academic_authority.field_ac_photo
+    - field.field.node.academic_authority.field_campus_role
+    - field.field.node.academic_authority.field_display_order
+    - field.field.node.academic_authority.field_institution_role
+    - field.field.node.academic_authority.field_mobility_contact
+    - field.field.node.academic_authority.field_organizational_unit_role
+    - node.type.academic_authority
+  module:
+    - image
+    - link
+    - text
+    - user
+id: node.academic_authority.default
+targetEntityType: node
+bundle: academic_authority
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_aa_campus:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 111
+    region: content
+  field_aa_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 118
+    region: content
+  field_aa_institution:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 109
+    region: content
+  field_aa_organizational_unit:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 112
+    region: content
+  field_aa_phone:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 119
+    region: content
+  field_aa_web:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 120
+    region: content
+  field_ac_photo:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 110
+    region: content
+  field_campus_role:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 114
+    region: content
+  field_display_order:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 121
+    region: content
+  field_institution_role:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 116
+    region: content
+  field_mobility_contact:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 117
+    region: content
+  field_organizational_unit_role:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 115
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

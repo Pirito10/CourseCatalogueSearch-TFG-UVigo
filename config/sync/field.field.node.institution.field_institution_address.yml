@@ -1,0 +1,19 @@
+uuid: 8c4eb753-7c10-4021-a5eb-83ff2e95791e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution_address
+    - node.type.institution
+id: node.institution.field_institution_address
+field_name: field_institution_address
+entity_type: node
+bundle: institution
+label: 'Institution Address'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

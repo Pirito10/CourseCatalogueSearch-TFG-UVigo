@@ -1,0 +1,18 @@
+uuid: 74e39c8f-b5e1-4566-b676-e74e36873aaf
+langcode: en
+status: false
+dependencies:
+  theme:
+    - b5subtheme
+id: b5subtheme_pagetitle
+theme: b5subtheme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

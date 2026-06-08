@@ -1,0 +1,26 @@
+uuid: c39eba4e-1372-4bf0-bd2e-2196090bae1e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.person_given_names
+  module:
+    - ewp_contact
+    - ewp_core
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: ngTc1t05fEj_FQx3Vda39989hPjO_iLCQl0HC7WZ9iA
+id: contact.contact.person_given_names
+field_name: person_given_names
+entity_type: contact
+bundle: contact
+label: 'Person given names'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_string_lang

@@ -1,0 +1,48 @@
+uuid: cab9f563-664e-4a95-9bd5-7bee6e10ec45
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_qualification_awarded
+field_name: field_qualification_awarded
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: ad
+      label: AD
+    -
+      value: ba
+      label: BA
+    -
+      value: bsc
+      label: BSc
+    -
+      value: llb
+      label: LLB
+    -
+      value: ma
+      label: MA
+    -
+      value: msc
+      label: MSc
+    -
+      value: llm
+      label: LLM
+    -
+      value: phd
+      label: PhD
+    -
+      value: none
+      label: None
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,23 @@
+uuid: a292028c-0891-4418-b22c-74cb2b684ef3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_restricted_alliance
+    - node.type.individual_educational_component
+id: node.individual_educational_component.field_iec_restricted_alliance
+field_name: field_iec_restricted_alliance
+entity_type: node
+bundle: individual_educational_component
+label: 'Restricted to alliance students'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

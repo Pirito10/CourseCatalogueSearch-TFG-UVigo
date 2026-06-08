@@ -1,0 +1,79 @@
+uuid: 0747e11f-6b5e-4f71-a214-b9600040065d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.individual_educational_component.field_assessment_method_types
+    - field.field.node.individual_educational_component.field_fields_of_study
+    - field.field.node.individual_educational_component.field_iec_activity_types
+    - field.field.node.individual_educational_component.field_iec_avaliable_for_mobility
+    - field.field.node.individual_educational_component.field_iec_code
+    - field.field.node.individual_educational_component.field_iec_contents
+    - field.field.node.individual_educational_component.field_iec_coordinator
+    - field.field.node.individual_educational_component.field_iec_credits
+    - field.field.node.individual_educational_component.field_iec_description
+    - field.field.node.individual_educational_component.field_iec_elm_type
+    - field.field.node.individual_educational_component.field_iec_email
+    - field.field.node.individual_educational_component.field_iec_engagement_hours
+    - field.field.node.individual_educational_component.field_iec_evaluation
+    - field.field.node.individual_educational_component.field_iec_instructors
+    - field.field.node.individual_educational_component.field_iec_language_of_instructio
+    - field.field.node.individual_educational_component.field_iec_learning_outcomes
+    - field.field.node.individual_educational_component.field_iec_modality
+    - field.field.node.individual_educational_component.field_iec_phone
+    - field.field.node.individual_educational_component.field_iec_planned_activities
+    - field.field.node.individual_educational_component.field_iec_programme
+    - field.field.node.individual_educational_component.field_iec_recommendations
+    - field.field.node.individual_educational_component.field_iec_requirements
+    - field.field.node.individual_educational_component.field_iec_restricted_alliance
+    - field.field.node.individual_educational_component.field_iec_term
+    - field.field.node.individual_educational_component.field_iec_type
+    - field.field.node.individual_educational_component.field_iec_type_of_credits
+    - field.field.node.individual_educational_component.field_iec_web
+    - field.field.node.individual_educational_component.field_iec_year
+    - field.field.node.individual_educational_component.field_subject_area
+    - node.type.individual_educational_component
+  module:
+    - user
+id: node.individual_educational_component.teaser
+targetEntityType: node
+bundle: individual_educational_component
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_assessment_method_types: true
+  field_fields_of_study: true
+  field_iec_activity_types: true
+  field_iec_avaliable_for_mobility: true
+  field_iec_code: true
+  field_iec_contents: true
+  field_iec_coordinator: true
+  field_iec_credits: true
+  field_iec_description: true
+  field_iec_elm_type: true
+  field_iec_email: true
+  field_iec_engagement_hours: true
+  field_iec_evaluation: true
+  field_iec_instructors: true
+  field_iec_language_of_instructio: true
+  field_iec_learning_outcomes: true
+  field_iec_modality: true
+  field_iec_phone: true
+  field_iec_planned_activities: true
+  field_iec_programme: true
+  field_iec_recommendations: true
+  field_iec_requirements: true
+  field_iec_restricted_alliance: true
+  field_iec_term: true
+  field_iec_type: true
+  field_iec_type_of_credits: true
+  field_iec_web: true
+  field_iec_year: true
+  field_subject_area: true
+  langcode: true

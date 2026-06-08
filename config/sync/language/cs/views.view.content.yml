@@ -1,0 +1,69 @@
+label: Obsah
+description: 'Hledat a spravovat obsah.'
+display:
+  default:
+    display_title: Výchozí
+    display_options:
+      title: Obsah
+      fields:
+        title:
+          label: Nadpis
+        type:
+          label: 'Typ obsahu'
+          separator: ', '
+        name:
+          label: Autor
+        status:
+          label: Stav
+          settings:
+            format_custom_false: Skryto
+            format_custom_true: Zveřejněno
+        changed:
+          label: Aktualizováno
+        operations:
+          label: Operace
+      pager:
+        options:
+          tags:
+            next: 'Následující ›'
+            previous: '‹ Předchozí'
+            first: '« První'
+            last: 'Poslední »'
+      exposed_form:
+        options:
+          submit_button: Filtr
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      empty:
+        area_text_custom:
+          content: 'Žádný obsah není k dispozici.'
+      filters:
+        title:
+          expose:
+            label: Nadpis
+        type:
+          expose:
+            label: 'Typ obsahu'
+        status:
+          expose:
+            label: Stav
+          group_info:
+            label: 'Status zveřejnění'
+            group_items:
+              1:
+                title: Zveřejněno
+              2:
+                title: Skryto
+        langcode:
+          expose:
+            label: 'Jazyk '
+  page_1:
+    display_title: Stránka
+    display_options:
+      menu:
+        title: Obsah
+      tab_options:
+        title: Obsah
+        description: 'Najít a spravovat obsah'

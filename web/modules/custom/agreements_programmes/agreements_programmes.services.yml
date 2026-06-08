@@ -1,0 +1,5 @@
+services:
+  agreements_programmes.matcher:
+    class: Drupal\agreements_programmes\Service\AgreementProgrammeMatcher
+    arguments:
+      - '@entity_type.manager'

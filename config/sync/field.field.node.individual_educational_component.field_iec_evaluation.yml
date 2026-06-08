@@ -1,0 +1,24 @@
+uuid: 7d92cb50-586b-42b1-b4fc-97b5792aee4a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_evaluation
+    - filter.format.basic_html
+    - node.type.individual_educational_component
+  module:
+    - text
+id: node.individual_educational_component.field_iec_evaluation
+field_name: field_iec_evaluation
+entity_type: node
+bundle: individual_educational_component
+label: Assessment
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

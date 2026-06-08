@@ -1,0 +1,49 @@
+display:
+  default:
+    display_title: Mester
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Alkalmaz
+          reset_button_label: Visszaállít
+          exposed_sorts_label: Rendezés
+          sort_asc_label: Növ
+          sort_desc_label: Csökk
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Első'
+            last: 'Utolsó »'
+          expose:
+            items_per_page_label: 'Elemek száma oldalanként'
+            items_per_page_options_all_label: '– Mind –'
+            offset_label: Eltolás
+      fields:
+        label:
+          label: Címke
+          separator: ', '
+        hei_id:
+          separator: ', '
+        name:
+          label: Név
+        abbreviation:
+          label: Rövidítés
+          separator: ', '
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        website_url:
+          separator: ', '
+        logo_url:
+          separator: ', '
+        mobility_factsheet_url:
+          separator: ', '
+        contact:
+          label: Kapcsolat
+      filters:
+        label:
+          expose:
+            label: Címke

@@ -1,0 +1,671 @@
+uuid: 32869ef3-21d1-4d74-b66b-28c4a711324a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.programme.field_access_to_further_studies
+    - field.field.node.programme.field_arrangments_recognition
+    - field.field.node.programme.field_avaliable_for_mobility
+    - field.field.node.programme.field_competencies
+    - field.field.node.programme.field_coordinator
+    - field.field.node.programme.field_credits
+    - field.field.node.programme.field_distribution_of_credits
+    - field.field.node.programme.field_email
+    - field.field.node.programme.field_eqf_level
+    - field.field.node.programme.field_isced_f
+    - field.field.node.programme.field_joint_programme
+    - field.field.node.programme.field_learning_opportunity_type
+    - field.field.node.programme.field_length_of_programme
+    - field.field.node.programme.field_main_objective
+    - field.field.node.programme.field_number_of_terms
+    - field.field.node.programme.field_occupational_profiles
+    - field.field.node.programme.field_professional_practices
+    - field.field.node.programme.field_programme_abbreviation
+    - field.field.node.programme.field_programme_code
+    - field.field.node.programme.field_programme_description
+    - field.field.node.programme.field_programme_end_date
+    - field.field.node.programme.field_programme_grading_scheme
+    - field.field.node.programme.field_programme_grading_table
+    - field.field.node.programme.field_programme_institution
+    - field.field.node.programme.field_programme_language_of_inst
+    - field.field.node.programme.field_programme_learn_outcomes
+    - field.field.node.programme.field_programme_mobility
+    - field.field.node.programme.field_programme_mobility_windows
+    - field.field.node.programme.field_programme_mode_of_learning
+    - field.field.node.programme.field_programme_mode_of_study
+    - field.field.node.programme.field_programme_ou
+    - field.field.node.programme.field_programme_phone
+    - field.field.node.programme.field_programme_qualification
+    - field.field.node.programme.field_programme_requirements
+    - field.field.node.programme.field_programme_restricted_allia
+    - field.field.node.programme.field_programme_start_date
+    - field.field.node.programme.field_programme_type
+    - field.field.node.programme.field_programme_type_of_credits
+    - field.field.node.programme.field_programme_web
+    - field.field.node.programme.field_programme_work_placements
+    - field.field.node.programme.field_qualification_awarded
+    - field.field.node.programme.field_qualification_requirements
+    - field.field.node.programme.field_work_based_learning
+    - node.type.programme
+  module:
+    - datetime
+    - elm_vocabulary_field
+    - ewp_core
+    - field_group
+    - isced_field
+    - link
+    - path
+    - text
+third_party_settings:
+  field_group:
+    group_general_data:
+      children:
+        - field_programme_abbreviation
+        - field_programme_start_date
+        - field_programme_end_date
+        - field_programme_type_of_credits
+        - field_credits
+        - field_eqf_level
+        - field_programme_type
+        - field_programme_language_of_inst
+        - field_isced_f
+        - field_programme_mode_of_study
+        - field_programme_mode_of_learning
+        - field_avaliable_for_mobility
+        - field_programme_restricted_allia
+        - field_length_of_programme
+        - field_number_of_terms
+        - field_learning_opportunity_type
+        - field_qualification_awarded
+        - field_professional_practices
+      label: 'General Data'
+      region: content
+      parent_name: ''
+      weight: 12
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        description: ''
+        required_fields: true
+    group_coordination:
+      children:
+        - field_coordinator
+        - field_programme_phone
+        - field_email
+        - field_programme_web
+      label: Coordination
+      region: content
+      parent_name: ''
+      weight: 13
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+    group_assessment:
+      children:
+        - field_programme_grading_scheme
+        - field_programme_grading_table
+      label: Assessment
+      region: content
+      parent_name: ''
+      weight: 18
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+    group_overview:
+      children:
+        - field_programme_description
+        - field_main_objective
+        - field_competencies
+        - field_programme_learn_outcomes
+        - field_programme_qualification
+      label: Overview
+      region: content
+      parent_name: ''
+      weight: 14
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+    group_mobility:
+      children:
+        - field_programme_mobility_windows
+        - field_programme_mobility
+      label: Mobility
+      region: content
+      parent_name: ''
+      weight: 19
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+    group_practice:
+      children:
+        - field_programme_work_placements
+        - field_work_based_learning
+        - field_occupational_profiles
+      label: Practice
+      region: content
+      parent_name: ''
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+    group_careers:
+      children:
+        - field_access_to_further_studies
+      label: Careers
+      region: content
+      parent_name: ''
+      weight: 21
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+    group_admission:
+      children:
+        - field_programme_requirements
+        - field_arrangments_recognition
+        - field_qualification_requirements
+      label: Admission
+      region: content
+      parent_name: ''
+      weight: 17
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+    group_curriculum:
+      children: {  }
+      label: Curriculum
+      region: content
+      parent_name: ''
+      weight: 15
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+        description: ''
+id: node.programme.default
+targetEntityType: node
+bundle: programme
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_access_to_further_studies:
+    type: text_textarea
+    weight: 28
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_arrangments_recognition:
+    type: text_textarea
+    weight: 23
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_avaliable_for_mobility:
+    type: options_buttons
+    weight: 46
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_competencies:
+    type: text_textarea
+    weight: 23
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_coordinator:
+    type: string_textfield
+    weight: 15
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_credits:
+    type: number
+    weight: 37
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_distribution_of_credits:
+    type: text_textarea
+    weight: 16
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_email:
+    type: string_textfield
+    weight: 17
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_eqf_level:
+    type: eqf_level_default
+    weight: 38
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_isced_f:
+    type: isced_f_select
+    weight: 41
+    region: content
+    settings:
+      allow_all_levels: true
+    third_party_settings: {  }
+  field_joint_programme:
+    type: boolean_checkbox
+    weight: 54
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_learning_opportunity_type:
+    type: elm_controlled_vocabulary_select
+    weight: 50
+    region: content
+    settings:
+      prefix: false
+    third_party_settings: {  }
+  field_length_of_programme:
+    type: number
+    weight: 48
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_main_objective:
+    type: text_textarea
+    weight: 22
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_number_of_terms:
+    type: number
+    weight: 49
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_occupational_profiles:
+    type: text_textarea
+    weight: 23
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_professional_practices:
+    type: boolean_checkbox
+    weight: 53
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_programme_abbreviation:
+    type: string_textfield
+    weight: 33
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_code:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_description:
+    type: text_textarea
+    weight: 21
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_end_date:
+    type: datetime_default
+    weight: 35
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_programme_grading_scheme:
+    type: text_textarea
+    weight: 28
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_grading_table:
+    type: text_textarea
+    weight: 29
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_institution:
+    type: entity_reference_autocomplete
+    weight: 9
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_language_of_inst:
+    type: options_buttons
+    weight: 40
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_programme_learn_outcomes:
+    type: text_textarea
+    weight: 24
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_mobility:
+    type: text_textarea
+    weight: 18
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_mobility_windows:
+    type: text_textarea
+    weight: 17
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_mode_of_learning:
+    type: elm_controlled_vocabulary_select
+    weight: 44
+    region: content
+    settings:
+      prefix: false
+    third_party_settings: {  }
+  field_programme_mode_of_study:
+    type: elm_controlled_vocabulary_select
+    weight: 43
+    region: content
+    settings:
+      prefix: false
+    third_party_settings: {  }
+  field_programme_ou:
+    type: entity_reference_autocomplete
+    weight: 10
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_phone:
+    type: string_textfield
+    weight: 16
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_qualification:
+    type: text_textarea
+    weight: 25
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_requirements:
+    type: text_textarea
+    weight: 22
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_programme_restricted_allia:
+    type: boolean_checkbox
+    weight: 47
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_programme_start_date:
+    type: datetime_default
+    weight: 34
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_programme_type:
+    type: options_buttons
+    weight: 39
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_programme_type_of_credits:
+    type: options_select
+    weight: 36
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_programme_web:
+    type: link_default
+    weight: 18
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_programme_work_placements:
+    type: text_textarea
+    weight: 21
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_qualification_awarded:
+    type: options_buttons
+    weight: 51
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_qualification_requirements:
+    type: text_textarea
+    weight: 24
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_work_based_learning:
+    type: text_textarea
+    weight: 22
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  langcode:
+    type: language_select
+    weight: 1
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 5
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 8
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  translation:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete_tags
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

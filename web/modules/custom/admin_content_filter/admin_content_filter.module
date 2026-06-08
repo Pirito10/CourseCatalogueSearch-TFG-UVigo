@@ -1,0 +1,59 @@
+<?php
+
+use Drupal\group\Entity\GroupContent;
+
+function admin_content_filter_views_query_alter($view, $query)
+{
+  //\Drupal::messenger()->addMessage('ENTRA A ADMIN CONTENT FILTER VIEWS QUERY ALTER');
+  // Verifica si estamos en la vista admin/content.
+  if ($view->id() == 'content' && $view->getPath() == 'admin/content') {
+
+    // Verificar que el query no es null antes de continuar.
+    if ($query === null) {
+      \Drupal::logger('admin_content_filter')->error('Query is null in admin_content_filter_views_query_alter');
+      return;
+    }
+
+    // Obtener el usuario actual.
+    $current_user = \Drupal::currentUser();
+
+    // Si el usuario tiene el permiso de "administer content", no filtramos nada.
+    if ($current_user->hasPermission('administer content')) {
+      return;
+    }
+
+    // Cargar todas las entidades que el usuario puede editar.
+    $editable_node_ids = [];
+
+    // Cargar los nodos con verificación de acceso.
+    $nids = \Drupal::entityQuery('node')
+      ->accessCheck(TRUE) // Aquí estamos verificando el acceso.
+      ->execute();
+
+    $storage = \Drupal::entityTypeManager()->getStorage('node');
+    $nodes = $storage->loadMultiple($nids);
+
+    // Verificar qué nodos puede editar el usuario.
+    foreach ($nodes as $node) {
+      if ($node->access('update', $current_user)) {
+        //\Drupal::messenger()->addMessage('El usuario tiene permiso para editar el nodo: ' . $node->label());
+        $editable_node_ids[] = $node->id();
+      }
+    }
+
+    // Si el usuario no puede editar ningún nodo, filtramos todo.
+    if (empty($editable_node_ids)) {
+      //\Drupal::messenger()->addMessage('El usuario no puede editar ningún nodo.');
+      $query->addWhere(0, 'node_field_data.nid', -1, '=');
+    } else {
+      //\Drupal::messenger()->addMessage('El usuario puede editar algunos nodos.');
+      // Filtrar la vista para mostrar solo los nodos que el usuario puede editar.
+      $query->addWhere(0, 'node_field_data.nid', $editable_node_ids, 'IN');
+    }
+  }
+
+
+
+
+
+}

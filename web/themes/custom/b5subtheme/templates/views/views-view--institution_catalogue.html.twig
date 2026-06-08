@@ -1,0 +1,264 @@
+
+
+
+
+{{ attach_library('b5subtheme/catalogue_buttons') }}
+
+{# Obtener la entidad de contenido desde la vista #}
+{% set entity = view.result[0]._entity %}
+
+
+{% set current_language = view.result[0].node_field_data_langcode %}
+
+{# Verificar si la entidad tiene una traducción en el idioma de la URL #}
+{% if entity.hasTranslation(current_language) %}
+	{% set institution = entity.getTranslation(current_language) %}
+{% else %}
+	{% set institution = entity %}
+{% endif %}
+
+{# Obtener el idioma actual de la URL #}
+
+{#
+{% set current_language = language_manager.getCurrentLanguage().getId() %}
+
+{% set entity = view.result[0]._entity %}
+{% if entity.hasTranslation(current_language) %}
+	{% set translated_entity = entity.getTranslation(current_language) %}
+{% else %}
+	{% set translated_entity = entity %}
+{% endif %}
+
+{% set university = translated_entity %}
+#}
+
+{% set institution_primary_color = entity.field_primary_color[0].color %}
+
+{% set institution_text_color = entity.field_text_color[0].color %}
+{% set institution_emphasis_text_color = entity.field_emphasis_text_color[0].color %}
+
+
+
+{# Mapear iconos y categorías por idioma #}
+{% set icon_map = {
+  'arts_and_humanities': 'fas fa-archway',
+  'sciences': 'fas fa-atom',
+  'health_sciences': 'fas fa-heartbeat',
+  'social_and_legal_sciences': 'fas fa-balance-scale',
+  'engineering_and_architecture': 'fas fa-drafting-compass'
+} %}
+
+{# Definir las categorías en todos los idiomas soportados #}
+{% set categories = {
+  'es': {
+    'arts_and_humanities': 'Artes y Humanidades',
+    'sciences': 'Ciencias',
+    'health_sciences': 'Ciencias de la Salud',
+    'social_and_legal_sciences': 'Ciencias Sociales y Jurídicas',
+    'engineering_and_architecture': 'Ingeniería y Arquitectura'
+  },
+  'en': {
+    'arts_and_humanities': 'Arts and Humanities',
+    'sciences': 'Sciences',
+    'health_sciences': 'Health Sciences',
+    'social_and_legal_sciences': 'Social and Legal Sciences',
+    'engineering_and_architecture': 'Engineering and Architecture'
+  },
+  'fr': {
+    'arts_and_humanities': 'Arts et Humanités',
+    'sciences': 'Sciences',
+    'health_sciences': 'Sciences de la Santé',
+    'social_and_legal_sciences': 'Sciences Sociales et Juridiques',
+    'engineering_and_architecture': 'Ingénierie et Architecture'
+  },
+  'pt-pt': {
+    'arts_and_humanities': 'Artes e Humanidades',
+    'sciences': 'Ciências',
+    'health_sciences': 'Ciências da Saúde',
+    'social_and_legal_sciences': 'Ciências Sociais e Jurídicas',
+    'engineering_and_architecture': 'Engenharia e Arquitetura'
+  },
+  'gl': {
+    'arts_and_humanities': 'Artes e Humanidades',
+    'sciences': 'sciences',
+    'health_sciences': 'sciences da Saúde',
+    'social_and_legal_sciences': 'sciences Sociais e Xurídicas',
+    'engineering_and_architecture': 'Enxeñería e Arquitectura'
+  },
+  'hu': {
+    'arts_and_humanities': 'Művészetek és Bölcsészettudományok',
+    'sciences': 'Tudományok',
+    'health_sciences': 'Egészségtudományok',
+    'social_and_legal_sciences': 'Társadalmi és Jogtudományok',
+    'engineering_and_architecture': 'Mérnöki és Építészeti Tudományok'
+  },
+  'sl': {
+    'arts_and_humanities': 'Umetnost in Humanistika',
+    'sciences': 'Znanost',
+    'health_sciences': 'Zdravstvene vede',
+    'social_and_legal_sciences': 'Družbene in Pravne Znanosti',
+    'engineering_and_architecture': 'Inženiring in Arhitektura'
+  },
+  'et': {
+    'arts_and_humanities': 'Kunst ja Humanitaarteadused',
+    'sciences': 'Teadused',
+    'health_sciences': 'Tervishoiuteadused',
+    'social_and_legal_sciences': 'Sotsiaal- ja Õigusteadused',
+    'engineering_and_architecture': 'Inseneriteadus ja Arhitektuur'
+  },
+  'el': {
+    'arts_and_humanities': 'Τέχνες και Ανθρωπιστικές Επιστήμες',
+    'sciences': 'Επιστήμες',
+    'health_sciences': 'Επιστήμες Υγείας',
+    'social_and_legal_sciences': 'Κοινωνικές και Νομικές Επιστήμες',
+    'engineering_and_architecture': 'Μηχανική και Αρχιτεκτονική'
+  }
+} %}
+
+{# Seleccionar las etiquetas del idioma actual #}
+{% set category_labels = categories[current_language] ?? categories['en'] %}
+
+
+
+
+<style>:root
+{
+	--university_primary_color: {{institution_primary_color}}
+	;
+	--university_text_color: {{institution_text_color}}
+	;
+	--university_emphasis_text_color: {{institution_emphasis_text_color}}
+	;
+}</style>
+
+<div
+class="container-fluid">
+<!-- Menú superior de la universidad -->
+
+<div class="search-and-filters-container mb-4">
+	<div
+		class="search-and-filters">
+		<!-- Encabezado de búsqueda -->
+		<div class="search-header d-flex align-items-center mb-3">
+			<div class="search-header-row row">
+				<div class="col-lg-5 col-md-12 col-sm-12">
+					<h1>{{translations[current_language]['CATALOGUE']}}</h1>
+				</div>
+				<div class="col-lg-3">
+					<div class="d-flex">
+						<button class="btn filter-button me-2 selected" id='titulaciones-button'>{{translations[current_language]['PROGRAMMES']}}</button>
+						<button class="btn filter-button" id='asignaturas-button'>{{ 'Courses'|t|upper }}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Barra de búsqueda -->
+		<div class="search-bar d-flex mb-3">
+			<input type="text" class="form-control" id='search-input' placeholder={{translations[current_language]['Search']}}>
+			<button class="btn btn-dark search-button ms-0" id='search-button'>
+				<i class="fas fa-search"></i>
+			</button>
+		</div>
+
+		<!-- Filtros -->
+		<div class="row filters d-flex align-items-center flex-wrap">
+			<div
+				class="col-lg-1 col-md-2 col-sm-2">
+				<!-- Botón de filtro (visible solo en pantallas grandes) -->
+				<button class="btn btn-danger d-none d-lg-block w-100">
+					<i class="fas fa-filter"></i>
+				</button>
+			</div>
+
+			
+
+			<div class="col-lg-2 col-md-12 col-sm-12 d-lg-none">
+				<select class="form-control me-2">
+					<option>{{ 'All'|t }}</option>
+					{% set sorted_keys = grouped_carreras|keys|sort %}
+					{% for area in sorted_keys %}
+						<option>{{ category_labels[area] }}</option>
+					{% endfor %}
+				</select>
+			</div>
+
+			<div class="col-lg-2 col-md-12 col-sm-12">
+				<select class="form-control me-2">
+					<option>{{ translations[current_language]['LEVEL'] }}</option>
+					<option>{{ translations[current_language]['Bachelor'] }}</option>
+					<option>{{ translations[current_language]['Master'] }}</option>
+				</select>
+			</div>
+			<div class="col-lg-2 col-md-12 col-sm-12">
+				<select class="form-control me-2">
+					<option>{{ translations[current_language]['LANGUAGE'] }}</option>
+					<option>{{ translations[current_language]['Spanish'] }}</option>
+					<option>{{ translations[current_language]['English'] }}</option>
+				</select>
+			</div>
+			<div class="col-lg-2 col-md-12 col-sm-12">
+				<select class="form-control">
+					<option>2024</option>
+					<option>2023</option>
+					<option>2022</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div
+	class="row w-100">
+	<!-- Barra lateral con categorías -->
+	<div class="col-md-3 d-none d-lg-block ">
+		<div class="navbar sidebar-categories ">
+
+
+			<ul class="nav flex-column">
+				{% if grouped_carreras is defined %}
+					{% set sorted_keys = grouped_carreras|keys|sort %}
+					{% for area in sorted_keys %}
+						<li class="nav-item">
+							<a class="nav-link" href="#{{ area | clean_id }}">
+								<i class="{{ icon_map[area] }}"></i>
+								{{ category_labels[area] }}
+							</a>
+						</li>
+					{% endfor %}
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fas fa-folder"></i>
+							No hay áreas disponibles</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+
+	<!-- Contenido principal -->
+	<div
+		class="col-md-9">
+		<!-- Lista de programas o titulaciones -->
+		<div class="program-list m-lg-0">
+			{% if grouped_carreras is defined %}
+				{% for area in sorted_keys %}
+					<h2 id="{{ area | clean_id }}">{{ category_labels[area]|upper }}</h2>
+					<ul>
+						{% for programme in grouped_carreras[area] %}
+							<li>
+								<a href="{{ programme.url }}">
+									{{ programme.title }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				{% endfor %}
+			{% else %}
+				<p>No programmes avaliable.</p>
+			{% endif %}
+		</div>
+	</div>
+</div></div>

@@ -1,0 +1,18 @@
+uuid: a7abbc10-cc42-478c-bc3f-04705ea0e850
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.relationship_type.universitytypegroup-7c5b33081c82
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: false
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: group_relationship.universitytypegroup-7c5b33081c82
+target_entity_type_id: group_relationship
+target_bundle: universitytypegroup-7c5b33081c82
+default_langcode: site_default
+language_alterable: false

@@ -1,0 +1,24 @@
+uuid: fd790be4-125c-42b4-9647-bf55b8516b93
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_admission_descript_visitin
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_admission_descript_visitin
+field_name: field_admission_descript_visitin
+entity_type: node
+bundle: institution
+label: 'Admission description for visiting students'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

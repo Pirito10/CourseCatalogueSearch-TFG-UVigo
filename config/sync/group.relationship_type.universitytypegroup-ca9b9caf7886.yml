@@ -1,0 +1,17 @@
+uuid: e8dcf709-8dd0-46d4-a89d-2a4c15d4be49
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - node.type.joint_programme
+  module:
+    - gnode
+    - node
+id: universitytypegroup-ca9b9caf7886
+group_type: universitytypegroup
+content_plugin: 'group_node:joint_programme'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

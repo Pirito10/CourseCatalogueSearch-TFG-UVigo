@@ -1,0 +1,21 @@
+uuid: f2c52089-ec9e-4a14-a53c-3c055b74b861
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_programme_phone
+field_name: field_programme_phone
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

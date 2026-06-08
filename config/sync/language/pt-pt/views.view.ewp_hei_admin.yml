@@ -1,0 +1,49 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Candidatar-se
+          reset_button_label: Atualizar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Primeira'
+            last: 'Última »'
+          expose:
+            items_per_page_label: 'Itens por página'
+            items_per_page_options_all_label: '- Todos -'
+            offset_label: Deslocamento
+      fields:
+        label:
+          label: Etiqueta
+          separator: ', '
+        hei_id:
+          separator: ', '
+        name:
+          label: Nome
+        abbreviation:
+          label: Abreviação
+          separator: ', '
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        website_url:
+          separator: ', '
+        logo_url:
+          separator: ', '
+        mobility_factsheet_url:
+          separator: ', '
+        contact:
+          label: Contact
+      filters:
+        label:
+          expose:
+            label: Etiqueta

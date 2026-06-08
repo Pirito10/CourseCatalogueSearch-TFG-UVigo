@@ -1,0 +1,17 @@
+uuid: 2243d983-5c52-46df-8281-938b31b33da7
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - node.type.iec_instance
+  module:
+    - gnode
+    - node
+id: universitytypegroup-755fe793ad10
+group_type: universitytypegroup
+content_plugin: 'group_node:iec_instance'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false

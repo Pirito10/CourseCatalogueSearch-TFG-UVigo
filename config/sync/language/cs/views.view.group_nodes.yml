@@ -1,0 +1,67 @@
+display:
+  default:
+    display_title: Nadřízené
+    display_options:
+      title: Uzly
+      fields:
+        title:
+          label: Nadpis
+          separator: ', '
+        type:
+          label: 'Typ obsahu'
+          separator: ', '
+        status:
+          label: Stav
+          settings:
+            format_custom_false: Skryto
+            format_custom_true: Zveřejněno
+          separator: ', '
+        changed:
+          label: Aktualizováno
+          separator: ', '
+        dropbutton:
+          label: Operace
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« První'
+            last: 'Poslední »'
+          expose:
+            items_per_page_label: 'Položek na stránku'
+            items_per_page_options_all_label: '- Vše -'
+            offset_label: Posun
+      exposed_form:
+        options:
+          submit_button: 'Přihlásit se'
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      empty:
+        area_text_custom:
+          content: 'Žádný obsah není k dispozici.'
+      arguments:
+        gid:
+          exception:
+            title: Vše
+      filters:
+        status:
+          expose:
+            label: 'Status zveřejnění'
+          group_info:
+            label: 'Status zveřejnění'
+            group_items:
+              1:
+                title: Zveřejněno
+              2:
+                title: Skryto
+        type:
+          expose:
+            label: Typ
+  page_1:
+    display_title: Stránka
+    display_options:
+      menu:
+        title: Uzly

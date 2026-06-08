@@ -1,0 +1,24 @@
+uuid: de3ce160-5d6c-4c31-9676-0d8517e1912f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_admission_descipt_full
+    - filter.format.basic_html
+    - node.type.institution
+  module:
+    - text
+id: node.institution.field_admission_descipt_full
+field_name: field_admission_descipt_full
+entity_type: node
+bundle: institution
+label: 'Admission description for full-degree students'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

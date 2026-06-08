@@ -1,0 +1,22 @@
+uuid: ec752d25-f382-4536-9fb0-09b8adb4c453
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_text_color
+    - node.type.institution
+  module:
+    - color_field
+id: node.institution.field_text_color
+field_name: field_text_color
+entity_type: node
+bundle: institution
+label: 'Text Color'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  opacity: 1
+field_type: color_field_type

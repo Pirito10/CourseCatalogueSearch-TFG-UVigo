@@ -1,0 +1,7 @@
+name: 'Degree Admin Locks'
+type: module
+description: 'Locks certain fields for Degree Admin role.'
+core_version_requirement: ^9 || ^10
+package: Custom
+dependencies:
+  - drupal:node

@@ -1,0 +1,9 @@
+uuid: 506e4afe-7cbc-486c-9cd3-999fef6fbff7
+langcode: en
+status: true
+dependencies: {  }
+name: 'Type of HEI'
+vid: type_of_hei
+description: null
+weight: 0
+new_revision: false

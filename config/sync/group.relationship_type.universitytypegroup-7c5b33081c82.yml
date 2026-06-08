@@ -1,0 +1,17 @@
+uuid: e2edea4a-5c6d-4fe9-8e08-deb4fbd75032
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - node.type.resources_and_services
+  module:
+    - gnode
+    - node
+id: universitytypegroup-7c5b33081c82
+group_type: universitytypegroup
+content_plugin: 'group_node:resources_and_services'
+plugin_config:
+  group_cardinality: 1
+  entity_cardinality: 1
+  use_creation_wizard: false

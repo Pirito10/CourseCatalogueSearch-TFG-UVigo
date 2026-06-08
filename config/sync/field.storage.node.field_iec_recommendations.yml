@@ -1,0 +1,19 @@
+uuid: 4fe9d32f-634d-4b8a-8d4e-5ca3a07ab7ed
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_iec_recommendations
+field_name: field_iec_recommendations
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

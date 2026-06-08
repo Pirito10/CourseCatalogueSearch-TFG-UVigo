@@ -1,0 +1,22 @@
+uuid: bcb84c3d-8945-4ca4-80c7-58c0c36256f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.iec_instance
+id: node.iec_instance.sticky
+field_name: sticky
+entity_type: node
+bundle: iec_instance
+label: 'Sticky at top of lists'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

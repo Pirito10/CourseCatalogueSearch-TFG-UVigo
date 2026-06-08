@@ -1,0 +1,19 @@
+uuid: 0dd819fb-9007-4215-b944-6222f588f0ae
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_academic_calendar
+field_name: field_academic_calendar
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

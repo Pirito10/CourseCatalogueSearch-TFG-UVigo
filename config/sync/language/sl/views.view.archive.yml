@@ -1,0 +1,12 @@
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+  block_1:
+    display_title: Blok
+  page_1:
+    display_title: Stran

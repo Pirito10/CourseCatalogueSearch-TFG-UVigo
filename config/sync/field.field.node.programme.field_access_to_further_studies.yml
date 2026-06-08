@@ -1,0 +1,24 @@
+uuid: d65b249b-a4db-4f8b-bafa-72486c01a1fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_access_to_further_studies
+    - filter.format.basic_html
+    - node.type.programme
+  module:
+    - text
+id: node.programme.field_access_to_further_studies
+field_name: field_access_to_further_studies
+entity_type: node
+bundle: programme
+label: 'Access to further studies'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

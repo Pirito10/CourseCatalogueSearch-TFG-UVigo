@@ -1,0 +1,21 @@
+uuid: 78c71e14-60cb-46c1-bd6e-4d6f1af2f6fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ou_phone
+    - node.type.organizational_unit
+  module:
+    - telephone
+id: node.organizational_unit.field_ou_phone
+field_name: field_ou_phone
+entity_type: node
+bundle: organizational_unit
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

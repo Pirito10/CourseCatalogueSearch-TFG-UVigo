@@ -1,0 +1,67 @@
+label: Περιεχόμενο
+description: 'Εύρεση και διαχείριση περιεχομένου'
+display:
+  default:
+    display_title: Προεπιλεγμένο
+    display_options:
+      title: Περιεχόμενο
+      fields:
+        title:
+          label: Τίτλος
+        type:
+          label: 'Τύπος περιεχομένου'
+          separator: ', '
+        name:
+          label: Συντάκτης
+        status:
+          label: Κατάσταση
+          settings:
+            format_custom_false: 'Μη δημοσιευμένο'
+            format_custom_true: Δημοσιευμένο
+        changed:
+          label: Ενημερώθηκε
+        operations:
+          label: Λειτουργίες
+      pager:
+        options:
+          tags:
+            next: 'Επόμενο ›'
+            previous: '‹ Προηγούμενο'
+      exposed_form:
+        options:
+          submit_button: Φίλτρο
+          reset_button_label: Επαναφορά
+          exposed_sorts_label: 'Ταξινόμηση κατά'
+          sort_asc_label: Αύξ
+          sort_desc_label: Φθί
+      empty:
+        area_text_custom:
+          content: 'Δεν υπάρχει διαθέσιμη ύλη.'
+      filters:
+        title:
+          expose:
+            label: Τίτλος
+        type:
+          expose:
+            label: 'Τύπος περιεχομένου'
+        status:
+          expose:
+            label: Κατάσταση
+          group_info:
+            label: 'Κατάσταση δημοσίευσης'
+            group_items:
+              1:
+                title: Δημοσιευμένο
+              2:
+                title: 'Μη δημοσιευμένο'
+        langcode:
+          expose:
+            label: Γλώσσα
+  page_1:
+    display_title: Σελίδα
+    display_options:
+      menu:
+        title: Περιεχόμενο
+      tab_options:
+        title: Περιεχόμενο
+        description: 'Αναζήτηση και διαχείριση περιεχομένου'

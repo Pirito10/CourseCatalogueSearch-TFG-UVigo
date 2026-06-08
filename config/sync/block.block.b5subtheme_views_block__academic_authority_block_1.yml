@@ -1,0 +1,30 @@
+uuid: 04fc00fe-2910-4ae0-ae53-c5bd292bcfaa
+langcode: en
+status: false
+dependencies:
+  config:
+    - views.view.academic_authority
+  module:
+    - system
+    - views
+  theme:
+    - b5subtheme
+id: b5subtheme_views_block__academic_authority_block_1
+theme: b5subtheme
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:academic_authority-block_1'
+settings:
+  id: 'views_block:academic_authority-block_1'
+  label: ''
+  label_display: visible
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/general-information/*'

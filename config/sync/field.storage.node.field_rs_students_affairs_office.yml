@@ -1,0 +1,19 @@
+uuid: 7ee9e3cc-39b9-4989-909c-f37981a5e991
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_rs_students_affairs_office
+field_name: field_rs_students_affairs_office
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

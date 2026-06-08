@@ -1,0 +1,17 @@
+label: 'Contenido reciente'
+description: 'Contenido reciente.'
+display:
+  default:
+    display_title: Privzeto
+    display_options:
+      title: 'Contenido reciente'
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+      empty:
+        area_text_custom:
+          content: 'Na voljo ni nobene vsebine.'
+      use_more_text: Več
+  block_1:
+    display_title: Blok

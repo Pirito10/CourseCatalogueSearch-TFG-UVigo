@@ -1,0 +1,56 @@
+<?php
+
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function agreement_courses_preprocess_views_view(array &$variables): void {
+  $view = $variables['view'];
+
+  if ($view->id() !== 'programme_information') {
+    return;
+  }
+
+  $node = NULL;
+
+  // Caso 1: si algún día la ruta tiene node.
+  $route_node = \Drupal::routeMatch()->getParameter('node');
+
+  if ($route_node instanceof NodeInterface) {
+    $node = $route_node;
+  }
+
+  // Caso 2: sacar el Programme desde el resultado de la View.
+  if (!$node instanceof NodeInterface && !empty($view->result[0]->_entity)) {
+    $entity = $view->result[0]->_entity;
+
+    if ($entity instanceof NodeInterface) {
+      $node = $entity;
+    }
+  }
+
+  if (!$node instanceof NodeInterface) {
+    \Drupal::logger('agreement_courses')->notice('No se pudo cargar el Programme desde la View.');
+    return;
+  }
+
+  if ($node->bundle() !== 'programme') {
+    return;
+  }
+
+  /** @var \Drupal\agreement_courses\Service\AgreementCourseMatcher $matcher */
+  $matcher = \Drupal::service('agreement_courses.matcher');
+
+  $variables['compatible_courses'] = $matcher->getCompatibleCoursesForProgramme($node);
+
+  $cacheability = CacheableMetadata::createFromObject($node)
+    ->addCacheContexts(['route'])
+    ->addCacheTags([
+      'node_list:agreement',
+      'node_list:individual_educational_component',
+      'node_list:programme',
+    ]);
+  $cacheability->applyTo($variables);
+}

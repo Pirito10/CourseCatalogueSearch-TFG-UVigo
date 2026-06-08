@@ -1,0 +1,80 @@
+label: Csoporttartalmak
+display:
+  default:
+    display_title: Mester
+    display_options:
+      title: Tartalmak
+      fields:
+        title:
+          label: Cím
+          separator: ', '
+        type:
+          label: Tartalomtípus
+          separator: ', '
+        status:
+          label: Állapot
+          settings:
+            format_custom_false: Rejtett
+            format_custom_true: Közzétéve
+          separator: ', '
+        changed:
+          label: Frissítve
+          separator: ', '
+        view_group_relationship:
+          admin_label: 'Kapcsolat megtekintéséhez hivatkozás'
+          text: 'Kapcsolat megtekintése'
+        edit_group_relationship:
+          text: 'Kapcsolat szerkesztése'
+        delete_group_relationship:
+          text: 'Kapcsolat törlése'
+        edit_node:
+          text: 'Tartalom szerkesztése'
+        delete_node:
+          text: 'Tartalom törlése'
+        dropbutton:
+          label: Műveletek
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Első'
+            last: 'Utolsó »'
+          expose:
+            items_per_page_label: 'Elemek száma oldalanként'
+            items_per_page_options_all_label: '– Mind –'
+            offset_label: Eltolás
+      exposed_form:
+        options:
+          submit_button: Alkalmaz
+          reset_button_label: Visszaállít
+          exposed_sorts_label: Rendezés
+          sort_asc_label: Növ
+          sort_desc_label: Csökk
+      empty:
+        area_text_custom:
+          content: 'Nincs elérhető tartalom.'
+      arguments:
+        gid:
+          exception:
+            title: Mind
+          title: '{{ arguments.gid|placeholder }} tartalmak'
+      filters:
+        status:
+          expose:
+            label: 'Közzététel állapota'
+          group_info:
+            label: 'Közzététel állapota'
+            group_items:
+              1:
+                title: Közzétéve
+              2:
+                title: Rejtett
+        type:
+          expose:
+            label: Tipus
+  page_1:
+    display_title: Oldal
+    display_options:
+      menu:
+        title: Tartalmak

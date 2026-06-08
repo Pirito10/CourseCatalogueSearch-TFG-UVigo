@@ -1,0 +1,21 @@
+uuid: eac00de3-b7e0-4f5a-933e-046db9612780
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_eqf_level
+    - node.type.programme
+  module:
+    - ewp_core
+id: node.programme.field_eqf_level
+field_name: field_eqf_level
+entity_type: node
+bundle: programme
+label: 'Level of qualification'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: eqf_level

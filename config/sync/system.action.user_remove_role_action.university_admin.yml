@@ -1,0 +1,14 @@
+uuid: 537e0475-bc5d-469e-b573-0e21c1620c84
+langcode: es
+status: true
+dependencies:
+  config:
+    - user.role.university_admin
+  module:
+    - user
+id: user_remove_role_action.university_admin
+label: 'Elimina el rol University Admin al(los) usuario(s) seleccionado(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: university_admin

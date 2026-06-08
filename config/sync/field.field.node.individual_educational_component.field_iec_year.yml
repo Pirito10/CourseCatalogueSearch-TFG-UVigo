@@ -1,0 +1,21 @@
+uuid: fd5bda8e-eba7-49dd-a19b-8f096e214e39
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_year
+    - node.type.individual_educational_component
+  module:
+    - options
+id: node.individual_educational_component.field_iec_year
+field_name: field_iec_year
+entity_type: node
+bundle: individual_educational_component
+label: Year
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

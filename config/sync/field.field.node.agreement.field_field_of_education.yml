@@ -1,0 +1,21 @@
+uuid: 0013e14c-e022-4ba7-b8d2-047aaf2eb28e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_field_of_education
+    - node.type.agreement
+  module:
+    - isced_field
+id: node.agreement.field_field_of_education
+field_name: field_field_of_education
+entity_type: node
+bundle: agreement
+label: 'Field of education'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: isced_f

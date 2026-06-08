@@ -1,0 +1,21 @@
+cancel_confirm:
+  subject: 'Konto [user:display-name] kustutamise soov saidil [site:name]'
+password_reset:
+  subject: 'Konto [user:display-name] parooli muutmise soov saidil [site:name]'
+  body: "[user:display-name],\r\n\r\nSaidil [site:name] avaldas keegi külastaja soovi muuta ära sinu konto parool.\r\n\r\nParooli muutmiseks kasuta alumist linki:\r\n\r\n[user:one-time-login-url]\r\n\r\nSeda linki saab kasutada ainult üks kord, see suunab sind parooli muutmise lehele. Link aegub 24 tunniga, aga mitte midagi ei juhtu, kui seda ei kasutata.\r\n\r\n--  [site:name] meeskond"
+register_admin_created:
+  subject: 'Administraator on loonud sulle konto saidile [site:name]'
+register_no_approval_required:
+  subject: 'Kasutaja [user:display-name] konto andmed lehel [site:name]'
+register_pending_approval:
+  subject: 'Kasutajakonto [user:display-name] detailid lehel [site:name] (ootab administraatori kinnitust)'
+register_pending_approval_admin:
+  subject: 'Kasutajakonto [user:display-name] detailid lehel [site:name] (ootab administraatori kinnitust)'
+status_activated:
+  subject: 'Kasutaja [user:display-name] konto andmed saidil [site:name] (kinnitatud)'
+status_blocked:
+  subject: 'Kasutaja [user:display-name] konto andmed lehel [site:name] (blokeeritud)'
+  body: "[user:display-name],\r\n\r\nSinu konto lehel [site:name] on blokeeritud.\r\n\r\n--  [site:name] meeskond"
+status_canceled:
+  subject: 'Konto [user:display-name] andmed saidil [site:name] (tühistatud)'
+  body: "[user:display-name],\r\n\r\nSinu konto saidil [site:name] on tühistatud.\r\n\r\n--  [site:name] meeskond"

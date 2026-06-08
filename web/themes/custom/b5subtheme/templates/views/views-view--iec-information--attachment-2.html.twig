@@ -1,0 +1,50 @@
+
+
+{% if view.result|length > 0 %}
+
+{% set iec = view.result[0]._entity.field_iec.entity %}
+{% set programme = iec ? iec.field_iec_programme.entity : null %}
+{% set institution = programme ? programme.field_programme_institution.entity : null %}
+
+{% set university_primary_color = institution.field_primary_color[0].color %}
+
+<style>:root
+{
+	--university_primary_color: {{university_primary_color}}
+	;
+	
+}</style>
+
+
+
+
+<div class="subject-edition-band">
+  <div class="subject-edition-label">
+    {{ 'Course edition:'|t }}
+  </div>
+
+  <div class="dropdown subject-edition-dropdown">
+    <button
+      class="subject-edition-btn dropdown-toggle"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false">
+      {{ 'Select'|t }}
+    </button>
+
+    <ul class="dropdown-menu dropdown-menu-dark w-100">
+      {% for row in view.result %}
+        {% set instance = row._entity %}
+        {% if instance %}
+          <li>
+            <a class="dropdown-item"
+               href="/iec-instance/{{ instance.id }}">
+              {{ instance.label }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}

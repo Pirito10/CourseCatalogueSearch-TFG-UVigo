@@ -1,0 +1,24 @@
+uuid: 61c990c1-8d23-4d2f-9567-ae38107c68b8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.body
+field_name: body
+entity_type: node
+bundle: resources_and_services
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+  allowed_formats: {  }
+field_type: text_with_summary

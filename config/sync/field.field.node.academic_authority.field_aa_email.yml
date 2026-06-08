@@ -1,0 +1,19 @@
+uuid: 3ee1ebb3-e11f-4df2-9de1-16f7a5c5dee7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_aa_email
+    - node.type.academic_authority
+id: node.academic_authority.field_aa_email
+field_name: field_aa_email
+entity_type: node
+bundle: academic_authority
+label: E-mail
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

@@ -1,0 +1,48 @@
+display:
+  default:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Εφαρμογή
+          reset_button_label: Επαναφορά
+          exposed_sorts_label: 'Ταξινόμηση κατά'
+          sort_asc_label: Αύξ
+          sort_desc_label: Φθί
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+          expose:
+            items_per_page_label: 'Είδη ανά σελίδα'
+            items_per_page_options_all_label: '- Όλα -'
+            offset_label: Αντιστάθμιση
+      fields:
+        label:
+          label: Ετικέτα
+          separator: ', '
+        person_given_names:
+          separator: ', '
+        person_family_name:
+          separator: ', '
+        person_gender:
+          separator: ', '
+        phone_number:
+          label: 'Αριθμός τηλεφώνου'
+        email:
+          label: Email
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        role_description:
+          separator: ', '
+      filters:
+        label:
+          expose:
+            label: Ετικέτα
+      title: Επαφές
+  contact_list:
+    display_options:
+      menu:
+        title: Επαφές

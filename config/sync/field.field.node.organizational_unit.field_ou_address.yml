@@ -1,0 +1,19 @@
+uuid: e40e8130-ac09-49a8-b0fd-e930f77802a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ou_address
+    - node.type.organizational_unit
+id: node.organizational_unit.field_ou_address
+field_name: field_ou_address
+entity_type: node
+bundle: organizational_unit
+label: 'Street Address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

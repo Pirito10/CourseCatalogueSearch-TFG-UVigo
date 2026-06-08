@@ -1,0 +1,761 @@
+<?php
+
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Url;
+use Drupal\user\Entity\User;
+
+
+/**
+ * Implements hook_theme().
+ */
+function admin_area_theme($existing, $type, $theme, $path) {
+    return [
+      'admin-area' => [
+        'variables' => ['data' => NULL],
+        // Usamos el servicio de extensión para obtener la ruta del tema.
+        'path' => \Drupal::service('extension.list.theme')->getPath('b5subtheme') . '/templates',
+      ],
+    ];
+  }
+  
+/**
+ * Implements hook_entity_access().
+ */
+function admin_area_entity_access(\Drupal\Core\Entity\EntityInterface $entity, $operation, \Drupal\Core\Session\AccountInterface $account) {
+  // Solo manejamos nodos.
+  if ($entity->getEntityTypeId() !== 'node') {
+    return \Drupal\Core\Access\AccessResult::neutral();
+  }
+
+  // Verifica que es una asignatura.
+  if ($entity->bundle() === 'individual_educational_component') {
+    // Carga los grupos del usuario.
+    $groups = \Drupal::service('group.membership_loader')->loadByUser($account);
+
+    foreach ($groups as $membership) {
+      $group = $membership->getGroup();
+      $roles = $membership->getRoles();
+
+      // Verifica si el usuario tiene un rol válido en este grupo.
+      foreach ($roles as $role) {
+        if (in_array($role->id(), ['universitytypegroup-university_a', 'universitytypegroup-degree_admin', 'universitytypegroup-subject_admi'])) {
+          // Verifica permisos del rol del grupo.
+          if ($role->id() === 'universitytypegroup-university_a' && in_array($operation, ['translate', 'view'])) {
+            return \Drupal\Core\Access\AccessResult::allowed();
+          }
+          if ($role->id() === 'universitytypegroup-degree_admin' && in_array($operation, ['translate'])) {
+            return \Drupal\Core\Access\AccessResult::allowed();
+          }
+          if ($role->id() === 'universitytypegroup-subject_admi' && in_array($operation, ['translate'])) {
+            return \Drupal\Core\Access\AccessResult::allowed();
+          }
+        }
+      }
+    }
+  }
+
+  // Devuelve acceso neutral si no se cumple ninguna condición.
+  return \Drupal\Core\Access\AccessResult::neutral();
+}
+
+ /* Implementación de hook_form_alter().
+ */
+
+
+function admin_area_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  //\Drupal::logger('admin_area')->info('Interceptado formulario con ID: @form_id', ['@form_id' => $form_id]);
+
+
+
+
+
+  // Comprobar si estamos en un formulario de vista expuesta.
+  if ($form_id == 'views_exposed_form') {
+    \Drupal::logger('admin_area')->info('Estamos en formulario de view exposed form');
+
+    // Imprimir la estructura completa del formulario en el log.
+    //\Drupal::logger('admin_area')->info('<pre>@form</pre>', ['@form' => print_r($form, TRUE)]);
+  }
+
+
+    if($form_id != 'views_exposed_form' && $form_id != 'search_block_form'){
+    \Drupal::logger('admin_area_2')->info('Interceptado formulario con ID: @form_id', ['@form_id' => $form_id]);
+  }
+  
+
+  if($form_id == 'node_institution_edit_form' || $form_id == 'node_programme_edit_form' || $form_id == 'node_individual_educational_component_edit_form' || 
+    $form_id == 'node_institution_form' || $form_id == 'node_programme_form' || $form_id == 'node_individual_educational_component_form' || $form_id == 'node_campus_edit_form' ||
+    $form_id == 'node_campus_form' || $form_id == 'node_resources_and_services_edit_form' || $form_id == 'node_resources_and_services_form' || $form_id == 'node_organizational_unit_edit_form'
+    || $form_id == 'node_organizational_unit_form' || $form_id == 'node_academic_authority_edit_form' || $form_id == 'node_academic_authority_form' || $form_id == 'node_iec_instance_edit_form' || $form_id == 'node_iec_instance_form'){
+    \Drupal::logger('admin_area_2')->info('Dentro do if node edit formmmmm');
+    \Drupal::logger('admin_area_2')->info('ACADEMIC AUTHORITYYYYY');
+    $form['actions']['submit']['#submit'][] = 'admin_area_redirect_after_translation';
+  }
+
+
+  
+  if ($form_id === 'content_translation_overview_add_form') {
+    \Drupal::logger('admin_area')->info('Formulario de traducción interceptado.');
+
+    $node = $form_state->getFormObject()->getEntity();
+    if ($node) {
+      \Drupal::logger('admin_area')->info('Nodo cargado para traducción: ID: @id, tipo: @type', [
+        '@id' => $node->id(),
+        '@type' => $node->bundle(),
+      ]);
+    } else {
+      \Drupal::logger('admin_area')->error('No se pudo cargar el nodo para el formulario de traducción.');
+    }
+  }
+
+  $is_node_translation_delete_form = FALSE;
+  if (str_starts_with($form_id, 'node_') && str_ends_with($form_id, '_delete_form')) {
+    $form_object = $form_state->getFormObject();
+    $entity = $form_object && method_exists($form_object, 'getEntity') ? $form_object->getEntity() : NULL;
+    $is_node_translation_delete_form = $entity instanceof Node && !$entity->isDefaultTranslation();
+  }
+
+  if ($form_id === 'content_translation_delete_confirm' || $is_node_translation_delete_form) {
+    $form['admin_area_delete_destination'] = [
+      '#type' => 'hidden',
+      '#value' => admin_area_translation_delete_destination_from_request($form_state) ?: '',
+    ];
+    $form['actions']['submit']['#submit'][] = 'admin_area_redirect_after_translation_delete';
+  }
+
+
+
+  $entity_types = ['programme', 'institution', 'resources_and_services', 'individual_educational_component', 'campus', 'organizational_unit', 'academic_authority'];
+
+  // Verifica si el formulario pertenece a la creación o edición de estas entidades.
+  foreach ($entity_types as $type) {
+    if ($form_id === "node_{$type}_form" || $form_id === "node_{$type}_edit_form" || $form_id == 'create_user_in_group_form') {
+
+      // Obtener la URL de la página anterior.
+      $request = \Drupal::requestStack()->getCurrentRequest();
+      $referer = $request->headers->get('referer');
+
+      // Si no hay referer, redirigir a /my-area por defecto.
+      $cancel_url = $referer ?: '/';
+      
+      // Agregar un botón "Cancel".
+      $form['actions']['cancel'] = [
+        '#type' => 'button',
+        '#value' => t('Cancel'),
+        '#attributes' => ['onclick' => 'window.location.href="' . $cancel_url . '"; return false;'],
+      ];
+
+      if (isset($form['actions']['preview'])) {
+        unset($form['actions']['preview']);
+      }
+
+
+    
+
+      break; // Salir del bucle una vez que se encuentra un tipo coincidente.
+    }
+  }
+
+
+
+
+
+}
+
+/**
+ * Redirects after deleting a translation to the page that started the flow.
+ */
+function admin_area_redirect_after_translation_delete(array &$form, FormStateInterface $form_state): void {
+  $destination = $form_state->getValue('admin_area_delete_destination');
+
+  if (!$destination) {
+    $destination = admin_area_translation_delete_destination_from_request($form_state);
+  }
+
+  if ($destination && UrlHelper::isValid($destination) && !UrlHelper::isExternal($destination)) {
+    $form_state->setRedirectUrl(Url::fromUserInput($destination));
+  }
+}
+
+/**
+ * Finds the best internal destination for a translation delete form.
+ */
+function admin_area_translation_delete_destination_from_request(FormStateInterface $form_state): ?string {
+  $request = \Drupal::requestStack()->getCurrentRequest();
+  $destination = $request->query->get('destination');
+
+  if (!$destination) {
+    $referer = $request->headers->get('referer');
+    if ($referer) {
+      $referer_parts = parse_url($referer);
+      if (!empty($referer_parts['query'])) {
+        parse_str($referer_parts['query'], $query);
+        $destination = $query['destination'] ?? NULL;
+      }
+
+      if (!$destination && !empty($referer_parts['path']) && !admin_area_is_translation_delete_path($referer_parts['path'])) {
+        $destination = $referer_parts['path'];
+        if (!empty($referer_parts['query'])) {
+          $destination .= '?' . $referer_parts['query'];
+        }
+      }
+    }
+  }
+
+  if ($destination && UrlHelper::isValid($destination) && !UrlHelper::isExternal($destination)) {
+    return $destination;
+  }
+
+  $form_object = $form_state->getFormObject();
+  $entity = $form_object && method_exists($form_object, 'getEntity') ? $form_object->getEntity() : NULL;
+  if ($entity instanceof Node) {
+    return Url::fromRoute('entity.node.content_translation_overview', [
+      'node' => $entity->id(),
+    ], [
+      'language' => \Drupal::languageManager()->getLanguage('en'),
+    ])->toString();
+  }
+
+  return NULL;
+}
+
+/**
+ * Returns TRUE when the path is the delete confirmation itself.
+ */
+function admin_area_is_translation_delete_path(string $path): bool {
+  return str_ends_with($path, '/delete') || str_contains($path, '/translations/delete/');
+}
+
+
+
+/**
+ * Callback para redirigir después de guardar una traducción.
+ */
+function admin_area_redirect_after_translation(array &$form, FormStateInterface $form_state) {
+  $node = $form_state->getFormObject()->getEntity();
+  $current_user = \Drupal::currentUser();
+  $user = User::load($current_user->id());
+
+  \Drupal::logger('admin_area')->info('Redirect after translatioooooonnn');
+
+  if ($node && $user) {
+    $memberships = \Drupal::service('group.membership_loader')->loadByUser($user);
+    if (!empty($memberships)) {
+      $group = reset($memberships)->getGroup();
+
+      // Obtener tipo de entidad y rol del grupo
+      $entity_type = $node->bundle(); // 'programme', 'iec', etc.
+      $role = null;
+      $membership = \Drupal::service('group.membership_loader')->load($group, $user);
+      if ($membership) {
+        foreach ($membership->getRoles() as $r) {
+          switch ($r->id()) {
+            case 'universitytypegroup-university_a':
+              $role = 'university_admin';
+              break;
+
+            case 'universitytypegroup-degree_admin':
+              $role = 'programme_admin';
+              break;
+
+            case 'universitytypegroup-subject_admi':
+              $role = 'iec_admin';
+              break;
+          }
+        }
+      }
+
+      // Mapear ruta
+      $route_maps = [
+        'programme' => [
+          'university_admin' => 'view.admin_programmes.page_1',
+          'programme_admin'  => 'view.admin_programmes.page_2',
+        ],
+        'iec' => [
+          'university_admin' => 'view.admin_iecs.page_1',
+          'programme_admin'  => 'view.admin_iecs.page_2',
+          'iec_admin'        => 'view.admin_iecs.page_3',
+        ],
+        'iec_instance' => [
+          'university_admin' => 'view.admin_iec_instances.page_1',
+          'programme_admin'  => 'view.admin_iec_instances.page_2',
+          'iec_admin'        => 'view.admin_iec_instances.page_3',
+        ],
+        'campus' => [
+          'university_admin' => 'view.admin_campuses.page_1',
+        ],
+        'rs' => [
+          'university_admin' => 'view.admin_rs.page_1',
+        ],
+        'institution' => [
+          'university_admin' => 'view.admin_institution.page_1',
+        ],
+        'organizational_unit' => [
+          'university_admin' => 'view.admin_organizational_units.page_1',
+        ],
+        'academic_authority' => [
+          'university_admin' => 'view.admin_academic_authorities.page_1',
+        ],
+      ];
+
+      if (isset($route_maps[$entity_type][$role])) {
+        $route_name = $route_maps[$entity_type][$role];
+
+        // ✅ Forzar idioma EN en la URL de destino.
+        $en = \Drupal::languageManager()->getLanguage('en');
+        if ($en) {
+          $url = Url::fromRoute($route_name, [], ['language' => $en]);
+          $form_state->setRedirectUrl($url);
+        }
+        else {
+          // Fallback si no existe 'en'
+          $form_state->setRedirect($route_name);
+        }
+
+        return;
+      }
+    }
+  }
+
+  // Redirección por defecto
+  $en = \Drupal::languageManager()->getLanguage('en');
+  if ($en) {
+    $form_state->setRedirectUrl(Url::fromRoute('<front>', [], ['language' => $en]));
+  }
+  else {
+    $form_state->setRedirect('<front>');
+  }
+}
+
+
+
+
+/**
+ * Implements hook_page_top().
+ */
+function admin_area_page_top(array &$page_top) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  if ($route_name == 'entity.node.content_translation_overview') {
+
+    /*
+    // Crear el botón "Go to My Area".
+    $url = \Drupal\Core\Url::fromUserInput('/my-area');
+
+    $button = [
+      '#type' => 'link',
+      '#title' => t('Go to My Area'),
+      '#url' => $url,
+      '#attributes' => [
+        'class' => ['btn', 'btn-primary', 'mb-3'],
+        'style' => 'margin-bottom: 10px;',
+      ],
+    ];
+
+    // Obtener la URL de la página anterior.
+    $request = \Drupal::requestStack()->getCurrentRequest();
+    $referer = $request->headers->get('referer');
+
+    // Si no hay referer, redirigir a /my-area por defecto.
+    $cancel_url = $referer ?: '/my-area';
+
+    // Agregar un botón "Cancel".
+    $button_cancel = [
+      '#type' => 'button',
+      '#value' => t('Cancel'),
+      '#attributes' => ['onclick' => 'window.location.href="' . $cancel_url . '"; return false;',
+      'class' => ['btn', 'btn-secondary', 'mb-3'],
+      'style' => 'margin-bottom: 10px;', 'color'],
+    ];
+
+
+    
+
+    // Añadir el botón al array renderizable de la página.
+    $page_top['go_to_my_area_button'] = $button;
+    $page_top['cancel'] = $button_cancel;
+  
+  */
+    }
+    
+}
+
+
+
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function admin_area_form_group_node_individual_educational_component_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $programme_id = \Drupal::request()->query->get('field_iec_programme');
+
+  if ($programme_id && is_numeric($programme_id)) {
+    $programme = Node::load($programme_id);
+
+    if ($programme && $programme->bundle() === 'programme') {
+      $form['field_iec_programme']['#default_value'] = [$programme];
+      $form['field_iec_programme']['#disabled'] = TRUE;
+    }
+  }
+}
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+
+
+function admin_area_form_node_programme_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $institution_id = \Drupal::request()->query->get('field_programme_institution');
+
+  
+  
+  if ($institution_id && is_numeric($institution_id)) {
+    $institution = Node::load($institution_id);
+
+    if ($institution && $institution->bundle() === 'institution') {
+      // Esta es la forma correcta con entity_autocomplete
+      $form['field_programme_institution']['widget'][0]['target_id']['#default_value'] = $institution;
+
+      // Bloquearlo para que no sea editable
+      $form['field_programme_institution']['widget'][0]['target_id']['#disabled'] = TRUE;
+    }
+  }
+
+
+  $ou_id = \Drupal::request()->query->get('field_programme_ou');
+  if ($ou_id && is_numeric($ou_id)) {
+    $ou = Node::load($ou_id);
+
+    if ($ou && $ou->bundle() === 'organizational_unit') {
+      $form['field_programme_ou']['widget'][0]['target_id']['#default_value'] = $ou->id();
+      $form['field_programme_ou']['widget'][0]['target_id']['#disabled'] = TRUE;
+    }
+  }
+
+
+
+
+}
+
+/**
+ * Locks Agreement Institution 1 from the URL query when present.
+ */
+function admin_area_apply_agreement_institution_lock(array &$form, \Drupal\Core\Form\FormStateInterface $form_state): void {
+  $institution_id = \Drupal::request()->query->get('field_institution_1');
+
+  if ((!$institution_id || !is_numeric($institution_id)) && $form_state->getFormObject()) {
+    $entity = $form_state->getFormObject()->getEntity();
+
+    if ($entity instanceof Node && $entity->bundle() === 'agreement' && $entity->hasField('field_institution_1') && !$entity->get('field_institution_1')->isEmpty()) {
+      $institution_id = $entity->get('field_institution_1')->target_id;
+    }
+  }
+
+  if (!$institution_id || !is_numeric($institution_id)) {
+    return;
+  }
+
+  $institution = Node::load($institution_id);
+
+  if (!$institution || $institution->bundle() !== 'institution') {
+    return;
+  }
+
+  if (isset($form['field_institution_1']['widget'][0]['target_id'])) {
+    $form['field_institution_1']['widget'][0]['target_id']['#default_value'] = $institution;
+    $form['field_institution_1']['widget'][0]['target_id']['#disabled'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function admin_area_form_node_agreement_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  admin_area_apply_agreement_institution_lock($form, $form_state);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function admin_area_form_node_agreement_edit_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  admin_area_apply_agreement_institution_lock($form, $form_state);
+}
+
+
+function admin_area_form_node_individual_educational_component_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $programme_id = \Drupal::request()->query->get('field_iec_programme');
+
+  if ($programme_id && is_numeric($programme_id)) {
+    $programme = Node::load($programme_id);
+
+    if ($programme && $programme->bundle() === 'programme') {
+      // Esta es la forma correcta con entity_autocomplete
+      $form['field_iec_programme']['widget'][0]['target_id']['#default_value'] = $programme;
+
+      // Bloquearlo para que no sea editable
+      $form['field_iec_programme']['widget'][0]['target_id']['#disabled'] = TRUE;
+    }
+  }
+}
+
+
+function admin_area_form_node_iec_instance_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $iec_id = \Drupal::request()->query->get('field_iec');
+
+  if ($iec_id && is_numeric($iec_id)) {
+    $iec = Node::load($iec_id);
+
+    if ($iec && $iec->bundle() === 'individual_educational_component') {
+      // Esta es la forma correcta con entity_autocomplete
+      $form['field_iec']['widget'][0]['target_id']['#default_value'] = $iec;
+
+      // Bloquearlo para que no sea editable
+      $form['field_iec']['widget'][0]['target_id']['#disabled'] = TRUE;
+    }
+  }
+}
+
+
+
+
+function admin_area_form_node_campus_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $campus_id = \Drupal::request()->query->get('field_campus_institution');
+
+  if ($campus_id && is_numeric($campus_id)) {
+    $campus = Node::load($campus_id);
+
+    if ($campus && $campus->bundle() === 'campus') {
+      // Esta es la forma correcta con entity_autocomplete
+      $form['field_campus_institution']['widget'][0]['target_id']['#default_value'] = $campus;
+
+      // Bloquearlo para que no sea editable
+      $form['field_campus_institution']['widget'][0]['target_id']['#disabled'] = TRUE;
+    }
+  }
+}
+
+
+
+
+function admin_area_form_node_organizational_unit_form_alter(array &$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $institution_id = \Drupal::request()->query->get('field_ou_institution');
+
+  if ($institution_id && is_numeric($institution_id)) {
+    $institution = Node::load($institution_id);
+
+    if ($institution && $institution->bundle() === 'institution') {
+      // Esta es la forma correcta con entity_autocomplete
+      $form['field_ou_institution']['widget'][0]['target_id']['#default_value'] = $institution;
+
+      // Bloquearlo para que no sea editable
+      $form['field_ou_institution']['widget'][0]['target_id']['#disabled'] = TRUE;
+    }
+  }
+}
+
+
+
+function admin_area_form_node_programme_edit_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  
+    #$form['field_programme_ou']['#disabled'] = TRUE;
+  
+
+}
+
+
+
+function admin_area_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $node = $form_state->getFormObject()->getEntity();
+
+  $bundles = [
+    'institution',
+    'campus',
+    'organizational_unit',
+    'resources_and_services',
+    'programme',
+    'individual_educational_component',
+    'academic_authority',
+    'iec_instance',
+  ];
+
+  if (in_array($node->bundle(), $bundles, TRUE)) {
+    if (isset($form['uid'])) {
+      $form['uid']['#access'] = TRUE;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+use Drupal\views\ViewExecutable;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function admin_area_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  if ($view->id() !== 'admin_available_joint_programmes') {
+    return;
+  }
+
+
+  $institution_nid = admin_area_get_current_user_group_institution_nid();
+
+  if (empty($institution_nid)) {
+    return;
+  }
+
+  $query->addWhereExpression(0, "
+    node_field_data.nid NOT IN (
+      SELECT jp_programme.entity_id
+      FROM {node__field_programme} jp_programme
+      INNER JOIN {node__field_programme_institution} programme_inst
+        ON programme_inst.entity_id = jp_programme.field_programme_target_id
+      WHERE programme_inst.field_programme_institution_target_id = :current_institution_own
+        AND jp_programme.deleted = 0
+        AND programme_inst.deleted = 0
+    )
+  ", [
+    ':current_institution_own' => $institution_nid,
+  ]);
+
+
+  $query->addWhereExpression(0, "
+    node_field_data.nid NOT IN (
+      SELECT member_jp.field_member_joint_programme_target_id
+      FROM {node__field_member_joint_programme} member_jp
+      INNER JOIN {node__field_member_institution} member_inst
+        ON member_inst.entity_id = member_jp.entity_id
+      WHERE member_inst.field_member_institution_target_id = :current_institution_membership
+        AND member_jp.deleted = 0
+        AND member_inst.deleted = 0
+    )
+  ", [
+    ':current_institution_membership' => $institution_nid,
+  ]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Obtiene el grupo del usuario actual.
+ */
+function admin_area_get_current_user_group_id() {
+  $account = \Drupal::currentUser();
+
+  if ($account->isAnonymous()) {
+    return NULL;
+  }
+
+  $user = User::load($account->id());
+
+  if (!$user) {
+    return NULL;
+  }
+
+  /** @var \Drupal\group\Entity\GroupMembershipLoaderInterface $membership_loader */
+  $membership_loader = \Drupal::service('group.membership_loader');
+  $memberships = $membership_loader->loadByUser($user);
+
+  foreach ($memberships as $membership) {
+    $group = $membership->getGroup();
+
+    if ($group) {
+      return (int) $group->id();
+    }
+  }
+
+  return NULL;
+}
+
+
+function admin_area_get_current_user_group_institution_nid() {
+  $gid = admin_area_get_current_user_group_id();
+
+  if (!$gid) {
+    return NULL;
+  }
+
+  $institution_nid = \Drupal::database()
+    ->select('group_relationship_field_data', 'grfd')
+    ->fields('grfd', ['entity_id'])
+    ->condition('grfd.gid', $gid)
+    ->condition('grfd.plugin_id', 'group_node:institution')
+    ->range(0, 1)
+    ->execute()
+    ->fetchField();
+
+  return $institution_nid ? (int) $institution_nid : NULL;
+}
+
+
+
+function admin_area_form_node_member_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $request = \Drupal::request();
+
+  $joint_programme_nid = $request->query->get('field_member_joint_programme');
+  $institution_nid = admin_area_get_current_user_group_institution_nid();
+
+  if ($institution_nid && isset($form['field_member_institution']['widget'][0]['target_id'])) {
+    $form['field_member_institution']['widget'][0]['target_id']['#default_value'] = Node::load($institution_nid);
+  }
+
+  if ($joint_programme_nid && isset($form['field_member_joint_programme']['widget'][0]['target_id'])) {
+    $form['field_member_joint_programme']['widget'][0]['target_id']['#default_value'] = Node::load($joint_programme_nid);
+  }
+
+  $form['field_member_institution']['widget'][0]['target_id']['#disabled'] = TRUE;
+  $form['field_member_joint_programme']['widget'][0]['target_id']['#disabled'] = TRUE;
+}

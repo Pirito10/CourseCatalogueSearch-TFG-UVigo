@@ -1,0 +1,19 @@
+uuid: 9c91d197-d737-4995-ab09-5dd7a2e65329
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_inclusion_email
+    - node.type.resources_and_services
+id: node.resources_and_services.field_inclusion_email
+field_name: field_inclusion_email
+entity_type: node
+bundle: resources_and_services
+label: 'Inclusion and accessibility support email'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

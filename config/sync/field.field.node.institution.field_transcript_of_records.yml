@@ -1,0 +1,23 @@
+uuid: 5159090e-0fa7-4992-8ef6-7fcd20726115
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_transcript_of_records
+    - node.type.institution
+id: node.institution.field_transcript_of_records
+field_name: field_transcript_of_records
+entity_type: node
+bundle: institution
+label: 'Transcript of records'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: 5
+  prefix: ''
+  suffix: ''
+field_type: integer

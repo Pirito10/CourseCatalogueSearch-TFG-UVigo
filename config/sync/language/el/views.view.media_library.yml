@@ -1,0 +1,96 @@
+display:
+  default:
+    display_title: Προεπιλεγμένο
+    display_options:
+      title: Μέσα
+      fields:
+        media_bulk_form:
+          action_title: Ενέργεια
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Είδη ανά σελίδα'
+            items_per_page_options_all_label: '- Όλα -'
+            offset_label: Αντιστάθμιση
+      exposed_form:
+        options:
+          reset_button_label: Επαναφορά
+          exposed_sorts_label: 'Ταξινόμηση κατά'
+          sort_asc_label: Αύξ
+          sort_desc_label: Φθί
+      sorts:
+        created:
+          expose:
+            label: 'Τα νεότερα πρώτα'
+      filters:
+        status:
+          expose:
+            label: 'Κατάσταση δημοσίευσης'
+          group_info:
+            label: Δημοσιευμένο
+            group_items:
+              1:
+                title: Δημοσιευμένο
+              2:
+                title: 'Μη δημοσιευμένο'
+        name:
+          expose:
+            label: Όνομα
+        langcode:
+          expose:
+            label: Γλώσσα
+  page:
+    display_title: Σελίδα
+    display_options:
+      fields:
+        media_bulk_form:
+          action_title: Ενέργεια
+        name:
+          separator: ', '
+        edit_media:
+          text: Επεξεργασία
+        delete_media:
+          text: Διαγραφή
+  widget:
+    display_title: 'Γραφικό συστατικό'
+    display_options:
+      arguments:
+        bundle:
+          exception:
+            title: Όλες
+      filters:
+        name:
+          expose:
+            label: Όνομα
+      header:
+        display_link_grid:
+          label: Πλέγμα
+        display_link_table:
+          label: Πίνακας
+  widget_table:
+    display_options:
+      fields:
+        thumbnail__target_id:
+          label: Μικρογραφία
+        name:
+          label: Όνομα
+        uid:
+          label: Συντάκτης
+        changed:
+          label: Ενημερώθηκε
+      arguments:
+        bundle:
+          exception:
+            title: Όλες
+      filters:
+        name:
+          expose:
+            label: Όνομα
+      header:
+        display_link_grid:
+          label: Πλέγμα
+        display_link_table:
+          label: Πίνακας

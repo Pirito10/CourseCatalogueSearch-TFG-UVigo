@@ -1,0 +1,191 @@
+uuid: 7637aba8-8281-4d37-808d-38c3a7ec5f15
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.individual_educational_component.field_assessment_method_types
+    - field.field.node.individual_educational_component.field_fields_of_study
+    - field.field.node.individual_educational_component.field_iec_activity_types
+    - field.field.node.individual_educational_component.field_iec_avaliable_for_mobility
+    - field.field.node.individual_educational_component.field_iec_code
+    - field.field.node.individual_educational_component.field_iec_contents
+    - field.field.node.individual_educational_component.field_iec_coordinator
+    - field.field.node.individual_educational_component.field_iec_credits
+    - field.field.node.individual_educational_component.field_iec_description
+    - field.field.node.individual_educational_component.field_iec_elm_type
+    - field.field.node.individual_educational_component.field_iec_email
+    - field.field.node.individual_educational_component.field_iec_engagement_hours
+    - field.field.node.individual_educational_component.field_iec_evaluation
+    - field.field.node.individual_educational_component.field_iec_instructors
+    - field.field.node.individual_educational_component.field_iec_language_of_instructio
+    - field.field.node.individual_educational_component.field_iec_learning_outcomes
+    - field.field.node.individual_educational_component.field_iec_modality
+    - field.field.node.individual_educational_component.field_iec_phone
+    - field.field.node.individual_educational_component.field_iec_planned_activities
+    - field.field.node.individual_educational_component.field_iec_programme
+    - field.field.node.individual_educational_component.field_iec_recommendations
+    - field.field.node.individual_educational_component.field_iec_requirements
+    - field.field.node.individual_educational_component.field_iec_restricted_alliance
+    - field.field.node.individual_educational_component.field_iec_term
+    - field.field.node.individual_educational_component.field_iec_type
+    - field.field.node.individual_educational_component.field_iec_type_of_credits
+    - field.field.node.individual_educational_component.field_iec_web
+    - field.field.node.individual_educational_component.field_iec_year
+    - field.field.node.individual_educational_component.field_subject_area
+    - node.type.individual_educational_component
+  module:
+    - elm_vocabulary_field
+    - isced_field
+    - link
+    - options
+    - text
+    - user
+id: node.individual_educational_component.default
+targetEntityType: node
+bundle: individual_educational_component
+mode: default
+content:
+  field_assessment_method_types:
+    type: elm_controlled_vocabulary_default
+    label: above
+    settings:
+      prefix: false
+    third_party_settings: {  }
+    weight: 16
+    region: content
+  field_fields_of_study:
+    type: isced_f_default
+    label: above
+    settings:
+      prefix: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_iec_activity_types:
+    type: elm_controlled_vocabulary_default
+    label: above
+    settings:
+      prefix: false
+    third_party_settings: {  }
+    weight: 15
+    region: content
+  field_iec_avaliable_for_mobility:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_iec_coordinator:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_iec_elm_type:
+    type: elm_controlled_vocabulary_default
+    label: above
+    settings:
+      prefix: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_iec_email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_iec_engagement_hours:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  field_iec_language_of_instructio:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_iec_modality:
+    type: elm_controlled_vocabulary_default
+    label: above
+    settings:
+      prefix: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_iec_phone:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_iec_restricted_alliance:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 17
+    region: content
+  field_iec_type_of_credits:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 18
+    region: content
+  field_iec_web:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_subject_area:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 13
+    region: content
+hidden:
+  field_iec_code: true
+  field_iec_contents: true
+  field_iec_credits: true
+  field_iec_description: true
+  field_iec_evaluation: true
+  field_iec_instructors: true
+  field_iec_learning_outcomes: true
+  field_iec_planned_activities: true
+  field_iec_programme: true
+  field_iec_recommendations: true
+  field_iec_requirements: true
+  field_iec_term: true
+  field_iec_type: true
+  field_iec_year: true
+  langcode: true
+  links: true

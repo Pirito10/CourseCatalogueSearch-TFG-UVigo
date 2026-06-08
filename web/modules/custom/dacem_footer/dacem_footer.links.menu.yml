@@ -1,0 +1,6 @@
+dacem_footer.messages:
+  title: 'DACEM footer messages'
+  description: 'View feedback submitted from the DACEM footer.'
+  route_name: dacem_footer.messages
+  parent: system.admin_config
+  weight: 100

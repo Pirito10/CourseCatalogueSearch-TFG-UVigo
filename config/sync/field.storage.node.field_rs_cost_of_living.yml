@@ -1,0 +1,19 @@
+uuid: 3e042163-7f0f-4003-bfcd-4999d8f23b93
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_rs_cost_of_living
+field_name: field_rs_cost_of_living
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

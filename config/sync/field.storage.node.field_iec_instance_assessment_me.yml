@@ -1,0 +1,20 @@
+uuid: fb17ad74-6306-4daf-8e20-2c9e821ddb2a
+langcode: en
+status: true
+dependencies:
+  module:
+    - elm_vocabulary_field
+    - node
+id: node.field_iec_instance_assessment_me
+field_name: field_iec_instance_assessment_me
+entity_type: node
+type: elm_controlled_vocabulary
+settings:
+  vocabulary: assessment
+module: elm_vocabulary_field
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

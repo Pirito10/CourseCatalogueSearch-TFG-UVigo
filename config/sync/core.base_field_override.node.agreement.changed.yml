@@ -1,0 +1,18 @@
+uuid: 038e1102-736f-4517-9c6a-82298a920351
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.agreement
+id: node.agreement.changed
+field_name: changed
+entity_type: node
+bundle: agreement
+label: Changed
+description: 'The time that the node was last edited.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: changed

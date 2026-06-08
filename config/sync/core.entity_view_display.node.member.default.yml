@@ -1,0 +1,56 @@
+uuid: f1428ad4-2cd4-4db6-bc92-f295a55d6e11
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.member.field_member_institution
+    - field.field.node.member.field_member_joint_programme
+    - field.field.node.member.field_member_organizational_unit
+    - field.field.node.member.field_member_role
+    - node.type.member
+  module:
+    - text
+    - user
+id: node.member.default
+targetEntityType: node
+bundle: member
+mode: default
+content:
+  field_member_institution:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_member_joint_programme:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_member_organizational_unit:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_member_role:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

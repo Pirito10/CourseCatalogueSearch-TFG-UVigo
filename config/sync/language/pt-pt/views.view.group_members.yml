@@ -1,0 +1,56 @@
+label: 'Membros do grupo'
+display:
+  default:
+    display_title: Principal
+    display_options:
+      title: Membros
+      fields:
+        name:
+          label: Utilizador
+          separator: ', '
+        group_roles:
+          label: 'Grupos de utilizador'
+          separator: ', '
+        changed:
+          label: Atualizado
+          separator: ', '
+        created:
+          label: 'Membro desde'
+          separator: ', '
+        edit_group_relationship:
+          text: 'Editar membro'
+        delete_group_relationship:
+          text: 'Remover membro'
+        dropbutton:
+          label: Operações
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+            first: '« Primeira'
+            last: 'Última »'
+          expose:
+            items_per_page_label: 'Itens por página'
+            items_per_page_options_all_label: '- Todos -'
+            offset_label: Deslocamento
+      exposed_form:
+        options:
+          submit_button: Candidatar-se
+          reset_button_label: Atualizar
+          exposed_sorts_label: 'Ordenar por'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      empty:
+        area_text_custom:
+          content: 'Nenhum membro disponível.'
+      arguments:
+        gid:
+          exception:
+            title: Todos
+          title: '{{ arguments.gid|placeholder }} membros'
+  page_1:
+    display_title: Página
+    display_options:
+      menu:
+        title: Membros

@@ -1,0 +1,29 @@
+uuid: faf08337-fcfc-4082-82a5-fdc264b149f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_aa_organizational_unit
+    - node.type.academic_authority
+    - node.type.organizational_unit
+id: node.academic_authority.field_aa_organizational_unit
+field_name: field_aa_organizational_unit
+entity_type: node
+bundle: academic_authority
+label: 'Organizational Unit'
+description: 'Fill in only if this Academic Authority belongs to the Organizational Unit.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organizational_unit: organizational_unit
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

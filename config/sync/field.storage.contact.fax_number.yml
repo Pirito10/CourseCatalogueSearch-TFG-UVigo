@@ -1,0 +1,24 @@
+uuid: aade6128-1e65-48cd-a3f4-289fc029c711
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_contact
+    - ewp_phone_number
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: vHjSZ0AoEk_Si5BYYPOEjLnfvORMSboKw5KDazJrPpM
+id: contact.fax_number
+field_name: fax_number
+entity_type: contact
+type: ewp_phone_number
+settings: {  }
+module: ewp_phone_number
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

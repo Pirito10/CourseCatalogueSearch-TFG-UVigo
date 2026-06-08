@@ -1,0 +1,25 @@
+uuid: 0c78fdfa-7f1d-40db-9c48-ae1d81e48ca3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.hei.abbreviation
+  module:
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: lNbeRtOwnxCAvQPa5zM5LvOmYENm9P0vYzfiVEFpup8
+id: hei.hei.abbreviation
+field_name: abbreviation
+entity_type: hei
+bundle: hei
+label: Abbreviation
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,22 @@
+uuid: 808a890e-ff61-48c4-ab5e-18cb579d3df4
+langcode: es
+status: true
+dependencies:
+  config:
+    - field.storage.group_relationship.group_roles
+    - group.relationship_type.universitytypegroup-9376111be951
+id: group_relationship.universitytypegroup-9376111be951.group_roles
+field_name: group_roles
+entity_type: group_relationship
+bundle: universitytypegroup-9376111be951
+label: Roles
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'group_type:group_role'
+  handler_settings:
+    group_type_id: universitytypegroup
+field_type: entity_reference

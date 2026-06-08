@@ -1,0 +1,110 @@
+uuid: 40860fe2-c704-4528-b2d7-7ea61fde21d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.contact.contact.contact_name
+    - field.field.contact.contact.email
+    - field.field.contact.contact.fax_number
+    - field.field.contact.contact.mailing_address
+    - field.field.contact.contact.person_family_name
+    - field.field.contact.contact.person_gender
+    - field.field.contact.contact.person_given_names
+    - field.field.contact.contact.phone_number
+    - field.field.contact.contact.role_description
+    - field.field.contact.contact.street_address
+  module:
+    - ewp_contact
+    - ewp_core
+    - ewp_flexible_address
+    - ewp_phone_number
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: 4245-8C9ZMUCNUSoFq5RM1eRwPEWx88phJ8Mf-5rt64
+id: contact.contact.default
+targetEntityType: contact
+bundle: contact
+mode: default
+content:
+  contact_name:
+    type: ewp_string_lang_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  email:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  fax_number:
+    type: ewp_phone_number_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  mailing_address:
+    type: ewp_flexible_address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  person_family_name:
+    type: ewp_string_lang_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  person_gender:
+    type: gender_code_default
+    label: inline
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  person_given_names:
+    type: ewp_string_lang_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  phone_number:
+    type: ewp_phone_number_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  role_description:
+    type: ewp_multiline_lang_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  street_address:
+    type: ewp_flexible_address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+hidden:
+  langcode: true

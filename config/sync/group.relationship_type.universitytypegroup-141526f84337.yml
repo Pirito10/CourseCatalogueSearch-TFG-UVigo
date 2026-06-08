@@ -1,0 +1,17 @@
+uuid: f639720b-2e88-444e-acc0-072b30c5d6bd
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+    - node.type.agreement
+  module:
+    - gnode
+    - node
+id: universitytypegroup-141526f84337
+group_type: universitytypegroup
+content_plugin: 'group_node:agreement'
+plugin_config:
+  group_cardinality: 1
+  entity_cardinality: 1
+  use_creation_wizard: false

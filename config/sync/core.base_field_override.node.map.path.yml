@@ -1,0 +1,20 @@
+uuid: afbf61a3-5d7f-41f8-bdf9-2a0493a21ebc
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.map
+  module:
+    - path
+id: node.map.path
+field_name: path
+entity_type: node
+bundle: map
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

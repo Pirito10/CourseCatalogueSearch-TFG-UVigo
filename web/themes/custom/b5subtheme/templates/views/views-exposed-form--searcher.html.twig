@@ -1,0 +1,53 @@
+<form{{ attributes.addAttribute('data-disable-refocus','true') }}>
+  <div class="custom-btn-group-filter-ou d-flex gap-10 mb-3 flex-wrap">
+    <div class="dropdown">
+      <button class="btn btn-dark btn-sm dropdown-toggle btn-whithout-border-radius" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ 'Knowledge Area'|t }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.programme_area }}
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-dark btn-sm dropdown-toggle btn-whithout-border-radius" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ 'Level'|t }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.programme_level }}
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-dark btn-sm dropdown-toggle btn-whithout-border-radius" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ 'Destination'|t }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.field_institution_country_value }}
+      </div>
+    </div>
+
+    {% if form.actions is defined %}
+      <div class="ms-auto">
+        {{ form.actions }}
+      </div>
+    {% endif %}
+  </div>
+
+  {# Ordenación expuesta: UNA sola vez y oculta #}
+  {% if form.sort_by is defined and form.sort_order is defined %}
+    <div class="visually-hidden">
+      {{ form.sort_by }}
+      {{ form.sort_order }}
+    </div>
+  {% endif %}
+
+  {# ⬅️ AQUI: el filtro de texto expuesto, oculto pero presente en el DOM #}
+  {% if form.combine is defined %}
+    <div class="visually-hidden">
+      {{ form.combine }}
+    </div>
+  {% endif %}
+
+  {{ children }}
+</form>

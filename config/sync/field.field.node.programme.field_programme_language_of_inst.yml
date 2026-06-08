@@ -1,0 +1,29 @@
+uuid: 14f083fd-c786-455f-a9bc-47a6ee9517c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_language_of_inst
+    - node.type.programme
+    - taxonomy.vocabulary.languages_of_instuction
+id: node.programme.field_programme_language_of_inst
+field_name: field_programme_language_of_inst
+entity_type: node
+bundle: programme
+label: 'Languages of instruction'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      languages_of_instuction: languages_of_instuction
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

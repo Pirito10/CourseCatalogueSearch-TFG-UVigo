@@ -1,0 +1,38 @@
+uuid: 38adeeb3-0312-4e51-b84b-8a24ad38e68b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ac_photo
+    - node.type.academic_authority
+  module:
+    - image
+id: node.academic_authority.field_ac_photo
+field_name: field_ac_photo
+entity_type: node
+bundle: academic_authority
+label: Picture
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg webp'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: true
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: 820
+    height: 480
+field_type: image

@@ -1,0 +1,72 @@
+uuid: 42a0842d-fbe4-4d6c-bfeb-240b5aa72e1a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.joint_programme.field_arrangements_for_grading
+    - field.field.node.joint_programme.field_form_of_the_diploma
+    - field.field.node.joint_programme.field_joint_alliance
+    - field.field.node.joint_programme.field_joint_description
+    - field.field.node.joint_programme.field_mobility_structure
+    - field.field.node.joint_programme.field_programme
+    - node.type.joint_programme
+  module:
+    - options
+    - text
+    - user
+id: node.joint_programme.default
+targetEntityType: node
+bundle: joint_programme
+mode: default
+content:
+  field_arrangements_for_grading:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_form_of_the_diploma:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_joint_alliance:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_joint_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_mobility_structure:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_programme:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true

@@ -1,0 +1,23 @@
+uuid: 4e781a78-797d-40d4-be0c-dee1c4a7205c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_institution_webpage
+    - node.type.institution
+  module:
+    - link
+id: node.institution.field_institution_webpage
+field_name: field_institution_webpage
+entity_type: node
+bundle: institution
+label: 'Institution web'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

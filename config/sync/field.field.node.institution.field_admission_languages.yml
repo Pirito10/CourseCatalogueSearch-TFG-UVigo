@@ -1,0 +1,19 @@
+uuid: d4395a7a-56fa-4d61-97e3-05b44311cfef
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_admission_languages
+    - node.type.institution
+id: node.institution.field_admission_languages
+field_name: field_admission_languages
+entity_type: node
+bundle: institution
+label: 'Admission Languages'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

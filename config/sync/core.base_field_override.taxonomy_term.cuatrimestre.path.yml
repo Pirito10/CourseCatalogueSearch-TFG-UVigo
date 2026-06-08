@@ -1,0 +1,20 @@
+uuid: 8b45debd-cb2e-4dd2-aca2-c354dd76ac01
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.cuatrimestre
+  module:
+    - path
+id: taxonomy_term.cuatrimestre.path
+field_name: path
+entity_type: taxonomy_term
+bundle: cuatrimestre
+label: 'Alias de URL'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

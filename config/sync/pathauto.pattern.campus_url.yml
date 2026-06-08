@@ -1,0 +1,22 @@
+uuid: f1adb3c9-43a9-458f-8df1-ce315df9bdd6
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: campus_url
+label: 'Campus url'
+type: 'canonical_entities:node'
+pattern: '[node:field_campus_institution:entity:title]/[node:title]'
+selection_criteria:
+  b4815f5e-791e-4324-b0f4-86a577ff70a7:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: b4815f5e-791e-4324-b0f4-86a577ff70a7
+    context_mapping:
+      node: node
+    bundles:
+      campus: campus
+selection_logic: and
+weight: -5
+relationships: {  }

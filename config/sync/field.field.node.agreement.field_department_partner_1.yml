@@ -1,0 +1,29 @@
+uuid: 55e633e7-3333-4bc4-89e9-592502e22d34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_department_partner_1
+    - node.type.agreement
+    - node.type.organizational_unit
+id: node.agreement.field_department_partner_1
+field_name: field_department_partner_1
+entity_type: node
+bundle: agreement
+label: 'Organizational Unit partner 1'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organizational_unit: organizational_unit
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,22 @@
+uuid: 76a47beb-f264-48a1-8cee-4aa3dd18c742
+langcode: es
+status: true
+dependencies:
+  module:
+    - node
+id: programmes_url
+label: 'Programmes url'
+type: 'canonical_entities:node'
+pattern: '[node:field_programme_institution:entity:title]/[node:title]'
+selection_criteria:
+  d2148238-38d8-429d-9bef-d36b7b5ba6a9:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: d2148238-38d8-429d-9bef-d36b7b5ba6a9
+    context_mapping:
+      node: node
+    bundles:
+      programme: programme
+selection_logic: and
+weight: -5
+relationships: {  }

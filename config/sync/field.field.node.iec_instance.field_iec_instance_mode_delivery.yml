@@ -1,0 +1,29 @@
+uuid: 69f32731-4260-4b89-839d-803abaeb12bd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_mode_delivery
+    - node.type.iec_instance
+  module:
+    - elm_vocabulary_field
+id: node.iec_instance.field_iec_instance_mode_delivery
+field_name: field_iec_instance_mode_delivery
+entity_type: node
+bundle: iec_instance
+label: 'Mode of Delivery'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allow_selection:
+    729f3bed4b: false
+    7813801c77: false
+    9191af2ed9: false
+    920fbb3cbe: false
+    c_3a90b26d: false
+    e92d221e4d: false
+    ed4c557045: false
+field_type: elm_controlled_vocabulary

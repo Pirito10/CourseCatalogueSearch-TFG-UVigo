@@ -1,0 +1,19 @@
+uuid: bec71056-e9c4-43e7-a561-ab76d33691f1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_email
+    - node.type.programme
+id: node.programme.field_email
+field_name: field_email
+entity_type: node
+bundle: programme
+label: Email
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

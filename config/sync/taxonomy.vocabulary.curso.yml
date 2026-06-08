@@ -1,0 +1,9 @@
+uuid: e52c9633-d7f6-49b3-a68a-c8a0138ea184
+langcode: es
+status: true
+dependencies: {  }
+name: Curso
+vid: curso
+description: 'Indica el curso en el que se dá una asignatura'
+weight: 0
+new_revision: false

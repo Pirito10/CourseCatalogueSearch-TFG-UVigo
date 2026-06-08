@@ -1,0 +1,19 @@
+uuid: 7b171f08-2763-41f2-986b-fa9d36d9bcf8
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - node
+id: node.field_insurance_website
+field_name: field_insurance_website
+entity_type: node
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,29 @@
+uuid: 31aa7029-7034-40f3-bf1f-810aae3391af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_ou
+    - node.type.organizational_unit
+    - node.type.programme
+id: node.programme.field_programme_ou
+field_name: field_programme_ou
+entity_type: node
+bundle: programme
+label: 'Organizational Unit'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      organizational_unit: organizational_unit
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

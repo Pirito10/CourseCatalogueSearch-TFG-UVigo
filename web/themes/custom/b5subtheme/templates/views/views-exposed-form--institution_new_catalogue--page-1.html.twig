@@ -1,0 +1,247 @@
+{% import _self as helpers %}
+
+{% macro filter_label(element, default_label) %}
+  {# valor actual del filtro #}
+  {% set value = element['#value'] ?? [] %}
+  {% set label = default_label %}
+
+  {# multi-selección (valor iterable) #}
+  {% if value is iterable %}
+    {% set count = 0 %}
+    {% set first_label = '' %}
+
+    {# recorrer todas las opciones y ver cuáles están seleccionadas #}
+    {% for key, option_label in element['#options'] ?? [] %}
+      {% if key in value and key not in ['', '_none', 'All'] %}
+        {% set count = count + 1 %}
+        {% if count == 1 %}
+          {% set first_label = option_label %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% if count == 1 %}
+      {% set label = first_label %}
+    {% elseif count > 1 %}
+      {% set label = '@count selected'|t({'@count': count}) %}
+    {% endif %}
+
+  {# selección simple (un único valor) #}
+  {% else %}
+    {% if value not in ['', '_none', 'All'] %}
+      {% set label = (element['#options'][value] ?? default_label) %}
+    {% endif %}
+  {% endif %}
+
+  {{- label -}}
+{% endmacro %}
+
+
+
+
+<form{{ attributes.addClass('institution-new-catalogue-exposed-form').addAttribute('data-disable-refocus','true') }}>
+
+  {# helpers: está activo si el #value no está vacío, ni '_none', ni 'All' #}
+  {% set area_active =
+    form.field_isced_f is defined
+    and (
+      (form.field_isced_f['#value'] is iterable and form.field_isced_f['#value']|length > 0)
+      or (form.field_isced_f['#value']|default('') not in ['', '_none', 'All'])
+    )
+  %}
+
+  {#
+  {% set programme_type_active =
+    form.programme_type is defined
+    and (
+      (form.programme_type['#value'] is iterable and form.programme_type['#value']|length > 0)
+      or (form.programme_type['#value']|default('') not in ['', '_none', 'All'])
+    )
+  %}
+  #}
+
+  {% set country_active =
+    form.field_institution_country_value is defined
+    and (
+      (form.field_institution_country_value['#value'] is iterable and form.field_institution_country_value['#value']|length > 0)
+      or (form.field_institution_country_value['#value']|default('') not in ['', '_none', 'All'])
+    )
+  %}
+  {% set language_active =
+    form.programme_language is defined
+    and (
+      (form.programme_language['#value'] is iterable and form.programme_language['#value']|length > 0)
+      or (form.programme_language['#value']|default('') not in ['', '_none', 'All'])
+    )
+  %}
+
+  {% set programme_ou_active =
+    form.programme_ou is defined
+    and (
+      (form.programme_ou['#value'] is iterable and form.programme_ou['#value']|length > 0)
+      or (form.programme_ou['#value']|default('') not in ['', '_none', 'All'])
+    )
+  %}
+   {% set programme_campus_active =
+    form.programme_campus is defined
+    and (
+      (form.programme_campus['#value'] is iterable and form.programme_campus['#value']|length > 0)
+      or (form.programme_campus['#value']|default('') not in ['', '_none', 'All'])
+    )
+  %}
+
+  {% set eqf_level_active =
+    form.eqf_level is defined
+    and (
+      (form.eqf_level['#value'] is iterable and form.eqf_level['#value']|length > 0)
+      or (form.eqf_level['#value']|default('') not in ['', '_none', 'All'])
+    )
+  %}
+
+  {% set mobility_active =
+    form.programme_available_for_mobility is defined
+    and (
+      (form.programme_available_for_mobility['#value'] is iterable and form.programme_available_for_mobility['#value']|length > 0)
+      or (form.programme_available_for_mobility['#value']|default('') not in ['', '_none', 'All', 0, '0'])
+    )
+  %}
+
+  <div class="custom-btn-group-filter-ou institution-new-catalogue-filters d-flex gap-10 mb-3 flex-wrap">
+
+    <div class="dropdown">
+      <button
+        class="btn btn-sm dropdown-toggle btn-whithout-border-radius {{ area_active ? 'btn-search-filter-active' : 'btn-dark' }}"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ helpers.filter_label(form.field_isced_f, 'Fields of study'|t) }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.field_isced_f }}
+      </div>
+    </div>
+
+
+    {#
+    <div class="dropdown">
+      <button
+        class="btn btn-sm dropdown-toggle btn-whithout-border-radius {{ programme_type_active ? 'btn-newcatalogue-active' : 'btn-dark' }}"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ helpers.filter_label(form.programme_type, 'Type'|t) }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.programme_type }}
+      </div>
+    </div>
+
+    #}
+
+
+
+    <div class="dropdown">
+      <button
+        class="btn btn-sm dropdown-toggle btn-whithout-border-radius {{ eqf_level_active ? 'btn-newcatalogue-active' : 'btn-dark' }}"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ helpers.filter_label(form.eqf_level, 'Type'|t) }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.eqf_level }}
+      </div>
+    </div>
+
+
+
+
+
+    <div class="dropdown">
+      <button
+        class="btn btn-sm dropdown-toggle btn-whithout-border-radius {{ language_active ? 'btn-newcatalogue-active' : 'btn-dark' }}"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ helpers.filter_label(form.programme_language, 'Languages'|t) }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.programme_language }}
+      </div>
+    </div>
+
+
+
+
+
+    {% if form.programme_campus['#options']|length > 1 %}
+  <div class="dropdown">
+    <button
+      class="btn btn-sm dropdown-toggle btn-whithout-border-radius {{ programme_campus_active ? 'btn-newcatalogue-active' : 'btn-dark' }}"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      data-bs-auto-close="outside">
+      {{ helpers.filter_label(form.programme_campus, 'Campus'|t) }}
+    </button>
+
+    <div class="dropdown-menu p-3 filter-menu">
+      {{ form.programme_campus }}
+    </div>
+  </div>
+{% endif %}
+
+
+
+
+
+    <div class="dropdown">
+      <button
+        class="btn btn-sm dropdown-toggle btn-whithout-border-radius {{ programme_ou_active ? 'btn-newcatalogue-active' : 'btn-dark' }}"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ helpers.filter_label(form.programme_ou, 'Organizational Unit'|t) }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.programme_ou }}
+      </div>
+    </div>
+
+    {% if form.programme_available_for_mobility is defined %}
+      <div class="iec-mobility-filter">
+        {{ form.programme_available_for_mobility }}
+        <label class="form-check-label mb-0" for="{{ form.programme_available_for_mobility['#id']|default('') }}"></label>
+      </div>
+    {% endif %}
+
+    
+
+
+    
+
+    <!--
+    <div class="dropdown">
+      <button
+        class="btn btn-sm dropdown-toggle btn-whithout-border-radius {{ country_active ? 'btn-newcatalogue-active' : 'btn-dark' }}"
+        type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+        {{ helpers.filter_label(form.field_institution_country_value, 'Destination'|t) }}
+      </button>
+      <div class="dropdown-menu p-3 filter-menu">
+        {{ form.field_institution_country_value }}
+      </div>
+    </div>
+    -->
+
+    {% if form.actions is defined %}
+      <div class="ms-auto">
+        {{ form.actions }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if form.sort_by is defined and form.sort_order is defined %}
+    <div class="visually-hidden">
+      {{ form.sort_by }}
+      {{ form.sort_order }}
+    </div>
+  {% endif %}
+
+  {% if form.combine is defined %}
+    <div class="visually-hidden">
+      {{ form.combine }}
+    </div>
+  {% endif %}
+
+  {{ children }}
+</form>

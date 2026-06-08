@@ -1,0 +1,33 @@
+uuid: 7a6404da-7333-44f4-975c-23ce3302cdb1
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_ou_type
+field_name: field_ou_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: faculty
+      label: Faculty
+    -
+      value: school
+      label: School
+    -
+      value: department
+      label: Department
+    -
+      value: institute
+      label: Institute
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

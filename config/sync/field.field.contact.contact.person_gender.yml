@@ -1,0 +1,26 @@
+uuid: fac2be89-bbb3-4f03-92a3-58fdc39c9abe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.person_gender
+  module:
+    - ewp_contact
+    - ewp_core
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: dVD32VnROpzS9ZADHRoq5gAdGvG6EXV16cv1GpAMOk8
+id: contact.contact.person_gender
+field_name: person_gender
+entity_type: contact
+bundle: contact
+label: 'Person gender'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: gender_code

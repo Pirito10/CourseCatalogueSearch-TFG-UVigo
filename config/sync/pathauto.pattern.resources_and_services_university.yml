@@ -1,0 +1,22 @@
+uuid: 50600e59-2749-485f-ae3a-51cbe7f67f33
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: resources_and_services_university
+label: 'Resources and Services University'
+type: 'canonical_entities:node'
+pattern: 'rs/[node:field_rs_institution:entity:title]'
+selection_criteria:
+  8b4eb88e-1038-4e35-b068-abe1f297ad2f:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 8b4eb88e-1038-4e35-b068-abe1f297ad2f
+    context_mapping:
+      node: node
+    bundles:
+      resources_and_services: resources_and_services
+selection_logic: and
+weight: -5
+relationships: {  }

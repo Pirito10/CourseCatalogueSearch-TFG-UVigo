@@ -1,0 +1,28 @@
+uuid: dd97c8f4-9ef7-44c1-ade4-f2735c658e56
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.hei.mobility_factsheet_url
+  module:
+    - ewp_core
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: LYdlXVF6Lj-N33gHMIoATQEJ5OVLThBfGUZJaS5Yfac
+id: hei.hei.mobility_factsheet_url
+field_name: mobility_factsheet_url
+entity_type: hei
+bundle: hei
+label: 'Mobility factsheet URL'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: ewp_http_lang

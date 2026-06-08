@@ -1,0 +1,19 @@
+uuid: 2cbabeb9-826c-43b0-8e1a-d301597c04fa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_nominations_spring_term
+    - node.type.institution
+id: node.institution.field_nominations_spring_term
+field_name: field_nominations_spring_term
+entity_type: node
+bundle: institution
+label: 'Nominations spring term'
+description: 'Enter the date in mm/dd format.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

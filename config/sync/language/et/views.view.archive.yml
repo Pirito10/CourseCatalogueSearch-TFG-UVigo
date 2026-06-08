@@ -1,0 +1,34 @@
+label: Arhiiv
+description: 'Kogu sisu, kuu kaupa.'
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      title: 'Igakuine arhiiv'
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Kirjeid lehel'
+            items_per_page_options_all_label: '- Kõik -'
+            offset_label: Nihe
+      exposed_form:
+        options:
+          submit_button: 'Rakenda / Kinnita'
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+      arguments:
+        created_year_month:
+          title: '{{ arguments.created_year_month }}'
+  block_1:
+    display_title: Plokk
+    display_options:
+      arguments:
+        created_year_month:
+          title: '{{ arguments.created_year_month }}'
+  page_1:
+    display_title: Leht

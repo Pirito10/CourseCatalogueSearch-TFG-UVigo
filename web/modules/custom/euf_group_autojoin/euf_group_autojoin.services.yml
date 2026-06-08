@@ -1,0 +1,10 @@
+services:
+  euf_group_autojoin.institution_subscriber:
+    class: Drupal\euf_group_autojoin\EventSubscriber\EufInstitutionSubscriber
+    arguments: ['@entity_type.manager', '@logger.channel.euf_group_autojoin']
+    tags:
+      - { name: event_subscriber }
+
+  logger.channel.euf_group_autojoin:
+    parent: logger.channel_base
+    arguments: ['euf_group_autojoin']

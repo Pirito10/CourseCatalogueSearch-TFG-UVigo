@@ -1,0 +1,29 @@
+uuid: 6d25b90b-8d0d-4336-afdb-65a86a4da3a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec
+    - node.type.iec_instance
+    - node.type.individual_educational_component
+id: node.iec_instance.field_iec
+field_name: field_iec
+entity_type: node
+bundle: iec_instance
+label: IEC
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      individual_educational_component: individual_educational_component
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

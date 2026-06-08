@@ -1,0 +1,33 @@
+uuid: e018615f-eec8-4e40-a5c3-7eca654d7682
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.group.universitytypegroup.field_institution_profile
+    - group.type.universitytypegroup
+id: group.universitytypegroup.default
+targetEntityType: group
+bundle: universitytypegroup
+mode: default
+content:
+  field_institution_profile:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: -4
+    region: content
+  label:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -5
+    region: content
+hidden:
+  changed: true
+  created: true
+  langcode: true
+  uid: true

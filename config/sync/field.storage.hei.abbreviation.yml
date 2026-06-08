@@ -1,0 +1,26 @@
+uuid: 15465114-0dc4-48f3-bcf2-7791ee9e1b57
+langcode: en
+status: true
+dependencies:
+  module:
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: qA-aP5PX_o0r0dzm6L5SwtTLQ3MMCLlp_dMqzuXARNE
+id: hei.abbreviation
+field_name: abbreviation
+entity_type: hei
+type: string
+settings:
+  max_length: 255
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

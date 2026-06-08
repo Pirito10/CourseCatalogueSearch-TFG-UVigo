@@ -1,0 +1,21 @@
+uuid: 79bab086-3931-47fb-a2ec-196c99d0b6fe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_aa_phone
+    - node.type.academic_authority
+  module:
+    - telephone
+id: node.academic_authority.field_aa_phone
+field_name: field_aa_phone
+entity_type: node
+bundle: academic_authority
+label: Phone
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: telephone

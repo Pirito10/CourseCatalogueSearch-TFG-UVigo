@@ -1,0 +1,23 @@
+uuid: dbaaa66f-a1d5-4f98-8695-f099013ac6b5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme_web
+    - node.type.programme
+  module:
+    - link
+id: node.programme.field_programme_web
+field_name: field_programme_web
+entity_type: node
+bundle: programme
+label: Webpage
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

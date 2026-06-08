@@ -1,0 +1,55 @@
+uuid: 82b79aa4-4eae-4b66-82c4-cae5047a3ce6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.academic_authority.body
+    - field.field.node.academic_authority.field_aa_campus
+    - field.field.node.academic_authority.field_aa_email
+    - field.field.node.academic_authority.field_aa_institution
+    - field.field.node.academic_authority.field_aa_organizational_unit
+    - field.field.node.academic_authority.field_aa_phone
+    - field.field.node.academic_authority.field_aa_web
+    - field.field.node.academic_authority.field_ac_photo
+    - field.field.node.academic_authority.field_campus_role
+    - field.field.node.academic_authority.field_display_order
+    - field.field.node.academic_authority.field_institution_role
+    - field.field.node.academic_authority.field_mobility_contact
+    - field.field.node.academic_authority.field_organizational_unit_role
+    - node.type.academic_authority
+  module:
+    - text
+    - user
+id: node.academic_authority.teaser
+targetEntityType: node
+bundle: academic_authority
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_aa_campus: true
+  field_aa_email: true
+  field_aa_institution: true
+  field_aa_organizational_unit: true
+  field_aa_phone: true
+  field_aa_web: true
+  field_ac_photo: true
+  field_campus_role: true
+  field_display_order: true
+  field_institution_role: true
+  field_mobility_contact: true
+  field_organizational_unit_role: true
+  langcode: true

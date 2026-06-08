@@ -1,0 +1,20 @@
+uuid: 83654dfc-a9cd-4273-b5fe-94806bc18ba5
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+  module:
+    - path
+id: group.universitytypegroup.path
+field_name: path
+entity_type: group
+bundle: universitytypegroup
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

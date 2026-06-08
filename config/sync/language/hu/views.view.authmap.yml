@@ -1,0 +1,38 @@
+display:
+  default:
+    display_title: Mester
+    display_options:
+      fields:
+        uid:
+          label: 'Drupal felhasználóazonosító'
+          format_plural_string: !!binary MQNAY291bnQ=
+        name:
+          separator: ', '
+        delete_link:
+          label: törlés
+          text: törlés
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Elemek száma oldalanként'
+            items_per_page_options_all_label: '– Mind –'
+            offset_label: Eltolás
+      exposed_form:
+        options:
+          submit_button: Alkalmaz
+          reset_button_label: Visszaállít
+          exposed_sorts_label: Rendezés
+          sort_asc_label: Növ
+          sort_desc_label: Csökk
+      arguments:
+        provider_field:
+          exception:
+            title: Mind
+  page:
+    display_title: Oldal
+    display_options:
+      menu:
+        title: Külső

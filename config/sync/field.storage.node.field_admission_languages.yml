@@ -1,0 +1,19 @@
+uuid: e788f73f-2585-4710-8c4e-0411482e2e71
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_admission_languages
+field_name: field_admission_languages
+entity_type: node
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

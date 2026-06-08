@@ -1,0 +1,7 @@
+importar_datos.form:
+  path: '/import-from-excel'
+  defaults:
+    _form: '\Drupal\import_from_excel\Form\ImportForm'
+    _title: 'Importar Datos desde Excel'
+  #requirements:
+    #_permission: 'access import from excel page'

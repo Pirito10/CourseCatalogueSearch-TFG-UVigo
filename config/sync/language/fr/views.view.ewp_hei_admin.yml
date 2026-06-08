@@ -1,0 +1,49 @@
+display:
+  default:
+    display_title: Principal
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Candidater
+          reset_button_label: Réinitialiser
+          exposed_sorts_label: 'Trier par'
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        options:
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« Premier'
+            last: 'Dernier »'
+          expose:
+            items_per_page_label: 'Éléments par page'
+            items_per_page_options_all_label: '- Tout -'
+            offset_label: Décalage
+      fields:
+        label:
+          label: Libellé
+          separator: ', '
+        hei_id:
+          separator: ', '
+        name:
+          label: Nom
+        abbreviation:
+          label: Abrévation
+          separator: ', '
+        street_address:
+          separator: ', '
+        mailing_address:
+          separator: ', '
+        website_url:
+          separator: ', '
+        logo_url:
+          separator: ', '
+        mobility_factsheet_url:
+          separator: ', '
+        contact:
+          label: Contact
+      filters:
+        label:
+          expose:
+            label: Libellé

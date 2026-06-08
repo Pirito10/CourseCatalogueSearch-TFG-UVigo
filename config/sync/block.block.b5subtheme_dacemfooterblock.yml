@@ -1,0 +1,25 @@
+uuid: 952fa285-33ae-4d70-aca0-6343babf2807
+langcode: en
+status: true
+dependencies:
+  module:
+    - dacem_footer
+    - system
+  theme:
+    - b5subtheme
+id: b5subtheme_dacemfooterblock
+theme: b5subtheme
+region: footer
+weight: 0
+provider: null
+plugin: dacem_footer_block
+settings:
+  id: dacem_footer_block
+  label: 'DACEM Footer Block'
+  label_display: '0'
+  provider: dacem_footer
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: "/admin/*\r\n/user/*"

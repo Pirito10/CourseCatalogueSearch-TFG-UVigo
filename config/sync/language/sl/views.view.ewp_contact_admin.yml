@@ -1,0 +1,21 @@
+display:
+  default:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Prijava
+          reset_button_label: Ponastavi
+      fields:
+        label:
+          label: Oznaka
+        email:
+          label: E-pošta
+      filters:
+        label:
+          expose:
+            label: Oznaka
+      title: Kontakti
+  contact_list:
+    display_options:
+      menu:
+        title: Kontakti

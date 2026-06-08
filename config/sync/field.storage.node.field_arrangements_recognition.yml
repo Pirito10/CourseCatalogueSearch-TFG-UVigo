@@ -1,0 +1,19 @@
+uuid: b393aca2-010c-4487-a398-dc8fca090288
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_arrangements_recognition
+field_name: field_arrangements_recognition
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

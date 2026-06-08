@@ -1,0 +1,26 @@
+uuid: 77791c4c-e23d-400c-9298-255e33e9d2b1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.group.field_institution_profile
+    - group.type.universitytypegroup
+id: group.universitytypegroup.field_institution_profile
+field_name: field_institution_profile
+entity_type: group
+bundle: universitytypegroup
+label: 'Institution Profile'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:hei'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

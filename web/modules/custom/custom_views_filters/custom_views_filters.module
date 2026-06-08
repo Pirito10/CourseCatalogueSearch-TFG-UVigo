@@ -1,0 +1,1843 @@
+<?php
+
+use Drupal\custom_views_filters\FuzzySearch;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Plugin\views\query\Sql;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Element\EntityAutocomplete;
+use Drupal\Core\Form\FormStateInterface;
+
+
+
+/**
+ * Implements hook_views_post_execute().
+ *
+ * Reorders the current page of results by the fuzzy score computed in
+ * FuzzySearch::scoreFromIndex(). Only fires when the fuzzy filter was active.
+ */
+function custom_views_filters_views_post_execute(ViewExecutable $view): void {
+  if (empty(FuzzySearch::$scores)) {
+    return;
+  }
+  $scores = FuzzySearch::$scores;
+  usort($view->result, static function ($a, $b) use ($scores) {
+    $sa = $scores[$a->nid] ?? 0.0;
+    $sb = $scores[$b->nid] ?? 0.0;
+    return $sb <=> $sa;
+  });
+  FuzzySearch::$scores = [];
+}
+
+/**
+ * Implements hook_views_query_alter().
+ * Modifies the query to replace the alias of the university with its node ID.
+ */
+function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query)
+{
+  // Fuzzy search for the programme catalogue.
+  // Replaces the combine filter (exact LIKE) with a Levenshtein-based fuzzy search
+  // backed by the Search API index.
+  if ($view->id() === 'search_programme') {
+    $search = trim($view->getExposedInput()['combine'] ?? '');
+
+    if ($search !== '') {
+      $matches = FuzzySearch::scoreFromIndex($search);
+
+      // Remove the combine filter SQL condition (operator 'formula').
+      foreach ($query->where as &$group) {
+        foreach ($group['conditions'] as $k => $condition) {
+          if (($condition['operator'] ?? '') === 'formula') {
+            foreach ((array) ($condition['value'] ?? []) as $arg) {
+              if (is_string($arg) && strpos($arg, $search) !== FALSE) {
+                unset($group['conditions'][$k]);
+                break 2;
+              }
+            }
+          }
+        }
+      }
+      unset($group);
+
+      if ($matches === NULL) {
+        // Term too short — no filtering, show all results.
+      }
+      elseif (empty($matches)) {
+        // No fuzzy matches — force empty result.
+        $query->addWhere(1, 'node_field_data.nid', [0], 'IN');
+      }
+      else {
+        FuzzySearch::$scores = array_column($matches, 'score', 'nid');
+        $query->addWhere(1, 'node_field_data.nid', array_column($matches, 'nid'), 'IN');
+      }
+    }
+  }
+
+  $current_language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
+  $alias_manager = \Drupal::service('path_alias.manager');
+
+  if ($view->id() === 'institution_catalogue' || $view->id() === 'general_information' || $view->id() === 'programme_information') {
+
+    \Drupal::logger('custom_views_filters')->notice('Altering query for institution_catalogue');
+
+    // 🔹Get the argument of the view (the instituion alias)
+    $args = $view->args;
+    $alias_name = '';
+
+    if (empty($args[0])) {
+      \Drupal::logger('custom_views_filters')->warning('No alias found in arguments');
+      return;
+    }
+    if ($view->id() == 'institution_catalogue' || $view->id() == 'general_information') {
+      $alias_name = $args[0];
+    } else if ($view->id() == 'programme_information') {
+      $alias_name = $args[0] . '/' . $args[1];
+    }
+
+    $path = $alias_manager->getPathByAlias('/' . $alias_name, $current_language);
+    ////dump($path);
+
+
+    if (preg_match('/^\/node\/(\d+)$/', $path, $matches)) {
+
+      $node_id = (int) $matches[1];
+      $where_conditions = &$query->where;
+
+      ////dump($where_conditions);
+
+      foreach ($where_conditions as &$condition_group) {
+        foreach ($condition_group['conditions'] as &$condition) {
+
+          if (isset($condition['field']) && strpos($condition['field'], 'node_field_data.nid') !== false) {
+
+            // Reemplaza el placeholder existente (:node_field_data_nid, :node_field_data_nid1, ...)
+            if (!empty($condition['value']) && is_array($condition['value'])) {
+              foreach ($condition['value'] as $key => $val) {
+                if (preg_match('/^:node_field_data_nid\d*$/', (string) $key)) {
+                  $condition['value'][$key] = $node_id;
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+  } else if ($view->id() === 'resources_and_services') {
+
+    $args = $view->args;
+    $entity_name = '';
+    if ($view->current_display == 'page_1') {
+      $entity_name = $args[0];
+
+    } else if ($view->current_display == 'page_2') {
+      $entity_name = $args[0] . '/' . $args[1];
+
+    }
+
+
+    if (empty($args[0])) {
+      \Drupal::logger('custom_views_filters')->warning('No alias found in arguments');
+      return;
+    }
+
+
+    $path = $alias_manager->getPathByAlias('/' . $entity_name, $current_language);
+
+    if (preg_match('/^\/node\/(\d+)$/', $path, $matches)) {
+
+
+      $entity_id = (int) $matches[1];
+
+      $query_to_execute = null;
+
+      if ($view->current_display == 'page_1') {
+
+        $query_to_execute = \Drupal::entityQuery('node')
+          ->condition('type', 'resources_and_services')
+          ->condition('field_rs_institution', $entity_id)
+          ->notExists('field_rs_campus')
+          ->accessCheck(TRUE) // ← 🔹 SOLUCIÓN AQUÍ
+          ->range(0, 1);
+      } else if ($view->current_display == 'page_2') {
+
+        $query_to_execute = \Drupal::entityQuery('node')
+          ->condition('type', 'resources_and_services')
+          ->condition('field_rs_campus', $entity_id)
+          ->accessCheck(TRUE) // ← 🔹 SOLUCIÓN AQUÍ
+          ->range(0, 1);
+      }
+
+      //dump($query_to_execute);
+
+      $resource_ids = $query_to_execute->execute();
+
+
+      if (!empty($resource_ids)) {
+        $resources = \Drupal::entityTypeManager()
+          ->getStorage('node')
+          ->loadMultiple($resource_ids);
+
+        $resource = reset($resources);
+        ////dump('Resource encontrado:', $resource->label());
+      } else {
+        //dump('No se encontraron Resources and Services para esta institución.');
+      }
+
+      if ($resource && $resource->hasTranslation($current_language)) {
+        $resource = $resource->getTranslation($current_language);
+      }
+      ////dump('Resource en el idioma actual:', $resource->label());
+
+
+
+
+
+      // 🔹 Modify the query replacing the alias with the ID
+      $where_conditions = &$query->where;
+
+      ////dump($where_conditions);
+
+      foreach ($where_conditions as &$condition_group) {
+
+        foreach ($condition_group['conditions'] as &$condition) {
+          if (isset($condition['field']) && strpos($condition['field'], 'node_field_data.nid') !== false) {
+            \Drupal::logger('custom_views_filters')->notice('Replacing :node_field_data_nid with ' . $resource->id());
+            ////dump('dentro if isset');
+            // Modify the value of the sql parameter
+            $condition['value'][':node_field_data_nid'] = $resource->id();
+            ////dump($condition['value'][':node_field_data_nid']);
+          }
+
+        }
+      }
+    }
+
+
+  } else if ($view->id() === 'search_programme' && $view->current_display === 'page_1') {
+
+    $home_programme_id = \Drupal::request()->query->get('home_programme');
+    if (!$home_programme_id || !is_numeric($home_programme_id)) {
+      return;
+    }
+
+    $origin_programme = Node::load((int) $home_programme_id);
+    if (!$origin_programme || $origin_programme->bundle() !== 'programme') {
+      return;
+    }
+
+    /** @var \Drupal\agreements_programmes\Service\AgreementProgrammeMatcher $matcher */
+    $matcher = \Drupal::service('agreements_programmes.matcher');
+    $compatible_programmes = $matcher->getCompatibleProgrammesForProgramme($origin_programme);
+
+    $compatible_programme_ids = [];
+    foreach ($compatible_programmes as $item) {
+      if (!empty($item['programme']) && $item['programme'] instanceof \Drupal\node\NodeInterface) {
+        $compatible_programme_ids[] = (int) $item['programme']->id();
+      }
+    }
+
+    $compatible_programme_ids = array_values(array_unique($compatible_programme_ids));
+    if (!$compatible_programme_ids) {
+      $query->addWhere(0, 'node_field_data.nid', 0, '=');
+      return;
+    }
+
+    $query->addWhere(0, 'node_field_data.nid', $compatible_programme_ids, 'IN');
+
+  } else if ($view->id() === 'institution_new_catalogue' && $view->current_display == 'page_1') {
+
+    /**
+     * 1) OU filter (Programme -> field_programme_ou IN selected OUs)
+     */
+    $selected_ou = \Drupal::request()->query->all('programme_ou');
+    $selected_ou = is_array($selected_ou) ? array_values(array_filter($selected_ou, 'is_numeric')) : [];
+
+    // Tabla del field Programme -> OU
+    $programme_ou_table = 'node__field_programme_ou';
+    $programme_ou_alias = $query->ensureTable($programme_ou_table);
+
+    if (!empty($selected_ou)) {
+      $query->addWhere(0, "$programme_ou_alias.field_programme_ou_target_id", $selected_ou, 'IN');
+    }
+
+    /**
+     * 2) Campus filter (Programme -> OU -> Campus IN selected campuses)
+     */
+    $selected_campus = \Drupal::request()->query->all('programme_campus');
+    $selected_campus = is_array($selected_campus) ? array_values(array_filter($selected_campus, 'is_numeric')) : [];
+
+    if (!empty($selected_campus)) {
+      // Join OU -> Campus table: node__field_ou_campus
+      $ou_campus_table = 'node__field_ou_campus';
+
+      $join = \Drupal::service('plugin.manager.views.join')->createInstance('standard', [
+        'table' => $ou_campus_table,
+        'field' => 'entity_id', // OU nid is stored as entity_id in this table
+        'left_table' => $programme_ou_alias, // alias of node__field_programme_ou
+        'left_field' => 'field_programme_ou_target_id', // OU nid
+        'operator' => '=',
+      ]);
+
+      // Add relationship and get alias
+      $ou_campus_alias = $query->addRelationship('ou_campus_join', $join, $programme_ou_table);
+
+      // Apply IN on campus target id
+      $query->addWhere(0, "$ou_campus_alias.field_ou_campus_target_id", $selected_campus, 'IN');
+    }
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Convierte aliases compuestos a NID para campus/OU/IEC
+ * y añade soporte para iec_instance (dropdown de instancias hermanas).
+ *
+ * - campus_information:   /{institution_alias}/{campus_alias}
+ * - organizational_unit_information: /{institution_alias}/{ou_alias}
+ * - iec_information:      /{institution_alias}/{programme_alias}/{iec_alias}
+ *
+ * Además:
+ * - iec_instance_information (Page muestra iec_instance por NID/alias)
+ *   Attachment dropdown: recibe NID de iec_instance, lo convierte a NID del IEC via field_iec,
+ *   y reinyecta args = [iec_nid] para filtrar otras instancias.
+ */
+function custom_views_filters_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+
+  /**
+   * ============================================================
+   * 1) SPECIAL CASE: IEC_INSTANCE VIEW (instance -> IEC nid)
+   * ============================================================
+   *
+   * Ajusta estos IDs a los tuyos:
+   * - View id:      iec_instance_information
+   * - Attachment id: attachment_2 (o el que tengas para el dropdown)
+   */
+  $is_iec_instance_view = ($view->id() === 'iec_instance');
+  $is_instance_switcher_attachment = ($display_id === 'attachment_2'); // <-- cambia si tu attachment se llama distinto
+
+  if ($is_iec_instance_view && $is_instance_switcher_attachment) {
+    // Esperamos que el attachment herede el NID de la iec_instance como arg[0].
+    // Si tu page usa alias complejo y tú lo conviertes a nid antes, aquí ya llegará el nid.
+    if (!empty($args[0]) && ctype_digit((string) $args[0])) {
+      $instance_nid = (int) $args[0];
+      $instance = Node::load($instance_nid);
+
+      if ($instance && $instance->bundle() === 'iec_instance') {
+        $iec_nid = (int) ($instance->get('field_iec')->target_id ?? 0);
+
+        if ($iec_nid) {
+          // Para el attachment: queremos filtrar instancias por el IEC original.
+          $args = [$iec_nid];
+          $view->setArguments($args);
+
+          \Drupal::logger('custom_views_filters')->notice(
+            'iec_instance_information:@display: instance @instance_nid -> IEC @iec_nid; args reinyectados.',
+            [
+              '@display' => $display_id,
+              '@instance_nid' => $instance_nid,
+              '@iec_nid' => $iec_nid,
+            ]
+          );
+        }
+      }
+    }
+
+    // IMPORTANTE: aquí devolvemos para no mezclar con la lógica de alias campus/ou/iec.
+    return;
+  }
+
+  /**
+   * ============================================================
+   * 2) EXISTING LOGIC: campus / OU / IEC (alias -> nid)
+   * ============================================================
+   */
+
+  // Solo nuestras vistas.
+  $is_campus = ($view->id() === 'campus_information');
+  $is_ou = ($view->id() === 'organizational_unit_information');
+  $is_iec = ($view->id() === 'iec_information');
+
+  if (!$is_campus && !$is_ou && !$is_iec) {
+    return;
+  }
+
+  $langcode = \Drupal::languageManager()
+    ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
+    ->getId();
+
+  /** @var \Drupal\path_alias\AliasManagerInterface $alias_manager */
+  $alias_manager = \Drupal::service('path_alias.manager');
+
+  // Si ya llega un NID directo como 2º argumento, úsalo tal cual.
+  // (Lo mantengo tal cual lo tenías, por compatibilidad con tu flujo actual.)
+  if (!empty($args[1]) && ctype_digit((string) $args[1])) {
+    $nid = (int) $args[1];
+    $args = [$nid];
+    $view->setArguments($args);
+
+    \Drupal::logger('custom_views_filters')->notice(
+      '@view: recibido NID directo @nid; args reinyectados.',
+      ['@view' => $view->id(), '@nid' => $nid]
+    );
+    return;
+  }
+
+  // Validación de argumentos según vista.
+  if (($is_campus || $is_ou) && count($args) < 2) {
+    \Drupal::logger('custom_views_filters')->warning(
+      '@view: args insuficientes (esperaba 2): @args',
+      ['@view' => $view->id(), '@args' => print_r($args, TRUE)]
+    );
+    return;
+  }
+
+  if ($is_iec && count($args) < 3) {
+    \Drupal::logger('custom_views_filters')->warning(
+      '@view: args insuficientes (esperaba 3): @args',
+      ['@view' => $view->id(), '@args' => print_r($args, TRUE)]
+    );
+    return;
+  }
+
+  // Recomponer alias completo.
+  $institution_alias = trim($args[0], '/');
+
+  if ($is_iec) {
+    $programme_alias = trim($args[1], '/');
+    $iec_alias = trim($args[2], '/');
+    $full_alias = '/' . $institution_alias . '/' . $programme_alias . '/' . $iec_alias;
+  }
+  else {
+    $second_alias = trim($args[1], '/'); // campus_alias u ou_alias
+    $full_alias = '/' . $institution_alias . '/' . $second_alias;
+  }
+
+  // Resolver alias -> path interno (/node/NID).
+  $path = $alias_manager->getPathByAlias($full_alias, $langcode);
+
+  // Fallback: intenta alias "plano" del último segmento por si existiera.
+  $m = [];
+  if (!preg_match('/^\/node\/(\d+)$/', $path ?? '', $m)) {
+    $last_segment = $is_iec ? trim($args[2], '/') : trim($args[1], '/');
+    $path2 = $alias_manager->getPathByAlias('/' . $last_segment, $langcode);
+
+    if (preg_match('/^\/node\/(\d+)$/', $path2 ?? '', $m2)) {
+      $m = $m2;
+      $path = $path2;
+    }
+  }
+
+  \Drupal::logger('custom_views_filters')->notice(
+    '@view: alias "@alias" ⇒ path "@path"',
+    ['@view' => $view->id(), '@alias' => $full_alias, '@path' => $path]
+  );
+
+  if (!empty($m[1])) {
+    $nid = (int) $m[1];
+
+    // Todas estas vistas deben tener UN único contextual: Content: Nid
+    $args = [$nid];
+    $view->setArguments($args);
+
+    \Drupal::logger('custom_views_filters')->notice(
+      '@view: resuelto NID = @nid; args reinyectados.',
+      ['@view' => $view->id(), '@nid' => $nid]
+    );
+  }
+  else {
+    \Drupal::logger('custom_views_filters')->warning(
+      '@view: no se pudo resolver alias "@alias" en @lang',
+      ['@view' => $view->id(), '@alias' => $full_alias, '@lang' => $langcode]
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Implements hook_entity_insert().
+ */
+function custom_views_filters_entity_insert(EntityInterface $entity)
+{
+  // Only if a campus is created
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'campus') {
+
+    // Create node Resources and Services
+    $rs_node = Node::create([
+      'type' => 'resources_and_services',
+      'title' => 'Resources and Services for ' . $entity->label(),
+      'field_rs_campus' => ['target_id' => $entity->id()],
+      'field_rs_institution' => ['target_id' => $entity->get('field_campus_institution')->target_id],
+      'langcode' => $entity->language()->getId(),
+      'status' => 1,
+    ]);
+    $rs_node->save();
+
+
+    $current_user = \Drupal::currentUser();
+    if ($current_user->getAccountName() === 'prueba') {
+      return;
+    }
+
+    $memberships = \Drupal::service('group.membership_loader')->loadByUser($current_user);
+
+    foreach ($memberships as $membership) {
+      $group = $membership->getGroup();
+
+      if ($group->bundle() === 'universitytypegroup') {
+        $group->addRelationship($rs_node, 'group_node:resources_and_services');
+
+        \Drupal::logger('custom_views_filters')->notice('RS añadido al grupo ' . $group->id());
+        break;
+      }
+    }
+  }
+}
+
+
+
+
+
+/**
+ * Implements hook_entity_predelete().
+ */
+function custom_views_filters_entity_predelete(\Drupal\Core\Entity\EntityInterface $entity)
+{
+  // Only if node type is a campus
+  if ($entity->getEntityTypeId() === 'node' && $entity->bundle() === 'campus') {
+    $campus_id = $entity->id();
+
+    // Find node type 'resources_and_services' associated to this campus.
+    $rs_nodes = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
+      'type' => 'resources_and_services',
+      'field_rs_campus' => $campus_id,
+    ]);
+
+    foreach ($rs_nodes as $rs_node) {
+      $rs_node->delete();
+      \Drupal::logger('custom_views_filters')->notice('Removed RS associated to campus with ID ' . $campus_id);
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+use Drupal\views\Views;
+
+use Drupal\views\Plugin\views\query\QueryPluginBase;
+
+/**
+ * 1) Cambia el widget del exposed form a checkboxes.
+ */
+function custom_views_filters_form_views_exposed_form_alter(array &$form, FormStateInterface $form_state)
+{
+  // Ajusta al #id real de tu exposed form (según tu dump previo).
+
+
+  //dump($form['#id'] );
+
+  if (($form['#id']) == 'views-exposed-form-institution-new-catalogue-page-1') {
+    \Drupal::logger('custom_views_filters')->notice('asdfasdfasdfasdfasdf');
+
+
+
+    // Vamos a usar un parámetro nuevo para multi-select.
+    $param = 'programme_ou';
+    $title = t('Organizational Unit');
+
+    // Institution desde /catalogue/{nid}/programmes
+    $institution_nid = _cvf_get_institution_from_path();
+
+    // Opciones desde tu view reference (reutilizas).
+    $options = _cvf_get_ou_options_from_view($institution_nid);
+
+    // Defaults desde GET (?programme_ou[]=12&programme_ou[]=15)
+    $defaults = \Drupal::request()->query->all($param);
+    $defaults = is_array($defaults) ? array_values(array_filter($defaults, 'is_numeric')) : [];
+
+    // Añadimos nuestro propio elemento (no tocamos el target_id de Views).
+    $form[$param] = [
+      '#type' => 'checkboxes',
+      '#title' => $title,
+      '#options' => $options,
+      '#default_value' => array_map('strval', $defaults),
+      '#weight' => -10,
+    ];
+
+
+
+
+
+
+
+    // --- CAMPUS CHECKBOXES ---
+    $campus_param = 'programme_campus';
+
+    $institution_nid = _cvf_get_institution_from_path();
+
+    // Reusa una view entity reference para campuses:
+    $campus_options = _cvf_get_campus_options_from_view($institution_nid);
+
+    $campus_defaults = \Drupal::request()->query->all($campus_param);
+    $campus_defaults = is_array($campus_defaults) ? array_values(array_filter($campus_defaults, 'is_numeric')) : [];
+
+    $form[$campus_param] = [
+      '#type' => 'checkboxes',
+      '#title' => t('Campus'),
+      '#options' => $campus_options,
+      '#default_value' => array_map('strval', $campus_defaults),
+      '#weight' => -9, // ponlo donde quieras en el orden
+    ];
+
+    if (isset($form['actions']['reset'])) {
+      $form['actions']['reset']['#attributes']['data-clear-custom-filters'] = '1';
+      $form['actions']['reset']['#attributes']['data-reset-url'] = \Drupal\Core\Url::fromRoute('view.institution_new_catalogue.page_1', [
+        'arg_0' => $institution_nid,
+      ], [
+        'language' => \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT),
+      ])->toString();
+    }
+
+
+
+
+
+
+
+
+
+
+  }
+}
+
+/**
+ * Helpers: institution nid desde path.
+ */
+function _cvf_get_institution_from_path(): int
+{
+  $path = trim(\Drupal::service('path.current')->getPath(), '/');
+  $parts = explode('/', $path);
+  $idx = array_search('catalogue', $parts, true);
+  return ($idx !== false && isset($parts[$idx + 1])) ? (int) $parts[$idx + 1] : 0;
+}
+
+/**
+ * Ejecuta tu view reference de OUs para obtener [nid => label].
+ */
+function _cvf_get_ou_options_from_view(int $institution_nid): array
+{
+
+
+  // Cambia por tus machine names reales.
+  $view_id = 'institution_organizatinal_unit_list';
+  $display_id = 'entity_reference_1';
+
+  $view = Views::getView($view_id);
+
+
+
+  if (!$view) {
+    return [];
+  }
+  $view->setDisplay($display_id);
+  $view->setArguments([$institution_nid]);
+  $view->setItemsPerPage(0);
+  $view->execute();
+
+  $options = [];
+  foreach ($view->result as $row) {
+    if (!empty($row->_entity)) {
+      $options[(string) $row->_entity->id()] = $row->_entity->label();
+    }
+  }
+  asort($options, SORT_NATURAL | SORT_FLAG_CASE);
+  return $options;
+}
+
+
+
+function _cvf_get_campus_options_from_view(int $institution_nid): array
+{
+  // 🔧 PON AQUÍ tus machine names reales:
+  $view_id = 'institution_organizatinal_unit_list';
+  $display_id = 'entity_reference_2';
+
+  $view = Views::getView($view_id);
+  if (!$view) {
+    return [];
+  }
+
+  $view->setDisplay($display_id);
+
+  // Si tu vista usa contextual filter por institution, esto la limita al catálogo actual.
+  // Si no lo usa, no pasa nada: la vista ignorará el argumento.
+  $view->setArguments([$institution_nid]);
+
+  $view->setItemsPerPage(0);
+  $view->execute();
+
+  $options = [];
+  foreach ($view->result as $row) {
+    if (!empty($row->_entity)) {
+      $options[(string) $row->_entity->id()] = $row->_entity->label();
+    }
+  }
+
+  asort($options, SORT_NATURAL | SORT_FLAG_CASE);
+
+  return $options;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\group\Entity\GroupInterface;
+use Drupal\node\NodeInterface;
+/**
+ * Helper: resolve the Group for create/edit routes.
+ * - Create: usually /group/{group}/content/create/... → 'group' route param.
+ * - Edit: entity.node.edit_form (no group in route) → via group_relationship storage.
+ */
+function custom_views_filters__aa_resolve_group(NodeInterface $node, RouteMatchInterface $route_match): ?GroupInterface
+{
+  // 1) Try route 'group' param (creation in group context).
+  $group_param = $route_match->getParameter('group');
+  if ($group_param instanceof GroupInterface) {
+    return $group_param;
+  }
+  if (is_numeric($group_param)) {
+    $loaded = \Drupal::entityTypeManager()->getStorage('group')->load((int) $group_param);
+    if ($loaded instanceof GroupInterface) {
+      return $loaded;
+    }
+  }
+
+  // 2) Edit fallback: get group via group_relationship storage.
+  $gr_storage = \Drupal::entityTypeManager()->getStorage('group_relationship');
+  $rels = [];
+
+  if (method_exists($gr_storage, 'loadByEntity')) {
+    $rels = $gr_storage->loadByEntity($node);
+  } else {
+    $rels = $gr_storage->loadByProperties([
+      'entity_type' => $node->getEntityTypeId(),
+      'entity_id' => $node->id(),
+    ]);
+  }
+
+  if (!empty($rels)) {
+    $rel = reset($rels);
+    if (method_exists($rel, 'getGroup')) {
+      $grp = $rel->getGroup();
+      if ($grp instanceof GroupInterface) {
+        return $grp;
+      }
+    }
+    if (method_exists($rel, 'getGroupEntity')) {
+      $grp = $rel->getGroupEntity();
+      if ($grp instanceof GroupInterface) {
+        return $grp;
+      }
+    }
+  }
+
+  // 3) Optional: route may pass 'group_content'.
+  $gc = $route_match->getParameter('group_content');
+  if ($gc && method_exists($gc, 'getGroup')) {
+    $grp = $gc->getGroup();
+    if ($grp instanceof GroupInterface) {
+      return $grp;
+    }
+  }
+
+  return NULL;
+}
+
+/**
+ * Helper: normalizes options to have string keys and string labels.
+ */
+function _cvt_opts(array $pairs): array
+{
+  $opts = [];
+  foreach ($pairs as $id => $label) {
+    $opts[(string) $id] = (string) $label;
+  }
+  return $opts;
+}
+
+/**
+ * Helper: apply AA select options (institution, campus, org unit) for a given group.
+ */
+function custom_views_filters__aa_apply_options(array &$form, GroupInterface $group, NodeInterface $node): void
+{
+  $gr_storage = \Drupal::entityTypeManager()->getStorage('group_relationship');
+
+  // === Institution relationships ===
+  $inst_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:institution',
+  ]);
+
+  $institution_options = [];
+  $institution_nid = NULL;
+
+  foreach ($inst_rels as $rel) {
+    $entity = NULL;
+    if (method_exists($rel, 'getEntity')) {
+      $entity = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $entity = $rel->getContentEntity();
+    }
+    if ($entity && $entity->bundle() === 'institution') {
+      $institution_options[$entity->id()] = $entity->label();
+      $institution_nid = $entity->id();
+    }
+  }
+
+  // === Campus relationships ===
+  $campus_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:campus',
+  ]);
+
+  $campus_options = [];
+  foreach ($campus_rels as $rel) {
+    $campus = NULL;
+    if (method_exists($rel, 'getEntity')) {
+      $campus = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $campus = $rel->getContentEntity();
+    }
+    if ($campus && $campus->bundle() === 'campus') {
+      if ($institution_nid && $campus->hasField('field_campus_institution') && !$campus->get('field_campus_institution')->isEmpty()) {
+        $ref = (int) $campus->get('field_campus_institution')->target_id;
+        if ($ref !== (int) $institution_nid) {
+          continue;
+        }
+      }
+      $campus_options[$campus->id()] = $campus->label();
+    }
+  }
+
+  // === Organizational Unit relationships ===
+  $ou_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:organizational_unit',
+  ]);
+
+  $org_unit_options = [];
+  foreach ($ou_rels as $rel) {
+    $ou = NULL;
+    if (method_exists($rel, 'getEntity')) {
+      $ou = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $ou = $rel->getContentEntity();
+    }
+    if ($ou && $ou->bundle() === 'organizational_unit') {
+      if ($institution_nid && $ou->hasField('field_ou_institution') && !$ou->get('field_ou_institution')->isEmpty()) {
+        $ref = (int) $ou->get('field_ou_institution')->target_id;
+        if ($ref !== (int) $institution_nid) {
+          continue;
+        }
+      }
+      $org_unit_options[$ou->id()] = $ou->label();
+    }
+  }
+
+  // === Sort options by language ===
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  if (class_exists(\Collator::class)) {
+    $coll = new \Collator($langcode);
+    uasort($campus_options, fn($a, $b) => $coll->compare((string) $a, (string) $b));
+    uasort($org_unit_options, fn($a, $b) => $coll->compare((string) $a, (string) $b));
+  }
+
+  // === Replace widgets with <select> ===
+  // --- Institution ---
+  if (isset($form['field_aa_institution']['widget'][0]['target_id'])) {
+    $el =& $form['field_aa_institution']['widget'][0]['target_id'];
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+    $el['#options'] = _cvt_opts($institution_options);
+
+    $default_id = NULL;
+    if (isset($el['#default_value']) && is_object($el['#default_value']) && method_exists($el['#default_value'], 'id')) {
+      $default_id = (string) $el['#default_value']->id();
+    } elseif ($node->hasField('field_aa_institution') && !$node->get('field_aa_institution')->isEmpty()) {
+      $default_id = (string) $node->get('field_aa_institution')->target_id;
+    }
+    $el['#default_value'] = $default_id;
+
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = FALSE;
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+
+  // --- Campus ---
+  if (isset($form['field_aa_campus']['widget'][0]['target_id'])) {
+    $el =& $form['field_aa_campus']['widget'][0]['target_id'];
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+    $el['#options'] = _cvt_opts($campus_options);
+
+    $default_id = NULL;
+    if (isset($el['#default_value']) && is_object($el['#default_value']) && method_exists($el['#default_value'], 'id')) {
+      $default_id = (string) $el['#default_value']->id();
+    } elseif ($node->hasField('field_aa_campus') && !$node->get('field_aa_campus')->isEmpty()) {
+      $default_id = (string) $node->get('field_aa_campus')->target_id;
+    }
+    $el['#default_value'] = $default_id;
+
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = FALSE;
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+
+  // --- Organizational Unit ---
+  if (isset($form['field_aa_organizational_unit']['widget'][0]['target_id'])) {
+    $el =& $form['field_aa_organizational_unit']['widget'][0]['target_id'];
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+    $el['#options'] = _cvt_opts($org_unit_options);
+
+    $default_id = NULL;
+    if (isset($el['#default_value']) && is_object($el['#default_value']) && method_exists($el['#default_value'], 'id')) {
+      $default_id = (string) $el['#default_value']->id();
+    } elseif ($node->hasField('field_aa_organizational_unit') && !$node->get('field_aa_organizational_unit')->isEmpty()) {
+      $default_id = (string) $node->get('field_aa_organizational_unit')->target_id;
+    }
+    $el['#default_value'] = $default_id;
+
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = FALSE;
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+}
+
+/**
+ * Academic Authority CREATE form alter.
+ */
+function custom_views_filters_form_node_academic_authority_form_alter(array &$form, FormStateInterface $form_state, $form_id)
+{
+  $node = $form_state->getFormObject()->getEntity();
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'academic_authority') {
+    return;
+  }
+
+  $route_match = \Drupal::routeMatch();
+  $group = custom_views_filters__aa_resolve_group($node, $route_match);
+  if (!$group) {
+    return;
+  }
+
+  custom_views_filters__aa_apply_options($form, $group, $node);
+}
+
+/**
+ * Academic Authority EDIT form alter (same behavior as creation).
+ */
+function custom_views_filters_form_node_academic_authority_edit_form_alter(array &$form, FormStateInterface $form_state, $form_id)
+{
+  $node = $form_state->getFormObject()->getEntity();
+  if (!$node instanceof NodeInterface && isset($form['#node']) && $form['#node'] instanceof NodeInterface) {
+    $node = $form['#node'];
+  }
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'academic_authority') {
+    return;
+  }
+
+  $route_match = \Drupal::routeMatch();
+  $group = custom_views_filters__aa_resolve_group($node, $route_match);
+  if (!$group) {
+    return;
+  }
+
+  custom_views_filters__aa_apply_options($form, $group, $node);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Crear ORGANIZATIONAL UNIT.
+ */
+function custom_views_filters_form_node_organizational_unit_form_alter(array &$form, FormStateInterface $form_state, $form_id)
+{
+  \Drupal::logger('custom_views_filters')->info('custom_views_filters_form_node_organizational_unit_edit_form_alter jjjjaaaaaaajj');
+
+  _custom_views_filters_alter_organizational_unit_form($form, $form_state, $form_id);
+}
+
+/**
+ * Editar ORGANIZATIONAL UNIT.
+ */
+function custom_views_filters_form_node_organizational_unit_edit_form_alter(array &$form, FormStateInterface $form_state, $form_id)
+{
+  \Drupal::logger('custom_views_filters')->info('EDIT: form_node_organizational_unit_edit_form_alter');
+  _custom_views_filters_alter_organizational_unit_form($form, $form_state, $form_id);
+}
+
+
+/**
+ * Lógica común para creación y edición de organizational_unit.
+ */
+function _custom_views_filters_alter_organizational_unit_form(array &$form, FormStateInterface $form_state, $form_id)
+{
+  $node = $form_state->getFormObject()->getEntity();
+  if (!$node || $node->bundle() !== 'organizational_unit') {
+    return;
+  }
+
+  // 1) Obtener el grupo.
+  $route_match = \Drupal::routeMatch();
+  $group_param = $route_match->getParameter('group');
+  $group = NULL;
+
+  if (is_object($group_param)) {
+    $group = $group_param;
+  } elseif (is_numeric($group_param)) {
+    $group = \Drupal::entityTypeManager()->getStorage('group')->load((int) $group_param);
+  }
+
+  $gr_storage = \Drupal::entityTypeManager()->getStorage('group_relationship');
+
+  // Si no viene por la ruta (caso /node/{nid}/edit), miramos la relación del nodo.
+  if (!$group && !$node->isNew()) {
+    $ou_rels = $gr_storage->loadByProperties([
+      'entity_id' => $node->id(),
+      'plugin_id' => 'group_node:organizational_unit',
+    ]);
+    if ($ou_rel = reset($ou_rels)) {
+      if (method_exists($ou_rel, 'getGroup')) {
+        $group = $ou_rel->getGroup();
+      }
+    }
+  }
+
+  if (!$group) {
+    // Fuera de contexto de grupo, no forzamos nada.
+    return;
+  }
+
+  // 2) Obtener INSTITUTION del grupo.
+  $inst_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:institution',
+  ]);
+
+  $institution_options = [];
+  $institution_nid = NULL;
+
+  foreach ($inst_rels as $rel) {
+    $entity = NULL;
+    if (method_exists($rel, 'getEntity')) {
+      $entity = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $entity = $rel->getContentEntity();
+    }
+    if ($entity && $entity->bundle() === 'institution') {
+      $institution_options[$entity->id()] = $entity->label();
+      $institution_nid = $entity->id();
+    }
+  }
+
+  // 3) CAMPUS del grupo.
+  $campus_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:campus',
+  ]);
+
+  $campus_options = [];
+  foreach ($campus_rels as $rel) {
+    $campus = NULL;
+    if (method_exists($rel, 'getEntity')) {
+      $campus = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $campus = $rel->getContentEntity();
+    }
+    if ($campus && $campus->bundle() === 'campus') {
+      if ($institution_nid && $campus->hasField('field_campus_institution') && !$campus->get('field_campus_institution')->isEmpty()) {
+        $ref = (int) $campus->get('field_campus_institution')->target_id;
+        if ($ref !== (int) $institution_nid) {
+          continue;
+        }
+      }
+      $campus_options[$campus->id()] = $campus->label();
+    }
+  }
+
+  // 4) ORGANIZATIONAL UNITS raíz (sin padre).
+  $organizational_unit_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:organizational_unit',
+  ]);
+
+  $organizational_unit_options = [];
+
+  foreach ($organizational_unit_rels as $rel) {
+    $org_unit = NULL;
+
+    if (method_exists($rel, 'getEntity')) {
+      $org_unit = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $org_unit = $rel->getContentEntity();
+    }
+
+    if ($org_unit && $org_unit->bundle() === 'organizational_unit') {
+      if (
+        $org_unit->hasField('field_parent_organizational_unit')
+        && $org_unit->get('field_parent_organizational_unit')->isEmpty()
+      ) {
+
+        $organizational_unit_options[$org_unit->id()] = $org_unit->label();
+      }
+    }
+  }
+
+  // === Institution bloqueada (si tienes el campo en el form) ===
+  if (isset($form['field_ou_institution']['widget'][0]['target_id'])) {
+    $el =& $form['field_ou_institution']['widget'][0]['target_id'];
+
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+    $el['#options'] = $institution_options;
+    $el['#required'] = TRUE;
+    $el['#disabled'] = TRUE;
+
+    if ($institution_nid) {
+      $el['#default_value'] = $institution_nid;
+    }
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+  }
+
+  // === Campus select ===
+  // === Campus select ===
+  if (isset($form['field_ou_campus']['widget'][0]['target_id'])) {
+    $el =& $form['field_ou_campus']['widget'][0]['target_id'];
+
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+
+    $el['#options'] = $campus_options;
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = FALSE;
+
+    // 👇 IMPORTANTE: asegurar default_value como ID, no como objeto.
+    if (!$node->isNew() && !$node->get('field_ou_campus')->isEmpty()) {
+      $el['#default_value'] = $node->get('field_ou_campus')->target_id;
+    } else {
+      $el['#default_value'] = '_none';
+    }
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+
+
+  // === Parent Organizational Unit select (solo raíz) ===
+  if (isset($form['field_parent_organizational_unit']['widget'][0]['target_id'])) {
+    $el =& $form['field_parent_organizational_unit']['widget'][0]['target_id'];
+
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+
+    $el['#options'] = $organizational_unit_options;
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = FALSE;
+
+    // 👇 Igual que antes: ID, no objeto.
+    if (!$node->isNew() && !$node->get('field_parent_organizational_unit')->isEmpty()) {
+      $el['#default_value'] = $node->get('field_parent_organizational_unit')->target_id;
+    } else {
+      $el['#default_value'] = '_none';
+    }
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+
+}
+
+
+
+
+
+
+
+
+/**
+ * Academic Authority create/edit form alter.
+ */
+function custom_views_filters_form_node_programme_form_alter(array &$form, FormStateInterface $form_state, $form_id)
+{
+
+  $node = $form_state->getFormObject()->getEntity();
+  if (!$node || $node->bundle() !== 'programme') {
+    return;
+  }
+
+  // 1) Obtener el grupo desde la ruta /group/{group}/content/create/...
+  $route_match = \Drupal::routeMatch();
+  $group_param = $route_match->getParameter('group');
+  $group = NULL;
+  if (is_object($group_param)) {
+    $group = $group_param;
+  } elseif (is_numeric($group_param)) {
+    $group = \Drupal::entityTypeManager()->getStorage('group')->load((int) $group_param);
+  }
+  if (!$group) {
+    // Fuera de contexto de grupo, no forzamos nada.
+    return;
+  }
+
+  // 2) Obtener INSTITUTION del grupo vía group_relationship.
+  //    Plugin id para nodos "institution": group_node:institution
+  $gr_storage = \Drupal::entityTypeManager()->getStorage('group_relationship');
+
+  $inst_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:institution',
+  ]);
+
+  $institution_options = [];
+  $institution_nid = NULL;
+
+  foreach ($inst_rels as $rel) {
+    // Compatibilidad: Group v3 expone métodos diferentes según versión,
+    // intentamos ambos de forma segura.
+    $entity = NULL;
+    if (method_exists($rel, 'getEntity')) {
+      $entity = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $entity = $rel->getContentEntity();
+    }
+    if ($entity && $entity->bundle() === 'institution') {
+      $institution_options[$entity->id()] = $entity->label();
+      $institution_nid = $entity->id();
+    }
+  }
+
+  // 3) Obtener CAMPUS del grupo (plugin group_node:campus).
+  $campus_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:campus',
+  ]);
+
+  //Obter Org Units do grupo
+
+  $org_unit_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:organizational_unit',
+  ]);
+
+  $org_unit_options = [];
+  foreach ($org_unit_rels as $rel) {
+    $organizational_unit = NULL;
+    if (method_exists($rel, 'getEntity')) {
+      $organizational_unit = $rel->getEntity();
+    } elseif (method_exists($rel, 'getContentEntity')) {
+      $organizational_unit = $rel->getContentEntity();
+    }
+    if ($organizational_unit && $organizational_unit->bundle() === 'organizational_unit') {
+      // Si quieres filtrar solo los campus que referencian a ESA institution (opcional):
+      if ($institution_nid && $organizational_unit->hasField('field_ou_institution') && !$organizational_unit->get('field_ou_institution')->isEmpty()) {
+        $ref = (int) $organizational_unit->get('field_ou_institution')->target_id;
+        if ($ref !== (int) $institution_nid) {
+          continue;
+        }
+      }
+      $org_unit_options[$organizational_unit->id()] = $organizational_unit->label();
+    }
+  }
+
+
+
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  if (class_exists(\Collator::class)) {
+    $coll = new \Collator($langcode);
+
+    uasort($org_unit_options, function ($a, $b) use ($coll) {
+      return $coll->compare((string) $a, (string) $b);
+    });
+  }
+
+
+  // === Organizational Unit: forzar opciones filtradas en el select ===
+  if (isset($form['field_programme_ou']['widget'][0]['target_id'])) {
+    $el =& $form['field_programme_ou']['widget'][0]['target_id'];
+
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+
+    // 👇 Solo campus del grupo (y si quieres, filtrados por la institution del grupo)
+    $el['#options'] = $org_unit_options;
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = TRUE;
+
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+
+
+
+
+}
+
+/**
+ * Agreement create form alter.
+ */
+function custom_views_filters_form_node_agreement_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  _custom_views_filters_alter_agreement_form($form, $form_state);
+}
+
+/**
+ * Agreement edit form alter.
+ */
+function custom_views_filters_form_node_agreement_edit_form_alter(array &$form, FormStateInterface $form_state, $form_id) {
+  _custom_views_filters_alter_agreement_form($form, $form_state);
+}
+
+/**
+ * Common logic for agreement forms.
+ */
+function _custom_views_filters_alter_agreement_form(array &$form, FormStateInterface $form_state): void {
+  $node = $form_state->getFormObject()->getEntity();
+  if (!$node || $node->bundle() !== 'agreement') {
+    return;
+  }
+
+  $route_match = \Drupal::routeMatch();
+  $group_param = $route_match->getParameter('group');
+  $group = NULL;
+
+  if (is_object($group_param)) {
+    $group = $group_param;
+  }
+  elseif (is_numeric($group_param)) {
+    $group = \Drupal::entityTypeManager()->getStorage('group')->load((int) $group_param);
+  }
+
+  $gr_storage = \Drupal::entityTypeManager()->getStorage('group_relationship');
+
+  if (!$group && !$node->isNew()) {
+    $agreement_rels = $gr_storage->loadByProperties([
+      'entity_id' => $node->id(),
+      'plugin_id' => 'group_node:agreement',
+    ]);
+
+    if ($agreement_rel = reset($agreement_rels)) {
+      if (method_exists($agreement_rel, 'getGroup')) {
+        $group = $agreement_rel->getGroup();
+      }
+    }
+  }
+
+  if (!$group) {
+    return;
+  }
+
+  $inst_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:institution',
+  ]);
+
+  $institution_nid = NULL;
+  foreach ($inst_rels as $rel) {
+    $entity = NULL;
+
+    if (method_exists($rel, 'getEntity')) {
+      $entity = $rel->getEntity();
+    }
+    elseif (method_exists($rel, 'getContentEntity')) {
+      $entity = $rel->getContentEntity();
+    }
+
+    if ($entity && $entity->bundle() === 'institution') {
+      $institution_nid = $entity->id();
+      break;
+    }
+  }
+
+  $org_unit_rels = $gr_storage->loadByProperties([
+    'gid' => $group->id(),
+    'plugin_id' => 'group_node:organizational_unit',
+  ]);
+
+  $org_unit_options = [];
+  foreach ($org_unit_rels as $rel) {
+    $organizational_unit = NULL;
+
+    if (method_exists($rel, 'getEntity')) {
+      $organizational_unit = $rel->getEntity();
+    }
+    elseif (method_exists($rel, 'getContentEntity')) {
+      $organizational_unit = $rel->getContentEntity();
+    }
+
+    if ($organizational_unit && $organizational_unit->bundle() === 'organizational_unit') {
+      if ($institution_nid && $organizational_unit->hasField('field_ou_institution') && !$organizational_unit->get('field_ou_institution')->isEmpty()) {
+        $ref = (int) $organizational_unit->get('field_ou_institution')->target_id;
+        if ($ref !== (int) $institution_nid) {
+          continue;
+        }
+      }
+
+      $org_unit_options[$organizational_unit->id()] = $organizational_unit->label();
+    }
+  }
+
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  if (class_exists(\Collator::class)) {
+    $coll = new \Collator($langcode);
+    uasort($org_unit_options, function ($a, $b) use ($coll) {
+      return $coll->compare((string) $a, (string) $b);
+    });
+  }
+
+  if (isset($form['field_department_partner_1']['widget'][0]['target_id'])) {
+    $el =& $form['field_department_partner_1']['widget'][0]['target_id'];
+
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+    $el['#options'] = $org_unit_options;
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = FALSE;
+
+    if (!$node->isNew() && !$node->get('field_department_partner_1')->isEmpty()) {
+      $el['#default_value'] = $node->get('field_department_partner_1')->target_id;
+    }
+    else {
+      $el['#default_value'] = '_none';
+    }
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+
+  if (isset($form['field_institution_2']['widget'][0]['target_id'])) {
+    $form['field_institution_2']['widget'][0]['target_id']['#ajax'] = [
+      'callback' => 'custom_views_filters_agreement_department_partner_2_ajax',
+      'event' => 'change',
+      'wrapper' => 'agreement-department-partner-2-wrapper',
+    ];
+  }
+
+  if (isset($form['field_department_partner_2'])) {
+    $form['field_department_partner_2']['#prefix'] = '<div id="agreement-department-partner-2-wrapper">';
+    $form['field_department_partner_2']['#suffix'] = '</div>';
+  }
+
+  if (isset($form['field_department_partner_2']['widget'][0]['target_id'])) {
+    $el =& $form['field_department_partner_2']['widget'][0]['target_id'];
+    $selected_institution_2_id = custom_views_filters_get_selected_agreement_institution_2_id($form_state, $node);
+    $org_unit_options_2 = custom_views_filters_get_org_unit_options_for_institution($selected_institution_2_id);
+
+    $el['#type'] = 'select';
+    $el['#multiple'] = FALSE;
+    $el['#size'] = 1;
+    $el['#options'] = $org_unit_options_2;
+    $el['#empty_option'] = t('- None -');
+    $el['#empty_value'] = '_none';
+    $el['#required'] = FALSE;
+
+    $current_department_2 = (!$node->isNew() && !$node->get('field_department_partner_2')->isEmpty())
+      ? (string) $node->get('field_department_partner_2')->target_id
+      : '_none';
+
+    $submitted_department_2 = $form_state->getValue(['field_department_partner_2', 0, 'target_id']);
+    if ($submitted_department_2 !== NULL && $submitted_department_2 !== '') {
+      $current_department_2 = (string) $submitted_department_2;
+    }
+
+    $el['#default_value'] = array_key_exists($current_department_2, $org_unit_options_2) ? $current_department_2 : '_none';
+
+    unset($el['#selection_handler'], $el['#selection_settings'], $el['#autocomplete_route_name']);
+    $el['#element_validate'][] = 'custom_views_filters_er_select_empty_to_null';
+  }
+}
+
+/**
+ * Ajax callback for refreshing agreement destination OUs.
+ */
+function custom_views_filters_agreement_department_partner_2_ajax(array &$form, FormStateInterface $form_state) {
+  $form_state->setRebuild(TRUE);
+  return $form['field_department_partner_2'];
+}
+
+/**
+ * Resolves selected institution 2 from current form state or entity.
+ */
+function custom_views_filters_get_selected_agreement_institution_2_id(FormStateInterface $form_state, Node $node): ?int {
+  $user_input = $form_state->getUserInput();
+
+  if (!empty($user_input['field_institution_2'][0]['target_id']) && is_string($user_input['field_institution_2'][0]['target_id'])) {
+    $entity_id = EntityAutocomplete::extractEntityIdFromAutocompleteInput($user_input['field_institution_2'][0]['target_id']);
+    if ($entity_id) {
+      return (int) $entity_id;
+    }
+  }
+
+  $submitted_value = $form_state->getValue(['field_institution_2', 0, 'target_id']);
+
+  if (is_string($submitted_value) && $submitted_value !== '') {
+    $entity_id = EntityAutocomplete::extractEntityIdFromAutocompleteInput($submitted_value);
+    if ($entity_id) {
+      return (int) $entity_id;
+    }
+  }
+
+  if (is_array($submitted_value) && isset($submitted_value[0]['target_id']) && is_numeric($submitted_value[0]['target_id'])) {
+    return (int) $submitted_value[0]['target_id'];
+  }
+
+  if (!$node->isNew() && $node->hasField('field_institution_2') && !$node->get('field_institution_2')->isEmpty()) {
+    return (int) $node->get('field_institution_2')->target_id;
+  }
+
+  return NULL;
+}
+
+/**
+ * Returns organizational units belonging to one institution.
+ */
+function custom_views_filters_get_org_unit_options_for_institution(?int $institution_id): array {
+  if (!$institution_id) {
+    return [];
+  }
+
+  $org_units = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
+    'type' => 'organizational_unit',
+    'field_ou_institution' => $institution_id,
+  ]);
+
+  $options = [];
+  foreach ($org_units as $org_unit) {
+    if ($org_unit instanceof Node) {
+      $options[(string) $org_unit->id()] = $org_unit->label();
+    }
+  }
+
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  if (class_exists(\Collator::class)) {
+    $coll = new \Collator($langcode);
+    uasort($options, function ($a, $b) use ($coll) {
+      return $coll->compare((string) $a, (string) $b);
+    });
+  }
+
+  return $options;
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Convierte el valor vacío del select de entity reference a NULL.
+ * Se ejecuta en el elemento 'target_id' antes de la validación del campo.
+ */
+function custom_views_filters_er_select_empty_to_null(array &$element, FormStateInterface $form_state, array &$form)
+{
+  // Los padres apuntan exactamente a field_aa_campus][0][target_id]
+  $parents = $element['#parents']; // ['field_aa_campus', 0, 'target_id']
+  $value = $form_state->getValue($parents);
+
+  if ($value === '' || $value === '_none' || $value === 0 || $value === '0') {
+    // El entity reference espera NULL para "vacío"
+    $form_state->setValue($parents, NULL);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Implements hook_entity_operation_alter().
+ */
+function custom_views_filters_entity_operation_alter(array &$operations, \Drupal\Core\Entity\EntityInterface $entity)
+{
+  // Solo para nodos.
+
+
+  if ($entity->getEntityTypeId() !== 'node') {
+    return;
+  }
+
+  // Por ejemplo, solo para el tipo 'programme' (opcional).
+  // if ($entity->bundle() !== 'programme') {
+  //   return;
+  // }
+
+  // Limitar a una vista concreta (opcional).
+  $route_match = \Drupal::routeMatch();
+  $route_name = $route_match->getRouteName();
+
+
+  // Sustituye por el ID de tu vista y display (page_1, block_1, etc).
+  $views_to_block = in_array($route_name, [
+    'view.admin_rs.page_1',
+
+  ]);
+
+  if (!$views_to_block) {
+    return;
+  }
+
+  // Eliminar el enlace "Delete".
+  unset($operations['delete']);
+}

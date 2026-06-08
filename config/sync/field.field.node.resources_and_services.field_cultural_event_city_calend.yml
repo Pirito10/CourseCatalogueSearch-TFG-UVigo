@@ -1,0 +1,24 @@
+uuid: 8de150fd-e7ef-4872-9257-54b422ef10bf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_cultural_event_city_calend
+    - filter.format.basic_html
+    - node.type.resources_and_services
+  module:
+    - text
+id: node.resources_and_services.field_cultural_event_city_calend
+field_name: field_cultural_event_city_calend
+entity_type: node
+bundle: resources_and_services
+label: 'Cultural event city calendar'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

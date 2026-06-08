@@ -1,0 +1,18 @@
+uuid: eecd980f-9130-4e9d-8a4b-aed1ab259ccb
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.knowledge_areas
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: taxonomy_term.knowledge_areas
+target_entity_type_id: taxonomy_term
+target_bundle: knowledge_areas
+default_langcode: site_default
+language_alterable: false

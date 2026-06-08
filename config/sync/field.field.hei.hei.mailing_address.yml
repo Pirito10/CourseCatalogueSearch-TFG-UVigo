@@ -1,0 +1,26 @@
+uuid: 34c37009-f3d1-491e-99cd-6a43077a47aa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.hei.mailing_address
+  module:
+    - ewp_flexible_address
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: mOK3gy8Us8QN0pO4DUi9ImkZb2WMUxWOu7QTovAh3ck
+id: hei.hei.mailing_address
+field_name: mailing_address
+entity_type: hei
+bundle: hei
+label: 'Mailing address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_flexible_address

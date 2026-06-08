@@ -1,0 +1,22 @@
+uuid: 62ee422f-682b-49b6-a95f-3be5e51b1681
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.agreement
+id: node.agreement.status
+field_name: status
+entity_type: node
+bundle: agreement
+label: Published
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

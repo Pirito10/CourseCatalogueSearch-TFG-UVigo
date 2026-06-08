@@ -1,0 +1,78 @@
+label: Meedia
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      title: Meedia
+      fields:
+        media_bulk_form:
+          action_title: Tegevus
+        thumbnail__target_id:
+          label: Pisipilt
+          separator: ', '
+        name:
+          label: 'Meedia nimetus'
+          separator: ', '
+        bundle:
+          label: Tüüp
+          separator: ', '
+        uid:
+          label: Autor
+          separator: ', '
+        status:
+          label: Olek
+          settings:
+            format_custom_false: Avaldamata
+            format_custom_true: Avaldatud
+          separator: ', '
+        changed:
+          label: Uuendatud
+          separator: ', '
+        operations:
+          label: Toimingud
+      pager:
+        options:
+          tags:
+            next: 'Järgmine ›'
+            previous: '‹ Eelmine'
+            first: '« Esimene'
+            last: 'Viimane »'
+          expose:
+            items_per_page_label: 'Kirjeid lehel'
+            items_per_page_options_all_label: '- Kõik -'
+            offset_label: Nihe
+      exposed_form:
+        options:
+          submit_button: Filtreeri
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+      empty:
+        area_text_custom:
+          content: 'Meedia elemente pole saadaval.'
+      filters:
+        name:
+          expose:
+            label: 'Meedia nimetus'
+        bundle:
+          expose:
+            label: Tüüp
+        status:
+          expose:
+            label: Tõene
+          group_info:
+            label: 'Avaldamise staatus'
+            group_items:
+              1:
+                title: Avaldatud
+              2:
+                title: Avaldamata
+        langcode:
+          expose:
+            label: Õppekeel
+  media_page_list:
+    display_title: Meedia
+    display_options:
+      menu:
+        title: Meedia

@@ -1,0 +1,5 @@
+services:
+  custom_views_filters.argument_default.custom_alias_to_id:
+    class: Drupal\custom_views_filters\Plugin\views\argument_default\CustomAliasToId
+    tags:
+      - { name: views.argument_default, id: custom_alias_to_id }

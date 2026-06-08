@@ -1,0 +1,24 @@
+uuid: a85b1fb4-b01c-4d2b-88f0-8e56b43017a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_instance_grading_schem
+    - filter.format.basic_html
+    - node.type.iec_instance
+  module:
+    - text
+id: node.iec_instance.field_iec_instance_grading_schem
+field_name: field_iec_instance_grading_schem
+entity_type: node
+bundle: iec_instance
+label: 'Grading scheme'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

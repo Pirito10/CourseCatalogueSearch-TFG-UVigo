@@ -1,0 +1,26 @@
+uuid: 40809b7f-abbe-40f2-a665-8a3abfc15128
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.contact.mailing_address
+  module:
+    - ewp_contact
+    - ewp_flexible_address
+  enforced:
+    module:
+      - ewp_contact
+_core:
+  default_config_hash: bqXnROLvy6_46OueVj73PCUjljSrANdLUTgtsz-kD8g
+id: contact.contact.mailing_address
+field_name: mailing_address
+entity_type: contact
+bundle: contact
+label: 'Mailing address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: ewp_flexible_address

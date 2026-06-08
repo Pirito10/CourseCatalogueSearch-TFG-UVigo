@@ -1,0 +1,112 @@
+label: Meediakogu
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      title: Meedia
+      fields:
+        media_bulk_form:
+          action_title: Tegevus
+      pager:
+        options:
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page_label: 'Kirjeid lehel'
+            items_per_page_options_all_label: '- Kõik -'
+            offset_label: Nihe
+      exposed_form:
+        options:
+          submit_button: 'Rakenda filtrid'
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+      empty:
+        area_text_custom:
+          content: 'Meedia elemente pole saadaval.'
+      sorts:
+        created:
+          expose:
+            label: 'Uuemad enne'
+        name:
+          expose:
+            label: 'Nimetus (A-Z)'
+        name_1:
+          expose:
+            label: 'Nimetus (Z-A)'
+      filters:
+        status:
+          expose:
+            label: 'Avaldamise olek'
+          group_info:
+            label: Avaldatud
+            group_items:
+              1:
+                title: Avaldatud
+              2:
+                title: Avaldamata
+        name:
+          expose:
+            label: Nimi
+        bundle:
+          expose:
+            label: 'Meedia tüüp'
+          group_info:
+            label: 'Meedia tüüp'
+        langcode:
+          expose:
+            label: Õppekeel
+  page:
+    display_title: Leht
+    display_options:
+      fields:
+        media_bulk_form:
+          action_title: Tegevus
+        name:
+          separator: ', '
+        edit_media:
+          text: Muuda
+        delete_media:
+          text: Kustuta
+  widget:
+    display_title: Vidin
+    display_options:
+      arguments:
+        bundle:
+          exception:
+            title: Kõik
+      filters:
+        name:
+          expose:
+            label: Nimi
+      header:
+        display_link_grid:
+          label: Ruudustik
+        display_link_table:
+          label: Tabel
+  widget_table:
+    display_options:
+      fields:
+        thumbnail__target_id:
+          label: Pisipilt
+        name:
+          label: Nimi
+        uid:
+          label: Autor
+        changed:
+          label: Uuendatud
+      arguments:
+        bundle:
+          exception:
+            title: Kõik
+      filters:
+        name:
+          expose:
+            label: Nimi
+      header:
+        display_link_grid:
+          label: Ruudustik
+        display_link_table:
+          label: Tabel

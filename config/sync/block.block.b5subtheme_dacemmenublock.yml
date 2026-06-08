@@ -1,0 +1,20 @@
+uuid: 7fc2adf2-4e2c-43d8-acbc-672b1fa4f3df
+langcode: es
+status: false
+dependencies:
+  module:
+    - dacem_menu
+  theme:
+    - b5subtheme
+id: b5subtheme_dacemmenublock
+theme: b5subtheme
+region: header
+weight: 0
+provider: null
+plugin: dacem_menu_block
+settings:
+  id: dacem_menu_block
+  label: 'Dacem Menu Block'
+  label_display: '0'
+  provider: dacem_menu
+visibility: {  }

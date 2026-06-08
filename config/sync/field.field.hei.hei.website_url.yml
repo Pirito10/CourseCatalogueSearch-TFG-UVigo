@@ -1,0 +1,28 @@
+uuid: 5a8eba99-c2ec-477c-a0fd-01fe1df06197
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.hei.website_url
+  module:
+    - ewp_core
+    - ewp_institutions
+  enforced:
+    module:
+      - ewp_institutions
+_core:
+  default_config_hash: xjlZQWe0zFQyhoEFCvfCshhIF12BwTA27sR-4NaapeA
+id: hei.hei.website_url
+field_name: website_url
+entity_type: hei
+bundle: hei
+label: 'Website URL'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: ewp_http_lang

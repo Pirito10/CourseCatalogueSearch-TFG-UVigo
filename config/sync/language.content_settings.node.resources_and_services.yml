@@ -1,0 +1,18 @@
+uuid: fbbfd694-54f1-48fb-89d3-bbe65385b3f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.resources_and_services
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '1'
+id: node.resources_and_services
+target_entity_type_id: node
+target_bundle: resources_and_services
+default_langcode: en
+language_alterable: false

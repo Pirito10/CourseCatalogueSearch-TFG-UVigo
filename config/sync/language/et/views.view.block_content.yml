@@ -1,0 +1,43 @@
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      fields:
+        info:
+          label: 'Ploki kirjeldus'
+          separator: ', '
+        type:
+          label: 'Ploki tüüp'
+          separator: ', '
+        changed:
+          label: Uuendatud
+        operations:
+          label: Toimingud
+      pager:
+        options:
+          tags:
+            next: 'Järgmine ›'
+            previous: '‹ Eelmine'
+          expose:
+            items_per_page_label: 'Kirjeid lehel'
+            items_per_page_options_all_label: '- Kõik -'
+            offset_label: Nihe
+      exposed_form:
+        options:
+          submit_button: 'Rakenda / Kinnita'
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+      filters:
+        info:
+          expose:
+            label: 'Ploki kirjeldus'
+        type:
+          expose:
+            label: 'Ploki tüüp'
+  page_1:
+    display_title: Leht
+    display_options:
+      menu:
+        title: Plokid

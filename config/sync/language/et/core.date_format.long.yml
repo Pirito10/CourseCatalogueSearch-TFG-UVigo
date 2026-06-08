@@ -1,0 +1,2 @@
+label: 'Vaikimisi pikk kuupäevaformaat'
+pattern: 'l, F j, Y - H:i'

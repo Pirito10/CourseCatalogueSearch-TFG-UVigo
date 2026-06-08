@@ -1,0 +1,158 @@
+{{ attach_library('b5subtheme/search-programme-sort') }}
+
+<div class="negative-margin-search-page">
+  {# 👇 Wrapper que incluye data-view-dom-id y clases .view/* (no tocar) #}
+  {# DESPUÉS #}
+<div class="view view-id-{{ view.id }} view-display-id-{{ view.current_display }}
+            js-view-dom-id-{{ view.dom_id }} view-dom-id-{{ view.dom_id }}"
+     data-view-dom-id="{{ view.dom_id }}">
+
+  <div{{ attributes.addClass('catalogue-view') }}>
+
+
+    {# (opcional) dump temporal para verificar que el wrapper es el esperado
+    {{- attributes -}}
+    #}
+
+    {# === Diccionario (si lo usas en las tarjetas) === #}
+    {% set programme_area = {
+      'es': {'arts_and_humanities':'Artes y Humanidades','sciences':'Ciencias','health_sciences':'Ciencias de la Salud','social_and_legal_sciences':'Ciencias Sociales y Jurídicas','engineering_and_architecture':'Ingeniería y Arquitectura'},
+      'en': {'arts_and_humanities':'Arts and Humanities','sciences':'Sciences','health_sciences':'Health Sciences','social_and_legal_sciences':'Social and Legal Sciences','engineering_and_architecture':'Engineering and Architecture'}
+    } %}
+    {% set programme_area_labels = programme_area[current_language] ?? programme_area['en'] %}
+
+    {# === HEADER rojo === #}
+    <div class="bg-danger">
+      <div class="section-container">
+        <div class="my-custom-container-2 py-4">
+
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <h2 class="section-title text-white m-0">{{ 'CATALOGUE'|t }}</h2>
+            </div>
+            <div class="col-auto">
+              <button class="btn btn-primary bg-black border-0 disabled">{{ 'Select Home Programme'|t }}</button>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-12">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control bg-light border-0" placeholder="Search..." id="programme-search">
+                <button class="btn btn-outline-secondary pe-4 ps-4 bg-black" type="button" id="search-btn">
+                  <i class="fas fa-search" style="color: white;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {# ✅ Exposed en el hero, PERO envuelto en .view-filters (markup estándar) #}
+          {% if exposed %}
+            <div class="view-filters catg__filters mb-0">
+              {{ exposed }}
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+    {# === CUERPO gris (sort + resultados) === #}
+    <div class="section-container bg-light">
+      <div class="my-custom-container-2 py-4">
+        <div class="row">
+
+          <div class="col-lg-2">
+            <h3 class="subsection-title p-0 pb-2 m-0">
+              <i class="fas fa-sort-amount-down me-2"></i>
+              SORT
+            </h3>
+            <div class="group-search-sort-buttons w-100">
+              <button class="btn btn-dark btn-sm btn-whithout-border-radius js-sort disabled"
+                      data-sort-by="title" data-sort-order="ASC">A - Z</button>
+              <button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled"
+                      data-sort-by="field_programme_area" data-sort-order="ASC">{{ 'Knowledge Area'|t }}</button>
+              <button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled"
+                      data-sort-by="field_programme_level" data-sort-order="ASC">{{ 'Level'|t }}</button>
+              <button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled"
+                      data-sort-by="field_institution_country" data-sort-order="ASC">{{ 'Country'|t }}</button>
+            </div>
+          </div>
+
+          <div class="col-lg-10 ps-5" id="programme-list">
+            {# ✅ Wrappers que espera AJAX de Views #}
+            {% if rows %}
+              <div class="view-content">
+                {{ rows }}
+              </div>
+            {% else %}
+              <div class="view-empty">
+                {{ empty }}
+              </div>
+            {% endif %}
+
+            {% if pager %}
+              <div class="view-pager">
+                {{ pager }}
+              </div>
+            {% endif %}
+
+            {% if attachment_after %}
+              <div class="attachment attachment-after">
+                {{ attachment_after }}
+              </div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+{# === JS búsqueda === #}
+<script>
+(function () {
+  const norm = s => (s||'').toString().trim();
+  const searchInput = document.getElementById('programme-search');
+  const searchBtn   = document.getElementById('search-btn');
+  if (!searchInput) return;
+
+  const wrapper = document.querySelector('[data-view-dom-id]');
+  if (!wrapper) return;
+
+  // Exposed form real de Views
+  const form = wrapper.querySelector('form.views-exposed-form, form[id^="views-exposed-form-"]');
+  if (!form) return;
+
+  function resetPageParam() {
+    let pageField = form.querySelector('input[name="page"]');
+    if (!pageField) {
+      pageField = document.createElement('input');
+      pageField.type = 'hidden';
+      pageField.name = 'page';
+      form.appendChild(pageField);
+    }
+    pageField.value = 0;
+  }
+
+  function submitSearch() {
+    const val = norm(searchInput.value);
+    form.querySelectorAll('input[name="combine"]').forEach(el => { el.value = val; });
+    resetPageParam();
+    form.requestSubmit(); // respeta behaviors AJAX
+  }
+
+  const firstCombine = wrapper.querySelector('input[name="combine"]');
+  if (firstCombine && !searchInput.value) searchInput.value = firstCombine.value || '';
+
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); submitSearch(); }
+  });
+  if (searchBtn) {
+    searchBtn.addEventListener('click', e => { e.preventDefault(); submitSearch(); });
+  }
+})();
+</script>

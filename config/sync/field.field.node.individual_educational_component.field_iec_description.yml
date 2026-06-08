@@ -1,0 +1,24 @@
+uuid: d6ee424c-5c1f-4c18-a555-f5cc092fa81d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_iec_description
+    - filter.format.basic_html
+    - node.type.individual_educational_component
+  module:
+    - text
+id: node.individual_educational_component.field_iec_description
+field_name: field_iec_description
+entity_type: node
+bundle: individual_educational_component
+label: Description
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

@@ -1,0 +1,21 @@
+uuid: 3152e0df-04ae-4376-92a5-465f686cefbd
+langcode: es
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.curso
+  module:
+    - text
+id: taxonomy_term.curso.description
+field_name: description
+entity_type: taxonomy_term
+bundle: curso
+label: Descripción
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

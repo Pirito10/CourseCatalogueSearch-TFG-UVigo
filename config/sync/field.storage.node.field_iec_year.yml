@@ -1,0 +1,39 @@
+uuid: f4a5e956-f0dd-4bcf-aae3-00093ab1e74f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_iec_year
+field_name: field_iec_year
+entity_type: node
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 1
+      label: 1º
+    -
+      value: 2
+      label: 2º
+    -
+      value: 3
+      label: 3º
+    -
+      value: 4
+      label: 4º
+    -
+      value: 5
+      label: 5º
+    -
+      value: 0
+      label: Any
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

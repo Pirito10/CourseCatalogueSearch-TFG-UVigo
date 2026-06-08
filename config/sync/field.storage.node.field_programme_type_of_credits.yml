@@ -1,0 +1,27 @@
+uuid: a49c8f77-bb09-4406-a1a2-816ff9de6d3c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_programme_type_of_credits
+field_name: field_programme_type_of_credits
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: ects
+      label: ECTS
+    -
+      value: ecvet
+      label: ECVET
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

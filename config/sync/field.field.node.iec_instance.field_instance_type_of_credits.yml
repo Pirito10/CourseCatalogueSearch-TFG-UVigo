@@ -1,0 +1,23 @@
+uuid: cc1de1d4-9729-4e26-9e37-dcaba514d909
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_instance_type_of_credits
+    - node.type.iec_instance
+  module:
+    - options
+id: node.iec_instance.field_instance_type_of_credits
+field_name: field_instance_type_of_credits
+entity_type: node
+bundle: iec_instance
+label: 'Type of credits'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: ects
+default_value_callback: ''
+settings: {  }
+field_type: list_string

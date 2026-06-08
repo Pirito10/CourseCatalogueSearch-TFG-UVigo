@@ -1,0 +1,57 @@
+uuid: 12015fcd-983a-4fcc-9257-35f911af76d0
+langcode: es
+status: true
+dependencies:
+  config:
+    - group.type.universitytypegroup
+id: universitytypegroup-degree_admin
+label: 'Programme Administrator'
+weight: 1
+admin: false
+scope: individual
+global_role: null
+group_type: universitytypegroup
+permissions:
+  - 'access content overview'
+  - 'access group_node overview'
+  - 'create group_node:asignatura entity'
+  - 'create group_node:asignatura relationship'
+  - 'create group_node:iec_instance entity'
+  - 'create group_node:individual_educational_component entity'
+  - 'create group_node:individual_educational_component relationship'
+  - 'delete any group_node:asignatura entity'
+  - 'delete any group_node:asignatura relationship'
+  - 'delete any group_node:individual_educational_component entity'
+  - 'delete any group_node:individual_educational_component relationship'
+  - 'delete own group_node:asignatura entity'
+  - 'delete own group_node:carrera entity'
+  - 'delete own group_node:individual_educational_component entity'
+  - 'delete own group_node:programme entity'
+  - 'update any group_node:asignatura entity'
+  - 'update any group_node:asignatura relationship'
+  - 'update any group_node:iec_instance entity'
+  - 'update any group_node:individual_educational_component entity'
+  - 'update any group_node:individual_educational_component relationship'
+  - 'update own group_node:asignatura entity'
+  - 'update own group_node:asignatura relationship'
+  - 'update own group_node:carrera entity'
+  - 'update own group_node:carrera relationship'
+  - 'update own group_node:iec_instance entity'
+  - 'update own group_node:individual_educational_component entity'
+  - 'update own group_node:individual_educational_component relationship'
+  - 'update own group_node:programme entity'
+  - 'update own group_node:programme relationship'
+  - 'update own group_node:resources_and_services relationship'
+  - 'view group'
+  - 'view group_node:academic_authority entity'
+  - 'view group_node:asignatura entity'
+  - 'view group_node:campus entity'
+  - 'view group_node:carrera entity'
+  - 'view group_node:iec_instance entity'
+  - 'view group_node:individual_educational_component entity'
+  - 'view group_node:institution entity'
+  - 'view group_node:organizational_unit entity'
+  - 'view group_node:programme entity'
+  - 'view group_node:resources_and_services entity'
+  - 'view group_node:universidad entity'
+  - 'view own unpublished group_node:carrera entity'

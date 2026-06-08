@@ -1,0 +1,5 @@
+services:
+  agreement_courses.matcher:
+    class: Drupal\agreement_courses\Service\AgreementCourseMatcher
+    arguments:
+      - '@entity_type.manager'

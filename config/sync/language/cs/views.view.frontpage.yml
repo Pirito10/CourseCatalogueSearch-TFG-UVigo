@@ -1,0 +1,30 @@
+label: 'Titulní strana'
+display:
+  default:
+    display_title: Výchozí
+    display_options:
+      pager:
+        options:
+          tags:
+            next: 'Následující ›'
+            previous: '‹ Předchozí'
+            first: '« První'
+            last: 'Poslední »'
+          expose:
+            items_per_page_label: 'Položek na stránku'
+            items_per_page_options_all_label: '- Vše -'
+            offset_label: Posun
+      exposed_form:
+        options:
+          submit_button: 'Přihlásit se'
+          reset_button_label: Resetovat
+          exposed_sorts_label: 'Řadit dle'
+          sort_asc_label: Vzestupně
+          sort_desc_label: Sestupně
+      empty:
+        area_text_custom:
+          content: 'Pro hlavní stranu zatím neexistuje žádný obsah. Instrukce pro přidání obsahu najdete v <a target="_blank" href="https://www.drupal.org/docs/user_guide/en/index.html">uživatelské příručce</a>.'
+  feed_1:
+    display_title: Zdroj
+  page_1:
+    display_title: Stránka

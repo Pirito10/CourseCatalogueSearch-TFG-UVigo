@@ -1,0 +1,20 @@
+uuid: 75eb3eab-1385-4ff9-b6d7-4e9e18df52a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.agreement
+  module:
+    - path
+id: node.agreement.path
+field_name: path
+entity_type: node
+bundle: agreement
+label: 'URL alias'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: path

@@ -1,0 +1,68 @@
+{% set primary_color = main_page_primary_color|default('#ff4949') %}
+
+<section class="alliances-search" style="--alliances-primary-color: {{ primary_color }};">
+  <div class="my-custom-container-2">
+    <div class="alliances-search__inner">
+      <h1>{{ 'Institutions'|t }}</h1>
+
+      {% if exposed %}
+        <div class="alliances-search__form">
+          {{ exposed }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="main-page-university-grid section-container">
+  <div class="my-custom-container-2">
+    {% if view.result %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 g-xl-5">
+        {% for row in view.result %}
+          {% set institution = row._entity %}
+          {% set file = institution.field_institution_card_image.entity %}
+          {% set institution_url = row.custom_url ? '/' ~ row.custom_url|trim('/') : null %}
+          {% set information = institution.field_information.processed|default(institution.field_information.value|default('')) %}
+
+          <div class="col">
+            {% if institution_url %}
+              <a href="{{ institution_url }}" class="main-page-university-card">
+            {% else %}
+              <article class="main-page-university-card">
+            {% endif %}
+
+              <div class="main-page-university-card__media">
+                {% if file %}
+                  <img src="{{ file_url(file.getFileUri()) }}" alt="{{ institution.title.value }}">
+                {% endif %}
+              </div>
+
+              <div class="main-page-university-card__body">
+                <h2 class="main-page-university-card__name">{{ institution.title.value }}</h2>
+
+                {% if row._country_name %}
+                  <p class="main-page-university-card__country" style="--card-primary-color: {{ primary_color }};">
+                    {{ row._country_name }}
+                  </p>
+                {% endif %}
+
+                {% if information %}
+                  <p class="main-page-university-card__description">
+                    {{ information|striptags }}
+                  </p>
+                {% endif %}
+              </div>
+
+            {% if institution_url %}
+              </a>
+            {% else %}
+              </article>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="main-page-university-grid__empty">{{ 'No universities found.'|t }}</p>
+    {% endif %}
+  </div>
+</section>

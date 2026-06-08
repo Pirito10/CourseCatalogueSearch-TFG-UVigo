@@ -1,0 +1,69 @@
+label: Sisu
+description: 'Otsi ja halda lehe sisu.'
+display:
+  default:
+    display_title: Vaikimisi
+    display_options:
+      title: Sisu
+      fields:
+        title:
+          label: Pealkiri
+        type:
+          label: 'Sisu tüüp'
+          separator: ', '
+        name:
+          label: Autor
+        status:
+          label: Olek
+          settings:
+            format_custom_false: Avaldamata
+            format_custom_true: Avaldatud
+        changed:
+          label: Uuendatud
+        operations:
+          label: Toimingud
+      pager:
+        options:
+          tags:
+            next: 'Järgmine ›'
+            previous: '‹ Eelmine'
+            first: '« Esimene'
+            last: 'Viimane »'
+      exposed_form:
+        options:
+          submit_button: Filtreeri
+          reset_button_label: Lähtesta
+          exposed_sorts_label: 'Sorteerimise alus'
+          sort_asc_label: Kasvav
+          sort_desc_label: Kahanev
+      empty:
+        area_text_custom:
+          content: 'Sisu puudub.'
+      filters:
+        title:
+          expose:
+            label: Pealkiri
+        type:
+          expose:
+            label: 'Sisu tüüp'
+        status:
+          expose:
+            label: Olek
+          group_info:
+            label: 'Avaldamise staatus'
+            group_items:
+              1:
+                title: Avaldatud
+              2:
+                title: Avaldamata
+        langcode:
+          expose:
+            label: Õppekeel
+  page_1:
+    display_title: Leht
+    display_options:
+      menu:
+        title: Sisu
+      tab_options:
+        title: Sisu
+        description: 'Otsi ja halda sisu'
