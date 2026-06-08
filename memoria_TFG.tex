@@ -168,7 +168,12 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 
 \subsection{Ordenación de resultados}
 
-Para incorporar a funcionalidade de ordenación á vista de programas e á vista de compoñentes educativos, optouse por empregar o mecanismo de ordenación exposta do módulo \textit{Views} de Drupal, en lugar de implementar unha solución baseada en manipulación directa de consultas ou en ordenación no lado do cliente. Esta decisión responde a tres razóns principais: en primeiro lugar, o mecanismo intégrase de forma nativa co sistema \textit{AJAX} de \textit{Views}, o que evita ter que reimplementar a actualización parcial de resultados; en segundo lugar, mantén a coherencia coa arquitectura da plataforma, que xa emprega \textit{Views} de forma extensiva para a xestión e presentación de contido; e en terceiro lugar, os criterios de ordenación quedan declarados na configuración da vista en lugar de estar codificados en PHP, o que facilita a súa modificación sen necesidade de modificar código.
+Para incorporar a funcionalidade de ordenación á vista de programas e á vista de compoñentes educativos, optouse por empregar o mecanismo de ordenación exposta do módulo \textit{Views} de Drupal, en lugar de implementar unha solución baseada en manipulación directa de consultas ou en ordenación no lado do cliente. Esta decisión responde a tres razóns principais:
+\begin{itemize}
+    \item O mecanismo intégrase de forma nativa co sistema \textit{AJAX} de \textit{Views}, o que evita ter que reimplementar a actualización parcial de resultados.
+    \item Mantén a coherencia coa arquitectura da plataforma, que xa emprega \textit{Views} de forma extensiva para a xestión e presentación de contido.
+    \item Os criterios de ordenación quedan declarados na configuración da vista en lugar de estar codificados en PHP, o que facilita a súa modificación sen necesidade de modificar código.
+\end{itemize}
 
 O mecanismo funciona do seguinte xeito: cando se declara un criterio de ordenación como exposto na configuración dunha vista, \textit{Views} xera automaticamente dous campos de control no formulario asociado, un que identifica o criterio polo que ordenar e outro que indica a dirección (ascendente ou descendente), e reconstrúe a consulta ao recibir o envío do formulario.
 
