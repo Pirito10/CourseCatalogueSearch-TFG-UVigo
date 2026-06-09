@@ -258,7 +258,26 @@ A plataforma de partida xa incluía un script JavaScript con lóxica de detecci�
 
 \subsection{Busca difusa}
 
-(pendente)
+A implementación da busca difusa concretouse en tres elementos:
+\begin{itemize}
+    \item A configuración do servidor e dos índices de \textit{Search API}.
+    \item A extensión do módulo \texttt{custom\_views\_filters} mediante dous \textit{hooks} de \textit{Views}.
+    \item A nova clase \texttt{FuzzySearch} que encapsula a lóxica de puntuación.
+\end{itemize}
+
+Creouse un servidor de \textit{Search API} con \textit{backend} de base de datos, configurado cun limiar de lonxitude mínima de palabra de 3 caracteres, coherente co mecanismo de tokenización da clase de puntuación; a indexación de frases e a concordancia parcial desactiváronse, xa que o índice se emprega unicamente como catálogo de títulos sobre o que operar a métrica de Levenshtein, sen usar a busca nativa do módulo. Sobre este servidor configuráronse dous índices: \texttt{programmes}, que indexa os nodos de tipo \textit{programme} polo campo \texttt{title}, e \texttt{courses}, que indexa os nodos de tipo \textit{course} polo mesmo campo. Ambos os índices se configuraron sen restrición de idioma.
+
+O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para a vista de programas e a vista de compoñentes educativos. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase a clase \texttt{FuzzySearch} co índice correspondente. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, as puntuacións gárdanse para o \textit{hook} de post-execución e engádese a condición \texttt{nid IN (\{NIDs\})}.
+
+Engadiuse ademais o novo \textit{hook} \texttt{hook\_views\_post\_execute}, que se invoca xusto despois de que \textit{Views} execute a consulta. Este comproba se o array de puntuacións non está baleiro e, de ser así, reordena os resultados da vista por puntuación descendente e limpa o array para evitar interferencias en execucions posteriores.
+
+A clase \texttt{FuzzySearch}, creada dentro do módulo \texttt{custom\_views\_filters}, centraliza a lóxica de puntuación. O punto de entrada é o método estático \texttt{scoreFromIndex()}, que recibe o texto de busca e o identificador do índice e devolve os candidatos ordenados por puntuación descendente, ou \texttt{NULL} se o texto non produce ningún token válido. Este delega en dous métodos: \texttt{loadCandidatesFromIndex()}, que obtén os candidatos do índice, e \texttt{scoreAndFilter()}, que aplica a puntuación. A clase mantén ademais a propiedade estática \texttt{\$scores}, que actúa como canle de comunicación entre os dous hooks: o hook de pre-execución escríbea coas puntuacións e o de post-execución léea.
+
+\texttt{loadCandidatesFromIndex()} consulta o índice de \textit{Search API} mediante unha \textit{query} sen restrición de idioma e cun rango de ata 10.000 resultados. O identificador de cada ítem ten o formato \texttt{entity:node/\{nid\}:\{lang\}}; o NID extráese deste identificador mediante expresión regular.
+
+\texttt{scoreAndFilter()} normaliza e tokeniza o termo de busca e, para cada candidato, compara cada palabra da consulta con cada palabra do título, acumulando a mellor puntuación obtida. Dado que \textit{Search API} indexa cada tradución dun nodo como un ítem independente, o mesmo NID pode aparecer varias veces; por iso, os resultados indexanse por NID e, en caso de duplicado, consérvase a puntuación máis alta.
+
+A tokenización divide o texto en palabras de 3 ou máis caracteres mediante a expresión regular \texttt{[a-z]\{3,\}}. O método \texttt{wordScore()} compara dúas palabras normalizadas e devolve unha puntuación entre 0 e 1. Os primeiros casos son a coincidencia exacta, que retorna unha puntuación de 1, e a coincidencia de prefixo, que retorna unha puntuación de $\alpha$. Para os demais, calcúlase a distancia de Levenshtein mediante a función \texttt{levenshtein()} de PHP e compárase cun limiar (isto é, a cantidade máxima de erros permitidos): se o supera, a puntuación é 0; se non, aplícase a fórmula $1 - d/L$, onde $d$ é a distancia e $L$ a lonxitude da maior palabra das dúas, de xeito que máis erros implican menor puntuación. O limiar é 1 para palabras de ata 5 caracteres e 2 para as máis longas.
 
 % **************************************************
 % * Conclusiones
