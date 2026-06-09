@@ -177,7 +177,7 @@ Para incorporar a funcionalidade de ordenación á vista de programas e á vista
 
 O mecanismo funciona do seguinte xeito: cando se declara un criterio de ordenación como exposto na configuración dunha vista, \textit{Views} xera automaticamente dous campos de control no formulario asociado, un que identifica o criterio polo que ordenar e outro que indica a dirección (ascendente ou descendente), e reconstrúe a consulta ao recibir o envío do formulario.
 
-Para a interacción do usuario, deseñouse un comportamento de alternancia: o primeiro clic sobre un botón de ordenación establece o criterio en orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección de ordenación. Esta decisión permite concentrar cada criterio nun único botón, evitando duplicar os controis en dúas versións por dirección. A lóxica de alternancia, implementada en \textit{JavaScript}, le o campo de ordenación activo no formulario e inverte a dirección se coincide co botón pulsado, ou establece a orde ascendente por defecto en caso contrario.
+Para a interacción do usuario, deseñouse un comportamento de alternancia: o primeiro clic sobre un botón de ordenación establece o criterio en orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección de ordenación, como se mostra na figura~\ref{fig:botons}. Esta decisión permite concentrar cada criterio nun único botón, evitando duplicar os controis en dúas versións por dirección. A lóxica de alternancia, implementada en \textit{JavaScript}, le o campo de ordenación activo no formulario e inverte a dirección se coincide co botón pulsado, ou establece a orde ascendente por defecto en caso contrario.
 
 \begin{figure}[h]
     \centering
