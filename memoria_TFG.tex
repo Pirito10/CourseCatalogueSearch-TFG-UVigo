@@ -171,6 +171,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \section{Deseño}
 
 \subsection{Ordenación de resultados}
+\label{sec:diseno_ordenacion}
 
 Para incorporar a funcionalidade de ordenación á vista de programas e á vista de compoñentes educativos, optouse por empregar o mecanismo de ordenación exposta do módulo \textit{Views} de Drupal, en lugar de implementar unha solución baseada en manipulación directa de consultas ou en ordenación no lado do cliente. Esta decisión responde a tres razóns principais:
 \begin{itemize}
@@ -234,7 +235,30 @@ O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \text
 % **************************************************
 \section{Desenvolvemento}
 
- (pendente)
+\subsection{Ordenación de resultados}
+
+A implementación da ordenación articulouse en tres capas coordinadas:
+\begin{itemize}
+    \item A configuración declarativa das vistas.
+    \item As plantillas Twig.
+    \item A lóxica JavaScript.
+\end{itemize}
+
+Na configuración YAML de cada vista, cada criterio de ordenación declarouse como exposto e asignóuselle un identificador único (\textit{field identifier}). Este identificador establece o contrato entre a configuración da vista e a capa JavaScript: o valor do atributo \texttt{data-sort-by} de cada botón no HTML debe coincidir exactamente con este identificador para que o mecanismo funcione correctamente.
+
+Algúns criterios implican campos de entidades relacionadas; nestes casos, o criterio declara o parámetro de relación correspondente, reutilizando as unións entre entidades xa definidas na configuración da vista, sen necesidade de declarar unións adicionais:
+\begin{itemize}
+    \item \textbf{Vista de programas}: a ordenación por país emprega a relación coa institución referenciada polo programa.
+    \item \textbf{Vista de compoñentes educativos}: a ordenación por área de coñecemento e por título do programa pai usa a relación co nodo programa referenciado polo IEC; a ordenación por país encadéase ademais a través da relación co nodo institución.
+\end{itemize}
+
+Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente. As plantillas de ambas as vistas cargan a mesma biblioteca JavaScript.
+
+A plataforma de partida xa incluía un script JavaScript con lóxica de detección de clics sobre os botóns \texttt{.js-sort} e o envío do formulario. Modificouse para implementar o comportamento de alternancia descrito na sección~\ref{sec:diseno_ordenacion}: en lugar de usar sempre a dirección especificada no atributo do botón, o script le agora o estado actual dos campos \texttt{sort\_by} e \texttt{sort\_order} do formulario e inverte a dirección se o mesmo criterio xa está activo, ou establece a dirección ascendente por defecto en caso contrario. Así mesmo, actualizouse o método de envío: en lugar de disparar un evento \textit{change} sobre os campos do formulario, o script simula agora un clic directo no botón de envío, o que desencadea o mecanismo de \textit{Views} e actualiza os resultados mediante AJAX sen recargar a páxina.
+
+\subsection{Busca difusa}
+
+(pendente)
 
 % **************************************************
 % * Conclusiones
