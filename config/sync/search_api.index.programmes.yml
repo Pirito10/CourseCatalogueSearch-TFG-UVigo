@@ -3,6 +3,7 @@ langcode: es
 status: true
 dependencies:
   config:
+    - field.storage.node.field_programme_institution
     - search_api.server.database_server
   module:
     - node
@@ -17,6 +18,16 @@ field_settings:
     property_path: title
     type: text
     dependencies:
+      module:
+        - node
+  title_1:
+    label: 'Institution » Content » Title'
+    datasource_id: 'entity:node'
+    property_path: 'field_programme_institution:entity:title'
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_programme_institution
       module:
         - node
 datasource_settings:

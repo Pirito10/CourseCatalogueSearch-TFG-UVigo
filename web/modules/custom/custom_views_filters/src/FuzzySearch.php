@@ -51,22 +51,26 @@ class FuzzySearch {
       }
       $nid = (int) $m[1];
 
-      $title = '';
-      $titleField = $item->getField('title');
-      if ($titleField) {
-        foreach ($titleField->getValues() as $value) {
+      $text = '';
+      foreach (['title', 'institution'] as $fieldName) {
+        $field = $item->getField($fieldName);
+        if (!$field) {
+          continue;
+        }
+        foreach ($field->getValues() as $value) {
           if ($value instanceof TextValueInterface) {
-            $title = $value->getText();
+            $text .= ' ' . $value->getText();
           }
           elseif (is_string($value)) {
-            $title = $value;
+            $text .= ' ' . $value;
           }
           break;
         }
       }
+      $text = trim($text);
 
-      if ($nid && $title !== '') {
-        $candidates[] = ['nid' => $nid, 'title' => $title];
+      if ($nid && $text !== '') {
+        $candidates[] = ['nid' => $nid, 'title' => $text];
       }
     }
 
