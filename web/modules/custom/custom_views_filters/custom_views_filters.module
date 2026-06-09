@@ -74,6 +74,40 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
     }
   }
 
+  // Fuzzy search for the IEC catalogue.
+  if ($view->id() === 'search_iec') {
+    $search = trim($view->getExposedInput()['combine'] ?? '');
+
+    if ($search !== '') {
+      $matches = FuzzySearch::scoreFromIndex($search, 'courses');
+
+      foreach ($query->where as &$group) {
+        foreach ($group['conditions'] as $k => $condition) {
+          if (($condition['operator'] ?? '') === 'formula') {
+            foreach ((array) ($condition['value'] ?? []) as $arg) {
+              if (is_string($arg) && strpos($arg, $search) !== FALSE) {
+                unset($group['conditions'][$k]);
+                break 2;
+              }
+            }
+          }
+        }
+      }
+      unset($group);
+
+      if ($matches === NULL) {
+        // Term too short — no filtering, show all results.
+      }
+      elseif (empty($matches)) {
+        $query->addWhere(1, 'node_field_data.nid', [0], 'IN');
+      }
+      else {
+        FuzzySearch::$scores = array_column($matches, 'score', 'nid');
+        $query->addWhere(1, 'node_field_data.nid', array_column($matches, 'nid'), 'IN');
+      }
+    }
+  }
+
   $current_language = \Drupal::languageManager()->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)->getId();
   $alias_manager = \Drupal::service('path_alias.manager');
 
