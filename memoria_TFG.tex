@@ -75,11 +75,11 @@ O presente Traballo de Fin de Grao enmárcase neste contexto, propoñendo o dese
 % **************************************************
 \subsection{A plataforma de partida}
 
-A plataforma DACEM está implementada sobre Drupal 10, un sistema de xestión de contidos (CMS) de código aberto amplamente empregado no ámbito académico e institucional. Drupal 10 proporciona unha contorna flexible para a definición de tipos de contido estruturado, a xestión de usuarios e a publicación de información a través de interfaces web configurables.
+A plataforma DACEM está implementada sobre Drupal 10, un sistema de xestión de contidos (CMS) de código aberto amplamente empregado no ámbito académico e institucional \cite{drupal_usage}. Drupal 10 proporciona unha contorna flexible para a definición de tipos de contido estruturado, a xestión de usuarios e a publicación de información a través de interfaces web configurables.
 
 O modelo de datos organízase arredor de tres tipos de contido principais: \textit{programme}, que representa unha titulación académica; \textit{individual educational component} (IEC), correspondente a unha materia ou compoñente curricular individual; e \textit{institution}, que modela as universidades participantes. Cada entidade conta cun conxunto de campos estruturados que recollen atributos como a área de coñecemento, o nivel de cualificación, os créditos, o idioma de impartición ou o país de orixe, entre outros.
 
-Para a presentación e consulta do catálogo, a plataforma emprega o módulo \textit{Views}, integrado no núcleo de Drupal, que permite definir listaxes e consultas de contido de forma declarativa. O módulo \textit{Better Exposed Filters} complementa \textit{Views} proporcionando a interface de filtrado ao usuario. Existen dúas vistas principais de busca: \textit{search\_programme}, accesible en \texttt{/search-programme}, orientada á consulta de titulacións; e \textit{search\_iec}, en \texttt{/search-iec}, orientada á consulta de compoñentes educativos individuais. A capa de presentación visual está baseada nun tema personalizado construído sobre Bootstrap 5.
+Para a presentación e consulta do catálogo, a plataforma emprega o módulo \textit{Views}, integrado no núcleo de Drupal, que permite definir listaxes e consultas de contido de forma declarativa. O módulo \textit{Better Exposed Filters} \cite{better_exposed_filters} complementa \textit{Views} proporcionando a interface de filtrado ao usuario. Existen dúas vistas principais de busca: \textit{search\_programme}, accesible en \texttt{/search-programme}, orientada á consulta de titulacións; e \textit{search\_iec}, en \texttt{/search-iec}, orientada á consulta de compoñentes educativos individuais. A capa de presentación visual está baseada nun tema personalizado construído sobre Bootstrap 5.
 
 O mecanismo de busca textual actual baséase no filtro \textit{combine} de \textit{Views}, que realiza comparacións de subcadeas sobre o campo título das entidades. Esta aproximación presenta limitacións relevantes:
 \begin{itemize}
@@ -294,7 +294,7 @@ A busca difusa (\textit{fuzzy search}) é unha técnica de recuperación de info
 
 O fundamento teórico da busca difusa reside no concepto de distancia de edición entre dúas cadeas, definida como o número mínimo de operacións elementais necesarias para transformar unha cadea na outra. O algoritmo máis empregado é a \textbf{distancia de Levenshtein} \cite{levenshtein}, que considera tres operacións básicas: inserción, eliminación e substitución dun carácter. Dados dous textos de lonxitude $m$ e $n$, calcúlase en tempo $O(m \times n)$ mediante programación dinámica.
 
-A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo incorporando as transposicións de caracteres adxacentes como operación atómica, o que a fai máis precisa para modelar erros tipográficos humanos, onde o intercambio de dúas letras consecutivas é un dos erros máis frecuentes. Outra métrica habitual é a \textbf{similitude de Jaro-Winkler} \cite{winkler}, que premia as cadeas con prefixo común e adoita empregarse na comparación de nomes propios. Por último, os enfoques baseados en \textbf{n-gramas} dividen as cadeas en secuencias solapadas de $n$ caracteres e comparan a proporción de n-gramas compartidos, ofrecendo bo rendemento en textos longos e sendo facilmente paralelizables.
+A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo incorporando as transposicións de caracteres adxacentes como operación atómica, o que a fai máis precisa para modelar erros tipográficos humanos, onde o intercambio de dúas letras consecutivas é un dos erros máis frecuentes. Outra métrica habitual é a \textbf{similitude de Jaro-Winkler} \cite{winkler}, que premia as cadeas con prefixo común e adoita empregarse na comparación de nomes propios. Por último, os enfoques baseados en \textbf{n-gramas} \cite{ukkonen} dividen as cadeas en secuencias solapadas de $n$ caracteres e comparan a proporción de n-gramas compartidos, ofrecendo bo rendemento en textos longos e sendo facilmente paralelizables.
 
 Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas e compoñentes educativos.
 
@@ -307,9 +307,9 @@ Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{
 \begin{itemize}
     \item \textbf{Backend de base de datos}: almacena o índice en táboas da base de datos relacional existente. Non require infraestrutura adicional e ofrece un rendemento axeitado para catálogos de tamaño moderado.
 
-    \item \textbf{Apache Solr}: motor de busca de código aberto baseado en Lucene, optimizado para grandes volumes de datos e con capacidades avanzadas de ponderación de resultados por relevancia. Require un servidor Solr externo.
+    \item \textbf{Apache Solr} \cite{solr}: motor de busca de código aberto baseado en Lucene, optimizado para grandes volumes de datos e con capacidades avanzadas de ponderación de resultados por relevancia. Require un servidor Solr externo.
 
-    \item \textbf{Elasticsearch}: solución distribuída orientada á alta dispoñibilidade e á escalabilidade horizontal, con capacidades similares a Solr. Tamén require infraestrutura adicional dedicada.
+    \item \textbf{Elasticsearch} \cite{elasticsearch}: solución distribuída orientada á alta dispoñibilidade e á escalabilidade horizontal, con capacidades similares a Solr. Tamén require infraestrutura adicional dedicada.
 \end{itemize}
 
 Para este traballo optouse polo \textit{backend} de base de datos, dado que non require infraestrutura adicional, é suficiente para o volume de datos do catálogo DACEM, e permite integrar a lóxica de busca difusa directamente en PHP, empregando o índice para recuperar os títulos sobre os que aplicar a métrica de Levenshtein.
