@@ -94,7 +94,7 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
 % **************************************************
 \section{Obxectivos e requisitos}
 \label{sec:obxectivos}
-O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta e sen tolerancia a erros tipográficos), propónse o deseño e implementación de dúas melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca existentes, e a implementación dun mecanismo de busca difusa que permita localizar programas aínda en presenza de erros tipográficos na consulta.
+O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta e sen tolerancia a erros tipográficos), propónse o deseño e implementación de dúas melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca existentes, e a implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta.
 
 A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
 
@@ -128,9 +128,13 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \begin{enumerate}
     \item O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
 
+    \item A busca difusa debe aplicarse a ambas as vistas de busca: a vista de programas e a vista de compoñentes educativos.
+
     \item A busca difusa debe aplicar un criterio de similaridade entre a consulta e os títulos dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
 
     \item A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
+
+    \item A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
 
     \item Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
 
@@ -200,14 +204,14 @@ Algúns destes criterios implican campos que non pertencen directamente ao nodo 
 
 \subsection{Busca difusa}
 
-A busca difusa articulouse en tres compoñentes:
+A busca difusa articulouse en tres compoñentes, aplicados de forma idéntica á vista de programas e á vista de compoñentes educativos:
 \begin{itemize}
-    \item \textbf{Índice de Search API}: proporciona o catálogo de títulos indexados sobre o que opera a clase de puntuación.
-    \item \textbf{Hooks de Views}: dous puntos de extensión de Drupal que integran a lóxica de busca difusa na execución da vista.
+    \item \textbf{Índices de Search API}: un índice para cada tipo de contido (programas e compoñentes educativos), que proporcionan o catálogo de títulos sobre o que opera a clase de puntuación.
+    \item \textbf{Hooks de Views}: dous puntos de extensión de Drupal que integran a lóxica de busca difusa na execución das vistas.
     \item \textbf{Clase PHP de puntuación}: calcula a similitude entre a consulta e cada título indexado mediante a distancia de Levenshtein.
 \end{itemize}
 
-Fronte a unha consulta SQL directa ás táboas de nodos, o índice ofrece a vantaxe de desacoplar a lóxica de puntuación do esquema da base de datos e de manterse actualizado de forma automática ao modificarse o contido.
+Fronte a unha consulta SQL directa ás táboas de nodos, os índices ofrecen a vantaxe de desacoplar a lóxica de puntuación do esquema da base de datos e de manterse actualizados de forma automática ao modificarse o contido. Ambos os índices están configurados para cubrir todos os idiomas dispoñibles, de xeito que a busca non queda restrinxida ao idioma da interface.
 
 A decisión de interceptar a consulta mediante \textit{hooks}, en lugar de actuar sobre a capa de presentación, responde ao obxectivo de que o mecanismo sexa transparente para o usuario e compatible co sistema \textit{AJAX} de \textit{Views}.
 
@@ -221,9 +225,9 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
     \item Distancia superior ao limiar: puntuación 0,0 (descartado).
 \end{itemize}
 
-A puntuación total dun programa é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel, incluído $\alpha$ e os limiares de distancia, foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~\ref{anx:calibrado} (pendente).
+A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel, incluído $\alpha$ e os limiares de distancia, foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~\ref{anx:calibrado} (pendente).
 
-O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de pre-execución intercepta a consulta antes de que \textit{Views} a execute. Nese momento invoca a clase de puntuación, que carga todos os títulos indexados en \textit{Search API}, normaliza e tokeniza tanto o termo de busca como cada título, e calcula a puntuación de cada candidato mediante a distancia de Levenshtein. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos programas que superaron o limiar de puntuación. A continuación, \textit{Views} executa a consulta modificada e o \textit{hook} de post-execución reordena os resultados por puntuación descendente, dado que filtrar por un conxunto de identificadores non garante ningunha orde determinada. As puntuacións compártense entre ambos os \textit{hooks} mediante un mecanismo de almacenamento compartido, que actúa como canle de comunicación entre as dúas fases de execución.
+O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de pre-execución intercepta a consulta antes de que \textit{Views} a execute. Nese momento invoca a clase de puntuación, que carga todos os títulos indexados en \textit{Search API}, normaliza e tokeniza tanto o termo de busca como cada título, e calcula a puntuación de cada candidato mediante a distancia de Levenshtein. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. A continuación, \textit{Views} executa a consulta modificada e o \textit{hook} de post-execución reordena os resultados por puntuación descendente, dado que filtrar por un conxunto de identificadores non garante ningunha orde determinada. As puntuacións compártense entre ambos os \textit{hooks} mediante un mecanismo de almacenamento compartido, que actúa como canle de comunicación entre as dúas fases de execución.
 
 % **************************************************
 % * Desarrollo
@@ -268,7 +272,7 @@ O fundamento teórico da busca difusa reside no concepto de distancia de edició
 
 A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo incorporando as transposicións de caracteres adxacentes como operación atómica, o que a fai máis precisa para modelar erros tipográficos humanos, onde o intercambio de dúas letras consecutivas é un dos erros máis frecuentes. Outra métrica habitual é a \textbf{similitude de Jaro-Winkler} \cite{winkler}, que premia as cadeas con prefixo común e adoita empregarse na comparación de nomes propios. Por último, os enfoques baseados en \textbf{n-gramas} dividen as cadeas en secuencias solapadas de $n$ caracteres e comparan a proporción de n-gramas compartidos, ofrecendo bo rendemento en textos longos e sendo facilmente paralelizables.
 
-Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas académicos.
+Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas e compoñentes educativos.
 
 \subsubsection{Busca e indexación en sistemas de xestión de contidos}
 
