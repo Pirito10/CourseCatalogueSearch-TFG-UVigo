@@ -3,7 +3,6 @@
 namespace Drupal\custom_views_filters;
 
 use Drupal\search_api\Entity\Index;
-use Drupal\Core\Language\LanguageInterface;
 use Drupal\search_api\Plugin\search_api\data_type\value\TextValueInterface;
 
 class FuzzySearch {
@@ -39,12 +38,7 @@ class FuzzySearch {
       return [];
     }
 
-    $langcode = \Drupal::languageManager()
-      ->getCurrentLanguage(LanguageInterface::TYPE_CONTENT)
-      ->getId();
-
     $query = $index->query();
-    $query->setLanguages([$langcode]);
     $query->range(0, 10000);
     $results = $query->execute();
 
@@ -111,10 +105,14 @@ class FuzzySearch {
       }
 
       if ($score > 0.0) {
-        $results[] = ['nid' => (int) $row['nid'], 'score' => $score];
+        $nid = (int) $row['nid'];
+        if (!isset($results[$nid]) || $score > $results[$nid]['score']) {
+          $results[$nid] = ['nid' => $nid, 'score' => $score];
+        }
       }
     }
 
+    $results = array_values($results);
     usort($results, static fn($a, $b) => $b['score'] <=> $a['score']);
     return $results;
   }
