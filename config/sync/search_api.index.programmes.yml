@@ -12,22 +12,22 @@ name: Programmes
 description: ''
 read_only: false
 field_settings:
+  institution:
+    label: 'Institution » Content » Title'
+    datasource_id: 'entity:node'
+    property_path: 'field_programme_institution:entity:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_programme_institution
+      module:
+        - node
   title:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: text
+    type: string
     dependencies:
-      module:
-        - node
-  title_1:
-    label: 'Institution » Content » Title'
-    datasource_id: 'entity:node'
-    property_path: 'field_programme_institution:entity:title'
-    type: text
-    dependencies:
-      config:
-        - field.storage.node.field_programme_institution
       module:
         - node
 datasource_settings:
