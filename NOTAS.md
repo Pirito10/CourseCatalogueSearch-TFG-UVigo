@@ -157,3 +157,32 @@ Los botones de campos propios del IEC son directos. Los que usan campos de nodos
 | Field of Study | `field_isced_f` | `field_isced_f_value` | `field_iec_programme` |
 | Programme | `field_iec_programme_title` | `title_1` | `field_iec_programme` |
 | Country | `field_institution_country` | `field_institution_country_value` | `field_programme_institution` |
+
+---
+
+### Botones institution_new_catalogue (programas)
+
+Vista del catálogo de una institución concreta (`/catalogue/{nid}/programmes`). Tiene `use_ajax: true`, igual que `search_programme`.
+
+| Botón | `data-sort-by` | Campo YAML |
+|---|---|---|
+| A-Z | `title` | `title` |
+| Field of Study | `field_isced_f` | `field_isced_f_value` |
+| Level | `field_eqf_level` | `field_eqf_level_value` |
+| ECTS | `field_credits` | `field_credits_value` |
+
+---
+
+### Botones institution_new_catalogue (cursos)
+
+Vista del catálogo de cursos de una institución (`/catalogue/{nid}/iecs`). Page_2 del mismo view, con sus propios `sorts:` en `display_options` (sobreescribe los del default display).
+
+Los sorts con relación usan `relationship: field_iec_programme` (IEC → programme).
+
+| Botón | `data-sort-by` | Campo YAML | Relación |
+|---|---|---|---|
+| A-Z | `title` | `title` | — |
+| Programme | `field_iec_programme_title` | `title_1` | `field_iec_programme` |
+| Field of Study | `field_isced_f` | `field_isced_f_value` | `field_iec_programme` |
+| ECTS | `field_iec_credits` | `field_iec_credits_value` | — |
+| Term | `field_iec_term` | `field_iec_term_value` | — |
