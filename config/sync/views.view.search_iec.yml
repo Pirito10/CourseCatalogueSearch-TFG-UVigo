@@ -248,18 +248,18 @@ display:
             label: Term
             field_identifier: field_iec_term
           exposed: true
-        field_programme_area_value:
-          id: field_programme_area_value
-          table: node__field_programme_area
-          field: field_programme_area_value
+        field_isced_f_value:
+          id: field_isced_f_value
+          table: node__field_isced_f
+          field: field_isced_f_value
           relationship: field_iec_programme
           group_type: group
           admin_label: ''
           plugin_id: standard
           order: ASC
           expose:
-            label: 'Knowledge Area'
-            field_identifier: field_programme_area
+            label: 'Field of Study (field_isced_f)'
+            field_identifier: field_isced_f
           exposed: true
         title_1:
           id: title
