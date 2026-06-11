@@ -166,22 +166,20 @@
 						
 						
 						<div class="col-lg-2 institution-new-catalogue-sort">
-						{#
 							<h3 class="subsection-title p-0 pb-2 m-0">
 								<i class="fas fa-sort-amount-down me-2"></i>
 								{{ 'Sort'|t|upper }}
 							</h3>
 
 							<div class="group-search-sort-buttons w-100">
-								<button class="btn btn-dark btn-sm btn-whithout-border-radius js-sort disabled" data-sort-by="title" data-sort-order="ASC">A - Z</button>
+								<button class="btn btn-dark btn-sm btn-whithout-border-radius js-sort" data-sort-by="title" data-sort-order="ASC">A - Z</button>
 
+								<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_isced_f" data-sort-order="ASC">{{ 'Field of Study'|t }}</button>
 
-								<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled" data-sort-by="field_programme_level" data-sort-order="ASC">{{ 'Level'|t }}</button>
+								<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_eqf_level" data-sort-order="ASC">{{ 'Level'|t }}</button>
 
-								<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled" data-sort-by="field_institution_country" data-sort-order="ASC">{{ 'Country'|t }}</button>
+								<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_credits" data-sort-order="ASC">ECTS</button>
 							</div>
-
-						#}
 
 						</div>
 

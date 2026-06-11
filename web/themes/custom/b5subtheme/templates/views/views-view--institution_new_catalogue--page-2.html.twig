@@ -168,25 +168,22 @@ class="negative-margin-search-page">
 			<div class="my-custom-container-2">
 				<div class="row institution-new-catalogue-results">
 					<div class="col-lg-2 institution-new-catalogue-sort">
-					{#
 						<h3 class="subsection-title p-0 pb-2 m-0">
 							<i class="fas fa-sort-amount-down me-2"></i>
 							{{ 'Sort'|t|upper }}
 						</h3>
 
-						<div
-							class="group-search-sort-buttons w-100">
-							
-							<button class="btn btn-dark btn-sm btn-whithout-border-radius js-sort disabled" data-sort-by="title" data-sort-order="ASC">
-								A - Z
-							</button>
+						<div class="group-search-sort-buttons w-100">
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius js-sort" data-sort-by="title" data-sort-order="ASC">A - Z</button>
 
-							
-							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort disabled" data-sort-by="field_iec_programme" data-sort-order="ASC">
-								Programme
-							</button>
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_iec_programme_title" data-sort-order="ASC">{{ 'Programme'|t }}</button>
+
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_isced_f" data-sort-order="ASC">{{ 'Field of Study'|t }}</button>
+
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_iec_credits" data-sort-order="ASC">ECTS</button>
+
+							<button class="btn btn-dark btn-sm btn-whithout-border-radius m-0 js-sort" data-sort-by="field_iec_term" data-sort-order="ASC">{{ 'Term'|t }}</button>
 						</div>
-					#}
 					</div>
 
 					<div class="col-lg-10 ps-lg-5 institution-new-catalogue-list" id="iec-list">
