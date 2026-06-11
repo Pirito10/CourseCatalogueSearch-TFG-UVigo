@@ -136,7 +136,7 @@ El JS escribe los valores en dos campos ocultos del formulario de Views (`sort_b
 | Botón | `data-sort-by` | Campo YAML | Notas |
 |---|---|---|---|
 | A-Z | `title` | `title` | — |
-| Knowledge Area | `field_programme_area` | `field_programme_area_value` | — |
+| Field of Study | `field_isced_f` | `field_isced_f_value` | — |
 | Level | `field_eqf_level` | `field_eqf_level_value` | El YAML original apuntaba a `node__field_programme_level` (tabla inexistente). Corregido a `node__field_eqf_level`. |
 | ECTS | `field_credits` | `field_credits_value` | — |
 | Country | `field_institution_country` | `field_institution_country_value` | Relación `field_programme_institution`. Ordena por código ISO (ES, FR, PT...), no por nombre traducido. |
@@ -146,7 +146,7 @@ El JS escribe los valores en dos campos ocultos del formulario de Views (`sort_b
 ### Botones search_iec
 
 Los botones de campos propios del IEC son directos. Los que usan campos de nodos relacionados requieren `relationship` en el YAML:
-- `field_programme_area` y `title_1` (título del programme) usan `relationship: field_iec_programme` (IEC → programme)
+- `field_isced_f` y `title_1` (título del programme) usan `relationship: field_iec_programme` (IEC → programme)
 - `field_institution_country` usa `relationship: field_programme_institution` (IEC → programme → institution)
 
 | Botón | `data-sort-by` | Campo YAML | Relación |
@@ -154,6 +154,6 @@ Los botones de campos propios del IEC son directos. Los que usan campos de nodos
 | A-Z | `title` | `title` | — |
 | ECTS | `field_iec_credits` | `field_iec_credits_value` | — |
 | Term | `field_iec_term` | `field_iec_term_value` | — |
-| Knowledge Area | `field_programme_area` | `field_programme_area_value` | `field_iec_programme` |
+| Field of Study | `field_isced_f` | `field_isced_f_value` | `field_iec_programme` |
 | Programme | `field_iec_programme_title` | `title_1` | `field_iec_programme` |
 | Country | `field_institution_country` | `field_institution_country_value` | `field_programme_institution` |
