@@ -260,18 +260,18 @@ display:
             label: Level
             field_identifier: field_eqf_level
           exposed: true
-        field_programme_area_value:
-          id: field_programme_area_value
-          table: node__field_programme_area
-          field: field_programme_area_value
+        field_isced_f_value:
+          id: field_isced_f_value
+          table: node__field_isced_f
+          field: field_isced_f_value
           relationship: none
           group_type: group
           admin_label: ''
           plugin_id: standard
           order: ASC
           expose:
-            label: 'Area (field_programme_area)'
-            field_identifier: field_programme_area
+            label: 'Field of Study (field_isced_f)'
+            field_identifier: field_isced_f
           exposed: true
         field_credits_value:
           id: field_credits_value
