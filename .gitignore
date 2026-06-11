@@ -28,7 +28,9 @@ Thumbs.db
 .idea/
 
 # Notas locales de desarrollo
-NOTAS.md
 CAMBIOS.md
+
+# Memoria TFG (repo independiente)
+TFG-Memoria/
 /.editorconfig
 /.gitattributes
