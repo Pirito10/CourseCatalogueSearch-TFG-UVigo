@@ -112,7 +112,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 
     \item Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
 
-    \item Ambas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, área de coñecemento, número de créditos e país de orixe da institución.
+    \item Ambas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo, número de créditos e país de orixe da institución.
 
     \item A vista de programas (\textit{search\_programme}) debe incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF.
 
@@ -195,13 +195,13 @@ Para a interacción do usuario, deseñouse un comportamento de alternancia: o pr
 Os criterios de ordenación definidos para cada vista son os seguintes:
 
 \begin{itemize}
-    \item \textbf{Vista de programas}: título, área de coñecemento, nivel EQF, créditos e país.
-    \item \textbf{Vista de compoñentes educativos}: título, programa pai, créditos, cuadrimestre, área de coñecemento e país.
+    \item \textbf{Vista de programas}: título, campo de estudo, nivel EQF, créditos e país.
+    \item \textbf{Vista de compoñentes educativos}: título, programa pai, créditos, cuadrimestre, campo de estudo e país.
 \end{itemize}
 
-Os criterios de tipo textual (título, área de coñecemento, programa pai e país) ordénanse de forma alfabética; os de tipo numérico (créditos, nivel EQF e cuadrimestre) ordénanse por valor numérico.
+Os criterios de tipo textual (título, campo de estudo, programa pai e país) ordénanse de forma alfabética; os de tipo numérico (créditos, nivel EQF e cuadrimestre) ordénanse por valor numérico.
 
-Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; a área de coñecemento e o título do programa pai na vista de compoñentes educativos pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de definir unións adicionais entre táboas.
+Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; o campo de estudo e o título do programa pai na vista de compoñentes educativos pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de definir unións adicionais entre táboas.
 
 \subsection{Busca difusa}
 
@@ -249,7 +249,7 @@ Na configuración YAML de cada vista, cada criterio de ordenación declarouse co
 Algúns criterios implican campos de entidades relacionadas; nestes casos, o criterio declara o parámetro de relación correspondente, reutilizando as unións entre entidades xa definidas na configuración da vista, sen necesidade de declarar unións adicionais:
 \begin{itemize}
     \item \textbf{Vista de programas}: a ordenación por país emprega a relación coa institución referenciada polo programa.
-    \item \textbf{Vista de compoñentes educativos}: a ordenación por área de coñecemento e por título do programa pai usa a relación co nodo programa referenciado polo IEC; a ordenación por país encadéase ademais a través da relación co nodo institución.
+    \item \textbf{Vista de compoñentes educativos}: a ordenación por campo de estudo e por título do programa pai usa a relación co nodo programa referenciado polo IEC; a ordenación por país encadéase ademais a través da relación co nodo institución.
 \end{itemize}
 
 Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente. As plantillas de ambas as vistas cargan a mesma biblioteca JavaScript.
