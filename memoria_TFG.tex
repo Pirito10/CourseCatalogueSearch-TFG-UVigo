@@ -79,7 +79,7 @@ A plataforma DACEM está implementada sobre Drupal 10, un sistema de xestión de
 
 O modelo de datos organízase arredor de tres tipos de contido principais: \textit{programme}, que representa unha titulación académica; \textit{individual educational component} (IEC), correspondente a unha materia ou compoñente curricular individual; e \textit{institution}, que modela as universidades participantes. Cada entidade conta cun conxunto de campos estruturados que recollen atributos como a área de coñecemento, o nivel de cualificación, os créditos, o idioma de impartición ou o país de orixe, entre outros.
 
-Para a presentación e consulta do catálogo, a plataforma emprega o módulo \textit{Views}, integrado no núcleo de Drupal, que permite definir listaxes e consultas de contido de forma declarativa. O módulo \textit{Better Exposed Filters} \cite{better_exposed_filters} complementa \textit{Views} proporcionando a interface de filtrado ao usuario. Existen dúas vistas principais de busca: \textit{search\_programme}, accesible en \texttt{/search-programme}, orientada á consulta de titulacións; e \textit{search\_iec}, en \texttt{/search-iec}, orientada á consulta de compoñentes educativos individuais. A capa de presentación visual está baseada nun tema personalizado construído sobre Bootstrap 5.
+Para a presentación e consulta do catálogo, a plataforma emprega o módulo \textit{Views}, integrado no núcleo de Drupal, que permite definir listaxes e consultas de contido de forma declarativa. O módulo \textit{Better Exposed Filters} \cite{better_exposed_filters} complementa \textit{Views} proporcionando a interface de filtrado ao usuario. Existen dúas vistas principais de busca: \textit{search\_programme}, accesible en \texttt{/search-programme}, orientada á consulta de titulacións; e \textit{search\_iec}, en \texttt{/search-iec}, orientada á consulta de compoñentes educativos individuais. Existe ademais a vista do catálogo de institución (\textit{institution\_new\_catalogue}), que presenta os programas e compoñentes educativos ofertados por unha institución concreta, accesible en \texttt{/catalogue/\{nid\}/programmes} e \texttt{/catalogue/\{nid\}/iecs} respectivamente. A capa de presentación visual está baseada nun tema personalizado construído sobre Bootstrap 5.
 
 O mecanismo de busca textual actual baséase no filtro \textit{combine} de \textit{Views}, que realiza comparacións de subcadeas sobre o campo título das entidades. Esta aproximación presenta limitacións relevantes:
 \begin{itemize}
@@ -94,7 +94,7 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
 % **************************************************
 \section{Obxectivos e requisitos}
 \label{sec:obxectivos}
-O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta e sen tolerancia a erros tipográficos), propónse o deseño e implementación de dúas melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca existentes, e a implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta.
+O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta e sen tolerancia a erros tipográficos), propónse o deseño e implementación de dúas melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca e na vista do catálogo de institución, e a implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta.
 
 A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
 
@@ -112,11 +112,13 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 
     \item Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
 
-    \item Ambas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo, número de créditos e país de orixe da institución.
+    \item Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
 
-    \item A vista de programas (\textit{search\_programme}) debe incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
+    \item As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
 
-    \item A vista de compoñentes educativos (\textit{search\_iec}) debe incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
+    \item A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
+
+    \item A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
 
     \item A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
 \end{enumerate}
@@ -173,7 +175,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \subsection{Ordenación de resultados}
 \label{sec:diseno_ordenacion}
 
-Para incorporar a funcionalidade de ordenación á vista de programas e á vista de compoñentes educativos, optouse por empregar o mecanismo de ordenación exposta do módulo \textit{Views} de Drupal, en lugar de implementar unha solución baseada en manipulación directa de consultas ou en ordenación no lado do cliente. Esta decisión responde a tres razóns principais:
+Para incorporar a funcionalidade de ordenación á vista de programas, á vista de compoñentes educativos e á vista do catálogo de institución, optouse por empregar o mecanismo de ordenación exposta do módulo \textit{Views} de Drupal, en lugar de implementar unha solución baseada en manipulación directa de consultas ou en ordenación no lado do cliente. Esta decisión responde a tres razóns principais:
 \begin{itemize}
     \item O mecanismo intégrase de forma nativa co sistema \textit{AJAX} de \textit{Views}, o que evita ter que reimplementar a actualización parcial de resultados.
     \item Mantén a coherencia coa arquitectura da plataforma, que xa emprega \textit{Views} de forma extensiva para a xestión e presentación de contido.
@@ -197,11 +199,13 @@ Os criterios de ordenación definidos para cada vista son os seguintes:
 \begin{itemize}
     \item \textbf{Vista de programas}: título, campo de estudo, nivel EQF, créditos e país.
     \item \textbf{Vista de compoñentes educativos}: título, programa pai, créditos, cuadrimestre, campo de estudo e país.
+    \item \textbf{Catálogo de institución, programas}: título, campo de estudo, nivel EQF e créditos.
+    \item \textbf{Catálogo de institución, compoñentes educativos}: título, programa pai, campo de estudo, créditos e cuadrimestre.
 \end{itemize}
 
 Os criterios de tipo textual (título, campo de estudo, programa pai e país) ordénanse de forma alfabética; os de tipo numérico (créditos, nivel EQF e cuadrimestre) ordénanse por valor numérico.
 
-Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; o campo de estudo e o título do programa pai na vista de compoñentes educativos pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de definir unións adicionais entre táboas.
+Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; o campo de estudo e o título do programa pai, tanto na vista de compoñentes educativos como na páxina de compoñentes educativos do catálogo de institución, pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de definir unións adicionais entre táboas.
 
 \subsection{Busca difusa}
 
@@ -250,9 +254,10 @@ Algúns criterios implican campos de entidades relacionadas; nestes casos, o cri
 \begin{itemize}
     \item \textbf{Vista de programas}: a ordenación por país emprega a relación coa institución referenciada polo programa.
     \item \textbf{Vista de compoñentes educativos}: a ordenación por campo de estudo e por título do programa pai usa a relación co nodo programa referenciado polo IEC; a ordenación por país encadéase ademais a través da relación co nodo institución.
+    \item \textbf{Catálogo de institución, compoñentes educativos}: a ordenación por campo de estudo e por título do programa pai usa a relación co nodo programa referenciado polo IEC.
 \end{itemize}
 
-Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente. As plantillas de ambas as vistas cargan a mesma biblioteca JavaScript.
+Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente. As plantillas de todas as vistas cargan a mesma biblioteca JavaScript.
 
 A plataforma de partida xa incluía un script JavaScript con lóxica de detección de clics sobre os botóns \texttt{.js-sort} e o envío do formulario. Modificouse para implementar o comportamento de alternancia descrito na sección~\ref{sec:diseno_ordenacion}: en lugar de usar sempre a dirección especificada no atributo do botón, o script le agora o estado actual dos campos \texttt{sort\_by} e \texttt{sort\_order} do formulario e inverte a dirección se o mesmo criterio xa está activo, ou establece a dirección ascendente por defecto en caso contrario. Así mesmo, actualizouse o método de envío: en lugar de disparar un evento \textit{change} sobre os campos do formulario, o script simula agora un clic directo no botón de envío, o que desencadea o mecanismo de \textit{Views} e actualiza os resultados mediante AJAX sen recargar a páxina.
 
