@@ -123,6 +123,8 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+            sort:
+              plugin_id: default
             filter:
               field_programme_language_of_inst_target_id:
                 plugin_id: bef
@@ -213,8 +215,6 @@ display:
                 animate: '0'
                 animate_ms: '0'
                 orientation: horizontal
-            sort:
-              plugin_id: default
       access:
         type: perm
         options:
@@ -236,7 +236,7 @@ display:
           plugin_id: standard
           order: ASC
           expose:
-            label: 'A-Z'
+            label: A-Z
             field_identifier: title
           exposed: true
         field_isced_f_value:
@@ -262,7 +262,7 @@ display:
           plugin_id: standard
           order: ASC
           expose:
-            label: 'Level'
+            label: Level
             field_identifier: field_eqf_level
           exposed: true
         field_credits_value:
@@ -275,7 +275,7 @@ display:
           plugin_id: standard
           order: ASC
           expose:
-            label: 'ECTS'
+            label: ECTS
             field_identifier: field_credits
           exposed: true
       arguments:
@@ -998,6 +998,8 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
+            sort:
+              plugin_id: default
             filter:
               field_iec_avaliable_for_mobility_value:
                 plugin_id: bef_single
@@ -1060,8 +1062,72 @@ display:
                 select_all_none: false
                 select_all_none_nested: false
                 display_inline: false
-            sort:
-              plugin_id: default
+      sorts:
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: A-Z
+            field_identifier: title
+          exposed: true
+        title_1:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: field_iec_programme
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: Programme
+            field_identifier: field_iec_programme_title
+          exposed: true
+        field_isced_f_value:
+          id: field_isced_f_value
+          table: node__field_isced_f
+          field: field_isced_f_value
+          relationship: field_iec_programme
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: 'Field of Study'
+            field_identifier: field_isced_f
+          exposed: true
+        field_iec_credits_value:
+          id: field_iec_credits_value
+          table: node__field_iec_credits
+          field: field_iec_credits_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ECTS
+            field_identifier: field_iec_credits
+          exposed: true
+        field_iec_term_value:
+          id: field_iec_term_value
+          table: node__field_iec_term
+          field: field_iec_term_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: Term
+            field_identifier: field_iec_term
+          exposed: true
       arguments:
         field_programme_institution_target_id:
           id: field_programme_institution_target_id
@@ -1488,79 +1554,13 @@ display:
         operator: AND
         groups:
           1: AND
-      sorts:
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: 'A-Z'
-            field_identifier: title
-          exposed: true
-        title_1:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: field_iec_programme
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: 'Programme'
-            field_identifier: field_iec_programme_title
-          exposed: true
-        field_isced_f_value:
-          id: field_isced_f_value
-          table: node__field_isced_f
-          field: field_isced_f_value
-          relationship: field_iec_programme
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: 'Field of Study'
-            field_identifier: field_isced_f
-          exposed: true
-        field_iec_credits_value:
-          id: field_iec_credits_value
-          table: node__field_iec_credits
-          field: field_iec_credits_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: 'ECTS'
-            field_identifier: field_iec_credits
-          exposed: true
-        field_iec_term_value:
-          id: field_iec_term_value
-          table: node__field_iec_term
-          field: field_iec_term_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: 'Term'
-            field_identifier: field_iec_term
-          exposed: true
       defaults:
         title: false
         exposed_form: false
+        sorts: false
         arguments: false
         filters: false
         filter_groups: false
-        sorts: false
       display_extenders: {  }
       path: catalogue/%/iecs
     cache_metadata:
