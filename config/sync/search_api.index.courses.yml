@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.storage.node.field_iec_programme
     - search_api.server.database_server
   module:
     - node
@@ -11,11 +12,21 @@ name: Courses
 description: ''
 read_only: false
 field_settings:
+  programme:
+    label: 'Programme » Content » Title'
+    datasource_id: 'entity:node'
+    property_path: 'field_iec_programme:entity:title'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_iec_programme
+      module:
+        - node
   title:
     label: Title
     datasource_id: 'entity:node'
     property_path: title
-    type: text
+    type: string
     dependencies:
       module:
         - node
