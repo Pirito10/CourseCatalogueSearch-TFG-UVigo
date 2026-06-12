@@ -52,7 +52,7 @@ class FuzzySearch {
       $nid = (int) $m[1];
 
       $text = '';
-      foreach (['title', 'institution'] as $fieldName) {
+      foreach (['title', 'institution', 'programme'] as $fieldName) {
         $field = $item->getField($fieldName);
         if (!$field) {
           continue;

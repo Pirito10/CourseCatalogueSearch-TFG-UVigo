@@ -66,7 +66,7 @@ Usuario escribe "enginering"
 - Bundles: `Only those selected`, `Course`
 - Languages: `All except those selected`
 - Server: `Database Server`
-- Campos: `title`
+- Campos: `title` + `field_iec_programme:entity:title` + `field_iec_programme:entity:field_programme_institution:entity:title`
 
 **Comandos útiles:**
 ```bash
@@ -101,20 +101,28 @@ if (!isset($results[$nid]) || $score > $results[$nid]['score']) {
 `loadCandidatesFromIndex()` itera sobre un array de field names y concatena sus valores en un único texto que se pasa a `scoreAndFilter()`. Los campos que no existen en un índice concreto se saltan automáticamente (el `getField()` devuelve `null`), así que el mismo código funciona para `programmes` y `courses`.
 
 ```php
-foreach (['title', 'institution'] as $fieldName) {
+foreach (['title', 'institution', 'programme'] as $fieldName) {
     $field = $item->getField($fieldName);
     if (!$field) { continue; }
     // ... concatenar valor a $text
 }
 ```
 
+Campos activos por índice:
+
+| Campo en el índice | `programmes` | `courses` |
+|---|---|---|
+| `title` | Título del programa | Título del curso |
+| `institution` | `field_programme_institution:entity:title` | `field_iec_programme:entity:field_programme_institution:entity:title` |
+| `programme` | — | `field_iec_programme:entity:title` |
+
 **Cómo añadir un campo nuevo:**
-1. Añadirlo al índice en el admin como Fulltext (`/admin/config/search/search-api/index/{id}/fields`)
+1. Añadirlo al índice en el admin (`/admin/config/search/search-api/index/{id}/fields`)
 2. Reindexar: `ddev drush search-api:index`
 3. Exportar config: `ddev drush cex -y`
 4. Añadir el machine name al array en `loadCandidatesFromIndex()`:
 ```php
-foreach (['title', 'institution', 'nuevo_campo'] as $fieldName) {
+foreach (['title', 'institution', 'programme', 'nuevo_campo'] as $fieldName) {
 ```
 
 ---
