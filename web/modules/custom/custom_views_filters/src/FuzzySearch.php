@@ -124,12 +124,12 @@ class FuzzySearch {
   /**
    * Returns a similarity score in [0, 1] between two normalised words.
    *
-   * - Exact match            → 1.0
-   * - Words shorter than 3   → 0.0 (too short to compare safely)
-   * - Prefix match           → 0.85 ("mech" matches "mechanical")
-   * - Levenshtein distance 1 → high score ("enginering" matches "engineering")
-   * - Levenshtein distance 2 → lower score (longer words only)
-   * - Beyond threshold       → 0.0
+   * - Exact match          → 1.0
+   * - Words shorter than 4 → 0.0 (too short to compare safely)
+   * - Prefix match         → 0.85 ("mech" matches "mechanical")
+   * - Levenshtein ≤ 1     → allowed for all words
+   * - Levenshtein ≤ 3     → allowed for words with maxLen > 5
+   * - Beyond threshold     → 0.0
    */
   protected static function wordScore(string $a, string $b): float {
     if ($a === $b) {
@@ -144,7 +144,7 @@ class FuzzySearch {
       return 0.85;
     }
     $maxLen = max($la, $lb);
-    $threshold = $maxLen <= 5 ? 1 : 2;
+    $threshold = $maxLen <= 5 ? 1 : 3;
     $dist = levenshtein($a, $b);
     return $dist <= $threshold ? 1.0 - ($dist / $maxLen) : 0.0;
   }
