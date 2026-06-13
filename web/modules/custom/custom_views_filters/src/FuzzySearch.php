@@ -137,7 +137,7 @@ class FuzzySearch {
     }
     $la = strlen($a);
     $lb = strlen($b);
-    if ($la < 3 || $lb < 3) {
+    if ($la < 4 || $lb < 4) {
       return 0.0;
     }
     if ($la <= $lb && str_starts_with($b, $a)) {
@@ -161,10 +161,10 @@ class FuzzySearch {
   }
 
   /**
-   * Splits a string into lowercase ASCII words of at least 3 characters.
+   * Splits a string into lowercase ASCII words of at least 4 characters.
    */
   protected static function tokenize(string $text): array {
-    preg_match_all('/[a-z]{3,}/', $text, $matches);
+    preg_match_all('/[a-z]{4,}/', $text, $matches);
     return $matches[0];
   }
 
