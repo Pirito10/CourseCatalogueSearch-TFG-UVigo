@@ -12,6 +12,7 @@
 % **************************************************
 \usepackage[galician]{babel}
 \usepackage{tfgteleco}
+\addto\captionsgalician{\renewcommand{\tablename}{Táboa}}
 
 % **************************************************
 % * Datos para la portada del TFG
@@ -226,13 +227,13 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
 
 \begin{itemize}
     \item Coincidencia exacta: puntuación 1,0.
-    \item Coincidencia de prefixo (a palabra da consulta é inicio dunha palabra do texto indexado): puntuación $\alpha$ (pendente).
-    \item Distancia de Levenshtein 1: puntuación proporcional á lonxitude das palabras (pendente).
-    \item Distancia de Levenshtein 2 (só para palabras suficientemente longas): puntuación menor (pendente).
+    \item Coincidencia de prefixo (a palabra da consulta é inicio dunha palabra do texto indexado): puntuación 0,85.
+    \item Distancia de Levenshtein para palabras curtas (ata 5 caracteres): ata 1 erro permitido.
+    \item Distancia de Levenshtein para palabras longas (máis de 5 caracteres): ata 3 erros permitidos.
     \item Distancia superior ao limiar: puntuación 0,0 (descartado).
 \end{itemize}
 
-A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel, incluído $\alpha$ e os limiares de distancia, foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~\ref{anx:calibrado} (pendente).
+A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel e os limiares de distancia foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~\ref{anx:calibrado}.
 
 O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de pre-execución intercepta a consulta antes de que \textit{Views} a execute. Nese momento invoca a clase de puntuación, que carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto o termo de busca como o texto de cada candidato, e calcula a puntuación de cada un mediante a distancia de Levenshtein. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. A continuación, \textit{Views} executa a consulta modificada e o \textit{hook} de post-execución reordena os resultados por puntuación descendente, dado que filtrar por un conxunto de identificadores non garante ningunha orde determinada. As puntuacións compártense entre ambos os \textit{hooks} mediante un mecanismo de almacenamento compartido, que actúa como canle de comunicación entre as dúas fases de execución.
 
@@ -284,7 +285,7 @@ A clase \texttt{FuzzySearch}, creada dentro do módulo \texttt{custom\_views\_fi
 
 \texttt{scoreAndFilter()} normaliza e tokeniza o termo de busca e, para cada candidato, compara cada palabra da consulta con cada palabra dos campos indexados do candidato, acumulando a mellor puntuación obtida. Dado que \textit{Search API} indexa cada tradución dun nodo como un ítem independente, o mesmo NID pode aparecer varias veces; por iso, os resultados indexanse por NID e, en caso de duplicado, consérvase a puntuación máis alta.
 
-A tokenización divide o texto en palabras de 4 ou máis caracteres mediante a expresión regular \texttt{[a-z]\{4,\}}. O método \texttt{wordScore()} compara dúas palabras normalizadas e devolve unha puntuación entre 0 e 1. Os primeiros casos son a coincidencia exacta, que retorna unha puntuación de 1, e a coincidencia de prefixo, que retorna unha puntuación de $\alpha$. Para os demais, calcúlase a distancia de Levenshtein mediante a función \texttt{levenshtein()} de PHP e compárase cun limiar (isto é, a cantidade máxima de erros permitidos): se o supera, a puntuación é 0; se non, aplícase a fórmula $1 - d/L$, onde $d$ é a distancia e $L$ a lonxitude da maior palabra das dúas, de xeito que máis erros implican menor puntuación. O limiar é 1 para palabras de ata 5 caracteres e 2 para as máis longas.
+A tokenización divide o texto en palabras de 4 ou máis caracteres mediante a expresión regular \texttt{[a-z]\{4,\}}. O método \texttt{wordScore()} compara dúas palabras normalizadas e devolve unha puntuación entre 0 e 1. Os primeiros casos son a coincidencia exacta, que retorna unha puntuación de 1, e a coincidencia de prefixo, que retorna unha puntuación de 0,85. Para os demais, calcúlase a distancia de Levenshtein mediante a función \texttt{levenshtein()} de PHP e compárase cun limiar (isto é, a cantidade máxima de erros permitidos): se o supera, a puntuación é 0; se non, aplícase a fórmula $1 - d/L$, onde $d$ é a distancia e $L$ a lonxitude da maior palabra das dúas, de xeito que máis erros implican menor puntuación. O limiar é 1 para palabras de ata 5 caracteres e 3 para as máis longas.
 
 % **************************************************
 % * Conclusiones
@@ -346,6 +347,95 @@ Para este traballo optouse polo \textit{backend} de base de datos, dado que non 
 \subsection{Calibrado do algoritmo de busca difusa}
 \label{anx:calibrado}
 
-(pendente)
+O proceso de calibrado ten como obxectivo determinar os valores óptimos dos parámetros que controlan o comportamento do algoritmo: o limiar de distancia de edición, que establece o número máximo de erros tolerados para que dúas palabras se consideren similares, e a puntuación asignada á coincidencia de prefixo. Para iso, definíronse un conxunto de datos de proba e unha batería de consultas representativa dos escenarios de uso esperados. Avaliáronse cinco configuracións distintas e seleccionouse a que mellores resultados produce.
+
+\subsubsection{Datos de proba}
+
+Creáronse tres nodos de tipo \textit{programme} con fins exclusivos de proba:
+\begin{itemize}
+    \item \textit{Engineering and Computer Science}
+    \item \textit{Medicine and Health Sciences}
+    \item \textit{Biotechnology}
+\end{itemize}
+
+\subsubsection{Batería de consultas}
+
+Definíronse 11 consultas que cobren os escenarios de uso máis representativos, como se detalla na táboa~\ref{tab:bateria}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lll}
+        \hline
+        \textbf{Consulta}         & \textbf{Resultado esperado} & \textbf{Escenario}                              \\
+        \hline
+        \texttt{engineering}      & aparece                     & Coincidencia exacta                             \\
+        \texttt{enginering}       & aparece                     & 1 erro tipográfico                              \\
+        \texttt{enginiring}       & aparece                     & 2 erros tipográficos en palabra longa           \\
+        \texttt{biotenology}      & aparece                     & 2 erros tipográficos en palabra longa           \\
+        \texttt{helath}           & aparece                     & 2 erros tipográficos en palabra de 6 caracteres \\
+        \texttt{biotenolohy}      & aparece                     & 3 erros tipográficos en palabra longa           \\
+        \texttt{engi}             & aparece                     & Coincidencia de prefixo                         \\
+        \texttt{computer science} & aparece                     & Consulta de varias palabras                     \\
+        \texttt{engnrng}          & non aparece                 & Palabra excesivamente deformada                 \\
+        \texttt{zzzz}             & non aparece                 & Termo irrelevante                               \\
+        \texttt{eng}              & sen filtro                  & Non supera a lonxitude mínima                   \\
+        \hline
+    \end{tabular}
+    \caption{Batería de consultas empregada no calibrado.}
+    \label{tab:bateria}
+\end{table}
+
+\subsubsection{Parámetros e configuracións avaliadas}
+
+Avaliáronse cinco configuracións que varían o limiar de distancia de edición, a puntuación de prefixo e outros mecanismos de filtrado, co obxectivo de identificar a combinación de parámetros máis equilibrada. O limiar para palabras de ata 5 caracteres mantívose en 1 en todas as configuracións, dado que permitir 2 erros nunha palabra curta xeraría demasiados falsos positivos; o parámetro variable é o limiar para palabras de máis de 5 caracteres. As configuracións son:
+
+\begin{itemize}
+    \item \textbf{Base}: limiar 2 para palabras longas, puntuación de prefixo 0,85. É a configuración inicial da que parten as demais.
+    \item \textbf{Estrita}: limiar 1 para palabras longas e filtro adicional de puntuación mínima de 0,5 que descarta coincidencias débiles.
+    \item \textbf{Laxa}: limiar 3 para palabras longas, o que permite ata 3 erros en palabras suficientemente extensas.
+    \item \textbf{Sen prefixo}: idéntica á base, pero coa coincidencia de prefixo desactivada.
+    \item \textbf{Limiar granular}: distingue tres rangos, con limiar 0 para palabras de ata 4 caracteres, 1 para palabras de 5 a 7 e 2 para as máis longas.
+\end{itemize}
+
+\subsubsection{Resultados}
+
+A táboa~\ref{tab:calibrado} resume os resultados de cada configuración sobre a batería de consultas. A marca $\surd$ indica que o resultado obtido coincide co esperado; $\times$ indica que non.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lccccc}
+        \hline
+        \textbf{Consulta}         & \textbf{Base} & \textbf{Estrita} & \textbf{Laxa} & \textbf{Sen prefixo} & \textbf{Granular} \\
+        \hline
+        \texttt{engineering}      & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{enginering}       & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{enginiring}       & $\surd$       & $\times$         & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{biotenology}      & $\surd$       & $\times$         & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{helath}           & $\surd$       & $\times$         & $\surd$       & $\surd$              & $\times$          \\
+        \texttt{biotenolohy}      & $\times$      & $\times$         & $\surd$       & $\times$             & $\times$          \\
+        \texttt{engi}             & $\surd$       & $\surd$          & $\surd$       & $\times$             & $\surd$           \\
+        \texttt{computer science} & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{engnrng}          & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{zzzz}             & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{eng}              & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \hline
+        \textbf{Fallos}           & \textbf{1}    & \textbf{4}       & \textbf{0}    & \textbf{2}           & \textbf{2}        \\
+        \hline
+    \end{tabular}
+    \caption{Resultados das configuracións sobre a batería de consultas.}
+    \label{tab:calibrado}
+\end{table}
+
+A configuración estrita rexeita demasiados casos válidos: o limiar reducido e o filtro de puntuación mínima descartan erros de dúas edicións que son perfectamente razoables. A configuración sen prefixo falla en consultas polo inicio dunha palabra, o que supón unha perda de utilidade relevante para o usuario. A configuración granular, ao restrinxir o limiar a 1 edición para palabras de entre 5 e 7 caracteres, non tolera os 2 erros de \texttt{helath} (6 caracteres). A configuración base produce un único fallo en palabras longas con 3 erros tipográficos. A configuración laxa produce 0 fallos en toda a batería. Aumentar o limiar por encima de 3 ampliaría innecesariamente o risco de falsos positivos, polo que a configuración laxa representa o equilibrio máis axeitado entre tolerancia e precisión.
+
+\subsubsection{Configuración seleccionada}
+
+Seleccionouse a configuración laxa como resultado do proceso de calibrado. Os valores finais dos parámetros son os seguintes:
+
+\begin{itemize}
+    \item \textbf{Puntuación de prefixo}: 0,85. Esta puntuación sitúase por riba das correspondencias por distancia de Levenshtein en palabras curtas (un erro nunha palabra de 4 caracteres dá $1 - 1/4 = 0{,}75$; nunha de 5 caracteres, $1 - 1/5 = 0{,}80$), e por debaixo da coincidencia exacta (1,0). Para palabras longas a relación invértese: 1 edición nunha palabra de 7 ou máis caracteres supera 0,85, o que reflicte que especificar case toda a palabra con un erro é máis preciso que quedarse a medias.
+    \item \textbf{Limiar de distancia de edición}: 1 para palabras de ata 5 caracteres e 3 para palabras de máis de 5 caracteres.
+    \item \textbf{Fórmula de puntuación por distancia de edición}: $1 - d/L$, onde $d$ é a distancia de Levenshtein e $L$ a lonxitude da palabra máis longa das dúas comparadas.
+\end{itemize}
 
 \end{document}
