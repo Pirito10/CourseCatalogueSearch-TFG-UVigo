@@ -144,7 +144,7 @@ class FuzzySearch {
       return 0.85;
     }
     $maxLen = max($la, $lb);
-    $threshold = $maxLen <= 5 ? 1 : 2;
+    $threshold = $maxLen <= 5 ? 1 : 3;
     $dist = levenshtein($a, $b);
     return $dist <= $threshold ? 1.0 - ($dist / $maxLen) : 0.0;
   }
