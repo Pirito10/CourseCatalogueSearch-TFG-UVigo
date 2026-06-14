@@ -131,7 +131,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \begin{enumerate}
     \item O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
 
-    \item A busca difusa debe aplicarse a ambas as vistas de busca: a vista de programas e a vista de compoñentes educativos.
+    \item A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
 
     \item A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
 
@@ -212,7 +212,7 @@ Algúns destes criterios implican campos que non pertencen directamente ao nodo 
 
 \subsection{Busca difusa}
 
-A busca difusa articulouse en tres compoñentes, aplicados de forma idéntica á vista de programas e á vista de compoñentes educativos:
+A busca difusa articulouse en tres compoñentes, aplicados de forma idéntica ás vistas de busca e á vista do catálogo de institución:
 \begin{itemize}
     \item \textbf{Índices de Search API}: un índice para cada tipo de contido (programas e compoñentes educativos), que proporcionan os campos sobre os que opera a clase de puntuación: título e nome da institución para os programas, e título, nome da institución e título do programa asociado para os compoñentes educativos.
     \item \textbf{Hooks de Views}: dous puntos de extensión de Drupal que integran a lóxica de busca difusa na execución das vistas.
@@ -275,7 +275,7 @@ A implementación da busca difusa concretouse en tres elementos:
 
 Creouse un servidor de \textit{Search API} con \textit{backend} de base de datos, configurado cun limiar de lonxitude mínima de palabra de 4 caracteres, coherente co mecanismo de tokenización da clase de puntuación; a indexación de frases e a concordancia parcial desactiváronse, xa que o índice se emprega unicamente como catálogo de campos sobre o que operar a métrica de Levenshtein, sen usar a busca nativa do módulo. Sobre este servidor configuráronse dous índices sen restrición de idioma: \texttt{programmes}, que indexa os nodos de tipo \textit{programme} polos campos \texttt{title} e \texttt{institution} (título da institución referenciada polo programa); e \texttt{courses}, que indexa os nodos de tipo \textit{course} polos campos \texttt{title}, \texttt{institution} (título da institución, accedida a través do programa asociado) e \texttt{programme} (título do programa ao que pertence o compoñente).
 
-O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para a vista de programas e a vista de compoñentes educativos. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase a clase \texttt{FuzzySearch} co índice correspondente. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, as puntuacións gárdanse para o \textit{hook} de post-execución e engádese a condición \texttt{nid IN (\{NIDs\})}.
+O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para as vistas de busca e para a vista do catálogo de institución. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase a clase \texttt{FuzzySearch} co índice correspondente. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, as puntuacións gárdanse para o \textit{hook} de post-execución e engádese a condición \texttt{nid IN (\{NIDs\})}.
 
 Engadiuse ademais o novo \textit{hook} \texttt{hook\_views\_post\_execute}, que se invoca xusto despois de que \textit{Views} execute a consulta. Este comproba se o array de puntuacións non está baleiro e, de ser así, reordena os resultados da vista por puntuación descendente e limpa o array para evitar interferencias en execucions posteriores.
 
