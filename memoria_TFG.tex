@@ -235,7 +235,15 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
 
 A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste. Os valores concretos de cada nivel e os limiares de distancia foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~\ref{anx:calibrado}.
 
-O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de pre-execución intercepta a consulta antes de que \textit{Views} a execute. Nese momento invoca a clase de puntuación, que carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto o termo de busca como o texto de cada candidato, e calcula a puntuación de cada un mediante a distancia de Levenshtein. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. A continuación, \textit{Views} executa a consulta modificada e o \textit{hook} de post-execución reordena os resultados por puntuación descendente, dado que filtrar por un conxunto de identificadores non garante ningunha orde determinada. As puntuacións compártense entre ambos os \textit{hooks} mediante un mecanismo de almacenamento compartido, que actúa como canle de comunicación entre as dúas fases de execución.
+O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de pre-execución intercepta a consulta antes de que \textit{Views} a execute. Nese momento invoca a clase de puntuación, que carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto o termo de busca como o texto de cada candidato, e calcula a puntuación de cada un mediante a distancia de Levenshtein. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. A continuación, \textit{Views} executa a consulta modificada e o \textit{hook} de post-execución reordena os resultados por puntuación descendente (como se ilustra na figura~\ref{fig:fuzzy}), dado que filtrar por un conxunto de identificadores non garante ningunha orde determinada. As puntuacións compártense entre ambos os \textit{hooks} mediante un mecanismo de almacenamento compartido, que actúa como canle de comunicación entre as dúas fases de execución.
+
+\begin{figure}[h]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=\linewidth]{images/fuzzy.png}}
+    \caption{Resultados da busca difusa para a consulta \texttt{telcommuniation}, con erros tipográficos respecto a \textit{Telecommunications}.}
+    \label{fig:fuzzy}
+\end{figure}
 
 % **************************************************
 % * Desarrollo
