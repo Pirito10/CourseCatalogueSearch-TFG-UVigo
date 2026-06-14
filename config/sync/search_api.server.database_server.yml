@@ -10,6 +10,6 @@ description: ''
 backend: search_api_db
 backend_config:
   database: 'default:default'
-  min_chars: 3
+  min_chars: 4
   matching: words
   phrase: disabled
