@@ -170,9 +170,8 @@ public static function getSearchTerms(string $input, ?string $sourceLang = NULL)
     $targets = array_diff(static::LANGUAGES, [$source]);
     $terms = [$input];
 
-    foreach ($targets as $lang) {
-      $translated = static::translate($input, $source, $lang);
-      if ($translated !== null && $translated !== $input) {
+    foreach (static::translateAll($input, $source, $targets) as $translated) {
+      if ($translated !== NULL && $translated !== $input) {
         $terms[] = $translated;
       }
     }
@@ -200,7 +199,9 @@ public static function getSearchTerms(string $input, ?string $sourceLang = NULL)
    - Typos: si la traducción falla o produce basura, FuzzySearch contra el original todavía encuentra coincidencias con distancia de Levenshtein baja.
    - Usuario que escribe en un idioma distinto al de la UI: un usuario con la web en español que escribe "chemical" (inglés) encuentra "Chemical Engineering" vía el término original, sin que la traducción (es→en de "chemical") tenga que acertar.
 
-4. **Traducciones fallidas o vacías se descartan silenciosamente** (`$translated !== null && $translated !== $input`). Si LibreTranslate no está disponible o devuelve error, `post()` captura la excepción y devuelve `null` — el sistema sigue funcionando solo con el término original, sin filtrar de más ni romper la búsqueda.
+4. **Traducciones fallidas o vacías se descartan silenciosamente** (`$translated !== NULL && $translated !== $input`). Si LibreTranslate no está disponible o devuelve error, la promesa correspondiente queda en estado `rejected` y `translateAll()` la trata como `NULL` — el sistema sigue funcionando solo con el término original, sin filtrar de más ni romper la búsqueda.
+
+5. **Las 9 traducciones se piden en paralelo, no secuencialmente** (`translateAll()`, ver siguiente apartado). Es la optimización con más impacto sobre la latencia percibida.
 
 #### Integración con `FuzzySearch.php`
 
@@ -240,12 +241,69 @@ public static function scoreFromIndex(string $input, string $indexId = 'programm
 
 `NULL` solo se devuelve (= "no filtrar") cuando *ningún* término produjo palabras tokenizables; si al menos uno tuvo resultados, se fusionan aunque sea con un array vacío de coincidencias.
 
+#### Rendimiento: por qué las búsquedas tardaban ~3s y cómo se redujo
+
+**Diagnóstico.** Cada búsqueda en un idioma distinto al inglés dispara hasta 9 llamadas a LibreTranslate (una por idioma destino). Midiendo cada llamada por separado se encontraron tres causas distintas, todas reales y acumulativas:
+
+1. **Memoria de la VM de WSL2 agotada y en swap.** Por defecto WSL2 solo reserva la mitad de la RAM del host. Con 7.7 GB asignados, la VM estaba usando 6.8 GB y 1.2 GB de swap (disco). Solución: crear `%UserProfile%\.wslconfig` con `memory=12GB` y reiniciar WSL2 (`wsl --shutdown` desde PowerShell, no desde dentro de WSL). Tras el cambio, la VM pasó a tener 11 GB disponibles sin uso de swap. Esto por sí solo no explicaba toda la lentitud, pero eliminaba un factor de ruido.
+
+2. **Carga de modelos por worker de gunicorn, no compartida.** LibreTranslate corre con 4 procesos gunicorn (`worker: sync`), cada uno con su propia memoria. El modelo de un par de idiomas se carga de forma perezosa la primera vez que *ese worker concreto* lo necesita — no se comparte entre procesos. Confirmado experimentalmente monitorizando `/proc/<pid>/status` (`VmRSS`) de cada worker mientras se repetía la misma traducción: en cada intento lento, la memoria de un worker distinto subía ~90-100 MB, hasta que los 4 habían cargado el par y las peticiones pasaban a tardar 8-15ms de forma consistente.
+
+   Un primer intento de precalentar con peticiones en paralelo (`&`) para los 9 idiomas a la vez **no funcionó** — con ráfagas simultáneas gunicorn no reparte las conexiones de forma equitativa entre los 4 workers, así que no hay garantía de que todos lleguen a cargar cada par. Repitiendo las peticiones **secuencialmente** (4-6 veces por idioma, una tras otra) sí se consiguió calentar los 4 workers de forma fiable.
+
+3. **Coste de inferencia por petición, incluso con el modelo ya caliente.** Aún con todos los workers calentados para un idioma, traducir un texto nuevo (no visto antes) seguía costando 100-250ms por idioma — es el coste real de ejecutar el modelo de traducción, no solo de cargarlo. Con 9 llamadas **secuenciales**, eso suma ~1-1.3s solo en inferencia, más el overhead de conexión HTTP de cada llamada por separado.
+
+**Solución aplicada: paralelizar las 9 llamadas HTTP.** En lugar de esperar cada traducción antes de pedir la siguiente, se lanzan las 9 a la vez con `postAsync()` de Guzzle (el cliente HTTP que usa `\Drupal::httpClient()`) y se espera a que todas terminen con `GuzzleHttp\Promise\Utils::settle()`:
+
+```php
+protected static function translateAll(string $input, string $source, array $targets): array {
+    $client = \Drupal::httpClient();
+    $promises = [];
+
+    foreach ($targets as $lang) {
+      $promises[$lang] = $client->postAsync(static::URL . '/translate', [
+        'json' => ['q' => $input, 'source' => $source, 'target' => $lang],
+        'timeout' => 5,
+      ]);
+    }
+
+    $responses = \GuzzleHttp\Promise\Utils::settle($promises)->wait();
+
+    $translations = [];
+    foreach ($responses as $lang => $result) {
+      if ($result['state'] !== 'fulfilled') {
+        $translations[$lang] = NULL;
+        continue;
+      }
+      $data = json_decode((string) $result['value']->getBody(), TRUE);
+      $translations[$lang] = $data['translatedText'] ?? NULL;
+    }
+
+    return $translations;
+}
+```
+
+`Utils::settle()` (a diferencia de `unwrap()`) no lanza excepción si una promesa falla — cada resultado llega con `state: 'fulfilled'|'rejected'`, así que un fallo puntual de un idioma no rompe los demás.
+
+**Resultado medido**, comparando siempre con términos nunca traducidos antes (para que la comparación sea justa) y usando el mismo cliente HTTP en ambos casos:
+
+| Ronda | Secuencial | Paralelo | Mejora |
+|---|---|---|---|
+| 1 | 2.371s | 1.098s | 2.2× |
+| 2 | 2.371s | 1.019s | 2.3× |
+| 3 | 4.405s | 0.980s | 4.5× |
+| 4 | 1.869s | 0.890s | 2.1× |
+
+El tiempo total pasa de ser la suma de las 9 llamadas a ser aproximadamente el de la más lenta de las 9 — mejora consistente de 2-4.5× en todas las pruebas.
+
 #### Limitaciones conocidas (líneas futuras)
 
 - **Traducción de palabras sueltas sin contexto es poco fiable.** Probado con "informática" → traducido a inglés como "it" (Information Technology) en vez de "Computer Science". Con más contexto ("informática y telecomunicaciones") el modelo traduce correctamente ("information technology and telecommunications"). Posible mejora: diccionario manual de términos académicos comunes (informática, ingeniería, medicina...) como paso previo a LibreTranslate, usado solo para esos términos puntuales.
 - **No se usa pivotado manual vía inglés.** LibreTranslate pivota automáticamente cuando no hay modelo directo entre dos idiomas, pero si el primer salto (origen→inglés) ya produce un resultado pobre, el pivote hereda el error (p. ej. es→en "informática"→"it", luego en→el de "it" da "το", el artículo griego "el", en vez de una traducción de "Information Technology").
 - **Parámetro `alternatives` de LibreTranslate sin usar.** El endpoint `/translate` admite devolver traducciones alternativas además de la principal (`alternatives: 3`). Una mejora futura sería añadir cada alternativa como término de búsqueda adicional, aumentando la cobertura cuando la traducción principal es de baja calidad. No implementado por ahora — más llamadas a la API y más pasadas de FuzzySearch por el mismo beneficio incierto.
 - **Idiomas sin modelo directo.** Con los 10 idiomas de DACEM cargados (`LT_LOAD_ONLY`), no todos los pares tienen modelo directo (p. ej. es→el); LibreTranslate pivota por inglés de forma transparente, heredando las limitaciones del punto anterior.
+- **Sin caché de traducciones.** Cada búsqueda repetida del mismo término vuelve a llamar a LibreTranslate 9 veces, aunque el resultado sea siempre el mismo. Cachear por `(idioma_origen, término)` en la cache de Drupal eliminaría por completo la latencia de traducción para términos ya buscados antes, que en un buscador con autocompletado/escritura en vivo es el caso más común. No implementado por decidir primero si la paralelización era suficiente.
+- **Sin precalentamiento de modelos al desplegar.** Confirmado que es viable si se hace bien (peticiones secuenciales, no en paralelo, 4-6 por idioma para cubrir los 4 workers de gunicorn), pero no se ha automatizado. Quedaría como script de arranque del contenedor o como tarea posterior al `ddev start`.
 
 ---
 

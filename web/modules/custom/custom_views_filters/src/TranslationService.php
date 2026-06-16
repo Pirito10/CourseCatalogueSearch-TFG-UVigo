@@ -29,9 +29,8 @@ class TranslationService {
     $targets = array_diff(static::LANGUAGES, [$source]);
     $terms = [$input];
 
-    foreach ($targets as $lang) {
-      $translated = static::translate($input, $source, $lang);
-      if ($translated !== null && $translated !== $input) {
+    foreach (static::translateAll($input, $source, $targets) as $translated) {
+      if ($translated !== NULL && $translated !== $input) {
         $terms[] = $translated;
       }
     }
@@ -44,26 +43,36 @@ class TranslationService {
     return $lang === 'pt-pt' ? 'pt' : $lang;
   }
 
-  protected static function translate(string $input, string $source, string $target): ?string {
-    $data = static::post('/translate', [
-      'q' => $input,
-      'source' => $source,
-      'target' => $target,
-    ]);
-    return $data['translatedText'] ?? NULL;
-  }
+  /**
+   * Fires one translation request per target language concurrently instead
+   * of waiting for each to finish before starting the next.
+   *
+   * @return array<string, string|null> keyed by target language code
+   */
+  protected static function translateAll(string $input, string $source, array $targets): array {
+    $client = \Drupal::httpClient();
+    $promises = [];
 
-  protected static function post(string $endpoint, array $body): mixed {
-    try {
-      $response = \Drupal::httpClient()->post(static::URL . $endpoint, [
-        'json' => $body,
+    foreach ($targets as $lang) {
+      $promises[$lang] = $client->postAsync(static::URL . '/translate', [
+        'json' => ['q' => $input, 'source' => $source, 'target' => $lang],
         'timeout' => 5,
       ]);
-      return json_decode((string) $response->getBody(), TRUE);
     }
-    catch (\Exception $e) {
-      return NULL;
+
+    $responses = \GuzzleHttp\Promise\Utils::settle($promises)->wait();
+
+    $translations = [];
+    foreach ($responses as $lang => $result) {
+      if ($result['state'] !== 'fulfilled') {
+        $translations[$lang] = NULL;
+        continue;
+      }
+      $data = json_decode((string) $result['value']->getBody(), TRUE);
+      $translations[$lang] = $data['translatedText'] ?? NULL;
     }
+
+    return $translations;
   }
 
 }
