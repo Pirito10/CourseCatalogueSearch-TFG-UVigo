@@ -8,12 +8,6 @@ use Drupal\search_api\Plugin\search_api\data_type\value\TextValueInterface;
 class FuzzySearch {
 
   /**
-   * Scores keyed by nid, shared between hook_views_query_alter and
-   * hook_views_post_execute via static state.
-   */
-  public static array $scores = [];
-
-  /**
    * NIDs in score order, shared between hook_views_query_alter and
    * hook_views_pre_execute to apply FIELD()-based SQL ordering.
    */

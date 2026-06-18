@@ -34,24 +34,6 @@ function custom_views_filters_views_pre_execute(ViewExecutable $view): void {
   $select->orderBy($alias, 'ASC');
 }
 
-/**
- * Implements hook_views_post_execute().
- *
- * Reorders the current page of results by the fuzzy score computed in
- * FuzzySearch::scoreFromIndex(). Only fires when the fuzzy filter was active.
- */
-function custom_views_filters_views_post_execute(ViewExecutable $view): void {
-  if (empty(FuzzySearch::$scores)) {
-    return;
-  }
-  $scores = FuzzySearch::$scores;
-  usort($view->result, static function ($a, $b) use ($scores) {
-    $sa = $scores[$a->nid] ?? 0.0;
-    $sb = $scores[$b->nid] ?? 0.0;
-    return $sb <=> $sa;
-  });
-  FuzzySearch::$scores = [];
-}
 
 /**
  * Implements hook_views_query_alter().
@@ -92,7 +74,6 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$scores = array_column($matches, 'score', 'nid');
         FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
         $query->orderby = [];
@@ -129,7 +110,6 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$scores = array_column($matches, 'score', 'nid');
         FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
         $query->orderby = [];
@@ -166,7 +146,6 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$scores = array_column($matches, 'score', 'nid');
         FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
         $query->orderby = [];
@@ -203,7 +182,6 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$scores = array_column($matches, 'score', 'nid');
         FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
         $query->orderby = [];
