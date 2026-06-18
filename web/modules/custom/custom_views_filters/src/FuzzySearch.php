@@ -14,6 +14,12 @@ class FuzzySearch {
   public static array $scores = [];
 
   /**
+   * NIDs in score order, shared between hook_views_query_alter and
+   * hook_views_pre_execute to apply FIELD()-based SQL ordering.
+   */
+  public static array $orderedNids = [];
+
+  /**
    * Entry point: loads candidates from the Search API index, scores them
    * against $input using Levenshtein distance, and returns the matches
    * sorted by descending score.
