@@ -12,10 +12,10 @@ use Drupal\Core\Form\FormStateInterface;
 
 
 /**
- * Implements hook_views_post_execute().
+ * Implements hook_views_pre_execute().
  *
- * Reorders the current page of results by the fuzzy score computed in
- * FuzzySearch::scoreFromIndex(). Only fires when the fuzzy filter was active.
+ * Adds a FIELD()-based ORDER BY so SQL paging respects fuzzy relevance score.
+ * Only fires when the fuzzy filter was active.
  */
 function custom_views_filters_views_pre_execute(ViewExecutable $view): void {
   if (empty(FuzzySearch::$orderedNids)) {
@@ -34,6 +34,12 @@ function custom_views_filters_views_pre_execute(ViewExecutable $view): void {
   $select->orderBy($alias, 'ASC');
 }
 
+/**
+ * Implements hook_views_post_execute().
+ *
+ * Reorders the current page of results by the fuzzy score computed in
+ * FuzzySearch::scoreFromIndex(). Only fires when the fuzzy filter was active.
+ */
 function custom_views_filters_views_post_execute(ViewExecutable $view): void {
   if (empty(FuzzySearch::$scores)) {
     return;
