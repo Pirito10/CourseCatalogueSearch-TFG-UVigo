@@ -17,6 +17,23 @@ use Drupal\Core\Form\FormStateInterface;
  * Reorders the current page of results by the fuzzy score computed in
  * FuzzySearch::scoreFromIndex(). Only fires when the fuzzy filter was active.
  */
+function custom_views_filters_views_pre_execute(ViewExecutable $view): void {
+  if (empty(FuzzySearch::$orderedNids)) {
+    return;
+  }
+  $nids = FuzzySearch::$orderedNids;
+  FuzzySearch::$orderedNids = [];
+
+  $select = $view->query->query ?? NULL;
+  if (!$select) {
+    return;
+  }
+
+  $nids_str = implode(',', array_map('intval', $nids));
+  $alias = $select->addExpression("FIELD(node_field_data.nid,$nids_str)", 'fuzzy_rank');
+  $select->orderBy($alias, 'ASC');
+}
+
 function custom_views_filters_views_post_execute(ViewExecutable $view): void {
   if (empty(FuzzySearch::$scores)) {
     return;
@@ -68,8 +85,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
         $query->addWhere(1, 'node_field_data.nid', [0], 'IN');
       }
       else {
+        $nids = array_column($matches, 'nid');
         FuzzySearch::$scores = array_column($matches, 'score', 'nid');
-        $query->addWhere(1, 'node_field_data.nid', array_column($matches, 'nid'), 'IN');
+        FuzzySearch::$orderedNids = $nids;
+        $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
+        $query->orderby = [];
       }
     }
   }
@@ -102,8 +122,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
         $query->addWhere(1, 'node_field_data.nid', [0], 'IN');
       }
       else {
+        $nids = array_column($matches, 'nid');
         FuzzySearch::$scores = array_column($matches, 'score', 'nid');
-        $query->addWhere(1, 'node_field_data.nid', array_column($matches, 'nid'), 'IN');
+        FuzzySearch::$orderedNids = $nids;
+        $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
+        $query->orderby = [];
       }
     }
   }
@@ -136,8 +159,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
         $query->addWhere(1, 'node_field_data.nid', [0], 'IN');
       }
       else {
+        $nids = array_column($matches, 'nid');
         FuzzySearch::$scores = array_column($matches, 'score', 'nid');
-        $query->addWhere(1, 'node_field_data.nid', array_column($matches, 'nid'), 'IN');
+        FuzzySearch::$orderedNids = $nids;
+        $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
+        $query->orderby = [];
       }
     }
   }
@@ -170,8 +196,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
         $query->addWhere(1, 'node_field_data.nid', [0], 'IN');
       }
       else {
+        $nids = array_column($matches, 'nid');
         FuzzySearch::$scores = array_column($matches, 'score', 'nid');
-        $query->addWhere(1, 'node_field_data.nid', array_column($matches, 'nid'), 'IN');
+        FuzzySearch::$orderedNids = $nids;
+        $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
+        $query->orderby = [];
       }
     }
   }
