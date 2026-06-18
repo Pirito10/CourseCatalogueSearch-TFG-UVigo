@@ -14,19 +14,17 @@ Dos piezas que trabajan juntas:
 
 #### `web/modules/custom/custom_views_filters/src/FuzzySearch.php`
 Clase PHP con toda la lógica de puntuación:
-- **`scoreFromIndex()`** — punto de entrada. Recibe el texto buscado y el ID del índice, devuelve los NIDs ordenados por score.
+- **`scoreFromIndex()`** — punto de entrada. Recibe el texto buscado y el ID del índice, devuelve un array de `{nid, score}` ordenado por score descendente (o `NULL` si el término es demasiado corto).
 - **`loadCandidatesFromIndex()`** — consulta el índice de Search API (no SQL directo) y devuelve todos los ítems indexados con sus campos de texto.
 - **`scoreAndFilter()`** — para cada candidato, suma los scores palabra a palabra contra el término buscado. Usa el NID como clave para deduplicar (un mismo nodo puede aparecer en varios idiomas en el índice).
 - **`wordScore()`** — compara dos palabras con distancia de Levenshtein: exacto=1.0, prefijo=0.85, 1 edición≈0.91, 2 ediciones≈menor, más diferencia=0.
 - **`normalize()`** — minúsculas + elimina acentos (é→e).
 - **`tokenize()`** — divide en palabras de mínimo 4 caracteres.
-- **`$scores`** — array estático que comparte los scores entre `hook_views_query_alter` y `hook_views_post_execute`.
 - **`$orderedNids`** — array estático que transporta los NIDs ordenados por score desde `hook_views_query_alter` hasta `hook_views_pre_execute`, para construir el `FIELD()` SQL.
 
 #### `web/modules/custom/custom_views_filters/custom_views_filters.module`
-- **`hook_views_query_alter`**: intercepta la query de `search_programme` o `search_iec`, llama a `FuzzySearch::scoreFromIndex()`, elimina la condición SQL del filtro combine (operator `formula`) y la sustituye por `WHERE nid IN (nids_con_score)`. Limpia `$query->orderby` y guarda los NIDs ordenados en `FuzzySearch::$orderedNids`.
+- **`hook_views_query_alter`**: intercepta la query de `search_programme`, `search_iec` e `institution_new_catalogue` (page_1 y page_2), llama a `FuzzySearch::scoreFromIndex()`, elimina la condición SQL del filtro combine (operator `formula`) y la sustituye por `WHERE nid IN (nids_con_score)`. Limpia `$query->orderby` y guarda los NIDs ordenados en `FuzzySearch::$orderedNids`.
 - **`hook_views_pre_execute`**: se ejecuta tras construir el objeto `SelectInterface`. Lee `$orderedNids`, añade una expresión `FIELD(node_field_data.nid, n1, n2, ...)` con `addExpression()` y ordena por ella con `orderBy()`. Esto garantiza que la paginación SQL también respeta el orden por relevancia.
-- **`hook_views_post_execute`**: reordena `$view->result` por score descendente como salvaguarda para casos en que `hook_views_pre_execute` no pueda actuar. Se aplica a cualquier vista cuando `FuzzySearch::$scores` está relleno.
 
 **Flujo completo:**
 ```
@@ -41,9 +39,8 @@ Usuario escribe "enginering"
   → Se elimina el WHERE combine de la SQL
   → Se añade WHERE nid IN (NIDs fuzzy), se limpia orderby
   → hook_views_pre_execute añade ORDER BY FIELD(nid, n1, n2, ...)
-  → Drupal ejecuta la query → devuelve nodos fuzzy-matched en orden de relevancia
-  → hook_views_post_execute reordena $view->result como salvaguarda
-  → El usuario ve los resultados más relevantes primero, paginación incluida
+  → Drupal ejecuta la query → devuelve nodos en orden de relevancia, paginación incluida
+  → El usuario ve los resultados más relevantes primero
 ```
 
 ---
