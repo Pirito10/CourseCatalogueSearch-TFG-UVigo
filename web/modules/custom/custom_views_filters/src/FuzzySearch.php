@@ -111,13 +111,13 @@ class FuzzySearch {
       if ($score > 0.0) {
         $nid = (int) $row['nid'];
         if (!isset($results[$nid]) || $score > $results[$nid]['score']) {
-          $results[$nid] = ['nid' => $nid, 'score' => $score];
+          $results[$nid] = ['nid' => $nid, 'score' => $score, 'title' => $row['title']];
         }
       }
     }
 
     $results = array_values($results);
-    usort($results, static fn($a, $b) => $b['score'] <=> $a['score']);
+    usort($results, static fn($a, $b) => $b['score'] <=> $a['score'] ?: strcmp($a['title'], $b['title']));
     return $results;
   }
 
