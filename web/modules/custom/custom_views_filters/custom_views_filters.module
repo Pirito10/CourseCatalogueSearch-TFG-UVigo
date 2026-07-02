@@ -24,7 +24,7 @@ function custom_views_filters_views_pre_execute(ViewExecutable $view): void {
   $nids = FuzzySearch::$orderedNids;
   FuzzySearch::$orderedNids = [];
 
-  $select = $view->query->query ?? NULL;
+  $select = $view->build_info['query'] ?? NULL;
   if (!$select) {
     return;
   }
