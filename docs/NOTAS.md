@@ -16,7 +16,7 @@ Dos piezas que trabajan juntas:
 Clase PHP con toda la lógica de puntuación:
 - **`scoreFromIndex()`** — punto de entrada. Recibe el texto buscado y el ID del índice, devuelve un array de `{nid, score}` ordenado por score descendente (o `NULL` si el término es demasiado corto).
 - **`loadCandidatesFromIndex()`** — consulta el índice de Search API (no SQL directo) y devuelve todos los ítems indexados con sus campos de texto.
-- **`scoreAndFilter()`** — para cada candidato, suma los scores palabra a palabra contra el término buscado. Usa el NID como clave para deduplicar (un mismo nodo puede aparecer en varios idiomas en el índice).
+- **`scoreAndFilter()`** — para cada candidato, suma los scores palabra a palabra contra el término buscado. Usa el NID como clave para deduplicar (un mismo nodo puede aparecer en varios idiomas en el índice). Ordena los resultados por score descendente; en caso de empate, alfabéticamente por título.
 - **`wordScore()`** — compara dos palabras con distancia de Levenshtein: exacto=1.0, prefijo=0.85, 1 edición≈0.91, 2 ediciones≈menor, más diferencia=0.
 - **`normalize()`** — minúsculas + elimina acentos (é→e).
 - **`tokenize()`** — divide en palabras de mínimo 4 caracteres.
@@ -90,7 +90,7 @@ $results[] = ['nid' => $nid, 'score' => $score];
 
 // Después:
 if (!isset($results[$nid]) || $score > $results[$nid]['score']) {
-  $results[$nid] = ['nid' => $nid, 'score' => $score];
+  $results[$nid] = ['nid' => $nid, 'score' => $score, 'title' => $row['title']];
 }
 ```
 
