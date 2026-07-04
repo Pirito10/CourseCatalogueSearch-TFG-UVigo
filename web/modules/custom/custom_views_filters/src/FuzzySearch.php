@@ -25,7 +25,7 @@ class FuzzySearch {
    */
   public static function scoreFromIndex(string $input, string $indexId = 'programmes'): ?array {
     $candidates = static::loadCandidatesFromIndex($indexId);
-    $terms = TranslationService::getSearchTerms($input);
+    $terms = TranslationService::getSearchTerms($input, NULL, $indexId);
 
     $merged = [];
     $allNull = TRUE;

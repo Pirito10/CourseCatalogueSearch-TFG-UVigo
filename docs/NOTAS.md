@@ -157,12 +157,29 @@ services:
 - **Acceso**: desde el host, `http://localhost:5000`. Desde dentro de los contenedores DDEV (PHP), `http://libretranslate:5000` (nombre del servicio).
 - **Persistencia**: los modelos se descargan al arrancar el contenedor y se guardan en su capa de escritura. Sobreviven a `ddev restart` pero se perderían con `ddev delete` (no hay volumen explícito).
 
-#### `TranslationService.php`
+#### `TranslationDictionary.php`
 
-Nueva clase en `web/modules/custom/custom_views_filters/src/TranslationService.php`. Punto de entrada: `getSearchTerms(string $input, ?string $sourceLang = NULL): array`.
+Clase de datos pura en `web/modules/custom/custom_views_filters/src/TranslationDictionary.php`. Contiene dos constantes:
+
+- **`PROGRAMMES`**: términos de programas académicos (informática, ingeniería, medicina...), con cobertura en los 9 idiomas no ingleses del sitio.
+- **`COURSES`**: términos de asignaturas (álgebra, cálculo, bases de datos...), separados de programas para evitar que términos de asignatura activen traducciones en búsquedas de programas y viceversa.
+
+Las claves son los equivalentes en inglés y los valores son mapas `[lang => traducción]`. Ejemplo:
 
 ```php
-public static function getSearchTerms(string $input, ?string $sourceLang = NULL): array {
+'computer science' => [
+    'es' => 'informática', 'fr' => 'informatique', 'cs' => 'informatika', ...
+]
+```
+
+Este sentido (inglés como clave) facilita el mantenimiento: una sola entrada cubre todos los idiomas para un mismo concepto. Para buscar por el término del usuario se construye un índice invertido en `TranslationService`.
+
+#### `TranslationService.php`
+
+Nueva clase en `web/modules/custom/custom_views_filters/src/TranslationService.php`. Punto de entrada: `getSearchTerms(string $input, ?string $sourceLang = NULL, string $indexId = 'programmes'): array`.
+
+```php
+public static function getSearchTerms(string $input, ?string $sourceLang = NULL, string $indexId = 'programmes'): array {
     $source = $sourceLang ?? static::uiLanguage();
 
     if ($source === 'en') {
@@ -170,7 +187,8 @@ public static function getSearchTerms(string $input, ?string $sourceLang = NULL)
     }
 
     $terms = [$input];
-    $translated = static::translateTo($input, $source, 'en');
+    $translated = static::dictionaryLookup($input, $source, $indexId)
+      ?? static::translateTo($input, $source, 'en');
 
     if ($translated !== NULL && $translated !== $input) {
       $terms[] = $translated;
@@ -179,6 +197,8 @@ public static function getSearchTerms(string $input, ?string $sourceLang = NULL)
     return $terms;
 }
 ```
+
+El operador `??` implementa la prioridad: diccionario primero, LibreTranslate solo si el diccionario devuelve `NULL`. `dictionaryLookup()` construye un índice invertido de `TranslationDictionary` la primera vez que se llama por petición (lazy initialization) y lo cachea en un array estático para reutilizarlo.
 
 **Decisiones de diseño:**
 
@@ -208,7 +228,7 @@ public static function getSearchTerms(string $input, ?string $sourceLang = NULL)
 ```php
 public static function scoreFromIndex(string $input, string $indexId = 'programmes'): ?array {
     $candidates = static::loadCandidatesFromIndex($indexId);
-    $terms = TranslationService::getSearchTerms($input);
+    $terms = TranslationService::getSearchTerms($input, NULL, $indexId);
 
     $merged = [];
     $allNull = TRUE;
@@ -249,7 +269,7 @@ El único caso lento es el arranque en frío: LibreTranslate carga los modelos d
 
 #### Limitaciones conocidas (líneas futuras)
 
-- **Traducción de palabras sueltas sin contexto es poco fiable.** Probado con "informática" → traducido a inglés como "it" en vez de "Computer Science". Con más contexto ("informática y telecomunicaciones") el modelo traduce correctamente. Mejora prevista: diccionario manual de términos académicos comunes (informática, ingeniería, medicina...) como paso previo a LibreTranslate.
+- **Traducción de palabras sueltas sin contexto es poco fiable.** Probado con "informática" → traducido a inglés como "it" en vez de "Computer Science". El diccionario (`TranslationDictionary`) cubre los casos más comunes; LibreTranslate sigue siendo el fallback para términos no incluidos.
 - **Parámetro `alternatives` de LibreTranslate sin usar.** El endpoint `/translate` admite devolver traducciones alternativas además de la principal (`alternatives: 3`). Una mejora futura sería añadir cada alternativa como término de búsqueda adicional, aumentando la cobertura cuando la traducción principal es de baja calidad. No implementado por ahora.
 - **Sin caché de traducciones en Drupal.** Cada búsqueda nueva llama a LibreTranslate aunque el término ya se haya traducido antes. Cachear por `(idioma_origen, término)` en la caché de Drupal eliminaría la latencia de traducción para búsquedas repetidas. No implementado por ahora dado que la latencia actual (~25-40ms) es aceptable.
 - **Sin precalentamiento de modelos al desplegar.** Los modelos se cargan de forma perezosa por cada worker de gunicorn en su primera petición. Quedaría como script de arranque o tarea posterior al `ddev start`.
