@@ -6,16 +6,15 @@ class TranslationService {
 
   const URL = 'http://libretranslate:5000';
 
-  const LANGUAGES = ['en', 'es', 'fr', 'cs', 'el', 'et', 'gl', 'hu', 'pt', 'sl'];
-
   /**
-   * Returns the original term plus its translations to all other site languages.
+   * Returns the original term plus its English translation (if the UI
+   * language is not English).
    *
    * The source language is the current Drupal UI language (or $sourceLang,
    * used in tests), never auto-detected — LibreTranslate's detection is too
    * unreliable for short, accent-less academic terms. If the source is
-   * English, returns just [$input], since every node is indexed in English
-   * at minimum and no translation is needed.
+   * English, returns just [$input], since all content is indexed in English
+   * and no translation is needed.
    *
    * @return string[]
    */
@@ -26,13 +25,11 @@ class TranslationService {
       return [$input];
     }
 
-    $targets = array_diff(static::LANGUAGES, [$source]);
     $terms = [$input];
+    $translated = static::translateTo($input, $source, 'en');
 
-    foreach (static::translateAll($input, $source, $targets) as $translated) {
-      if ($translated !== NULL && $translated !== $input) {
-        $terms[] = $translated;
-      }
+    if ($translated !== NULL && $translated !== $input) {
+      $terms[] = $translated;
     }
 
     return $terms;
@@ -43,36 +40,18 @@ class TranslationService {
     return $lang === 'pt-pt' ? 'pt' : $lang;
   }
 
-  /**
-   * Fires one translation request per target language concurrently instead
-   * of waiting for each to finish before starting the next.
-   *
-   * @return array<string, string|null> keyed by target language code
-   */
-  protected static function translateAll(string $input, string $source, array $targets): array {
-    $client = \Drupal::httpClient();
-    $promises = [];
-
-    foreach ($targets as $lang) {
-      $promises[$lang] = $client->postAsync(static::URL . '/translate', [
-        'json' => ['q' => $input, 'source' => $source, 'target' => $lang],
+  protected static function translateTo(string $input, string $source, string $target): ?string {
+    try {
+      $response = \Drupal::httpClient()->post(static::URL . '/translate', [
+        'json' => ['q' => $input, 'source' => $source, 'target' => $target],
         'timeout' => 5,
       ]);
+      $data = json_decode((string) $response->getBody(), TRUE);
+      return $data['translatedText'] ?? NULL;
     }
-
-    $responses = \GuzzleHttp\Promise\Utils::settle($promises)->wait();
-
-    $translations = [];
-    foreach ($responses as $lang => $result) {
-      if ($result['state'] !== 'fulfilled') {
-        $translations[$lang] = NULL;
-        continue;
-      }
-      $data = json_decode((string) $result['value']->getBody(), TRUE);
-      $translations[$lang] = $data['translatedText'] ?? NULL;
+    catch (\Exception $e) {
+      return NULL;
     }
-
-    return $translations;
   }
 
 }
