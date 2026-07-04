@@ -49,7 +49,7 @@ class FuzzySearch {
     }
 
     $results = array_values($merged);
-    usort($results, static fn($a, $b) => $b['score'] <=> $a['score']);
+    usort($results, static fn($a, $b) => $b['score'] <=> $a['score'] ?: strcmp($a['title'], $b['title']));
     return $results;
   }
 
