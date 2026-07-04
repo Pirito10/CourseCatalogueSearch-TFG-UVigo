@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  libretranslate:
+    image: libretranslate/libretranslate
+    restart: "no"
+    ports:
+      - "5000:5000"
+    mem_limit: 1g
+    environment:
+      - LT_LOAD_ONLY=en,es,fr,cs,el,et,gl,hu,pt,sl

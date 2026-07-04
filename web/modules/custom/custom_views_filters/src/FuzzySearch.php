@@ -25,7 +25,32 @@ class FuzzySearch {
    */
   public static function scoreFromIndex(string $input, string $indexId = 'programmes'): ?array {
     $candidates = static::loadCandidatesFromIndex($indexId);
-    return static::scoreAndFilter($input, $candidates);
+    $terms = TranslationService::getSearchTerms($input);
+
+    $merged = [];
+    $allNull = TRUE;
+
+    foreach ($terms as $term) {
+      $results = static::scoreAndFilter($term, $candidates);
+      if ($results === NULL) {
+        continue;
+      }
+      $allNull = FALSE;
+      foreach ($results as $row) {
+        $nid = $row['nid'];
+        if (!isset($merged[$nid]) || $row['score'] > $merged[$nid]['score']) {
+          $merged[$nid] = $row;
+        }
+      }
+    }
+
+    if ($allNull) {
+      return NULL;
+    }
+
+    $results = array_values($merged);
+    usort($results, static fn($a, $b) => $b['score'] <=> $a['score'] ?: strcmp($a['title'], $b['title']));
+    return $results;
   }
 
   /**

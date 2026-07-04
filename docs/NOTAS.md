@@ -127,6 +127,135 @@ foreach (['title', 'institution', 'programme', 'nuevo_campo'] as $fieldName) {
 
 ---
 
+### Búsqueda multilingüe con traducción automática
+
+#### Problema
+
+Search API indexa cada nodo solo en los idiomas en los que tiene traducción. Si un usuario español busca "informática" y el programa de una universidad griega solo tiene título en griego e inglés ("Computer Science"), FuzzySearch nunca lo encuentra porque compara cadenas de texto, no significados — "informática" y "Computer Science" no tienen ninguna palabra en común.
+
+#### Servicio LibreTranslate (DDEV)
+
+Se añadió LibreTranslate como servicio Docker adicional en `.ddev/docker-compose.libretranslate.yml`:
+
+```yaml
+version: "3.6"
+services:
+  libretranslate:
+    image: libretranslate/libretranslate
+    restart: "no"
+    ports:
+      - "5000:5000"
+    mem_limit: 1g
+    environment:
+      - LT_LOAD_ONLY=en,es,fr,cs,el,et,gl,hu,pt,sl
+```
+
+- **Por qué un docker-compose custom y no un add-on de `ddev get`**: es la forma oficial de DDEV de añadir servicios sin add-on disponible. Los servicios propios de DDEV (web, db...) se gestionan internamente a partir de `config.yaml`, no con ficheros docker-compose explícitos.
+- **`LT_LOAD_ONLY`**: limita los modelos de idioma descargados a los 10 idiomas reales de DACEM (`cs, el, en, es, et, fr, gl, hu, pt-pt, sl` en Drupal; `pt-pt` se mapea a `pt` para LibreTranslate). Sin esta variable descargaría los ~30 idiomas disponibles. Los modelos son direccionales (es→en ≠ en→es), así que con 10 idiomas se cargan 20 modelos en total. No existe forma oficialmente soportada de cargar solo una dirección.
+- **`mem_limit: 1g`**: la memoria del contenedor crece con el uso (modelos cargados por los workers de gunicorn + caché de resultados de traducción) y nunca se libera de forma proactiva. Sin límite, puede llegar a 4 GB con todos los modelos activos. Con el límite, cuando un worker supera la cuota, el OOM killer de Docker lo mata (`SIGKILL`), gunicorn lo reinicia automáticamente, y el servicio sigue disponible con los workers restantes. Desde el exterior es invisible.
+- **Peso**: con los 10 idiomas, el contenedor en ejecución ocupa ~1.58 GB (modelos descargados + imagen base). Con solo 3 idiomas (en, es, fr) eran ~847 MB — cada idioma añade aproximadamente 100 MB.
+- **Acceso**: desde el host, `http://localhost:5000`. Desde dentro de los contenedores DDEV (PHP), `http://libretranslate:5000` (nombre del servicio).
+- **Persistencia**: los modelos se descargan al arrancar el contenedor y se guardan en su capa de escritura. Sobreviven a `ddev restart` pero se perderían con `ddev delete` (no hay volumen explícito).
+
+#### `TranslationService.php`
+
+Nueva clase en `web/modules/custom/custom_views_filters/src/TranslationService.php`. Punto de entrada: `getSearchTerms(string $input, ?string $sourceLang = NULL): array`.
+
+```php
+public static function getSearchTerms(string $input, ?string $sourceLang = NULL): array {
+    $source = $sourceLang ?? static::uiLanguage();
+
+    if ($source === 'en') {
+      return [$input];
+    }
+
+    $terms = [$input];
+    $translated = static::translateTo($input, $source, 'en');
+
+    if ($translated !== NULL && $translated !== $input) {
+      $terms[] = $translated;
+    }
+
+    return $terms;
+}
+```
+
+**Decisiones de diseño:**
+
+1. **Idioma de origen = idioma de la UI de Drupal, nunca auto-detección.** Se probó `POST /detect` de LibreTranslate y resultó demasiado frágil para términos académicos cortos sin acentos:
+
+   | Término | Detectado | Confianza |
+   |---|---|---|
+   | "ingenieria quimica" (sin acentos) | en | 0% |
+   | "ingeniería química" | es | 90% |
+   | "gestion empresarial" (sin acentos) | **fr** | 90% |
+   | "matematicas aplicadas" (sin acentos) | **pt** | 100% |
+
+   Incluso con confianza alta (90-100%) la detección puede ser incorrecta — los idiomas romances comparten demasiado vocabulario sin los acentos. Ningún umbral de confianza lo soluciona, así que se descartó la auto-detección por completo a favor de `\Drupal::languageManager()->getCurrentLanguage()->getId()`.
+
+2. **Solo se traduce al inglés, no a todos los idiomas.** Todos los programas y cursos de DACEM tienen sus datos introducidos en inglés obligatoriamente (el contenido en otros idiomas es opcional). Por tanto, basta con traducir el término del usuario al inglés para cubrir el catálogo completo: si busca "ingeniería química" en español, se traduce a "chemical engineering" y FuzzySearch lo encuentra. Esto reduce la llamada a LibreTranslate de 9 peticiones (una por idioma) a 1 sola.
+
+3. **El término original siempre se incluye en el array devuelto** (`$terms = [$input]`), independientemente de si se traduce o no. Esto cubre dos casos a la vez:
+   - Typos: si la traducción falla o produce basura, FuzzySearch contra el original todavía encuentra coincidencias con distancia de Levenshtein baja.
+   - Usuario que escribe en un idioma distinto al de la UI: un usuario con la web en español que escribe "chemical" (inglés) encuentra "Chemical Engineering" vía el término original, sin que la traducción (es→en de "chemical") tenga que acertar.
+
+4. **Traducciones fallidas o vacías se descartan silenciosamente** (`$translated !== NULL && $translated !== $input`). Si LibreTranslate no está disponible o devuelve error, `translateTo()` captura la excepción y devuelve `NULL` — el sistema sigue funcionando solo con el término original, sin filtrar de más ni romper la búsqueda.
+
+#### Integración con `FuzzySearch.php`
+
+`scoreFromIndex()` ahora pide los términos a `TranslationService` y ejecuta `scoreAndFilter()` una vez por término, fusionando los resultados y quedándose con el score más alto por NID:
+
+```php
+public static function scoreFromIndex(string $input, string $indexId = 'programmes'): ?array {
+    $candidates = static::loadCandidatesFromIndex($indexId);
+    $terms = TranslationService::getSearchTerms($input);
+
+    $merged = [];
+    $allNull = TRUE;
+
+    foreach ($terms as $term) {
+      $results = static::scoreAndFilter($term, $candidates);
+      if ($results === NULL) {
+        continue;
+      }
+      $allNull = FALSE;
+      foreach ($results as $row) {
+        $nid = $row['nid'];
+        if (!isset($merged[$nid]) || $row['score'] > $merged[$nid]['score']) {
+          $merged[$nid] = $row;
+        }
+      }
+    }
+
+    if ($allNull) {
+      return NULL;
+    }
+
+    $results = array_values($merged);
+    usort($results, static fn($a, $b) => $b['score'] <=> $a['score']);
+    return $results;
+}
+```
+
+`NULL` solo se devuelve (= "no filtrar") cuando *ningún* término produjo palabras tokenizables; si al menos uno tuvo resultados, se fusionan aunque sea con un array vacío de coincidencias.
+
+#### Rendimiento
+
+Al reducir la traducción a un único idioma destino (inglés), `TranslationService` hace una sola petición HTTP síncrona por búsqueda. La latencia medida en condiciones normales (modelos ya cargados en memoria) es de **25-40ms**, frente a los ~1s que costaba la implementación anterior con 9 peticiones en paralelo.
+
+El único caso lento es el arranque en frío: LibreTranslate carga los modelos de forma perezosa la primera vez que cada worker de gunicorn los necesita. Con 4 workers, los primeros 4 usos de un idioma nuevo pueden tardar varios segundos hasta que todos los workers han cargado el par. Después la latencia se estabiliza en los 25-40ms mencionados.
+
+**Memoria de la VM de WSL2.** Si el host corre cerca del límite de RAM, WSL2 puede empezar a usar swap (disco) y toda la pila se ralentiza. Solución: crear `%UserProfile%\.wslconfig` con `[wsl2] memory=12GB` y reiniciar WSL2 con `wsl --shutdown` desde PowerShell.
+
+#### Limitaciones conocidas (líneas futuras)
+
+- **Traducción de palabras sueltas sin contexto es poco fiable.** Probado con "informática" → traducido a inglés como "it" en vez de "Computer Science". Con más contexto ("informática y telecomunicaciones") el modelo traduce correctamente. Mejora prevista: diccionario manual de términos académicos comunes (informática, ingeniería, medicina...) como paso previo a LibreTranslate.
+- **Parámetro `alternatives` de LibreTranslate sin usar.** El endpoint `/translate` admite devolver traducciones alternativas además de la principal (`alternatives: 3`). Una mejora futura sería añadir cada alternativa como término de búsqueda adicional, aumentando la cobertura cuando la traducción principal es de baja calidad. No implementado por ahora.
+- **Sin caché de traducciones en Drupal.** Cada búsqueda nueva llama a LibreTranslate aunque el término ya se haya traducido antes. Cachear por `(idioma_origen, término)` en la caché de Drupal eliminaría la latencia de traducción para búsquedas repetidas. No implementado por ahora dado que la latencia actual (~25-40ms) es aceptable.
+- **Sin precalentamiento de modelos al desplegar.** Los modelos se cargan de forma perezosa por cada worker de gunicorn en su primera petición. Quedaría como script de arranque o tarea posterior al `ddev start`.
+
+---
+
 ## Botones de ordenación
 
 ### Mecanismo común (JS)
