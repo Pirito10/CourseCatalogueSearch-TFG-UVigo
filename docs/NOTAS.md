@@ -198,7 +198,7 @@ public static function getSearchTerms(string $input, ?string $sourceLang = NULL,
 }
 ```
 
-El operador `??` implementa la prioridad: diccionario primero, LibreTranslate solo si el diccionario devuelve `NULL`. `dictionaryLookup()` construye un índice invertido de `TranslationDictionary` la primera vez que se llama por petición (lazy initialization) y lo cachea en un array estático para reutilizarlo.
+El operador `??` implementa la prioridad: diccionario primero, LibreTranslate solo si el diccionario devuelve `NULL`. `dictionaryLookup()` construye un índice invertido de `TranslationDictionary` en cada llamada — con ~30 entradas el coste es despreciable, y la caché entre peticiones requeriría la cache API de Drupal, que añade complejidad innecesaria para este tamaño.
 
 **Decisiones de diseño:**
 
