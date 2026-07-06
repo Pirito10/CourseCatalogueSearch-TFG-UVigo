@@ -7,11 +7,6 @@ class TranslationService {
   const URL = 'http://libretranslate:5000';
 
   /**
-   * Per-request inverted index cache: [indexId][lang][normalizedTerm] = english.
-   */
-  protected static array $dictionaryCache = [];
-
-  /**
    * Returns the original term plus its English translation (if the UI
    * language is not English).
    *
@@ -58,9 +53,6 @@ class TranslationService {
    * keyed by [lang][normalizedTerm] → english.
    */
   protected static function buildInvertedIndex(string $indexId): array {
-    if (isset(static::$dictionaryCache[$indexId])) {
-      return static::$dictionaryCache[$indexId];
-    }
     $source = $indexId === 'courses' ? TranslationDictionary::COURSES : TranslationDictionary::PROGRAMMES;
     $index = [];
     foreach ($source as $english => $translations) {
@@ -68,7 +60,7 @@ class TranslationService {
         $index[$lang][static::normalize($translation)] = $english;
       }
     }
-    return static::$dictionaryCache[$indexId] = $index;
+    return $index;
   }
 
   protected static function normalize(string $text): string {
