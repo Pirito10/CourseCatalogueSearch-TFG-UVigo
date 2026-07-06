@@ -333,12 +333,12 @@ A tokenización divide o texto en palabras de 4 ou máis caracteres mediante a e
 
 A implementación do servizo de tradución articulouse en tres elementos:
 \begin{itemize}
-    \item A configuración do motor \textit{LibreTranslate} no entorno de desenvolvemento.
+    \item A configuración do motor \textit{LibreTranslate} \cite{libretranslate} no entorno de desenvolvemento.
     \item A clase \texttt{TranslationDictionary}, que almacena o vocabulario académico estático.
     \item A clase \texttt{TranslationService}, que coordina o dicionario e o motor e serve de punto de entrada para a clase \texttt{FuzzySearch}.
 \end{itemize}
 
-O motor de tradución automática neural \textit{LibreTranslate} \cite{libretranslate} integróuse na contorna de desenvolvemento DDEV como un servizo Docker adicional, accesible desde o módulo PHP na URL interna \texttt{http://libretranslate:5000}. O límite de memoria do contedor estableceuse en 1\,GB para evitar que o proceso comprometa os recursos da máquina en contornas de desenvolvemento. A comunicación co servizo realízase mediante peticións POST ao punto de entrada \texttt{/translate}, que reciben o texto de entrada, o idioma de orixe e o idioma destino, e devolven o texto traducido en formato JSON; un \textit{timeout} de 5 segundos garante que un fallo de comunicación non bloquee a busca, retornando \texttt{NULL} en caso de excepción.
+O motor de tradución automática neural \textit{LibreTranslate} integróuse na contorna de desenvolvemento DDEV como un servizo Docker adicional, accesible desde o módulo PHP na URL interna \texttt{http://libretranslate:5000}. O límite de memoria do contedor estableceuse en 1\,GB para evitar que o proceso comprometa os recursos da máquina en contornas de desenvolvemento. A comunicación co servizo realízase mediante peticións POST ao punto de entrada \texttt{/translate}, que reciben o texto de entrada, o idioma de orixe e o idioma destino, e devolven o texto traducido en formato JSON; un \textit{timeout} de 5 segundos garante que un fallo de comunicación non bloquee a busca, retornando \texttt{NULL} en caso de excepción.
 
 A clase \texttt{TranslationDictionary} é unha clase PHP estática con dúas constantes: \texttt{PROGRAMMES}, con termos de titulacións, e \texttt{COURSES}, con termos de compoñentes educativos. Cada constante é un array indexado polo termo en inglés e cuxos valores son arrays de traducións por código de idioma, cubrindo os idiomas da plataforma (español, francés, checo, húngaro, esloveno, estoniano, galego, portugués e grego).
 
@@ -399,6 +399,27 @@ Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{
 \end{itemize}
 
 Para este traballo optouse polo \textit{backend} de base de datos, dado que non require infraestrutura adicional, é suficiente para o volume de datos do catálogo DACEM, e permite integrar a lóxica de busca difusa directamente en PHP, empregando o índice para recuperar os títulos sobre os que aplicar a métrica de Levenshtein.
+
+\subsubsection{Selección do motor de tradución automática}
+\label{anx:libretranslate}
+
+Para a integración dun servizo de tradución automática nunha plataforma web, a opción máis habitual é o uso de APIs externas de tradución, que permiten enviar texto e recibir a tradución sen necesidade de despregar modelos propios. As principais alternativas consideradas foron as seguintes:
+
+\begin{itemize}
+    \item \textbf{DeepL} \cite{deepl}: API de tradución de pago considerada de alta calidade. Ao ser un servizo externo, as consultas dos usuarios abandonan o servidor da plataforma.
+
+    \item \textbf{Google Cloud Translation} \cite{google_translate}: dispón dun nivel gratuíto de 500.000 caracteres mensuais, con tarifas de pago para volumes maiores. Comparte con DeepL a problemática de dependencia externa e saída de datos do servidor.
+
+    \item \textbf{LibreTranslate} \cite{libretranslate_portal}: API de pago sen nivel gratuíto, con límites de petición por minuto. Comparte a problemática de dependencia externa das opcións anteriores.
+
+    \item \textbf{LibreTranslate (autoaloxado)}: motor de código aberto despregable como contedor Docker, sen coste por petición, sen límites de cota e sen saída de datos do servidor.
+\end{itemize}
+
+Optouse pola opción autoaloxada de \textit{LibreTranslate} polas seguintes razóns: elimina a dependencia de servizos externos de pago, garante que os datos das consultas permanecen no servidor da plataforma, non impón límites de petición e intégrase de forma natural no entorno de desenvolvemento DDEV mediante Docker.
+
+O principal inconveniente de \textit{LibreTranslate} é a calidade de tradución inferior á de alternativas comerciais, especialmente para termos curtos e illados sen contexto, como os habituais en nomes de programas e compoñentes educativos, que adoitan ser palabras soltas ou frases técnicas curtas. Ademais, o contedor require dunha cantidade non despreciable de RAM e presenta latencia nas primeiras peticións tras o arranque.
+
+Estas limitacións mitigáronse con dúas medidas: a incorporación dun dicionario estático de termos académicos habituais, que cobre os casos de tradución incorrecta máis frecuentes e actúa como primeira opción antes de invocar o motor; e o establecemento dun límite de memoria de 1\,GB no contedor, que acota o seu consumo de recursos.
 
 % **************************************************
 % * Calibrado do algoritmo de busca difusa
