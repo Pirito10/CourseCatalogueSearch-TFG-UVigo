@@ -67,7 +67,7 @@ Un dos retos fundamentais nos sistemas de información que xestionan grandes vol
 
 Esta problemática é especialmente significativa en contornas nas que os datos presentan múltiples dimensións descritivas (como titulacións, materias, áreas de coñecemento, idiomas, créditos ou modalidades) e nas que o usuario pode ter criterios de busca diversos e combinados. A ausencia de mecanismos avanzados de filtrado e refinamento progresivo limita a capacidade do sistema para adaptarse a diferentes perfís de usuario e escenarios de consulta, reducindo a eficiencia na localización de información pertinente.
 
-No ámbito actual do desenvolvemento de aplicacións web e sistemas de xestión de contidos, as tendencias apuntan cara á implementación de motores de busca máis sofisticados, capaces de indexar múltiples campos, ponderar resultados segundo a relevancia, incorporar criterios de filtrado dinámico e mellorar a experiencia de usuario mediante interfaces intuitivas. Estas solucións non só optimizan o acceso á información, senón que contribúen a unha maior usabilidade e aproveitamento do sistema no seu conxunto.
+No ámbito actual do desenvolvemento de aplicacións web e sistemas de xestión de contidos, as tendencias apuntan cara á implementación de motores de busca máis sofisticados, capaces de indexar múltiples campos, ponderar resultados segundo a relevancia, incorporar criterios de filtrado dinámico, xestionar consultas en múltiples idiomas e mellorar a experiencia de usuario mediante interfaces intuitivas. Estas solucións non só optimizan o acceso á información, senón que contribúen a unha maior usabilidade e aproveitamento do sistema no seu conxunto.
 
 O presente Traballo de Fin de Grao enmárcase neste contexto, propoñendo o deseño e desenvolvemento dunha mellora nos mecanismos de busca e filtrado do catálogo de cursos da plataforma DACEM.
 
@@ -87,6 +87,7 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
     \item A busca restrinxese ao campo título, ignorando atributos como a descrición ou a área de coñecemento.
     \item Non se aplica ningunha ponderación por relevancia, polo que os resultados se presentan en orde alfabética con independencia da pertinencia da consulta.
     \item Non existe tolerancia a erros tipográficos, de xeito que calquera inexactitude na consulta pode producir cero resultados aínda que o elemento buscado exista no catálogo.
+    \item Aínda que os contidos están dispoñibles en inglés e opcionalmente noutros idiomas, a busca non contempla a posibilidade de formular a consulta nun idioma distinto ao dos contidos, o que impide localizar resultados mediante termos non ingleses cando non existe tradución indexada.
     \item As opcións de filtrado son estáticas e non se adaptan ao conxunto de resultados dispoñibles, polo que poden aparecer valores sen correspondencia con ningunha entrada existente.
 \end{itemize}
 
@@ -95,7 +96,7 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
 % **************************************************
 \section{Obxectivos e requisitos}
 \label{sec:obxectivos}
-O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta e sen tolerancia a erros tipográficos), propónse o deseño e implementación de dúas melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca e na vista do catálogo de institución, e a implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta.
+O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta, sen tolerancia a erros tipográficos e imposibilidade de consultar en idiomas distintos ao dos contidos), propónse o deseño e implementación de tres melloras concretas: a incorporación de criterios de ordenación de resultados nas vistas de busca e na vista do catálogo de institución; a implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta; e a incorporación dun servizo de tradución automática da consulta que permita obter resultados pertinentes aínda cando os contidos non dispoñan de tradución ao idioma do usuario.
 
 A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
 
@@ -146,6 +147,20 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
     \item O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
 
     \item O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
+\end{enumerate}
+
+% **************************************************
+% * Tradución automática da consulta
+% **************************************************
+\subsubsection{Tradución automática da consulta}
+\begin{enumerate}
+    \item O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
+
+    \item A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
+
+    \item O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
+
+    \item O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
 \end{enumerate}
 
 % **************************************************
@@ -235,7 +250,7 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
 
 A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste; en caso de empate na puntuación, aplícase como criterio de desempate a orde alfabética polo título. Os valores concretos de cada nivel e os limiares de distancia foron determinados de forma empírica a través dun proceso de calibrado descrito no anexo~\ref{anx:calibrado}.
 
-O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto o termo de busca como o texto de cada candidato, e calcula a puntuación de cada un mediante a distancia de Levenshtein. Con esa información, elimina a condición de filtrado por subcadea exacta, substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación e limpa os criterios de ordenación preexistentes da vista. A orde de relevancia dos candidatos trasládase ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido; este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída (como se ilustra na figura~\ref{fig:fuzzy}).
+O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta, substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación e limpa os criterios de ordenación preexistentes da vista. A orde de relevancia dos candidatos trasládase ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido; este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída (como se ilustra na figura~\ref{fig:fuzzy}).
 
 \begin{figure}[h]
     \centering
@@ -244,6 +259,24 @@ O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \text
     \caption{Resultados da busca difusa para a consulta \texttt{telcommuniation}, con erros tipográficos respecto a \textit{Telecommunications}.}
     \label{fig:fuzzy}
 \end{figure}
+
+\subsection{Tradución automática da consulta}
+\label{sec:diseno_traduccion}
+
+O catálogo de DACEM almacena cada contido obrigatoriamente en inglés, mentres que as traducións a outros idiomas son opcionais. Un usuario que formule a consulta noutro idioma pode non obter resultados pertinentes para contidos que carezan de tradución ao seu idioma, xa que o mecanismo de busca difusa compara o termo introducido directamente contra o texto indexado, sen ningún proceso de equivalencia semántica entre idiomas. Para cubrir esta limitación, incorpórase un servizo de tradución automática que obtén o equivalente en inglés do termo de busca e o engade como termo adicional de consulta. A busca execútase entón dúas veces —co termo orixinal e co traducido—, comparando cada un contra o conxunto completo do índice con independencia do idioma de cada contido; os resultados combínanse conservando a puntuación máxima por candidato. A tradución realízase unicamente ao inglés, idioma sempre dispoñible no catálogo, polo que basta cunha única tradución por consulta para cubrilo por completo. O servizo articulouse en dous compoñentes:
+
+\begin{itemize}
+    \item \textbf{Dicionario estático de termos académicos}: cobre o vocabulario máis habitual do ámbito educativo, con entradas separadas para programas e para compoñentes educativos.
+    \item \textbf{Motor de tradución automática neural}: empregado como alternativa cando o termo non está recollido no dicionario.
+\end{itemize}
+
+O idioma de orixe da consulta determínase a partir do idioma activo na interface de Drupal, en lugar de aplicar detección automática sobre o texto introducido. Esta decisión responde á escasa fiabilidade da detección automática de idioma do motor de tradución sobre termos académicos curtos e frecuentemente sen acentos: termos como \textit{gestion empresarial} ou \textit{matematicas aplicadas} son detectados incorrectamente como francés ou portugués con alta confianza, debido á semellanza léxica entre os idiomas románicos. O idioma da interface, en cambio, é un dato fiable e sempre dispoñible.
+
+O dicionario estático consultase en primeiro lugar por ser máis rápido e preciso que o motor de tradución neural para vocabulario académico: os motores de propósito xeral tenden a producir traducións incorrectas con palabras soltas e sen contexto (por exemplo, \textit{informática} pode traducirse como \textit{it} en lugar de \textit{computer science}). O dicionario mantén entradas separadas para termos de programas e para termos de compoñentes educativos, de xeito que cada chamada ao servizo consulta unicamente o subconxunto correspondente ao tipo de busca en curso, evitando percorrer entradas irrelevantes.
+
+O termo orixinal da consulta inclúese sempre no conxunto de termos de busca, tanto se se obtén tradución como se non. Deste xeito cóbrense tres escenarios: se o contido dispón de tradución ao idioma do usuario, o termo orixinal pode puntuar directamente contra ela, ofrecendo potencialmente maior precisión que a comparación mediante o equivalente en inglés; se o usuario escribe directamente en inglés, a busca funciona sen necesidade de ningún proceso de tradución; e se a tradución falla ou produce un resultado de baixa calidade, o mecanismo de busca difusa opera igualmente sobre o termo orixinal como salvagarda.
+
+O fluxo de execución é o seguinte: cando o usuario introduce un termo, o servizo de tradución detecta o idioma da interface; se non é inglés, consulta primeiro o dicionario e, se o termo non está recollido, invoca o motor de tradución automática. O resultado é un conxunto de un ou dous termos —o orixinal e, se procede, a súa tradución ao inglés— que se pasan ao mecanismo de busca difusa. A puntuación calcúlase de forma independente para cada termo e consérvase a puntuación máxima obtida para cada candidato.
 
 % **************************************************
 % * Desarrollo
@@ -283,7 +316,7 @@ A implementación da busca difusa concretouse en tres elementos:
 
 Creouse un servidor de \textit{Search API} con \textit{backend} de base de datos, configurado cun limiar de lonxitude mínima de palabra de 4 caracteres, coherente co mecanismo de tokenización da clase de puntuación; a indexación de frases e a concordancia parcial desactiváronse, xa que o índice se emprega unicamente como catálogo de campos sobre o que operar a métrica de Levenshtein, sen usar a busca nativa do módulo. Sobre este servidor configuráronse dous índices sen restrición de idioma: \texttt{programmes}, que indexa os nodos de tipo \textit{programme} polos campos \texttt{title} e \texttt{institution} (título da institución referenciada polo programa); e \texttt{courses}, que indexa os nodos de tipo \textit{course} polos campos \texttt{title}, \texttt{institution} (título da institución, accedida a través do programa asociado) e \texttt{programme} (título do programa ao que pertence o compoñente).
 
-O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para as vistas de busca e para a vista do catálogo de institución. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase a clase \texttt{FuzzySearch} co índice correspondente. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, limpanse os criterios de ordenación da vista (\texttt{\$query->orderby = []}), gárdanse os NIDs ordenados por relevancia na propiedade estática \texttt{\$orderedNids} e engádese a condición \texttt{nid IN (\{NIDs\})}.
+O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para as vistas de busca e para a vista do catálogo de institución. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase o método estático \texttt{FuzzySearch::scoreFromIndex()} co índice correspondente; este método encárgase internamente de obter os termos de busca a través do servizo de tradución, cargar os candidatos do índice, puntualos de forma independente para cada termo e combinar os resultados conservando a puntuación máxima por NID. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, limpanse os criterios de ordenación da vista (\texttt{\$query->orderby = []}), gárdanse os NIDs ordenados por relevancia na propiedade estática \texttt{\$orderedNids} e engádese a condición \texttt{nid IN (\{NIDs\})}.
 
 Engadiuse ademais o novo \textit{hook} \texttt{hook\_views\_pre\_execute}, que se invoca xusto antes de que \textit{Views} execute a consulta. Este comproba se a propiedade \texttt{\$orderedNids} non está baleira e, de ser así, obtén o obxecto \texttt{SelectInterface} da \textit{query}, constrúe mediante \texttt{addExpression()} a expresión \texttt{FIELD(node\_field\_data.nid, n1, n2, \ldots)} cos NIDs ordenados e engádea como criterio \texttt{ORDER BY}. Deste xeito, a base de datos devolve as filas directamente na orde de relevancia, sen ningunha reordenación posterior en PHP, e a paxinación tamén a respecta.
 
@@ -294,6 +327,24 @@ A clase \texttt{FuzzySearch}, creada dentro do módulo \texttt{custom\_views\_fi
 \texttt{scoreAndFilter()} normaliza e tokeniza o termo de busca e, para cada candidato, compara cada palabra da consulta con cada palabra dos campos indexados do candidato, acumulando a mellor puntuación obtida. Dado que \textit{Search API} indexa cada tradución dun nodo como un ítem independente, o mesmo NID pode aparecer varias veces; por iso, os resultados indexanse por NID e, en caso de duplicado, consérvase a puntuación máis alta. Finalmente, os resultados ordénanse por puntuación descendente; en caso de empate, aplícase como criterio de desempate a orde alfabética polo título do candidato.
 
 A tokenización divide o texto en palabras de 4 ou máis caracteres mediante a expresión regular \texttt{[a-z]\{4,\}}. O método \texttt{wordScore()} compara dúas palabras normalizadas e devolve unha puntuación entre 0 e 1. Os primeiros casos son a coincidencia exacta, que retorna unha puntuación de 1, e a coincidencia de prefixo, que retorna unha puntuación de 0,85. Para os demais, calcúlase a distancia de Levenshtein mediante a función \texttt{levenshtein()} de PHP e compárase cun limiar (isto é, a cantidade máxima de erros permitidos): se o supera, a puntuación é 0; se non, aplícase a fórmula $1 - d/L$, onde $d$ é a distancia e $L$ a lonxitude da maior palabra das dúas, de xeito que máis erros implican menor puntuación. O limiar é 1 para palabras de ata 5 caracteres e 3 para as máis longas.
+
+\subsection{Tradución automática da consulta}
+\label{sec:impl_traduccion}
+
+A implementación do servizo de tradución articulouse en tres elementos:
+\begin{itemize}
+    \item A configuración do motor \textit{LibreTranslate} no entorno de desenvolvemento.
+    \item A clase \texttt{TranslationDictionary}, que almacena o vocabulario académico estático.
+    \item A clase \texttt{TranslationService}, que coordina o dicionario e o motor e serve de punto de entrada para a clase \texttt{FuzzySearch}.
+\end{itemize}
+
+O motor de tradución automática neural \textit{LibreTranslate} \cite{libretranslate} integróuse na contorna de desenvolvemento DDEV como un servizo Docker adicional, accesible desde o módulo PHP na URL interna \texttt{http://libretranslate:5000}. O límite de memoria do contedor estableceuse en 1\,GB para evitar que o proceso comprometa os recursos da máquina en contornas de desenvolvemento. A comunicación co servizo realízase mediante peticións POST ao punto de entrada \texttt{/translate}, que reciben o texto de entrada, o idioma de orixe e o idioma destino, e devolven o texto traducido en formato JSON; un \textit{timeout} de 5 segundos garante que un fallo de comunicación non bloquee a busca, retornando \texttt{NULL} en caso de excepción.
+
+A clase \texttt{TranslationDictionary} é unha clase PHP estática con dúas constantes: \texttt{PROGRAMMES}, con termos de titulacións, e \texttt{COURSES}, con termos de compoñentes educativos. Cada constante é un array indexado polo termo en inglés e cuxos valores son arrays de traducións por código de idioma, cubrindo os idiomas da plataforma (español, francés, checo, húngaro, esloveno, estoniano, galego, portugués e grego).
+
+A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto de entrada é o método estático \texttt{getSearchTerms()}, que recibe o texto de busca e o identificador do índice, e devolve un array de un ou dous termos. O idioma de orixe obtense mediante \texttt{uiLanguage()}, que recupera o idioma activo da interface de Drupal; se o idioma é inglés, \texttt{getSearchTerms()} retorna directamente o termo orixinal sen consultar ningún servizo. En caso contrario, consulta primeiro o dicionario correspondente ao tipo de índice e, se o termo non está recollido, invoca o motor de tradución. Se se obtén un resultado distinto do termo orixinal, engádese como segundo elemento do array.
+
+\texttt{getSearchTerms()} delega a consulta ao dicionario en \texttt{dictionaryLookup()}, que á súa vez invoca \texttt{buildInvertedIndex()}. Para realizar a consulta de forma eficiente, este método transforma a estrutura do dicionario —indexada polo termo en inglés— nun índice invertido indexado por idioma e por termo normalizado, de xeito que a busca dun termo concreto nun idioma concreto é directa, sen percorrer todas as entradas. O índice constrúese a partir de \texttt{COURSES} para buscas de compoñentes educativos e de \texttt{PROGRAMMES} para buscas de programas. A comparación realízase sobre texto normalizado: \texttt{normalize()} converte a minúsculas, elimina diacríticos mediante transliteración Unicode e colapsa espazos, aplicándose tanto ao termo de entrada como ás claves do índice.
 
 % **************************************************
 % * Conclusiones
