@@ -78,6 +78,13 @@ O presente Traballo de Fin de Grao enmárcase neste contexto, propoñendo o dese
 
 A plataforma DACEM está implementada sobre Drupal 10, un sistema de xestión de contidos (CMS) de código aberto amplamente empregado no ámbito académico e institucional \cite{drupal_usage}. Drupal 10 proporciona unha contorna flexible para a definición de tipos de contido estruturado, a xestión de usuarios e a publicación de información a través de interfaces web configurables.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/dacem.png}
+    \caption{Páxina de inicio da plataforma DACEM.}
+    \label{fig:dacem}
+\end{figure}
+
 O modelo de datos organízase arredor de tres tipos de contido principais: \textit{programme}, que representa unha titulación académica; \textit{individual educational component} (IEC), correspondente a unha materia ou compoñente curricular individual; e \textit{institution}, que modela as universidades participantes. Cada entidade conta cun conxunto de campos estruturados que recollen atributos como a área de coñecemento, o nivel de cualificación, os créditos, o idioma de impartición ou o país de orixe, entre outros.
 
 Para a presentación e consulta do catálogo, a plataforma emprega o módulo \textit{Views}, integrado no núcleo de Drupal, que permite definir listaxes e consultas de contido de forma declarativa. O módulo \textit{Better Exposed Filters} \cite{better_exposed_filters} complementa \textit{Views} proporcionando a interface de filtrado ao usuario. Existen dúas vistas principais de busca: \textit{search\_programme}, accesible en \texttt{/search-programme}, orientada á consulta de titulacións; e \textit{search\_iec}, en \texttt{/search-iec}, orientada á consulta de compoñentes educativos individuais. Existe ademais a vista do catálogo de institución (\textit{institution\_new\_catalogue}), que presenta os programas e compoñentes educativos ofertados por unha institución concreta, accesible en \texttt{/catalogue/\{nid\}/programmes} e \texttt{/catalogue/\{nid\}/iecs} respectivamente. A capa de presentación visual está baseada nun tema personalizado construído sobre Bootstrap 5.
