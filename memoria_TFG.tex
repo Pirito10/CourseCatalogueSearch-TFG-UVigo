@@ -243,7 +243,7 @@ A busca difusa articulouse en tres compoñentes, aplicados de forma idéntica á
 \begin{itemize}
     \item \textbf{Índices de Search API}: un índice para cada tipo de contido (programas e compoñentes educativos), que proporcionan os campos sobre os que opera a clase de puntuación: título e nome da institución para os programas, e título, nome da institución e título do programa asociado para os compoñentes educativos.
     \item \textbf{Hooks de Views}: dous puntos de extensión de Drupal que integran a lóxica de busca difusa na execución das vistas.
-    \item \textbf{Clase PHP de puntuación}: calcula a similitude entre a consulta e o conxunto de campos indexados de cada candidato mediante a distancia de Levenshtein.
+    \item \textbf{Clase PHP de puntuación}: calcula a similitude entre a consulta e o conxunto de campos indexados de cada candidato mediante a distancia de Levenshtein (véxase o anexo~\ref{anx:busca_difusa}).
 \end{itemize}
 
 Fronte a unha consulta SQL directa ás táboas de nodos, os índices ofrecen a vantaxe de desacoplar a lóxica de puntuación do esquema da base de datos e de manterse actualizados de forma automática ao modificarse o contido. Ambos os índices están configurados para cubrir todos os idiomas dispoñibles, de xeito que a busca non queda restrinxida ao idioma da interface.
@@ -387,6 +387,7 @@ A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto 
 \subsection{Estado da arte}
 
 \subsubsection{Busca difusa e correspondencia aproximada de cadeas}
+\label{anx:busca_difusa}
 
 A busca difusa (\textit{fuzzy search}) é unha técnica de recuperación de información que permite localizar resultados relevantes aínda cando a consulta do usuario non coincide exactamente co texto almacenado. A diferenza da busca por subcadeas exactas, tolera desviacións ortográficas e erros tipográficos, o que mellora a experiencia de usuario en sistemas con datos introducidos manualmente ou con vocabulario técnico susceptible a equivocacións.
 
