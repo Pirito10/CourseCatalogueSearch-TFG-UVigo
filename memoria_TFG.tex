@@ -386,17 +386,6 @@ A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto 
 % **************************************************
 \subsection{Estado da arte}
 
-\subsubsection{Busca difusa e correspondencia aproximada de cadeas}
-\label{anx:busca_difusa}
-
-A busca difusa (\textit{fuzzy search}) é unha técnica de recuperación de información que permite localizar resultados relevantes aínda cando a consulta do usuario non coincide exactamente co texto almacenado. A diferenza da busca por subcadeas exactas, tolera desviacións ortográficas e erros tipográficos, o que mellora a experiencia de usuario en sistemas con datos introducidos manualmente ou con vocabulario técnico susceptible a equivocacións.
-
-O fundamento teórico da busca difusa reside no concepto de distancia de edición entre dúas cadeas, definida como o número mínimo de operacións elementais necesarias para transformar unha cadea na outra. O algoritmo máis empregado é a \textbf{distancia de Levenshtein} \cite{levenshtein}, que considera tres operacións básicas: inserción, eliminación e substitución dun carácter. Dados dous textos de lonxitude $m$ e $n$, calcúlase en tempo $O(m \times n)$ mediante programación dinámica.
-
-A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo incorporando as transposicións de caracteres adxacentes como operación atómica, o que a fai máis precisa para modelar erros tipográficos humanos, onde o intercambio de dúas letras consecutivas é un dos erros máis frecuentes. Outra métrica habitual é a \textbf{similitude de Jaro-Winkler} \cite{winkler}, que premia as cadeas con prefixo común e adoita empregarse na comparación de nomes propios. Por último, os enfoques baseados en \textbf{n-gramas} \cite{ukkonen} dividen as cadeas en secuencias solapadas de $n$ caracteres e comparan a proporción de n-gramas compartidos, ofrecendo bo rendemento en textos longos e sendo facilmente paralelizables.
-
-Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas e compoñentes educativos.
-
 \subsubsection{Busca e indexación en sistemas de xestión de contidos}
 \label{anx:search_api}
 
@@ -413,6 +402,17 @@ Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{
 \end{itemize}
 
 Para este traballo optouse polo \textit{backend} de base de datos, dado que non require infraestrutura adicional, é suficiente para o volume de datos do catálogo DACEM, e permite integrar a lóxica de busca difusa directamente en PHP, empregando o índice para recuperar os títulos sobre os que aplicar a métrica de Levenshtein.
+
+\subsubsection{Busca difusa e correspondencia aproximada de cadeas}
+\label{anx:busca_difusa}
+
+A busca difusa (\textit{fuzzy search}) é unha técnica de recuperación de información que permite localizar resultados relevantes aínda cando a consulta do usuario non coincide exactamente co texto almacenado. A diferenza da busca por subcadeas exactas, tolera desviacións ortográficas e erros tipográficos, o que mellora a experiencia de usuario en sistemas con datos introducidos manualmente ou con vocabulario técnico susceptible a equivocacións.
+
+O fundamento teórico da busca difusa reside no concepto de distancia de edición entre dúas cadeas, definida como o número mínimo de operacións elementais necesarias para transformar unha cadea na outra. O algoritmo máis empregado é a \textbf{distancia de Levenshtein} \cite{levenshtein}, que considera tres operacións básicas: inserción, eliminación e substitución dun carácter. Dados dous textos de lonxitude $m$ e $n$, calcúlase en tempo $O(m \times n)$ mediante programación dinámica.
+
+A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo incorporando as transposicións de caracteres adxacentes como operación atómica, o que a fai máis precisa para modelar erros tipográficos humanos, onde o intercambio de dúas letras consecutivas é un dos erros máis frecuentes. Outra métrica habitual é a \textbf{similitude de Jaro-Winkler} \cite{winkler}, que premia as cadeas con prefixo común e adoita empregarse na comparación de nomes propios. Por último, os enfoques baseados en \textbf{n-gramas} \cite{ukkonen} dividen as cadeas en secuencias solapadas de $n$ caracteres e comparan a proporción de n-gramas compartidos, ofrecendo bo rendemento en textos longos e sendo facilmente paralelizables.
+
+Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas e compoñentes educativos.
 
 \subsubsection{Selección do motor de tradución automática}
 \label{anx:libretranslate}
