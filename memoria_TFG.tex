@@ -241,7 +241,7 @@ Algúns destes criterios implican campos que non pertencen directamente ao nodo 
 
 A busca difusa articulouse en tres compoñentes, aplicados de forma idéntica ás vistas de busca e á vista do catálogo de institución:
 \begin{itemize}
-    \item \textbf{Índices de Search API}: un índice para cada tipo de contido (programas e compoñentes educativos), que proporcionan os campos sobre os que opera a clase de puntuación: título e nome da institución para os programas, e título, nome da institución e título do programa asociado para os compoñentes educativos.
+    \item \textbf{Índices de Search API}: un índice para cada tipo de contido (programas e compoñentes educativos), que proporcionan os campos sobre os que opera a clase de puntuación: título e nome da institución para os programas, e título, nome da institución e título do programa asociado para os compoñentes educativos (véxase o anexo~\ref{anx:search_api}).
     \item \textbf{Hooks de Views}: dous puntos de extensión de Drupal que integran a lóxica de busca difusa na execución das vistas.
     \item \textbf{Clase PHP de puntuación}: calcula a similitude entre a consulta e o conxunto de campos indexados de cada candidato mediante a distancia de Levenshtein (véxase o anexo~\ref{anx:busca_difusa}).
 \end{itemize}
@@ -398,6 +398,7 @@ A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo i
 Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas e compoñentes educativos.
 
 \subsubsection{Busca e indexación en sistemas de xestión de contidos}
+\label{anx:search_api}
 
 Os sistemas de xestión de contidos modernos incorporan habitualmente mecanismos de busca que van máis alá da simple consulta SQL. En Drupal 10, a solución integrada por defecto para a busca en listaxes de contido é o módulo \textit{Views}, cuxo filtro \textit{combine} realiza comparacións de subcadeas mediante operadores SQL \texttt{LIKE}. Esta aproximación limítase a coincidencias exactas e non ofrece capacidades de indexación nin de ponderación de resultados por relevancia.
 
