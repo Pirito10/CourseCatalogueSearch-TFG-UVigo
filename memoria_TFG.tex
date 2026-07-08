@@ -375,9 +375,17 @@ O motor de tradución automática neural \textit{LibreTranslate} integróuse na 
 
 A clase \texttt{TranslationDictionary} é unha clase PHP estática con dúas constantes: \texttt{PROGRAMMES}, con termos de titulacións, e \texttt{COURSES}, con termos de compoñentes educativos. Cada constante é un array indexado polo termo en inglés e cuxos valores son arrays de traducións por código de idioma, cubrindo os idiomas da plataforma (español, francés, checo, húngaro, esloveno, estoniano, galego, portugués e grego).
 
-A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto de entrada é o método estático \texttt{getSearchTerms()}, que recibe o texto de busca e o identificador do índice, e devolve un array de un ou dous termos. O idioma de orixe obtense mediante \texttt{uiLanguage()}, que recupera o idioma activo da interface de Drupal; se o idioma é inglés, \texttt{getSearchTerms()} retorna directamente o termo orixinal sen consultar ningún servizo. En caso contrario, consulta primeiro o dicionario correspondente ao tipo de índice e, se o termo non está recollido, invoca o motor de tradución. Se se obtén un resultado distinto do termo orixinal, engádese como segundo elemento do array.
+A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto de entrada é o método estático \texttt{getSearchTerms()}, que recibe o texto de busca e o identificador do índice, e devolve un array de un ou dous termos. O idioma de orixe obtense mediante \texttt{uiLanguage()}, que recupera o idioma activo da interface de Drupal; se o idioma é inglés, \texttt{getSearchTerms()} retorna directamente o termo orixinal sen consultar ningún servizo. En caso contrario, consulta primeiro o dicionario correspondente ao tipo de índice e, se o termo non está recollido, invoca o motor de tradución. Se se obtén un resultado distinto do termo orixinal, engádese como segundo elemento do array, como se amosa na figura~\ref{fig:traduccion_impl}.
 
 \texttt{getSearchTerms()} delega a consulta ao dicionario en \texttt{dictionaryLookup()}, que á súa vez invoca \texttt{buildInvertedIndex()}. Para realizar a consulta de forma eficiente, este método transforma a estrutura do dicionario —indexada polo termo en inglés— nun índice invertido indexado por idioma e por termo normalizado, de xeito que a busca dun termo concreto nun idioma concreto é directa, sen percorrer todas as entradas. O índice constrúese a partir de \texttt{COURSES} para buscas de compoñentes educativos e de \texttt{PROGRAMMES} para buscas de programas. A comparación realízase sobre texto normalizado: \texttt{normalize()} converte a minúsculas, elimina diacríticos mediante transliteración Unicode e colapsa espazos, aplicándose tanto ao termo de entrada como ás claves do índice.
+
+\begin{figure}[h]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=\linewidth]{images/traduccion-desarrollo.png}}
+    \caption{Resultados da busca para a consulta en grego correspondente a \textit{medicina}, obtidos grazas á tradución automática da consulta.}
+    \label{fig:traduccion_impl}
+\end{figure}
 
 % **************************************************
 % * Conclusiones
