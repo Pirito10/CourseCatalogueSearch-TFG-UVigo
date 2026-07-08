@@ -312,7 +312,15 @@ Algúns criterios implican campos de entidades relacionadas; nestes casos, o cri
     \item \textbf{Catálogo de institución, compoñentes educativos}: a ordenación por campo de estudo e por título do programa pai usa a relación co nodo programa referenciado polo IEC.
 \end{itemize}
 
-Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente. As plantillas de todas as vistas cargan a mesma biblioteca JavaScript.
+Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente, como se amosa na figura~\ref{fig:ordenacion_impl}. As plantillas de todas as vistas cargan a mesma biblioteca JavaScript.
+
+\begin{figure}[h]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=\linewidth]{images/ordenacion-desarrollo.png}}
+    \caption{Botóns de ordenación dispoñibles na vista de programas.}
+    \label{fig:ordenacion_impl}
+\end{figure}
 
 A plataforma de partida xa incluía un script JavaScript con lóxica de detección de clics sobre os botóns \texttt{.js-sort} e o envío do formulario. Modificouse para implementar o comportamento de alternancia descrito na sección~\ref{sec:diseno_ordenacion}: en lugar de usar sempre a dirección especificada no atributo do botón, o script le agora o estado actual dos campos \texttt{sort\_by} e \texttt{sort\_order} do formulario e inverte a dirección se o mesmo criterio xa está activo, ou establece a dirección ascendente por defecto en caso contrario. Así mesmo, actualizouse o método de envío: en lugar de disparar un evento \textit{change} sobre os campos do formulario, o script simula agora un clic directo no botón de envío, o que desencadea o mecanismo de \textit{Views} e actualiza os resultados mediante AJAX sen recargar a páxina.
 
