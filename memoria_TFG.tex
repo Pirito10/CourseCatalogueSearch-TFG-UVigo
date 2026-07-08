@@ -286,7 +286,14 @@ O dicionario estático consultase en primeiro lugar por ser máis rápido e prec
 
 O termo orixinal da consulta inclúese sempre no conxunto de termos de busca, tanto se se obtén tradución como se non. Deste xeito cóbrense tres escenarios: se o contido dispón de tradución ao idioma do usuario, o termo orixinal pode puntuar directamente contra ela, ofrecendo potencialmente maior precisión que a comparación mediante o equivalente en inglés; se o usuario escribe directamente en inglés, a busca funciona sen necesidade de ningún proceso de tradución; e se a tradución falla ou produce un resultado de baixa calidade, o mecanismo de busca difusa opera igualmente sobre o termo orixinal como salvagarda.
 
-O fluxo de execución é o seguinte: cando o usuario introduce un termo, o servizo de tradución detecta o idioma da interface; se non é inglés, consulta primeiro o dicionario e, se o termo non está recollido, invoca o motor de tradución automática. O resultado é un conxunto de un ou dous termos —o orixinal e, se procede, a súa tradución ao inglés— que se pasan ao mecanismo de busca difusa. A puntuación calcúlase de forma independente para cada termo e consérvase a puntuación máxima obtida para cada candidato.
+O fluxo de execución, esquematizado na figura~\ref{fig:traduccion_diseno}, é o seguinte: cando o usuario introduce un termo, o servizo de tradución detecta o idioma da interface; se non é inglés, consulta primeiro o dicionario e, se o termo non está recollido, invoca o motor de tradución automática. O resultado é un conxunto de un ou dous termos —o orixinal e, se procede, a súa tradución ao inglés— que se pasan ao mecanismo de busca difusa. A puntuación calcúlase de forma independente para cada termo e consérvase a puntuación máxima obtida para cada candidato.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{images/traduccion-diseño.png}
+    \caption{Deseño do fluxo de tradución automática da consulta.}
+    \label{fig:traduccion_diseno}
+\end{figure}
 
 % **************************************************
 % * Desarrollo
