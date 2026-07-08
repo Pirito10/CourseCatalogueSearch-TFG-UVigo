@@ -261,14 +261,13 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
 
 A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste; en caso de empate na puntuación, aplícase como criterio de desempate a orde alfabética polo título. Os valores concretos de cada nivel e os limiares de distancia foron determinados de forma empírica a través dun proceso de calibrado (véxase o anexo~\ref{anx:calibrado}).
 
-O fluxo de execución é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta, substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación e limpa os criterios de ordenación preexistentes da vista. A orde de relevancia dos candidatos trasládase ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido; este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída (como se ilustra na figura~\ref{fig:fuzzy}).
+O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta, substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación e limpa os criterios de ordenación preexistentes da vista. A orde de relevancia dos candidatos trasládase ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido; este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída.
 
 \begin{figure}[h]
     \centering
-    \setlength{\fboxsep}{0pt}
-    \fbox{\includegraphics[width=\linewidth]{images/fuzzy.png}}
-    \caption{Resultados da busca difusa para a consulta \texttt{telcommuniation}, con erros tipográficos respecto a \textit{Telecommunications}.}
-    \label{fig:fuzzy}
+    \includegraphics[width=\linewidth]{images/fuzzy-diseño.png}
+    \caption{Deseño do mecanismo de busca difusa.}
+    \label{fig:fuzzy_diseno}
 \end{figure}
 
 \subsection{Tradución automática da consulta}
