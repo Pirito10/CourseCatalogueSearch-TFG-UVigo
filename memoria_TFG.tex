@@ -133,19 +133,19 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % **************************************************
 \subsubsection{Ordenación de resultados}
 \begin{itemize}
-    \item \textbf{OR-1.} O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
+    \item \label{req:or1}\textbf{OR-1.} O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
 
-    \item \textbf{OR-2.} Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
+    \item \label{req:or2}\textbf{OR-2.} Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
 
-    \item \textbf{OR-3.} Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
+    \item \label{req:or3}\textbf{OR-3.} Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
 
-    \item \textbf{OR-4.} As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
+    \item \label{req:or4}\textbf{OR-4.} As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
 
-    \item \textbf{OR-5.} A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
+    \item \label{req:or5}\textbf{OR-5.} A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
 
-    \item \textbf{OR-6.} A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
+    \item \label{req:or6}\textbf{OR-6.} A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
 
-    \item \textbf{OR-7.} A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
+    \item \label{req:or7}\textbf{OR-7.} A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
 \end{itemize}
 
 % **************************************************
@@ -399,6 +399,34 @@ A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto 
     \caption{Resultados da busca para a consulta en grego correspondente a \textit{medicina}, obtidos grazas á tradución automática da consulta.}
     \label{fig:traduccion_impl}
 \end{figure}
+
+% **************************************************
+% * Validación
+% **************************************************
+\section{Validación e probas}
+
+\subsection{Ordenación de resultados}
+
+A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{sec:obxectivos} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_ordenacion} resume o resultado desta comprobación.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                            \\
+        \hline
+        \hyperref[req:or1]{OR-1} & Os botóns de ordenación están dispoñibles nas tres vistas, con criterios adaptados a cada tipo de contido      \\
+        \hyperref[req:or2]{OR-2} & Un primeiro clic establece a orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección          \\
+        \hyperref[req:or3]{OR-3} & Os tres criterios están presentes en todas as vistas, como se detalla na sección~\ref{sec:diseno_ordenacion}   \\
+        \hyperref[req:or4]{OR-4} & Dispoñible en \textit{search\_programme} e \textit{search\_iec}                                                \\
+        \hyperref[req:or5]{OR-5} & Dispoñible en \textit{search\_programme} e na páxina de programas de \textit{institution\_new\_catalogue}      \\
+        \hyperref[req:or6]{OR-6} & Dispoñibles en \textit{search\_iec} e na páxina de IECs de \textit{institution\_new\_catalogue}                \\
+        \hyperref[req:or7]{OR-7} & Os botóns empregan os estilos do tema Bootstrap 5 da plataforma, con indicador de dirección no criterio activo \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de ordenación de resultados.}
+    \label{tab:validacion_ordenacion}
+\end{table}
 
 % **************************************************
 % * Conclusiones
