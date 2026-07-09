@@ -28,7 +28,7 @@ Thumbs.db
 .idea/
 
 # Notas locales de desarrollo
-CAMBIOS.md
+docs/changelogs/
 
 # Memoria TFG (repo independiente)
 TFG-Memoria/
