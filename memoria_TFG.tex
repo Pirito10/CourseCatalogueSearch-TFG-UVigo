@@ -89,7 +89,15 @@ O modelo de datos organízase arredor de tres tipos de contido principais: \text
 
 Para a presentación e consulta do catálogo, a plataforma emprega o módulo \textit{Views}, integrado no núcleo de Drupal, que permite definir listaxes e consultas de contido de forma declarativa. O módulo \textit{Better Exposed Filters} \cite{better_exposed_filters} complementa \textit{Views} proporcionando a interface de filtrado ao usuario. Existen dúas vistas principais de busca: \textit{search\_programme}, accesible en \texttt{/search-programme}, orientada á consulta de titulacións; e \textit{search\_iec}, en \texttt{/search-iec}, orientada á consulta de compoñentes educativos individuais. Existe ademais a vista do catálogo de institución (\textit{institution\_new\_catalogue}), que presenta os programas e compoñentes educativos ofertados por unha institución concreta, accesible en \texttt{/catalogue/\{nid\}/programmes} e \texttt{/catalogue/\{nid\}/iecs} respectivamente. A capa de presentación visual está baseada nun tema personalizado construído sobre Bootstrap 5.
 
-A interface de busca ofrece ao usuario, nas vistas de busca e no catálogo de institución, unha barra de texto libre para formular a consulta, acompañada de filtros despregables que varían segundo o tipo de entidade consultada e permiten acotar os resultados por atributos como o campo de estudo, o tipo, a localización ou o idioma de impartición, así como un selector para restrinxir os resultados a programas e compoñentes dispoñibles para estudantes de mobilidade. Ademais, a vista de titulacións inclúe un selector adicional que permite ao usuario indicar o seu programa de orixe, de xeito que o sistema filtra os resultados para mostrar unicamente aqueles con acordos de colaboración con dita institución.
+A interface de busca ofrece ao usuario, nas vistas de busca e no catálogo de institución, unha barra de texto libre para formular a consulta, acompañada de filtros despregables que varían segundo o tipo de entidade consultada e permiten acotar os resultados por atributos como o campo de estudo, o tipo, a localización ou o idioma de impartición, así como un selector para restrinxir os resultados a programas e compoñentes dispoñibles para estudantes de mobilidade. Ademais, a vista de titulacións inclúe un selector adicional que permite ao usuario indicar o seu programa de orixe, de xeito que o sistema filtra os resultados para mostrar unicamente aqueles con acordos de colaboración con dita institución, como se amosa na figura~\ref{fig:busqueda}.
+
+\begin{figure}[h]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=\linewidth]{images/dacem-busqueda.png}}
+    \caption{Interface de busca da plataforma DACEM na vista de programas.}
+    \label{fig:busqueda}
+\end{figure}
 
 O mecanismo de busca textual actual baséase no filtro \textit{combine} de \textit{Views}, que realiza comparacións de subcadeas sobre o campo título das entidades. Esta aproximación presenta limitacións relevantes:
 \begin{itemize}
