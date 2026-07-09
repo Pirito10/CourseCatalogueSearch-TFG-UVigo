@@ -131,81 +131,81 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % * Ordenación de resultados
 % **************************************************
 \subsubsection{Ordenación de resultados}
-\begin{enumerate}
-    \item O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
+\begin{itemize}
+    \item \textbf{OR-1.} O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
 
-    \item Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
+    \item \textbf{OR-2.} Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
 
-    \item Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
+    \item \textbf{OR-3.} Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
 
-    \item As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
+    \item \textbf{OR-4.} As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
 
-    \item A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
+    \item \textbf{OR-5.} A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
 
-    \item A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
+    \item \textbf{OR-6.} A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
 
-    \item A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
-\end{enumerate}
+    \item \textbf{OR-7.} A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
+\end{itemize}
 
 % **************************************************
 % * Busca difusa
 % **************************************************
 \subsubsection{Busca difusa}
-\begin{enumerate}
-    \item O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
+\begin{itemize}
+    \item \textbf{BD-1.} O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
 
-    \item A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
+    \item \textbf{BD-2.} A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
 
-    \item A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
+    \item \textbf{BD-3.} A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
 
-    \item A busca difusa debe aplicar un criterio de similaridade entre a consulta e os campos indexados dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
+    \item \textbf{BD-4.} A busca difusa debe aplicar un criterio de similaridade entre a consulta e os campos indexados dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
 
-    \item A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
+    \item \textbf{BD-5.} A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
 
-    \item A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
+    \item \textbf{BD-6.} A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
 
-    \item Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
+    \item \textbf{BD-7.} Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
 
-    \item O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
+    \item \textbf{BD-8.} O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
 
-    \item O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
-\end{enumerate}
+    \item \textbf{BD-9.} O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
+\end{itemize}
 
 % **************************************************
 % * Tradución automática da consulta
 % **************************************************
 \subsubsection{Tradución automática da consulta}
-\begin{enumerate}
-    \item O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
+\begin{itemize}
+    \item \textbf{TA-1.} O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
 
-    \item A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
+    \item \textbf{TA-2.} A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
 
-    \item O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
+    \item \textbf{TA-3.} O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
 
-    \item O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
-\end{enumerate}
+    \item \textbf{TA-4.} O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
+\end{itemize}
 
 % **************************************************
 % * Requisitos non funcionais
 % **************************************************
 \subsection{Requisitos non funcionais}
-\begin{enumerate}
-    \item A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
+\begin{itemize}
+    \item \textbf{RNF-1.} A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
 
-    \item O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
+    \item \textbf{RNF-2.} O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
 
-    \item O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
+    \item \textbf{RNF-3.} O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
 
-    \item A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
+    \item \textbf{RNF-4.} A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
 
-    \item O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
+    \item \textbf{RNF-5.} O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
 
-    \item A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
+    \item \textbf{RNF-6.} A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
 
-    \item O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
+    \item \textbf{RNF-7.} O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
 
-    \item A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
-\end{enumerate}
+    \item \textbf{RNF-8.} A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
+\end{itemize}
 
 % **************************************************
 % * Deseño
