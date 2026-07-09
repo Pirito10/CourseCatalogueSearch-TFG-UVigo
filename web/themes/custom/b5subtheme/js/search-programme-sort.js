@@ -1,4 +1,6 @@
 (function (Drupal, once) {
+  let userChoseSort = false;
+
   Drupal.behaviors.searchProgrammeSort = {
     attach: function (context) {
       once('search-programme-sort', '.catalogue-view', context).forEach(function (wrapper) {
@@ -29,9 +31,18 @@
           }, true);
         });
 
-        const sortBy   = form.querySelector('[name="sort_by"]');
+        const sortBy = form.querySelector('[name="sort_by"]');
         const sortOrder = form.querySelector('[name="sort_order"]');
         if (!sortBy || !sortOrder) return;
+
+        let userSortInput = form.querySelector('[name="user_sort"]');
+        if (!userSortInput) {
+          userSortInput = document.createElement('input');
+          userSortInput.type = 'hidden';
+          userSortInput.name = 'user_sort';
+          form.appendChild(userSortInput);
+        }
+        userSortInput.value = userChoseSort ? '1' : '';
 
         function findSortOption(button) {
           const by = button.getAttribute('data-sort-by');
@@ -95,6 +106,8 @@
 
             sortBy.value = option.value;
             sortOrder.value = order;
+            userChoseSort = true;
+            userSortInput.value = '1';
             updateSortIndicators();
 
             const submitBtn = form.querySelector('[type="submit"], button[type="submit"]');
