@@ -17093,3 +17093,22 @@ header {
 .compatible-programmes__table td:nth-child(4) {
   width: 14%;
 }
+
+.js-sort.is-sort-asc::after,
+.js-sort.is-sort-desc::after {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 0.75em;
+  vertical-align: baseline;
+  position: relative;
+  top: -0.05em;
+  line-height: 1;
+}
+
+.js-sort.is-sort-asc::after {
+  content: '▲';
+}
+
+.js-sort.is-sort-desc::after {
+  content: '▼';
+}
