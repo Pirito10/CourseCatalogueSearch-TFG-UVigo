@@ -53,6 +53,22 @@
           });
         }
 
+        function updateSortIndicators() {
+          wrapper.querySelectorAll('.js-sort').forEach(function (btn) {
+            btn.classList.remove('is-sort-asc', 'is-sort-desc');
+          });
+
+          const currentBy = sortBy.value;
+          if (!currentBy) return;
+
+          wrapper.querySelectorAll('.js-sort').forEach(function (btn) {
+            const option = findSortOption(btn);
+            if (option && option.value === currentBy) {
+              btn.classList.add(sortOrder.value === 'DESC' ? 'is-sort-desc' : 'is-sort-asc');
+            }
+          });
+        }
+
         // Botones
         wrapper.querySelectorAll('.js-sort').forEach(function (btn) {
           btn.addEventListener('click', function (e) {
@@ -79,6 +95,7 @@
 
             sortBy.value = option.value;
             sortOrder.value = order;
+            updateSortIndicators();
 
             const submitBtn = form.querySelector('[type="submit"], button[type="submit"]');
             if (submitBtn) {
@@ -89,7 +106,8 @@
           });
         });
 
-        
+        updateSortIndicators();
+
         form.addEventListener('change', function (ev) {
           const t = ev.target;
           if (t && t.setAttribute) {
