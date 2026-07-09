@@ -80,7 +80,8 @@ A plataforma DACEM está implementada sobre Drupal 10, un sistema de xestión de
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{images/dacem.png}
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=\linewidth]{images/dacem.png}}
     \caption{Páxina de inicio da plataforma DACEM.}
     \label{fig:dacem}
 \end{figure}
@@ -131,81 +132,81 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % * Ordenación de resultados
 % **************************************************
 \subsubsection{Ordenación de resultados}
-\begin{enumerate}
-    \item O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
+\begin{itemize}
+    \item \label{req:or1}\textbf{OR-1.} O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
 
-    \item Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
+    \item \label{req:or2}\textbf{OR-2.} Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
 
-    \item Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
+    \item \label{req:or3}\textbf{OR-3.} Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
 
-    \item As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
+    \item \label{req:or4}\textbf{OR-4.} As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
 
-    \item A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
+    \item \label{req:or5}\textbf{OR-5.} A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
 
-    \item A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
+    \item \label{req:or6}\textbf{OR-6.} A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
 
-    \item A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
-\end{enumerate}
+    \item \label{req:or7}\textbf{OR-7.} A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
+\end{itemize}
 
 % **************************************************
 % * Busca difusa
 % **************************************************
 \subsubsection{Busca difusa}
-\begin{enumerate}
-    \item O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
+\begin{itemize}
+    \item \textbf{BD-1.} O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
 
-    \item A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
+    \item \textbf{BD-2.} A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
 
-    \item A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
+    \item \textbf{BD-3.} A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
 
-    \item A busca difusa debe aplicar un criterio de similaridade entre a consulta e os campos indexados dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
+    \item \textbf{BD-4.} A busca difusa debe aplicar un criterio de similaridade entre a consulta e os campos indexados dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
 
-    \item A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
+    \item \textbf{BD-5.} A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
 
-    \item A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
+    \item \textbf{BD-6.} A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
 
-    \item Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
+    \item \textbf{BD-7.} Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
 
-    \item O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
+    \item \textbf{BD-8.} O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
 
-    \item O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
-\end{enumerate}
+    \item \textbf{BD-9.} O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
+\end{itemize}
 
 % **************************************************
 % * Tradución automática da consulta
 % **************************************************
 \subsubsection{Tradución automática da consulta}
-\begin{enumerate}
-    \item O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
+\begin{itemize}
+    \item \textbf{TA-1.} O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
 
-    \item A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
+    \item \textbf{TA-2.} A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
 
-    \item O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
+    \item \textbf{TA-3.} O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
 
-    \item O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
-\end{enumerate}
+    \item \textbf{TA-4.} O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
+\end{itemize}
 
 % **************************************************
 % * Requisitos non funcionais
 % **************************************************
 \subsection{Requisitos non funcionais}
-\begin{enumerate}
-    \item A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
+\begin{itemize}
+    \item \textbf{RNF-1.} A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
 
-    \item O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
+    \item \textbf{RNF-2.} O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
 
-    \item O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
+    \item \textbf{RNF-3.} O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
 
-    \item A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
+    \item \textbf{RNF-4.} A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
 
-    \item O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
+    \item \textbf{RNF-5.} O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
 
-    \item A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
+    \item \textbf{RNF-6.} A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
 
-    \item O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
+    \item \textbf{RNF-7.} O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
 
-    \item A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
-\end{enumerate}
+    \item \textbf{RNF-8.} A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
+\end{itemize}
 
 % **************************************************
 % * Deseño
@@ -224,7 +225,7 @@ Para incorporar a funcionalidade de ordenación á vista de programas, á vista 
 
 O mecanismo funciona do seguinte xeito: cando se declara un criterio de ordenación como exposto na configuración dunha vista, \textit{Views} xera automaticamente dous campos de control no formulario asociado, un que identifica o criterio polo que ordenar e outro que indica a dirección (ascendente ou descendente), e reconstrúe a consulta ao recibir o envío do formulario.
 
-Para a interacción do usuario, deseñouse un comportamento de alternancia: o primeiro clic sobre un botón de ordenación establece o criterio en orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección de ordenación, como se mostra na figura~\ref{fig:ordenacion}. Esta decisión permite concentrar cada criterio nun único botón, evitando duplicar os controis en dúas versións por dirección. A lóxica de alternancia, implementada en \textit{JavaScript}, le o campo de ordenación activo no formulario e inverte a dirección se coincide co botón pulsado, ou establece a orde ascendente por defecto en caso contrario.
+Para a interacción do usuario, deseñouse un comportamento de alternancia: o primeiro clic sobre un botón de ordenación establece o criterio en orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección de ordenación, como se mostra na figura~\ref{fig:ordenacion}. Esta decisión permite concentrar cada criterio nun único botón, evitando duplicar os controis en dúas versións por dirección. A lóxica de alternancia, implementada en \textit{JavaScript}, le o campo de ordenación activo no formulario e inverte a dirección se coincide co botón pulsado, ou establece a orde ascendente por defecto en caso contrario. Ademais, o botón correspondente ao criterio activo mostra un indicador visual da dirección de ordenación aplicada.
 
 \begin{figure}[!b]
     \centering
@@ -271,7 +272,7 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
 
 A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste; en caso de empate na puntuación, aplícase como criterio de desempate a orde alfabética polo título. Os valores concretos de cada nivel e os limiares de distancia foron determinados de forma empírica a través dun proceso de calibrado (véxase o anexo~\ref{anx:calibrado}).
 
-O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta, substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación e limpa os criterios de ordenación preexistentes da vista. A orde de relevancia dos candidatos trasládase ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido; este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída.
+O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. Se o usuario non seleccionou explicitamente un criterio de ordenación, limpa ademais os criterios preexistentes da vista; a orde de relevancia dos candidatos trasládase entón ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido, e este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída. Se o usuario si seleccionou un criterio de ordenación, este prevalece sobre a orde de relevancia.
 
 \begin{figure}[h]
     \centering
@@ -283,7 +284,7 @@ O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o segu
 \subsection{Tradución automática da consulta}
 \label{sec:diseno_traduccion}
 
-O catálogo de DACEM almacena cada contido obrigatoriamente en inglés, mentres que as traducións a outros idiomas son opcionais. Un usuario que formule a consulta noutro idioma pode non obter resultados pertinentes para contidos que carezan de tradución ao seu idioma, xa que o mecanismo de busca difusa compara o termo introducido directamente contra o texto indexado, sen ningún proceso de equivalencia semántica entre idiomas. Para cubrir esta limitación, incorpórase un servizo de tradución automática que obtén o equivalente en inglés do termo de busca e o engade como termo adicional de consulta. A busca execútase entón dúas veces —co termo orixinal e co traducido—, comparando cada un contra o conxunto completo do índice con independencia do idioma de cada contido; os resultados combínanse conservando a puntuación máxima por candidato. A tradución realízase unicamente ao inglés, idioma sempre dispoñible no catálogo, polo que basta cunha única tradución por consulta para cubrilo por completo. O servizo articulouse en dous compoñentes:
+O catálogo de DACEM almacena cada contido obrigatoriamente en inglés, mentres que as traducións a outros idiomas son opcionais. Un usuario que formule a consulta noutro idioma pode non obter resultados pertinentes para contidos que carezan de tradución ao seu idioma, xa que o mecanismo de busca difusa compara o termo introducido directamente contra o texto indexado, sen ningún proceso de equivalencia semántica entre idiomas. Para cubrir esta limitación, incorpórase un servizo de tradución automática que obtén o equivalente en inglés do termo de busca e o engade como termo adicional de consulta. A busca execútase entón dúas veces (co termo orixinal e co traducido), comparando cada un contra o conxunto completo do índice con independencia do idioma de cada contido; os resultados combínanse conservando a puntuación máxima por candidato. A tradución realízase unicamente ao inglés, idioma sempre dispoñible no catálogo, polo que basta cunha única tradución por consulta para cubrilo por completo. O servizo articulouse en dous compoñentes:
 
 \begin{itemize}
     \item \textbf{Dicionario estático de termos académicos}: cobre o vocabulario máis habitual do ámbito educativo, con entradas separadas para programas e para compoñentes educativos.
@@ -296,7 +297,7 @@ O dicionario estático consultase en primeiro lugar por ser máis rápido e prec
 
 O termo orixinal da consulta inclúese sempre no conxunto de termos de busca, tanto se se obtén tradución como se non. Deste xeito cóbrense tres escenarios: se o contido dispón de tradución ao idioma do usuario, o termo orixinal pode puntuar directamente contra ela, ofrecendo potencialmente maior precisión que a comparación mediante o equivalente en inglés; se o usuario escribe directamente en inglés, a busca funciona sen necesidade de ningún proceso de tradución; e se a tradución falla ou produce un resultado de baixa calidade, o mecanismo de busca difusa opera igualmente sobre o termo orixinal como salvagarda.
 
-O fluxo de execución, esquematizado na figura~\ref{fig:traduccion_diseno}, é o seguinte: cando o usuario introduce un termo, o servizo de tradución detecta o idioma da interface; se non é inglés, consulta primeiro o dicionario e, se o termo non está recollido, invoca o motor de tradución automática. O resultado é un conxunto de un ou dous termos —o orixinal e, se procede, a súa tradución ao inglés— que se pasan ao mecanismo de busca difusa. A puntuación calcúlase de forma independente para cada termo e consérvase a puntuación máxima obtida para cada candidato.
+O fluxo de execución, esquematizado na figura~\ref{fig:traduccion_diseno}, é o seguinte: cando o usuario introduce un termo, o servizo de tradución detecta o idioma da interface; se non é inglés, consulta primeiro o dicionario e, se o termo non está recollido, invoca o motor de tradución automática. O resultado é un conxunto de un ou dous termos (o orixinal e, se procede, a súa tradución ao inglés) que se pasan ao mecanismo de busca difusa. A puntuación calcúlase de forma independente para cada termo e consérvase a puntuación máxima obtida para cada candidato.
 
 \begin{figure}[h]
     \centering
@@ -340,6 +341,8 @@ Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada u
 
 A plataforma de partida xa incluía un script JavaScript con lóxica de detección de clics sobre os botóns \texttt{.js-sort} e o envío do formulario. Modificouse para implementar o comportamento de alternancia descrito na sección~\ref{sec:diseno_ordenacion}: en lugar de usar sempre a dirección especificada no atributo do botón, o script le agora o estado actual dos campos \texttt{sort\_by} e \texttt{sort\_order} do formulario e inverte a dirección se o mesmo criterio xa está activo, ou establece a dirección ascendente por defecto en caso contrario. Así mesmo, actualizouse o método de envío: en lugar de disparar un evento \textit{change} sobre os campos do formulario, o script simula agora un clic directo no botón de envío, o que desencadea o mecanismo de \textit{Views} e actualiza os resultados mediante AJAX sen recargar a páxina.
 
+Incorporouse ademais a función \texttt{updateSortIndicators()}, invocada na carga inicial da páxina e tras cada clic, que asigna ao botón activo a clase \texttt{is-sort-asc} ou \texttt{is-sort-desc} segundo a dirección de ordenación, de xeito que o pseudoelemento \texttt{::after} definido nos estilos do tema renderiza o indicador de dirección. Para que a ordenación explícita do usuario prevaleza sobre a orde de relevancia da busca difusa, o script engade ao formulario un campo oculto \texttt{user\_sort} que toma o valor \texttt{1} cando o usuario fai clic nun botón de ordenación; este parámetro é lido polo servidor para decidir se aplicar a orde de relevancia ou respectar o criterio escollido polo usuario.
+
 \subsection{Busca difusa}
 
 A implementación da busca difusa concretouse en tres elementos:
@@ -351,7 +354,7 @@ A implementación da busca difusa concretouse en tres elementos:
 
 Creouse un servidor de \textit{Search API} con \textit{backend} de base de datos, configurado cun limiar de lonxitude mínima de palabra de 4 caracteres, coherente co mecanismo de tokenización da clase de puntuación; a indexación de frases e a concordancia parcial desactiváronse, xa que o índice se emprega unicamente como catálogo de campos sobre o que operar a métrica de Levenshtein, sen usar a busca nativa do módulo. Sobre este servidor configuráronse dous índices sen restrición de idioma: \texttt{programmes}, que indexa os nodos de tipo \textit{programme} polos campos \texttt{title} e \texttt{institution} (título da institución referenciada polo programa); e \texttt{courses}, que indexa os nodos de tipo \textit{course} polos campos \texttt{title}, \texttt{institution} (título da institución, accedida a través do programa asociado) e \texttt{programme} (título do programa ao que pertence o compoñente).
 
-O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para as vistas de busca e para a vista do catálogo de institución. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase o método estático \texttt{FuzzySearch::scoreFromIndex()} co índice correspondente; este método encárgase internamente de obter os termos de busca a través do servizo de tradución, cargar os candidatos do índice, puntualos de forma independente para cada termo e combinar os resultados conservando a puntuación máxima por NID. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, limpanse os criterios de ordenación da vista (\texttt{\$query->orderby = []}), gárdanse os NIDs ordenados por relevancia na propiedade estática \texttt{\$orderedNids} e engádese a condición \texttt{nid IN (\{NIDs\})}.
+O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para as vistas de busca e para a vista do catálogo de institución. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase o método estático \texttt{FuzzySearch::scoreFromIndex()} co índice correspondente; este método encárgase internamente de obter os termos de busca a través do servizo de tradución, cargar os candidatos do índice, puntualos de forma independente para cada termo e combinar os resultados conservando a puntuación máxima por NID. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, engádese a condición \texttt{nid IN (\{NIDs\})} e, se o formulario non inclúe o parámetro \texttt{user\_sort}, limpanse ademais os criterios de ordenación da vista (\texttt{\$query->orderby = []}) e gárdanse os NIDs ordenados por relevancia na propiedade estática \texttt{\$orderedNids}, de xeito que o \textit{hook} de pre-execución aplique a orde de relevancia; de incluílo, mantense o criterio de ordenación escollido polo usuario.
 
 Engadiuse ademais o novo \textit{hook} \texttt{hook\_views\_pre\_execute}, que se invoca xusto antes de que \textit{Views} execute a consulta. Este comproba se a propiedade \texttt{\$orderedNids} non está baleira e, de ser así, obtén o obxecto \texttt{SelectInterface} da \textit{query}, constrúe mediante \texttt{addExpression()} a expresión \texttt{FIELD(node\_field\_data.nid, n1, n2, \ldots)} cos NIDs ordenados e engádea como criterio \texttt{ORDER BY}. Deste xeito, a base de datos devolve as filas directamente na orde de relevancia, sen ningunha reordenación posterior en PHP, e a paxinación tamén a respecta.
 
@@ -387,7 +390,7 @@ A clase \texttt{TranslationDictionary} é unha clase PHP estática con dúas con
 
 A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto de entrada é o método estático \texttt{getSearchTerms()}, que recibe o texto de busca e o identificador do índice, e devolve un array de un ou dous termos. O idioma de orixe obtense mediante \texttt{uiLanguage()}, que recupera o idioma activo da interface de Drupal; se o idioma é inglés, \texttt{getSearchTerms()} retorna directamente o termo orixinal sen consultar ningún servizo. En caso contrario, consulta primeiro o dicionario correspondente ao tipo de índice e, se o termo non está recollido, invoca o motor de tradución. Se se obtén un resultado distinto do termo orixinal, engádese como segundo elemento do array, como se amosa na figura~\ref{fig:traduccion_impl}.
 
-\texttt{getSearchTerms()} delega a consulta ao dicionario en \texttt{dictionaryLookup()}, que á súa vez invoca \texttt{buildInvertedIndex()}. Para realizar a consulta de forma eficiente, este método transforma a estrutura do dicionario —indexada polo termo en inglés— nun índice invertido indexado por idioma e por termo normalizado, de xeito que a busca dun termo concreto nun idioma concreto é directa, sen percorrer todas as entradas. O índice constrúese a partir de \texttt{COURSES} para buscas de compoñentes educativos e de \texttt{PROGRAMMES} para buscas de programas. A comparación realízase sobre texto normalizado: \texttt{normalize()} converte a minúsculas, elimina diacríticos mediante transliteración Unicode e colapsa espazos, aplicándose tanto ao termo de entrada como ás claves do índice.
+\texttt{getSearchTerms()} delega a consulta ao dicionario en \texttt{dictionaryLookup()}, que á súa vez invoca \texttt{buildInvertedIndex()}. Para realizar a consulta de forma eficiente, este método transforma a estrutura do dicionario, indexada polo termo en inglés, nun índice invertido indexado por idioma e por termo normalizado, de xeito que a busca dun termo concreto nun idioma concreto é directa, sen percorrer todas as entradas. O índice constrúese a partir de \texttt{COURSES} para buscas de compoñentes educativos e de \texttt{PROGRAMMES} para buscas de programas. A comparación realízase sobre texto normalizado: \texttt{normalize()} converte a minúsculas, elimina diacríticos mediante transliteración Unicode e colapsa espazos, aplicándose tanto ao termo de entrada como ás claves do índice.
 
 \begin{figure}[h]
     \centering
@@ -396,6 +399,34 @@ A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto 
     \caption{Resultados da busca para a consulta en grego correspondente a \textit{medicina}, obtidos grazas á tradución automática da consulta.}
     \label{fig:traduccion_impl}
 \end{figure}
+
+% **************************************************
+% * Validación
+% **************************************************
+\section{Validación e probas}
+
+\subsection{Ordenación de resultados}
+
+A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{sec:obxectivos} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_ordenacion} resume o resultado desta comprobación.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                             \\
+        \hline
+        \hyperref[req:or1]{OR-1} & Os botóns de ordenación están dispoñibles nas tres vistas, con criterios adaptados a cada tipo de contido       \\
+        \hyperref[req:or2]{OR-2} & Un primeiro clic establece a orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección           \\
+        \hyperref[req:or3]{OR-3} & Dispoñibles en todas as vistas                                                                                  \\
+        \hyperref[req:or4]{OR-4} & Dispoñible nas vistas \textit{search\_programme} e \textit{search\_iec}                                         \\
+        \hyperref[req:or5]{OR-5} & Dispoñible na vista \textit{search\_programme} e na páxina de programas de \textit{institution\_new\_catalogue} \\
+        \hyperref[req:or6]{OR-6} & Dispoñible na vista \textit{search\_iec} e na páxina de IECs de \textit{institution\_new\_catalogue}            \\
+        \hyperref[req:or7]{OR-7} & Os botóns empregan os estilos do tema Bootstrap 5 da plataforma, con indicador de dirección no criterio activo  \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de ordenación de resultados.}
+    \label{tab:validacion_ordenacion}
+\end{table}
 
 % **************************************************
 % * Conclusiones
@@ -570,5 +601,47 @@ Seleccionouse a configuración laxa como resultado do proceso de calibrado. Os v
     \item \textbf{Limiar de distancia de edición}: 1 para palabras de ata 5 caracteres e 3 para palabras de máis de 5 caracteres.
     \item \textbf{Fórmula de puntuación por distancia de edición}: $1 - d/L$, onde $d$ é a distancia de Levenshtein e $L$ a lonxitude da palabra máis longa das dúas comparadas.
 \end{itemize}
+
+% **************************************************
+% * Declaración de uso de IAX
+% **************************************************
+\subsection{Declaración de uso de intelixencia artificial xerativa}
+
+\vspace{0.5em}
+\noindent\textbf{Título do traballo:} Deseño e desenvolvemento dunha funcionalidade de busca e filtrado de cursos no catálogo de cursos en liña
+
+\noindent\textbf{Materia:} Traballo de Fin de Grao
+
+\noindent\textbf{Titulación:} Grao en Enxeñaría de Tecnoloxías de Telecomunicación
+
+\noindent\textbf{Curso académico:} 2025/2026
+
+\noindent\textbf{Autor:} Aarón Riveiro Vilar
+
+\vspace{1em}
+\noindent Algúns dos contidos incluídos neste traballo foron producidos coa axuda de intelixencia artificial xerativa:
+
+\vspace{0.5em}
+\noindent Finalidade do uso de intelixencia artificial xerativa:
+
+\begin{itemize}
+    \item {[\ \ \ ]} Xeración de texto
+    \item {[\ \ \ ]} Xeración de imaxes
+    \item {[X]} Xeración de código fonte: Claude (Anthropic)
+    \item {[X]} Edición e/ou cambios no formato de contidos existentes: Claude (Anthropic)
+    \item {[X]} Revisión e/ou axudas á redacción: Claude (Anthropic)
+    \item {[\ \ \ ]} Outros
+\end{itemize}
+
+\noindent\textbf{Observacións}:
+
+\vspace{0.5em}
+\noindent A ferramenta empregouse en dous ámbitos diferenciados. Na redacción da memoria, o autor elaborou cada apartado e Claude asistiu na corrección gramatical e ortográfica, na mellora do estilo e no seguimento dos cambios no código, actualizando os apartados correspondentes conforme evolucionaba a implementación; nos de implementación, axudou ademais a inspeccionar o código e documentar os detalles técnicos. No desenvolvemento, empregouse como apoio para navegar polo proxecto, localizar ficheiros e fragmentos de código relevantes, comprender o ecosistema e as tecnoloxías implicadas, na depuración e corrección de erros, e como asistencia puntual na creación de código.
+
+\vspace{2em}
+\noindent\textbf{Data:} 12 de xullo de 2026
+
+\vspace{1em}
+\noindent\textbf{Sinatura:} [SINATURA DO AUTOR]
 
 \end{document}
