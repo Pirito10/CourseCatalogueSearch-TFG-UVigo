@@ -74,9 +74,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
-        $query->orderby = [];
+        if (empty($view->getExposedInput()['user_sort'])) {
+          FuzzySearch::$orderedNids = $nids;
+          $query->orderby = [];
+        }
       }
     }
   }
@@ -110,9 +112,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
-        $query->orderby = [];
+        if (empty($view->getExposedInput()['user_sort'])) {
+          FuzzySearch::$orderedNids = $nids;
+          $query->orderby = [];
+        }
       }
     }
   }
@@ -146,9 +150,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
-        $query->orderby = [];
+        if (empty($view->getExposedInput()['user_sort'])) {
+          FuzzySearch::$orderedNids = $nids;
+          $query->orderby = [];
+        }
       }
     }
   }
@@ -182,9 +188,11 @@ function custom_views_filters_views_query_alter(ViewExecutable $view, Sql $query
       }
       else {
         $nids = array_column($matches, 'nid');
-        FuzzySearch::$orderedNids = $nids;
         $query->addWhere(1, 'node_field_data.nid', $nids, 'IN');
-        $query->orderby = [];
+        if (empty($view->getExposedInput()['user_sort'])) {
+          FuzzySearch::$orderedNids = $nids;
+          $query->orderby = [];
+        }
       }
     }
   }
