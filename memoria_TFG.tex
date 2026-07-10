@@ -153,23 +153,23 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % **************************************************
 \subsubsection{Busca difusa}
 \begin{itemize}
-    \item \textbf{BD-1.} O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
+    \item \label{req:bd1}\textbf{BD-1.} O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
 
-    \item \textbf{BD-2.} A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
+    \item \label{req:bd2}\textbf{BD-2.} A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
 
-    \item \textbf{BD-3.} A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
+    \item \label{req:bd3}\textbf{BD-3.} A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
 
-    \item \textbf{BD-4.} A busca difusa debe aplicar un criterio de similaridade entre a consulta e os campos indexados dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
+    \item \label{req:bd4}\textbf{BD-4.} A busca difusa debe aplicar un criterio de similaridade entre a consulta e os campos indexados dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
 
-    \item \textbf{BD-5.} A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
+    \item \label{req:bd5}\textbf{BD-5.} A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
 
-    \item \textbf{BD-6.} A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
+    \item \label{req:bd6}\textbf{BD-6.} A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
 
-    \item \textbf{BD-7.} Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
+    \item \label{req:bd7}\textbf{BD-7.} Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
 
-    \item \textbf{BD-8.} O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
+    \item \label{req:bd8}\textbf{BD-8.} O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
 
-    \item \textbf{BD-9.} O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
+    \item \label{req:bd9}\textbf{BD-9.} O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
 \end{itemize}
 
 % **************************************************
@@ -427,6 +427,33 @@ A validación da funcionalidade de ordenación realizouse comprobando que cada u
     \caption{Validación dos requisitos de ordenación de resultados.}
     \label{tab:validacion_ordenacion}
 \end{table}
+
+\subsection{Busca difusa}
+
+A validación do mecanismo de busca difusa realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{sec:obxectivos} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_busca} resume o resultado desta comprobación.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                                                             \\
+        \hline
+        \hyperref[req:bd1]{BD-1} & Verificado con consultas con erros tipográficos; os resultados inclúen entidades relevantes                                                     \\
+        \hyperref[req:bd2]{BD-2} & Aplicada nas vistas \textit{search\_programme}, \textit{search\_iec} e \textit{institution\_new\_catalogue}                                     \\
+        \hyperref[req:bd3]{BD-3} & A busca opera sobre título, institución asociada e, para IECs, programa ao que pertencen                                                        \\
+        \hyperref[req:bd4]{BD-4} & Emprégase a distancia de Levenshtein normalizada como criterio de similaridade entre a consulta e os campos indexados                           \\
+        \hyperref[req:bd5]{BD-5} & Tanto o termo de busca coma os candidatos son normalizados antes da súa comparación, polo que maiúsculas e diacríticos non afectan aos resultados \\
+        \hyperref[req:bd6]{BD-6} & A busca compara o termo contra todas as traducións indexadas de cada contido, con independencia do idioma da interface do usuario                 \\
+        \hyperref[req:bd7]{BD-7} & Os resultados máis relevantes aparecen en primeiro lugar; se o usuario escolleu un criterio de ordenación propio, este prevalece                 \\
+        \hyperref[req:bd8]{BD-8} & A interface non sofreu ningunha modificación visible respecto ao comportamento anterior                                                          \\
+        \hyperref[req:bd9]{BD-9} & Ante consultas baleiras ou moi curtas, non se aplica ningún filtro e móstranse todos os resultados                                              \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de busca difusa.}
+    \label{tab:validacion_busca}
+\end{table}
+
+O correcto funcionamento do mecanismo queda avalado polo proceso de calibrado do algoritmo, realizado mediante unha batería de consultas representativas dos escenarios de uso esperados e cuxos resultados se detallan no anexo~\ref{anx:calibrado}.
 
 % **************************************************
 % * Conclusiones
