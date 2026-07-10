@@ -132,6 +132,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % * Ordenación de resultados
 % **************************************************
 \subsubsection{Ordenación de resultados}
+\label{req:sec:ordenacion}
 \begin{itemize}
     \item \label{req:or1}\textbf{OR-1.} O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
 
@@ -152,6 +153,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % * Busca difusa
 % **************************************************
 \subsubsection{Busca difusa}
+\label{req:sec:busca}
 \begin{itemize}
     \item \label{req:bd1}\textbf{BD-1.} O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
 
@@ -176,14 +178,15 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % * Tradución automática da consulta
 % **************************************************
 \subsubsection{Tradución automática da consulta}
+\label{req:sec:traduccion}
 \begin{itemize}
-    \item \textbf{TA-1.} O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
+    \item \label{req:ta1}\textbf{TA-1.} O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
 
-    \item \textbf{TA-2.} A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
+    \item \label{req:ta2}\textbf{TA-2.} A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
 
-    \item \textbf{TA-3.} O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
+    \item \label{req:ta3}\textbf{TA-3.} O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
 
-    \item \textbf{TA-4.} O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
+    \item \label{req:ta4}\textbf{TA-4.} O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
 \end{itemize}
 
 % **************************************************
@@ -407,7 +410,7 @@ A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto 
 
 \subsection{Ordenación de resultados}
 
-A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{sec:obxectivos} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_ordenacion} resume o resultado desta comprobación.
+A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:ordenacion} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_ordenacion} resume o resultado desta comprobación.
 
 \begin{table}[h]
     \centering
@@ -430,7 +433,7 @@ A validación da funcionalidade de ordenación realizouse comprobando que cada u
 
 \subsection{Busca difusa}
 
-A validación do mecanismo de busca difusa realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{sec:obxectivos} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_busca} resume o resultado desta comprobación.
+A validación do mecanismo de busca difusa realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:busca} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_busca} resume o resultado desta comprobación.
 
 \begin{table}[h]
     \centering
@@ -454,6 +457,26 @@ A validación do mecanismo de busca difusa realizouse comprobando que cada un do
 \end{table}
 
 O correcto funcionamento do mecanismo queda avalado polo proceso de calibrado do algoritmo, realizado mediante unha batería de consultas representativas dos escenarios de uso esperados e cuxos resultados se detallan no anexo~\ref{anx:calibrado}.
+
+\subsection{Tradución automática da consulta}
+
+A validación do servizo de tradución automática realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:traduccion} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_traduccion} resume o resultado desta comprobación.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                                                        \\
+        \hline
+        \hyperref[req:ta1]{TA-1} & O sistema localiza resultados pertinentes ante consultas formuladas nun idioma diferente ao dos contidos indexados                          \\
+        \hyperref[req:ta2]{TA-2} & Todas as traducións da consulta realízanse ao inglés                                                                                      \\
+        \hyperref[req:ta3]{TA-3} & O dicionario estático actúa como primeira opción; o motor de tradución automática invócase unicamente cando o termo non está recollido nel \\
+        \hyperref[req:ta4]{TA-4} & O termo orixinal inclúese sempre no conxunto de termos de busca, garantindo o funcionamento correcto aínda en caso de fallo na tradución   \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de tradución automática da consulta.}
+    \label{tab:validacion_traduccion}
+\end{table}
 
 % **************************************************
 % * Conclusiones
