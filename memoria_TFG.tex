@@ -198,7 +198,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 \subsubsection{Busca avanzada por compatibilidade de compoñentes educativos}
 \label{req:sec:busca_avanzada}
 \begin{itemize}
-    \item \label{req:ba1}\textbf{BA-1.} O sistema debe ofrecer ao usuario un mecanismo de busca avanzada na vista de programas (\textit{search\_programme}) e na páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) que lle permita introducir un conxunto de compoñentes educativos de referencia, accesible mediante un elemento de interface que abra un panel ou diálogo de busca avanzada.
+    \item \label{req:ba1}\textbf{BA-1.} O sistema debe ofrecer ao usuario un mecanismo de busca avanzada na vista de programas (\textit{search\_programme}) e na páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) que lle permita introducir un conxunto de compoñentes educativos de referencia, accesible mediante un elemento de interface que abra un diálogo de busca avanzada.
 
     \item \label{req:ba2}\textbf{BA-2.} A interface debe permitir engadir de forma dinámica un número indeterminado de campos de texto, cada un correspondente a un compoñente educativo.
 
@@ -272,6 +272,7 @@ Os criterios de tipo textual (título, campo de estudo, programa pai e país) or
 Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; o campo de estudo e o título do programa pai, tanto na vista de compoñentes educativos como na páxina de compoñentes educativos do catálogo de institución, pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de definir unións adicionais entre táboas.
 
 \subsection{Busca difusa}
+\label{sec:diseno_busca}
 
 A busca difusa articulouse en tres compoñentes, aplicados de forma idéntica ás vistas de busca e á vista do catálogo de institución:
 \begin{itemize}
@@ -328,6 +329,32 @@ O fluxo de execución, esquematizado na figura~\ref{fig:traduccion_diseno}, é o
     \includegraphics[width=\linewidth]{images/traduccion-diseño.png}
     \caption{Deseño do fluxo de tradución automática da consulta.}
     \label{fig:traduccion_diseno}
+\end{figure}
+
+% **************************************************
+% * Busca avanzada por compatibilidade de compoñentes educativos
+% **************************************************
+\subsection{Busca avanzada por compatibilidade de compoñentes educativos}
+\label{sec:diseno_busca_avanzada}
+
+A busca estándar da plataforma opera sobre o título das entidades e outros campos indexados, pero non permite ao usuario expresar que tipo de contido académico busca nun programa. Para cubrir esta carencia, deséñase un mecanismo de busca avanzada que permite ao usuario introducir un conxunto de compoñentes educativos de referencia e obter como resultado os programas do catálogo ordenados por afinidade co perfil introducido.
+
+O punto de entrada da funcionalidade é un botón \textit{Busca avanzada} situado na interface da vista de programas e na páxina de programas do catálogo de institución. Ao pulsalo, ábrese un diálogo, ilustrado na figura~\ref{fig:avanzada_diseno}, que presenta un formulario cos seguintes elementos:
+
+\begin{itemize}
+    \item Campos de texto, un por cada compoñente educativo de referencia que o usuario desexe introducir. De forma predeterminada móstrase un único campo baleiro.
+    \item Un botón \textit{Engadir compoñente} que permite incorporar novos campos de forma dinámica, sen límite predefinido.
+    \item Un botón de eliminación asociado a cada campo que permite eliminalo individualmente.
+    \item Un botón \textit{Buscar} que lanza a consulta cos termos introducidos.
+\end{itemize}
+
+Ao executar a busca, o sistema percorre o índice de compoñentes educativos para cada termo non baleiro introducido polo usuario, aplicando o mecanismo de busca difusa descrito na sección~\ref{sec:diseno_busca}. Cada entrada do índice inclúe o identificador do programa ao que pertence o compoñente, polo que non son necesarias consultas adicionais. Para cada compoñente que supere o limiar de puntuación, rexístrase a tripla \textit{(programme\_id, termo, puntuación)}. Unha vez procesados todos os termos, agréganse os resultados por programa: para cada termo, consérvase unicamente a puntuación máxima obtida entre todos os compoñentes dese programa, e a puntuación total do programa é a suma destas puntuacións máximas. Deste xeito, non só se ten en conta cantos termos encontran correspondencia, senón tamén a calidade de cada encaixe: un programa con dous encaixes exactos puntúa por encima dun con dous encaixes aproximados. Os programas preséntanse ordenados de maior a menor puntuación total.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{images/avanzada-diseño.png}
+    \caption{Deseño da interface de busca avanzada por compatibilidade de compoñentes educativos.}
+    \label{fig:avanzada_diseno}
 \end{figure}
 
 % **************************************************
