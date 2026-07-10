@@ -13,6 +13,7 @@
 \usepackage[galician]{babel}
 \usepackage{tfgteleco}
 \addto\captionsgalician{\renewcommand{\tablename}{Táboa}}
+\newfontfamily\greekfont{DejaVu Serif}
 
 % **************************************************
 % * Datos para la portada del TFG
@@ -468,8 +469,8 @@ A validación do servizo de tradución automática realizouse comprobando que ca
         \hline
         \textbf{Req.}            & \textbf{Validación}                                                                                                                        \\
         \hline
-        \hyperref[req:ta1]{TA-1} & O sistema localiza resultados pertinentes ante consultas formuladas nun idioma diferente ao dos contidos indexados                          \\
-        \hyperref[req:ta2]{TA-2} & Todas as traducións da consulta realízanse ao inglés                                                                                      \\
+        \hyperref[req:ta1]{TA-1} & O sistema localiza resultados pertinentes ante consultas formuladas nun idioma diferente ao dos contidos indexados                         \\
+        \hyperref[req:ta2]{TA-2} & Todas as traducións da consulta realízanse ao inglés                                                                                       \\
         \hyperref[req:ta3]{TA-3} & O dicionario estático actúa como primeira opción; o motor de tradución automática invócase unicamente cando o termo non está recollido nel \\
         \hyperref[req:ta4]{TA-4} & O termo orixinal inclúese sempre no conxunto de termos de busca, garantindo o funcionamento correcto aínda en caso de fallo na tradución   \\
         \hline
@@ -477,6 +478,40 @@ A validación do servizo de tradución automática realizouse comprobando que ca
     \caption{Validación dos requisitos de tradución automática da consulta.}
     \label{tab:validacion_traduccion}
 \end{table}
+
+Para validar o comportamento do servizo de tradución en escenarios reais, realizouse unha batería de probas sobre un conxunto de datos de proba específico. Creáronse catro nodos de tipo \textit{programme} con fins exclusivos de proba:
+\begin{itemize}
+    \item \textit{Medicine}
+    \item \textit{Computer Science}
+    \item \textit{Biotechnology}
+    \item \textit{History}
+\end{itemize}
+
+Definiuse un conxunto de 10 consultas que cobren unha variedade de escenarios, tanto en canto aos idiomas como aos mecanismos do sistema de tradución. A táboa~\ref{tab:probas_traduccion} resume estas consultas xunto co resultado esperado en cada caso.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{2cm} p{3cm} p{3cm} p{4cm}}
+        \hline
+        \textbf{Idioma} & \textbf{Consulta}    & \textbf{Mecanismo} & \textbf{Resultado esperado} \\
+        \hline
+        Español         & medicina             & Dicionario         & Medicine                    \\
+        Francés         & médecine             & Dicionario         & Medicine                    \\
+        Galego          & medicina             & Dicionario         & Medicine                    \\
+        Grego           & {\greekfont ιατρική} & Dicionario         & Medicine                    \\
+        Español         & informática          & Dicionario         & Computer Science            \\
+        Español         & biotecnología        & Motor neural       & Biotechnology               \\
+        Francés         & biotechnologie       & Motor neural       & Biotechnology               \\
+        Húngaro         & történelem           & Motor neural       & History                     \\
+        Esloveno        & zgodovina            & Motor neural       & History                     \\
+        Inglés          & medicine             & Sen tradución      & Medicine                    \\
+        \hline
+    \end{tabular}
+    \caption{Batería de consultas do servizo de tradución automática.}
+    \label{tab:probas_traduccion}
+\end{table}
+
+En todos os casos, o resultado obtido coincidiu co esperado, o que confirma o correcto funcionamento tanto do dicionario estático como do motor de tradución neural.
 
 % **************************************************
 % * Conclusiones
