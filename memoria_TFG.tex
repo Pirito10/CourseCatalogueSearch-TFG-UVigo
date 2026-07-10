@@ -108,7 +108,7 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
     \item Non existe tolerancia a erros tipográficos, de xeito que calquera inexactitude na consulta pode producir cero resultados aínda que o elemento buscado exista no catálogo.
     \item Aínda que os contidos están dispoñibles en inglés e opcionalmente noutros idiomas, a busca non contempla a posibilidade de formular a consulta nun idioma distinto ao dos contidos, o que impide localizar resultados mediante termos non ingleses cando non existe tradución indexada.
     \item As opcións de filtrado son estáticas e non se adaptan ao conxunto de resultados dispoñibles, polo que poden aparecer valores sen correspondencia con ningunha entrada existente.
-    \item A plataforma non dispón dun mecanismo que permita buscar programas en función dos cursos ou materias que conteñen, impedindo ao usuario localizar facilmente aqueles programas que mellor se axustan á súa formación académica previa.
+    \item A plataforma non dispón dun mecanismo que permita buscar programas en función dos compoñentes educativos que conteñen, impedindo ao usuario localizar facilmente aqueles programas que mellor se axustan á súa formación académica previa.
 \end{itemize}
 
 % **************************************************
@@ -116,11 +116,12 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
 % **************************************************
 \section{Obxectivos e requisitos}
 \label{sec:obxectivos}
-O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta, sen tolerancia a erros tipográficos e imposibilidade de consultar en idiomas distintos ao dos contidos), propónse o deseño e implementación de tres melloras concretas:
+O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta, sen tolerancia a erros tipográficos, imposibilidade de consultar en idiomas distintos ao dos contidos e carencia dun mecanismo para localizar programas segundo os compoñentes educativos que conteñen), propónse o deseño e implementación de catro melloras concretas:
 \begin{itemize}
     \item A incorporación de criterios de ordenación de resultados nas vistas de busca e na vista do catálogo de institución.
     \item A implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta.
     \item A incorporación dun servizo de tradución automática da consulta que permita obter resultados pertinentes aínda cando os contidos non dispoñan de tradución ao idioma do usuario.
+    \item O deseño dun mecanismo de busca avanzada que permita ao usuario localizar programas a partir dun conxunto de compoñentes educativos de referencia, ordenando os resultados segundo o número de correspondencias encontradas.
 \end{itemize}
 
 A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
@@ -189,6 +190,23 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
     \item \label{req:ta3}\textbf{TA-3.} O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
 
     \item \label{req:ta4}\textbf{TA-4.} O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
+\end{itemize}
+
+% **************************************************
+% * Busca avanzada por compatibilidade de compoñentes educativos
+% **************************************************
+\subsubsection{Busca avanzada por compatibilidade de compoñentes educativos}
+\label{req:sec:busca_avanzada}
+\begin{itemize}
+    \item \label{req:ba1}\textbf{BA-1.} O sistema debe ofrecer ao usuario un mecanismo de busca avanzada na vista de programas (\textit{search\_programme}) e na páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) que lle permita introducir un conxunto de compoñentes educativos de referencia, accesible mediante un elemento de interface que abra un panel ou diálogo de busca avanzada.
+
+    \item \label{req:ba2}\textbf{BA-2.} A interface debe permitir engadir de forma dinámica un número indeterminado de campos de texto, cada un correspondente a un compoñente educativo.
+
+    \item \label{req:ba3}\textbf{BA-3.} O sistema debe aplicar o mecanismo de busca difusa para calcular a correspondencia entre cada termo introducido polo usuario e os compoñentes educativos do catálogo.
+
+    \item \label{req:ba4}\textbf{BA-4.} Os resultados deben presentarse ordenados polo número de correspondencias encontradas, de xeito que os programas con máis compoñentes educativos coincidentes aparezan en primeiro lugar.
+
+    \item \label{req:ba5}\textbf{BA-5.} O sistema debe ignorar os campos de texto baleiros na busca, garantindo un comportamento robusto independentemente do número de campos que o usuario deixe sen cubrir.
 \end{itemize}
 
 % **************************************************
