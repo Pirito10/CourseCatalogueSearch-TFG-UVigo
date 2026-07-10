@@ -194,22 +194,23 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 % * Requisitos non funcionais
 % **************************************************
 \subsection{Requisitos non funcionais}
+\label{req:sec:rnf}
 \begin{itemize}
-    \item \textbf{RNF-1.} A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
+    \item \label{req:rnf1}\textbf{RNF-1.} A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
 
-    \item \textbf{RNF-2.} O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
+    \item \label{req:rnf2}\textbf{RNF-2.} O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
 
-    \item \textbf{RNF-3.} O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
+    \item \label{req:rnf3}\textbf{RNF-3.} O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
 
-    \item \textbf{RNF-4.} A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
+    \item \label{req:rnf4}\textbf{RNF-4.} A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
 
-    \item \textbf{RNF-5.} O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
+    \item \label{req:rnf5}\textbf{RNF-5.} O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
 
-    \item \textbf{RNF-6.} A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
+    \item \label{req:rnf6}\textbf{RNF-6.} A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
 
-    \item \textbf{RNF-7.} O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
+    \item \label{req:rnf7}\textbf{RNF-7.} O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
 
-    \item \textbf{RNF-8.} A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
+    \item \label{req:rnf8}\textbf{RNF-8.} A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
 \end{itemize}
 
 % **************************************************
@@ -514,6 +515,30 @@ Definiuse un conxunto de 10 consultas que cobren unha variedade de escenarios, t
 \end{table}
 
 En todos os casos, o resultado obtido coincidiu co esperado, o que confirma o correcto funcionamento tanto do dicionario estático como do motor de tradución neural.
+
+\subsection{Requisitos non funcionais}
+
+A validación dos requisitos non funcionais realizouse comprobando que cada un dos aspectos definidos na sección~\ref{req:sec:rnf} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_rnf} resume o resultado desta comprobación.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}              & \textbf{Validación}                                                                                                                                     \\
+        \hline
+        \hyperref[req:rnf1]{RNF-1} & A solución intégrase mediante hooks e módulos propios de Drupal, sen modificar o modelo de datos nin afectar ao resto de funcionalidades                \\
+        \hyperref[req:rnf2]{RNF-2} & Toda a implementación emprega Drupal, PHP e librarías de código aberto, en coherencia coa arquitectura do proxecto                                      \\
+        \hyperref[req:rnf3]{RNF-3} & O sistema xestiona entradas baleiras, moi curtas ou sen coincidencias sen producir erros visibles para o usuario                                        \\
+        \hyperref[req:rnf4]{RNF-4} & Os elementos de interacción integráronse co deseño existente da plataforma, empregando os estilos e compoñentes do tema Bootstrap 5                     \\
+        \hyperref[req:rnf5]{RNF-5} & O tempo de resposta observado durante o desenvolvemento non presentou degradación perceptible respecto ao comportamento previo                          \\
+        \hyperref[req:rnf6]{RNF-6} & As consultas ao índice de Search API limítanse aos campos necesarios e opérase sobre os resultados en memoria, sen consultas adicionais á base de datos \\
+        \hyperref[req:rnf7]{RNF-7} & O algoritmo opera sobre o índice de Search API, polo que o rendemento depende do motor de indexación e non escala linearmente co volume de contido      \\
+        \hyperref[req:rnf8]{RNF-8} & Cada mellora está implementada nun módulo propio con clases e servizos independentes, o que facilita o seu mantemento e extensión por separado          \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos non funcionais.}
+    \label{tab:validacion_rnf}
+\end{table}
 
 % **************************************************
 % * Conclusiones
