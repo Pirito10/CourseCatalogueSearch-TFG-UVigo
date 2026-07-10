@@ -70,7 +70,7 @@ Esta problemática é especialmente significativa en contornas nas que os datos 
 
 No ámbito actual do desenvolvemento de aplicacións web e sistemas de xestión de contidos, as tendencias apuntan cara á implementación de motores de busca máis sofisticados, capaces de indexar múltiples campos, ponderar resultados segundo a relevancia, incorporar criterios de filtrado dinámico, xestionar consultas en múltiples idiomas e mellorar a experiencia de usuario mediante interfaces intuitivas. Estas solucións non só optimizan o acceso á información, senón que contribúen a unha maior usabilidade e aproveitamento do sistema no seu conxunto.
 
-O presente Traballo de Fin de Grao enmárcase neste contexto, propoñendo o deseño e desenvolvemento dunha mellora nos mecanismos de busca e filtrado do catálogo de cursos da plataforma DACEM.
+O presente Traballo de Fin de Grao enmárcase neste contexto, propoñendo o deseño e desenvolvemento de melloras nos mecanismos de busca e filtrado do catálogo de cursos da plataforma DACEM.
 
 % **************************************************
 % * Plataforma de partida
@@ -108,6 +108,7 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
     \item Non existe tolerancia a erros tipográficos, de xeito que calquera inexactitude na consulta pode producir cero resultados aínda que o elemento buscado exista no catálogo.
     \item Aínda que os contidos están dispoñibles en inglés e opcionalmente noutros idiomas, a busca non contempla a posibilidade de formular a consulta nun idioma distinto ao dos contidos, o que impide localizar resultados mediante termos non ingleses cando non existe tradución indexada.
     \item As opcións de filtrado son estáticas e non se adaptan ao conxunto de resultados dispoñibles, polo que poden aparecer valores sen correspondencia con ningunha entrada existente.
+    \item A plataforma non dispón dun mecanismo que permita buscar programas en función dos cursos ou materias que conteñen, impedindo ao usuario localizar facilmente aqueles programas que mellor se axustan á súa formación académica previa.
 \end{itemize}
 
 % **************************************************
