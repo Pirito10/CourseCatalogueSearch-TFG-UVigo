@@ -436,17 +436,17 @@ A validación do mecanismo de busca difusa realizouse comprobando que cada un do
     \centering
     \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
         \hline
-        \textbf{Req.}            & \textbf{Validación}                                                                                                                             \\
+        \textbf{Req.}            & \textbf{Validación}                                                                                                                               \\
         \hline
-        \hyperref[req:bd1]{BD-1} & Verificado con consultas con erros tipográficos; os resultados inclúen entidades relevantes                                                     \\
-        \hyperref[req:bd2]{BD-2} & Aplicada nas vistas \textit{search\_programme}, \textit{search\_iec} e \textit{institution\_new\_catalogue}                                     \\
-        \hyperref[req:bd3]{BD-3} & A busca opera sobre título, institución asociada e, para IECs, programa ao que pertencen                                                        \\
-        \hyperref[req:bd4]{BD-4} & Emprégase a distancia de Levenshtein normalizada como criterio de similaridade entre a consulta e os campos indexados                           \\
+        \hyperref[req:bd1]{BD-1} & Verificado con consultas con erros tipográficos; os resultados inclúen entidades relevantes                                                       \\
+        \hyperref[req:bd2]{BD-2} & Aplicada nas vistas \textit{search\_programme}, \textit{search\_iec} e \textit{institution\_new\_catalogue}                                       \\
+        \hyperref[req:bd3]{BD-3} & A busca opera sobre título, institución asociada e, para IECs, programa ao que pertencen                                                          \\
+        \hyperref[req:bd4]{BD-4} & Emprégase a distancia de Levenshtein normalizada como criterio de similaridade entre a consulta e os campos indexados                             \\
         \hyperref[req:bd5]{BD-5} & Tanto o termo de busca coma os candidatos son normalizados antes da súa comparación, polo que maiúsculas e diacríticos non afectan aos resultados \\
         \hyperref[req:bd6]{BD-6} & A busca compara o termo contra todas as traducións indexadas de cada contido, con independencia do idioma da interface do usuario                 \\
-        \hyperref[req:bd7]{BD-7} & Os resultados máis relevantes aparecen en primeiro lugar; se o usuario escolleu un criterio de ordenación propio, este prevalece                 \\
-        \hyperref[req:bd8]{BD-8} & A interface non sofreu ningunha modificación visible respecto ao comportamento anterior                                                          \\
-        \hyperref[req:bd9]{BD-9} & Ante consultas baleiras ou moi curtas, non se aplica ningún filtro e móstranse todos os resultados                                              \\
+        \hyperref[req:bd7]{BD-7} & Os resultados máis relevantes aparecen en primeiro lugar; se o usuario escolleu un criterio de ordenación propio, este prevalece                  \\
+        \hyperref[req:bd8]{BD-8} & A interface non sofreu ningunha modificación visible respecto ao comportamento anterior                                                           \\
+        \hyperref[req:bd9]{BD-9} & Ante consultas baleiras ou moi curtas, non se aplica ningún filtro e móstranse todos os resultados                                                \\
         \hline
     \end{tabular}
     \caption{Validación dos requisitos de busca difusa.}
