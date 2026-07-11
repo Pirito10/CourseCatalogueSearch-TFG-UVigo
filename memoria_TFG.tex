@@ -79,10 +79,10 @@ O presente Traballo de Fin de Grao enmárcase neste contexto, propoñendo o dese
 
 A plataforma DACEM está implementada sobre Drupal 10, un sistema de xestión de contidos (CMS) de código aberto amplamente empregado no ámbito académico e institucional \cite{drupal_usage}. Drupal 10 proporciona unha contorna flexible para a definición de tipos de contido estruturado, a xestión de usuarios e a publicación de información a través de interfaces web configurables, como se mostra na figura~\ref{fig:dacem}.
 
-\begin{figure}[h]
+\begin{figure}[b!]
     \centering
     \setlength{\fboxsep}{0pt}
-    \fbox{\includegraphics[width=\linewidth]{images/dacem.png}}
+    \fbox{\includegraphics[width=0.78\linewidth]{images/dacem.png}}
     \caption{Páxina de inicio da plataforma DACEM.}
     \label{fig:dacem}
 \end{figure}
@@ -93,10 +93,10 @@ Para a presentación e consulta do catálogo, a plataforma emprega o módulo \te
 
 A interface de busca ofrece ao usuario, nas vistas de busca e no catálogo de institución, unha barra de texto libre para formular a consulta, acompañada de filtros despregables que varían segundo o tipo de entidade consultada e permiten acotar os resultados por atributos como o campo de estudo, o tipo, a localización ou o idioma de impartición, así como un selector para restrinxir os resultados a programas e compoñentes dispoñibles para estudantes de mobilidade. Ademais, a vista de titulacións inclúe un selector adicional que permite ao usuario indicar o seu programa de orixe, de xeito que o sistema filtra os resultados para mostrar unicamente aqueles con acordos de colaboración con dita institución, como se amosa na figura~\ref{fig:busqueda}.
 
-\begin{figure}[h]
+\begin{figure}[b!]
     \centering
     \setlength{\fboxsep}{0pt}
-    \fbox{\includegraphics[width=\linewidth]{images/dacem-busqueda.png}}
+    \fbox{\includegraphics[width=0.77\linewidth]{images/dacem-busqueda.png}}
     \caption{Interface de busca da plataforma DACEM na vista de programas.}
     \label{fig:busqueda}
 \end{figure}
@@ -251,7 +251,7 @@ O mecanismo funciona do seguinte xeito: cando se declara un criterio de ordenaci
 
 Para a interacción do usuario, deseñouse un comportamento de alternancia: o primeiro clic sobre un botón de ordenación establece o criterio en orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección de ordenación, como se mostra na figura~\ref{fig:ordenacion}. Esta decisión permite concentrar cada criterio nun único botón, evitando duplicar os controis en dúas versións por dirección. A lóxica de alternancia, implementada en \textit{JavaScript}, le o campo de ordenación activo no formulario e inverte a dirección se coincide co botón pulsado, ou establece a orde ascendente por defecto en caso contrario. Ademais, o botón correspondente ao criterio activo mostra un indicador visual da dirección de ordenación aplicada.
 
-\begin{figure}[!b]
+\begin{figure}[b!]
     \centering
     \includegraphics[width=\linewidth]{images/ordenacion-diseño.png}
     \caption{Deseño da interacción dos botóns de ordenación.}
@@ -299,7 +299,7 @@ A puntuación total dun elemento é a suma das mellores coincidencias obtidas pa
 
 O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. Se o usuario non seleccionou explicitamente un criterio de ordenación, limpa ademais os criterios preexistentes da vista; a orde de relevancia dos candidatos trasládase entón ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido, e este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída. Se o usuario seleccionou un criterio de ordenación, este prevalece sobre a orde de relevancia.
 
-\begin{figure}[h]
+\begin{figure}[t!]
     \centering
     \includegraphics[width=\linewidth]{images/fuzzy-diseño.png}
     \caption{Deseño do mecanismo de busca difusa.}
@@ -324,9 +324,9 @@ O termo orixinal da consulta inclúese sempre no conxunto de termos de busca, ta
 
 O fluxo de execución, esquematizado na figura~\ref{fig:traduccion_diseno}, é o seguinte: cando o usuario introduce un termo, o servizo de tradución detecta o idioma da interface; se non é inglés, consulta primeiro o dicionario e, se o termo non está recollido, invoca o motor de tradución automática. O resultado é un conxunto de un ou dous termos (o orixinal e, se procede, a súa tradución ao inglés) que se pasan ao mecanismo de busca difusa. A puntuación calcúlase de forma independente para cada termo e consérvase a puntuación máxima obtida para cada candidato.
 
-\begin{figure}[h]
+\begin{figure}[b!]
     \centering
-    \includegraphics[width=\linewidth]{images/traduccion-diseño.png}
+    \includegraphics[width=0.96\linewidth]{images/traduccion-diseño.png}
     \caption{Deseño do fluxo de tradución automática da consulta.}
     \label{fig:traduccion_diseno}
 \end{figure}
@@ -341,6 +341,13 @@ A busca estándar da plataforma opera sobre o título das entidades e outros cam
 
 O punto de entrada da funcionalidade é un botón \textit{Busca avanzada} situado na interface da vista de programas e na páxina de programas do catálogo de institución. Ao pulsalo, ábrese un diálogo, ilustrado na figura~\ref{fig:avanzada_diseno}, que presenta un formulario cos seguintes elementos:
 
+\begin{figure}[b!]
+    \centering
+    \includegraphics[width=0.86\linewidth]{images/avanzada-diseño.png}
+    \caption{Deseño da interface de busca avanzada por compatibilidade de compoñentes educativos.}
+    \label{fig:avanzada_diseno}
+\end{figure}
+
 \begin{itemize}
     \item Campos de texto, un por cada compoñente educativo de referencia que o usuario desexe introducir. De forma predeterminada móstrase un único campo baleiro.
     \item Un botón \textit{Engadir compoñente} que permite incorporar novos campos de forma dinámica, sen límite predefinido.
@@ -349,13 +356,6 @@ O punto de entrada da funcionalidade é un botón \textit{Busca avanzada} situad
 \end{itemize}
 
 Ao executar a busca, o sistema percorre o índice de compoñentes educativos para cada termo non baleiro introducido polo usuario, aplicando o mecanismo de busca difusa descrito na sección~\ref{sec:diseno_busca}. Cada entrada do índice inclúe o identificador do programa ao que pertence o compoñente, polo que non son necesarias consultas adicionais. Para cada compoñente que supere o limiar de puntuación, rexístrase a tripla \textit{(programme\_id, termo, puntuación)}. Unha vez procesados todos os termos, agréganse os resultados por programa: para cada termo, consérvase unicamente a puntuación máxima obtida entre todos os compoñentes dese programa, e a puntuación total do programa é a suma destas puntuacións máximas. Deste xeito, non só se ten en conta cantos termos encontran correspondencia, senón tamén a calidade de cada encaixe: un programa con dous encaixes exactos puntúa por encima dun con dous encaixes aproximados. Os programas preséntanse ordenados de maior a menor puntuación total.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=\linewidth]{images/avanzada-diseño.png}
-    \caption{Deseño da interface de busca avanzada por compatibilidade de compoñentes educativos.}
-    \label{fig:avanzada_diseno}
-\end{figure}
 
 % **************************************************
 % * Desarrollo
@@ -382,10 +382,10 @@ Algúns criterios implican campos de entidades relacionadas; nestes casos, o cri
 
 Nos modelos Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente, como se amosa na figura~\ref{fig:ordenacion_impl}. Os modelos de todas as vistas cargan a mesma biblioteca JavaScript.
 
-\begin{figure}[h]
+\begin{figure}[t!]
     \centering
     \setlength{\fboxsep}{0pt}
-    \fbox{\includegraphics[width=\linewidth]{images/ordenacion-desarrollo.png}}
+    \fbox{\includegraphics[width=0.85\linewidth]{images/ordenacion-desarrollo.png}}
     \caption{Botóns de ordenación dispoñibles na vista de programas.}
     \label{fig:ordenacion_impl}
 \end{figure}
@@ -415,10 +415,10 @@ A clase \texttt{FuzzySearch}, creada dentro do módulo \texttt{custom\_views\_fi
 
 \texttt{scoreAndFilter()} normaliza e tokeniza o termo de busca e, para cada candidato, compara cada palabra da consulta con cada palabra dos campos indexados do candidato, acumulando a mellor puntuación obtida. Dado que \textit{Search API} indexa cada tradución dun nodo como un ítem independente, o mesmo NID pode aparecer varias veces; por iso, os resultados indexanse por NID e, en caso de duplicado, consérvase a puntuación máis alta. Finalmente, os resultados ordénanse por puntuación descendente, como se amosa na figura~\ref{fig:fuzzy_impl}; en caso de empate, aplícase como criterio de desempate a orde alfabética polo título do candidato.
 
-\begin{figure}[h]
+\begin{figure}[b!]
     \centering
     \setlength{\fboxsep}{0pt}
-    \fbox{\includegraphics[width=\linewidth]{images/fuzzy-desarrollo.png}}
+    \fbox{\includegraphics[width=0.89\linewidth]{images/fuzzy-desarrollo.png}}
     \caption{Resultados da busca difusa para a consulta \texttt{telcommuniation}, con erros tipográficos respecto a \textit{Telecommunications}.}
     \label{fig:fuzzy_impl}
 \end{figure}
@@ -435,21 +435,21 @@ A implementación do servizo de tradución articulouse en tres elementos:
     \item A clase \texttt{TranslationService}, que coordina o dicionario e o motor e serve de punto de entrada para a clase \texttt{FuzzySearch}.
 \end{itemize}
 
-O motor de tradución automática neural \textit{LibreTranslate} integróuse na contorna de desenvolvemento DDEV como un servizo Docker adicional, accesible desde o módulo PHP na URL interna \texttt{http://libretranslate:5000}. O límite de memoria do contedor estableceuse en 1\,GB para evitar que o proceso comprometa os recursos da máquina en contornas de desenvolvemento. A comunicación co servizo realízase mediante peticións POST ao punto de entrada \texttt{/translate}, que reciben o texto de entrada, o idioma de orixe e o idioma destino, e devolven o texto traducido en formato JSON; un \textit{timeout} de 5 segundos garante que un fallo de comunicación non bloquee a busca, retornando \texttt{NULL} en caso de excepción.
+O motor de tradución automática neural \textit{LibreTranslate} integróuse na contorna de desenvolvemento DDEV como un servizo Docker adicional, accesible desde o módulo PHP na URL interna \texttt{http://libretranslate:5000}. Estableceuse o límite de memoria do contedor en 1\,GB. A comunicación co servizo realízase mediante peticións POST ao punto de entrada \texttt{/translate}, que reciben o texto de entrada, o idioma de orixe e o idioma destino, e devolven o texto traducido en formato JSON; un \textit{timeout} de 5 segundos garante que un fallo de comunicación non bloquee a busca, retornando \texttt{NULL} en caso de excepción.
 
 A clase \texttt{TranslationDictionary} é unha clase PHP estática con dúas constantes: \texttt{PROGRAMMES}, con termos de titulacións, e \texttt{COURSES}, con termos de compoñentes educativos. Cada constante é un array indexado polo termo en inglés e cuxos valores son arrays de traducións por código de idioma, cubrindo os idiomas da plataforma (español, francés, checo, húngaro, esloveno, estoniano, galego, portugués e grego).
 
 A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto de entrada é o método estático \texttt{getSearchTerms()}, que recibe o texto de busca e o identificador do índice, e devolve un array de un ou dous termos. O idioma de orixe obtense mediante \texttt{uiLanguage()}, que recupera o idioma activo da interface de Drupal; se o idioma é inglés, \texttt{getSearchTerms()} retorna directamente o termo orixinal sen consultar ningún servizo. En caso contrario, consulta primeiro o dicionario correspondente ao tipo de índice e, se o termo non está recollido, invoca o motor de tradución. Se se obtén un resultado distinto do termo orixinal, engádese como segundo elemento do array, como se amosa na figura~\ref{fig:traduccion_impl}.
 
-\texttt{getSearchTerms()} delega a consulta ao dicionario en \texttt{dictionaryLookup()}, que á súa vez invoca \texttt{buildInvertedIndex()}. Para realizar a consulta de forma eficiente, este método transforma a estrutura do dicionario, indexada polo termo en inglés, nun índice invertido indexado por idioma e por termo normalizado, de xeito que a busca dun termo concreto nun idioma concreto é directa, sen percorrer todas as entradas. O índice constrúese a partir de \texttt{COURSES} para buscas de compoñentes educativos e de \texttt{PROGRAMMES} para buscas de programas. A comparación realízase sobre texto normalizado: \texttt{normalize()} converte a minúsculas, elimina diacríticos mediante transliteración Unicode e colapsa espazos, aplicándose tanto ao termo de entrada como ás claves do índice.
-
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \setlength{\fboxsep}{0pt}
-    \fbox{\includegraphics[width=\linewidth]{images/traduccion-desarrollo.png}}
+    \fbox{\includegraphics[width=0.73\linewidth]{images/traduccion-desarrollo.png}}
     \caption{Resultados da busca para a consulta en grego correspondente a \textit{medicina}, obtidos grazas á tradución automática da consulta.}
     \label{fig:traduccion_impl}
 \end{figure}
+
+\texttt{getSearchTerms()} delega a consulta ao dicionario en \texttt{dictionaryLookup()}, que á súa vez invoca \texttt{buildInvertedIndex()}. Para realizar a consulta de forma eficiente, este método transforma a estrutura do dicionario, indexada polo termo en inglés, nun índice invertido indexado por idioma e por termo normalizado, de xeito que a busca dun termo concreto nun idioma concreto é directa, sen percorrer todas as entradas. O índice constrúese a partir de \texttt{COURSES} para buscas de compoñentes educativos e de \texttt{PROGRAMMES} para buscas de programas. A comparación realízase sobre texto normalizado mediante \texttt{normalize()}, que converte a minúsculas, elimina diacríticos e colapsa espazos.
 
 % **************************************************
 % * Validación
@@ -460,7 +460,7 @@ A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto 
 
 A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:ordenacion} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_ordenacion} resume o resultado desta comprobación.
 
-\begin{table}[h]
+\begin{table}[p]
     \centering
     \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
         \hline
@@ -485,7 +485,7 @@ Comprobouse que cada botón aplica correctamente o criterio de ordenación corre
 
 A validación do mecanismo de busca difusa realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:busca} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_busca} resume o resultado desta comprobación.
 
-\begin{table}[h]
+\begin{table}[p]
     \centering
     \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
         \hline
@@ -512,7 +512,7 @@ O correcto funcionamento do mecanismo queda avalado polo proceso de calibrado do
 
 A validación do servizo de tradución automática realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:traduccion} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_traduccion} resume o resultado desta comprobación.
 
-\begin{table}[h]
+\begin{table}[p]
     \centering
     \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
         \hline
@@ -538,9 +538,9 @@ Para validar o comportamento do servizo de tradución en escenarios reais, reali
 
 Definiuse un conxunto de 10 consultas que cobren unha variedade de escenarios, tanto en canto aos idiomas como aos mecanismos do sistema de tradución. A táboa~\ref{tab:probas_traduccion} resume estas consultas xunto co resultado esperado en cada caso.
 
-\begin{table}[h]
+\begin{table}[p]
     \centering
-    \begin{tabular}{p{2cm} p{3cm} p{3cm} p{4cm}}
+    \begin{tabular}{p{3.05cm} p{3.6cm} p{3.6cm} p{4cm}}
         \hline
         \textbf{Idioma} & \textbf{Consulta}    & \textbf{Mecanismo} & \textbf{Resultado esperado} \\
         \hline
@@ -566,7 +566,7 @@ En todos os casos, o resultado obtido coincidiu co esperado, o que confirma o co
 
 A validación dos requisitos non funcionais realizouse comprobando que cada un dos aspectos definidos na sección~\ref{req:sec:rnf} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_rnf} resume o resultado desta comprobación.
 
-\begin{table}[h]
+\begin{table}[t]
     \centering
     \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
         \hline
@@ -723,7 +723,7 @@ Creáronse tres nodos de tipo \textit{programme} con fins exclusivos de proba:
 
 Definíronse 11 consultas que cobren os escenarios de uso máis representativos, como se detalla na táboa~\ref{tab:bateria}.
 
-\begin{table}[h]
+\begin{table}[t]
     \centering
     \begin{tabular}{lll}
         \hline
@@ -762,7 +762,7 @@ Avaliáronse cinco configuracións que varían o limiar de distancia de edición
 
 A táboa~\ref{tab:calibrado} resume os resultados de cada configuración sobre a batería de consultas. A marca $\surd$ indica que o resultado obtido coincide co esperado; $\times$ indica que non.
 
-\begin{table}[h]
+\begin{table}[h!]
     \centering
     \begin{tabular}{lccccc}
         \hline
@@ -786,6 +786,8 @@ A táboa~\ref{tab:calibrado} resume os resultados de cada configuración sobre a
     \caption{Resultados das configuracións sobre a batería de consultas.}
     \label{tab:calibrado}
 \end{table}
+
+\clearpage
 
 A configuración estrita rexeita demasiados casos válidos: o limiar reducido e o filtro de puntuación mínima descartan erros de dúas edicións que son perfectamente razoables. A configuración sen prefixo falla en consultas polo inicio dunha palabra, o que supón unha perda de utilidade relevante para o usuario. A configuración granular, ao restrinxir o limiar a 1 edición para palabras de entre 5 e 7 caracteres, non tolera os 2 erros de \texttt{helath} (6 caracteres). A configuración base produce un único fallo en palabras longas con 3 erros tipográficos. A configuración laxa produce 0 fallos en toda a batería. Aumentar o limiar por encima de 3 ampliaría innecesariamente o risco de falsos positivos, polo que a configuración laxa representa o equilibrio máis axeitado entre tolerancia e precisión.
 
