@@ -591,15 +591,33 @@ A validación dos requisitos non funcionais realizouse comprobando que cada un d
 % **************************************************
 \section{Conclusións e liñas futuras}
 
- (pendente)
+Este traballo abordou o deseño e desenvolvemento de melloras nos mecanismos de busca e filtrado do catálogo de cursos da plataforma DACEM, partindo das limitacións identificadas no sistema de busca orixinal: ausencia de criterios de ordenación, busca por coincidencia exacta, imposibilidade de consultar en idiomas distintos ao dos contidos e carencia dun mecanismo para localizar programas segundo os compoñentes educativos que conteñen.
 
- % **************************************************
- % * Bibliografía
- % **************************************************
- {\small
-  \bibliographystyle{IEEEtran}
-  \bibliography{references}
- }
+Das catro melloras propostas, implementáronse e validáronse satisfactoriamente tres:
+
+\begin{itemize}
+    \item A \textbf{ordenación de resultados} mediante botóns de criterio múltiple, integrada nas tres vistas da plataforma e con soporte para alternancia de dirección nunha única acción de usuario.
+    \item A \textbf{busca difusa}, baseada na distancia de Levenshtein con puntuación por palabra e normalización de texto, que permite localizar resultados pertinentes aínda en presenza de erros tipográficos e con independencia do uso de maiúsculas ou diacríticos.
+    \item A \textbf{tradución automática da consulta}, articulada en dous niveis (dicionario estático de termos académicos e motor neuronal \textit{LibreTranslate}), que permite formular consultas no idioma da interface e obter resultados en calquera idioma dispoñible no catálogo.
+\end{itemize}
+
+A cuarta mellora proposta, a \textbf{busca avanzada por compatibilidade de compoñentes educativos}, non chegou a implementarse por limitacións de tempo. O deseño da funcionalidade, incluíndo a interface de usuario, o mecanismo de puntuación e os requisitos funcionais, quedou recollido nas seccións~\ref{req:sec:busca_avanzada} e~\ref{sec:diseno_busca_avanzada} como punto de partida para un traballo futuro.
+
+Ademais dos requisitos funcionais, os requisitos non funcionais definidos na sección~\ref{req:sec:rnf} quedaron igualmente satisfeitos: a solución intégrase na plataforma sen alterar o modelo de datos, emprega exclusivamente tecnoloxías de código aberto, mantén un comportamento estable ante entradas incorrectas, resulta coherente co deseño visual existente e está estruturada de forma modular.
+
+O desenvolvemento presentou dificultades principalmente na integración coa arquitectura interna de Drupal, que require comprender o funcionamento do sistema de \textit{hooks} e dos índices de \textit{Search API} antes de poder intervir nel de forma eficaz. Tamén foi necesario tomar decisións de deseño non triviais, como a estratexia de detección de idioma para a tradución automática, onde a solución máis evidente resultou ser menos fiable que un enfoque alternativo.
+
+A nivel persoal, este traballo supuxo o primeiro contacto con Drupal e co entorno de desenvolvemento DDEV, tecnoloxías das que non tiña coñecemento previo. Traballar sobre un sistema desta envergadura, con múltiples módulos interconectados e unha arquitectura interna complexa, esixiu un período de adaptación significativo antes de poder comezar a implementar calquera mellora. Igualmente relevante foi o proceso de investigación previo á implementación de cada funcionalidade: avaliar diferentes alternativas para a busca difusa, seleccionar un motor de tradución automática que se axustase aos requisitos do proxecto e decidir como estruturar o índice de busca requiriu consultar documentación, analizar casos de uso e contrastar opcións antes de tomar cada decisión técnica. Este proceso de investigación e toma de decisións informadas foi, probablemente, un dos aprendizaxes máis valiosos do traballo.
+
+As melloras desenvolvidas supoñen unha contribución concreta á plataforma DACEM, abordando limitacións reais do sistema de busca que afectan directamente á experiencia dos estudantes en mobilidade que consultan o catálogo.
+
+% **************************************************
+% * Bibliografía
+% **************************************************
+{\small
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+}
 \clearpage
 
 % **************************************************
