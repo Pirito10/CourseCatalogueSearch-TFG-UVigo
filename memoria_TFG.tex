@@ -116,12 +116,12 @@ O mecanismo de busca textual actual baséase no filtro \textit{combine} de \text
 % **************************************************
 \section{Obxectivos e requisitos}
 \label{sec:obxectivos}
-O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta, sen tolerancia a erros tipográficos, imposibilidade de consultar en idiomas distintos ao dos contidos e carencia dun mecanismo para localizar programas segundo os compoñentes educativos que conteñen), propónse o deseño e implementación de catro melloras concretas:
+O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta, falta de tolerancia a erros tipográficos, imposibilidade de consultar en idiomas distintos ao dos contidos e carencia dun mecanismo para localizar programas segundo os compoñentes educativos que conteñen), propónse o deseño e implementación de catro melloras concretas:
 \begin{itemize}
     \item A incorporación de criterios de ordenación de resultados nas vistas de busca e na vista do catálogo de institución.
     \item A implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta.
     \item A incorporación dun servizo de tradución automática da consulta que permita obter resultados pertinentes aínda cando os contidos non dispoñan de tradución ao idioma do usuario.
-    \item O deseño dun mecanismo de busca avanzada que permita ao usuario localizar programas a partir dun conxunto de compoñentes educativos de referencia, ordenando os resultados segundo o número de correspondencias encontradas.
+    \item O deseño dun mecanismo de busca avanzada que permita ao usuario localizar programas a partir dun conxunto de compoñentes educativos de referencia, ordenando os resultados pola suma das puntuacións de afinidade obtidas para cada compoñente introducido.
 \end{itemize}
 
 A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
@@ -204,7 +204,7 @@ A continuación defínense os requisitos funcionais e non funcionais que guían 
 
     \item \label{req:ba3}\textbf{BA-3.} O sistema debe aplicar o mecanismo de busca difusa para calcular a correspondencia entre cada termo introducido polo usuario e os compoñentes educativos do catálogo.
 
-    \item \label{req:ba4}\textbf{BA-4.} Os resultados deben presentarse ordenados polo número de correspondencias encontradas, de xeito que os programas con máis compoñentes educativos coincidentes aparezan en primeiro lugar.
+    \item \label{req:ba4}\textbf{BA-4.} Os resultados deben presentarse ordenados pola suma das puntuacións de afinidade obtidas para cada compoñente introducido, de xeito que os programas con maior correspondencia global co conxunto de termos introducidos aparezan en primeiro lugar.
 
     \item \label{req:ba5}\textbf{BA-5.} O sistema debe ignorar os campos de texto baleiros na busca, garantindo un comportamento robusto independentemente do número de campos que o usuario deixe sen cubrir.
 \end{itemize}
@@ -297,7 +297,7 @@ A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque
 
 A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste; en caso de empate na puntuación, aplícase como criterio de desempate a orde alfabética polo título. Os valores concretos de cada nivel e os limiares de distancia foron determinados de forma empírica a través dun proceso de calibrado (véxase o anexo~\ref{anx:calibrado}).
 
-O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. Se o usuario non seleccionou explicitamente un criterio de ordenación, limpa ademais os criterios preexistentes da vista; a orde de relevancia dos candidatos trasládase entón ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido, e este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída. Se o usuario si seleccionou un criterio de ordenación, este prevalece sobre a orde de relevancia.
+O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. Se o usuario non seleccionou explicitamente un criterio de ordenación, limpa ademais os criterios preexistentes da vista; a orde de relevancia dos candidatos trasládase entón ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido, e este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída. Se o usuario seleccionou un criterio de ordenación, este prevalece sobre a orde de relevancia.
 
 \begin{figure}[h]
     \centering
@@ -367,7 +367,7 @@ Ao executar a busca, o sistema percorre o índice de compoñentes educativos par
 A implementación da ordenación articulouse en tres capas coordinadas:
 \begin{itemize}
     \item A configuración declarativa das vistas.
-    \item As plantillas Twig.
+    \item As modelos Twig.
     \item A lóxica JavaScript.
 \end{itemize}
 
@@ -380,7 +380,7 @@ Algúns criterios implican campos de entidades relacionadas; nestes casos, o cri
     \item \textbf{Catálogo de institución, compoñentes educativos}: a ordenación por campo de estudo e por título do programa pai usa a relación co nodo programa referenciado polo IEC.
 \end{itemize}
 
-Nas plantillas Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente, como se amosa na figura~\ref{fig:ordenacion_impl}. As plantillas de todas as vistas cargan a mesma biblioteca JavaScript.
+Nos modelos Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente, como se amosa na figura~\ref{fig:ordenacion_impl}. Os modelos de todas as vistas cargan a mesma biblioteca JavaScript.
 
 \begin{figure}[h]
     \centering
@@ -609,7 +609,7 @@ Ademais dos requisitos funcionais, os requisitos non funcionais definidos na sec
 
 O desenvolvemento presentou dificultades principalmente na integración coa arquitectura interna de Drupal, que require comprender o funcionamento do sistema de \textit{hooks} e dos índices de \textit{Search API} antes de poder intervir nel de forma eficaz. Tamén foi necesario tomar decisións de deseño non triviais, como a estratexia de detección de idioma para a tradución automática, onde a solución máis evidente resultou ser menos fiable que un enfoque alternativo.
 
-A nivel persoal, este traballo supuxo o primeiro contacto con Drupal e co entorno de desenvolvemento DDEV, tecnoloxías das que non tiña coñecemento previo. Traballar sobre un sistema desta envergadura, con múltiples módulos interconectados e unha arquitectura interna complexa, esixiu un período de adaptación significativo antes de poder comezar a implementar calquera mellora. Igualmente relevante foi o proceso de investigación previo á implementación de cada funcionalidade: avaliar diferentes alternativas para a busca difusa, seleccionar un motor de tradución automática que se axustase aos requisitos do proxecto e decidir como estruturar o índice de busca requiriu consultar documentación, analizar casos de uso e contrastar opcións antes de tomar cada decisión técnica. Este proceso de investigación e toma de decisións informadas foi, probablemente, un dos aprendizaxes máis valiosos do traballo.
+A nivel persoal, este traballo supuxo o primeiro contacto con Drupal e co entorno de desenvolvemento DDEV, tecnoloxías das que non tiña coñecemento previo. Traballar sobre un sistema desta envergadura, con múltiples módulos interconectados e unha arquitectura interna complexa, esixiu un período de adaptación significativo antes de poder comezar a implementar calquera mellora. Igualmente relevante foi o proceso de investigación previo á implementación de cada funcionalidade: avaliar diferentes alternativas para a busca difusa, seleccionar un motor de tradución automática que se axustase aos requisitos do proxecto e decidir como estruturar o índice de busca requiriu consultar documentación, analizar casos de uso e contrastar opcións antes de tomar cada decisión técnica. Este proceso de investigación e toma de decisións informadas foi, probablemente, unha das aprendizaxes máis valiosas do traballo.
 
 As melloras desenvolvidas supoñen unha contribución concreta á plataforma DACEM, abordando limitacións reais do sistema de busca que afectan directamente á experiencia dos estudantes en mobilidade que consultan o catálogo.
 
