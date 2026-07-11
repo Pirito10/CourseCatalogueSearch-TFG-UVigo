@@ -591,6 +591,8 @@ A validación dos requisitos non funcionais realizouse comprobando que cada un d
 % **************************************************
 \section{Conclusións e liñas futuras}
 
+\subsection{Conclusións}
+
 Este traballo abordou o deseño e desenvolvemento de melloras nos mecanismos de busca e filtrado do catálogo de cursos da plataforma DACEM, partindo das limitacións identificadas no sistema de busca orixinal: ausencia de criterios de ordenación, busca por coincidencia exacta, imposibilidade de consultar en idiomas distintos ao dos contidos e carencia dun mecanismo para localizar programas segundo os compoñentes educativos que conteñen.
 
 Das catro melloras propostas, implementáronse e validáronse satisfactoriamente tres:
@@ -610,6 +612,25 @@ O desenvolvemento presentou dificultades principalmente na integración coa arqu
 A nivel persoal, este traballo supuxo o primeiro contacto con Drupal e co entorno de desenvolvemento DDEV, tecnoloxías das que non tiña coñecemento previo. Traballar sobre un sistema desta envergadura, con múltiples módulos interconectados e unha arquitectura interna complexa, esixiu un período de adaptación significativo antes de poder comezar a implementar calquera mellora. Igualmente relevante foi o proceso de investigación previo á implementación de cada funcionalidade: avaliar diferentes alternativas para a busca difusa, seleccionar un motor de tradución automática que se axustase aos requisitos do proxecto e decidir como estruturar o índice de busca requiriu consultar documentación, analizar casos de uso e contrastar opcións antes de tomar cada decisión técnica. Este proceso de investigación e toma de decisións informadas foi, probablemente, un dos aprendizaxes máis valiosos do traballo.
 
 As melloras desenvolvidas supoñen unha contribución concreta á plataforma DACEM, abordando limitacións reais do sistema de busca que afectan directamente á experiencia dos estudantes en mobilidade que consultan o catálogo.
+
+% **************************************************
+% * Liñas futuras
+% **************************************************
+\subsection{Liñas futuras}
+
+A partir do traballo realizado, identifícanse as seguintes liñas de traballo futuro:
+
+\begin{itemize}
+    \item \textbf{Implementación da busca avanzada por compatibilidade de compoñentes educativos.} A funcionalidade foi completamente deseñada no marco deste traballo, incluíndo a interface de usuario, o mecanismo de puntuación e os requisitos funcionais. A súa implementación constituiría a continuación máis directa do traballo aquí presentado.
+
+    \item \textbf{Despregamento do motor de tradución automática en produción.} O motor \textit{LibreTranslate} está configurado como un servizo Docker no entorno de desenvolvemento local, pero non no servidor de produción. Para que a tradución automática estea operativa na plataforma pública, sería necesario integrar este servizo na infraestrutura de despregamento real.
+
+    \item \textbf{Melloras no algoritmo de busca difusa.} O algoritmo actual baséase na distancia de Levenshtein sobre palabras individuais. Poderían explorarse técnicas complementarias como a redución de palabras á súa raíz (\textit{stemming}), o uso de sinónimos ou un proceso de calibrado máis sistemático baseado en datos reais de uso, co obxectivo de mellorar a precisión e exhaustividade dos resultados.
+
+    \item \textbf{Migración a un \textit{backend} de indexación dedicado.} O índice de \textit{Search API} empregado neste traballo utiliza a base de datos relacional existente como \textit{backend}. Se o volume de datos do catálogo medra significativamente, podería resultar conveniente migrar a un motor de indexación dedicado como \textit{Apache Solr} ou \textit{Elasticsearch}, que ofrecen mellor rendemento e capacidades de busca máis avanzadas, tal como se describe no anexo~\ref{anx:search_api}.
+
+    \item \textbf{Busca federada.} Nun contexto de mobilidade académica internacional, sería de interese que o sistema puidese lanzar consultas de forma simultánea contra fontes de datos externas, como catálogos doutras universidades socias, agregando os resultados nunha vista unificada para o usuario.
+\end{itemize}
 
 % **************************************************
 % * Bibliografía
