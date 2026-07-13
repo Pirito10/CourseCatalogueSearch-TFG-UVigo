@@ -458,75 +458,19 @@ A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto 
 
 \subsection{Ordenación de resultados}
 
-A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:ordenacion} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_ordenacion} resume o resultado desta comprobación.
-
-\begin{table}[p]
-    \centering
-    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
-        \hline
-        \textbf{Req.}            & \textbf{Validación}                                                                                             \\
-        \hline
-        \hyperref[req:or1]{OR-1} & Os botóns de ordenación están dispoñibles nas tres vistas, con criterios adaptados a cada tipo de contido       \\
-        \hyperref[req:or2]{OR-2} & Un primeiro clic establece a orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección           \\
-        \hyperref[req:or3]{OR-3} & Dispoñibles en todas as vistas                                                                                  \\
-        \hyperref[req:or4]{OR-4} & Dispoñible nas vistas \textit{search\_programme} e \textit{search\_iec}                                         \\
-        \hyperref[req:or5]{OR-5} & Dispoñible na vista \textit{search\_programme} e na páxina de programas de \textit{institution\_new\_catalogue} \\
-        \hyperref[req:or6]{OR-6} & Dispoñible na vista \textit{search\_iec} e na páxina de IECs de \textit{institution\_new\_catalogue}            \\
-        \hyperref[req:or7]{OR-7} & Os botóns empregan os estilos do tema Bootstrap 5 da plataforma, con indicador de dirección no criterio activo  \\
-        \hline
-    \end{tabular}
-    \caption{Validación dos requisitos de ordenación de resultados.}
-    \label{tab:validacion_ordenacion}
-\end{table}
+A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:ordenacion} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_ordenacion} do anexo~\ref{anx:validacion}.
 
 Comprobouse que cada botón aplica correctamente o criterio de ordenación correspondente, que a dirección se inverte ao facer clic de novo sobre o mesmo botón, e que o indicador visual reflicte en todo momento a dirección activa.
 
 \subsection{Busca difusa}
 
-A validación do mecanismo de busca difusa realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:busca} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_busca} resume o resultado desta comprobación.
-
-\begin{table}[p]
-    \centering
-    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
-        \hline
-        \textbf{Req.}            & \textbf{Validación}                                                                                                                               \\
-        \hline
-        \hyperref[req:bd1]{BD-1} & Verificado con consultas con erros tipográficos; os resultados inclúen entidades relevantes                                                       \\
-        \hyperref[req:bd2]{BD-2} & Aplicada nas vistas \textit{search\_programme}, \textit{search\_iec} e \textit{institution\_new\_catalogue}                                       \\
-        \hyperref[req:bd3]{BD-3} & A busca opera sobre título, institución asociada e, para IECs, programa ao que pertencen                                                          \\
-        \hyperref[req:bd4]{BD-4} & Emprégase a distancia de Levenshtein normalizada como criterio de similaridade entre a consulta e os campos indexados                             \\
-        \hyperref[req:bd5]{BD-5} & Tanto o termo de busca coma os candidatos son normalizados antes da súa comparación, polo que maiúsculas e diacríticos non afectan aos resultados \\
-        \hyperref[req:bd6]{BD-6} & A busca compara o termo contra todas as traducións indexadas de cada contido, con independencia do idioma da interface do usuario                 \\
-        \hyperref[req:bd7]{BD-7} & Os resultados máis relevantes aparecen en primeiro lugar; se o usuario escolleu un criterio de ordenación propio, este prevalece                  \\
-        \hyperref[req:bd8]{BD-8} & A interface non sofreu ningunha modificación visible respecto ao comportamento anterior                                                           \\
-        \hyperref[req:bd9]{BD-9} & Ante consultas baleiras ou moi curtas, non se aplica ningún filtro e móstranse todos os resultados                                                \\
-        \hline
-    \end{tabular}
-    \caption{Validación dos requisitos de busca difusa.}
-    \label{tab:validacion_busca}
-\end{table}
+A validación do mecanismo de busca difusa realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:busca} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_busca} do anexo~\ref{anx:validacion}.
 
 O correcto funcionamento do mecanismo queda avalado polo proceso de calibrado do algoritmo, realizado mediante unha batería de consultas representativas dos escenarios de uso esperados e cuxos resultados se detallan no anexo~\ref{anx:calibrado}.
 
 \subsection{Tradución automática da consulta}
 
-A validación do servizo de tradución automática realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:traduccion} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_traduccion} resume o resultado desta comprobación.
-
-\begin{table}[p]
-    \centering
-    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
-        \hline
-        \textbf{Req.}            & \textbf{Validación}                                                                                                                        \\
-        \hline
-        \hyperref[req:ta1]{TA-1} & O sistema localiza resultados pertinentes ante consultas formuladas nun idioma diferente ao dos contidos indexados                         \\
-        \hyperref[req:ta2]{TA-2} & Todas as traducións da consulta realízanse ao inglés                                                                                       \\
-        \hyperref[req:ta3]{TA-3} & O dicionario estático actúa como primeira opción; o motor de tradución automática invócase unicamente cando o termo non está recollido nel \\
-        \hyperref[req:ta4]{TA-4} & O termo orixinal inclúese sempre no conxunto de termos de busca, garantindo o funcionamento correcto aínda en caso de fallo na tradución   \\
-        \hline
-    \end{tabular}
-    \caption{Validación dos requisitos de tradución automática da consulta.}
-    \label{tab:validacion_traduccion}
-\end{table}
+A validación do servizo de tradución automática realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:traduccion} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_traduccion} do anexo~\ref{anx:validacion}.
 
 Para validar o comportamento do servizo de tradución en escenarios reais, realizouse unha batería de probas sobre un conxunto de datos de proba específico. Creáronse catro nodos de tipo \textit{programme} con fins exclusivos de proba:
 \begin{itemize}
@@ -538,7 +482,7 @@ Para validar o comportamento do servizo de tradución en escenarios reais, reali
 
 Definiuse un conxunto de 10 consultas que cobren unha variedade de escenarios, tanto en canto aos idiomas como aos mecanismos do sistema de tradución. A táboa~\ref{tab:probas_traduccion} resume estas consultas xunto co resultado esperado en cada caso.
 
-\begin{table}[p]
+\begin{table}[t]
     \centering
     \begin{tabular}{p{3.05cm} p{3.6cm} p{3.6cm} p{4cm}}
         \hline
@@ -564,27 +508,7 @@ En todos os casos, o resultado obtido coincidiu co esperado, o que confirma o co
 
 \subsection{Requisitos non funcionais}
 
-A validación dos requisitos non funcionais realizouse comprobando que cada un dos aspectos definidos na sección~\ref{req:sec:rnf} queda satisfeito na implementación desenvolvida. A táboa~\ref{tab:validacion_rnf} resume o resultado desta comprobación.
-
-\begin{table}[t]
-    \centering
-    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
-        \hline
-        \textbf{Req.}              & \textbf{Validación}                                                                                                                                     \\
-        \hline
-        \hyperref[req:rnf1]{RNF-1} & A solución intégrase mediante hooks e módulos propios de Drupal, sen modificar o modelo de datos nin afectar ao resto de funcionalidades                \\
-        \hyperref[req:rnf2]{RNF-2} & Toda a implementación emprega Drupal, PHP e librarías de código aberto, en coherencia coa arquitectura do proxecto                                      \\
-        \hyperref[req:rnf3]{RNF-3} & O sistema xestiona entradas baleiras, moi curtas ou sen coincidencias sen producir erros visibles para o usuario                                        \\
-        \hyperref[req:rnf4]{RNF-4} & Os elementos de interacción integráronse co deseño existente da plataforma, empregando os estilos e compoñentes do tema Bootstrap 5                     \\
-        \hyperref[req:rnf5]{RNF-5} & O tempo de resposta observado durante o desenvolvemento non presentou degradación perceptible respecto ao comportamento previo                          \\
-        \hyperref[req:rnf6]{RNF-6} & As consultas ao índice de Search API limítanse aos campos necesarios e opérase sobre os resultados en memoria, sen consultas adicionais á base de datos \\
-        \hyperref[req:rnf7]{RNF-7} & O algoritmo opera sobre o índice de Search API, polo que o rendemento depende do motor de indexación e non escala linearmente co volume de contido      \\
-        \hyperref[req:rnf8]{RNF-8} & Cada mellora está implementada nun módulo propio con clases e servizos independentes, o que facilita o seu mantemento e extensión por separado          \\
-        \hline
-    \end{tabular}
-    \caption{Validación dos requisitos non funcionais.}
-    \label{tab:validacion_rnf}
-\end{table}
+A validación dos requisitos non funcionais realizouse comprobando que cada un dos aspectos definidos na sección~\ref{req:sec:rnf} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_rnf} do anexo~\ref{anx:validacion}.
 
 % **************************************************
 % * Conclusiones
@@ -762,7 +686,7 @@ Avaliáronse cinco configuracións que varían o limiar de distancia de edición
 
 A táboa~\ref{tab:calibrado} resume os resultados de cada configuración sobre a batería de consultas. A marca $\surd$ indica que o resultado obtido coincide co esperado; $\times$ indica que non.
 
-\begin{table}[h!]
+\begin{table}[b]
     \centering
     \begin{tabular}{lccccc}
         \hline
@@ -787,19 +711,97 @@ A táboa~\ref{tab:calibrado} resume os resultados de cada configuración sobre a
     \label{tab:calibrado}
 \end{table}
 
-\clearpage
-
-A configuración estrita rexeita demasiados casos válidos: o limiar reducido e o filtro de puntuación mínima descartan erros de dúas edicións que son perfectamente razoables. A configuración sen prefixo falla en consultas polo inicio dunha palabra, o que supón unha perda de utilidade relevante para o usuario. A configuración granular, ao restrinxir o limiar a 1 edición para palabras de entre 5 e 7 caracteres, non tolera os 2 erros de \texttt{helath} (6 caracteres). A configuración base produce un único fallo en palabras longas con 3 erros tipográficos. A configuración laxa produce 0 fallos en toda a batería. Aumentar o limiar por encima de 3 ampliaría innecesariamente o risco de falsos positivos, polo que a configuración laxa representa o equilibrio máis axeitado entre tolerancia e precisión.
+A configuración estrita rexeita demasiados casos válidos: descartanse erros de dúas edicións que son perfectamente razoables. A configuración sen prefixo falla en consultas polo inicio dunha palabra. A configuración granular non tolera 2 erros en palabras de lonxitude intermedia. A configuración base produce fallos en palabras longas con 3 erros tipográficos. A configuración laxa produce 0 fallos en toda a batería e representa o equilibrio máis axeitado entre tolerancia e precisión.
 
 \subsubsection{Configuración seleccionada}
-
-Seleccionouse a configuración laxa como resultado do proceso de calibrado. Os valores finais dos parámetros son os seguintes:
 
 \begin{itemize}
     \item \textbf{Puntuación de prefixo}: 0,85. Esta puntuación sitúase por riba das correspondencias por distancia de Levenshtein en palabras curtas (un erro nunha palabra de 4 caracteres dá $1 - 1/4 = 0{,}75$; nunha de 5 caracteres, $1 - 1/5 = 0{,}80$), e por debaixo da coincidencia exacta (1,0). Para palabras longas a relación invértese: 1 edición nunha palabra de 7 ou máis caracteres supera 0,85, o que reflicte que especificar case toda a palabra con un erro é máis preciso que quedarse a medias.
     \item \textbf{Limiar de distancia de edición}: 1 para palabras de ata 5 caracteres e 3 para palabras de máis de 5 caracteres.
     \item \textbf{Fórmula de puntuación por distancia de edición}: $1 - d/L$, onde $d$ é a distancia de Levenshtein e $L$ a lonxitude da palabra máis longa das dúas comparadas.
 \end{itemize}
+
+% **************************************************
+% * Táboas de validación
+% **************************************************
+\subsection{Táboas de validación}
+\label{anx:validacion}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                             \\
+        \hline
+        \hyperref[req:or1]{OR-1} & Os botóns de ordenación están dispoñibles nas tres vistas, con criterios adaptados a cada tipo de contido       \\
+        \hyperref[req:or2]{OR-2} & Un primeiro clic establece a orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección           \\
+        \hyperref[req:or3]{OR-3} & Dispoñibles en todas as vistas                                                                                  \\
+        \hyperref[req:or4]{OR-4} & Dispoñible nas vistas \textit{search\_programme} e \textit{search\_iec}                                         \\
+        \hyperref[req:or5]{OR-5} & Dispoñible na vista \textit{search\_programme} e na páxina de programas de \textit{institution\_new\_catalogue} \\
+        \hyperref[req:or6]{OR-6} & Dispoñible na vista \textit{search\_iec} e na páxina de IECs de \textit{institution\_new\_catalogue}            \\
+        \hyperref[req:or7]{OR-7} & Os botóns empregan os estilos do tema Bootstrap 5 da plataforma, con indicador de dirección no criterio activo  \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de ordenación de resultados.}
+    \label{tab:validacion_ordenacion}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                                                               \\
+        \hline
+        \hyperref[req:bd1]{BD-1} & Verificado con consultas con erros tipográficos; os resultados inclúen entidades relevantes                                                       \\
+        \hyperref[req:bd2]{BD-2} & Aplicada nas vistas \textit{search\_programme}, \textit{search\_iec} e \textit{institution\_new\_catalogue}                                       \\
+        \hyperref[req:bd3]{BD-3} & A busca opera sobre título, institución asociada e, para IECs, programa ao que pertencen                                                          \\
+        \hyperref[req:bd4]{BD-4} & Emprégase a distancia de Levenshtein normalizada como criterio de similaridade entre a consulta e os campos indexados                             \\
+        \hyperref[req:bd5]{BD-5} & Tanto o termo de busca coma os candidatos son normalizados antes da súa comparación, polo que maiúsculas e diacríticos non afectan aos resultados \\
+        \hyperref[req:bd6]{BD-6} & A busca compara o termo contra todas as traducións indexadas de cada contido, con independencia do idioma da interface do usuario                 \\
+        \hyperref[req:bd7]{BD-7} & Os resultados máis relevantes aparecen en primeiro lugar; se o usuario escolleu un criterio de ordenación propio, este prevalece                  \\
+        \hyperref[req:bd8]{BD-8} & A interface non sofreu ningunha modificación visible respecto ao comportamento anterior                                                           \\
+        \hyperref[req:bd9]{BD-9} & Ante consultas baleiras ou moi curtas, non se aplica ningún filtro e móstranse todos os resultados                                                \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de busca difusa.}
+    \label{tab:validacion_busca}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                                                        \\
+        \hline
+        \hyperref[req:ta1]{TA-1} & O sistema localiza resultados pertinentes ante consultas formuladas nun idioma diferente ao dos contidos indexados                         \\
+        \hyperref[req:ta2]{TA-2} & Todas as traducións da consulta realízanse ao inglés                                                                                       \\
+        \hyperref[req:ta3]{TA-3} & O dicionario estático actúa como primeira opción; o motor de tradución automática invócase unicamente cando o termo non está recollido nel \\
+        \hyperref[req:ta4]{TA-4} & O termo orixinal inclúese sempre no conxunto de termos de busca, garantindo o funcionamento correcto aínda en caso de fallo na tradución   \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de tradución automática da consulta.}
+    \label{tab:validacion_traduccion}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}              & \textbf{Validación}                                                                                                                                     \\
+        \hline
+        \hyperref[req:rnf1]{RNF-1} & A solución intégrase mediante hooks e módulos propios de Drupal, sen modificar o modelo de datos nin afectar ao resto de funcionalidades                \\
+        \hyperref[req:rnf2]{RNF-2} & Toda a implementación emprega Drupal, PHP e librarías de código aberto, en coherencia coa arquitectura do proxecto                                      \\
+        \hyperref[req:rnf3]{RNF-3} & O sistema xestiona entradas baleiras, moi curtas ou sen coincidencias sen producir erros visibles para o usuario                                        \\
+        \hyperref[req:rnf4]{RNF-4} & Os elementos de interacción integráronse co deseño existente da plataforma, empregando os estilos e compoñentes do tema Bootstrap 5                     \\
+        \hyperref[req:rnf5]{RNF-5} & O tempo de resposta observado durante o desenvolvemento non presentou degradación perceptible respecto ao comportamento previo                          \\
+        \hyperref[req:rnf6]{RNF-6} & As consultas ao índice de Search API limítanse aos campos necesarios e opérase sobre os resultados en memoria, sen consultas adicionais á base de datos \\
+        \hyperref[req:rnf7]{RNF-7} & O algoritmo opera sobre o índice de Search API, polo que o rendemento depende do motor de indexación e non escala linearmente co volume de contido      \\
+        \hyperref[req:rnf8]{RNF-8} & Cada mellora está implementada nun módulo propio con clases e servizos independentes, o que facilita o seu mantemento e extensión por separado          \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos non funcionais.}
+    \label{tab:validacion_rnf}
+\end{table}
 
 % **************************************************
 % * Declaración de uso de IAX
@@ -833,6 +835,7 @@ Seleccionouse a configuración laxa como resultado do proceso de calibrado. Os v
 \end{itemize}
 
 \noindent\textbf{Observacións}:
+\nopagebreak
 
 \vspace{0.5em}
 \noindent A ferramenta empregouse en dous ámbitos diferenciados. Na redacción da memoria, o autor elaborou cada apartado e Claude asistiu na corrección gramatical e ortográfica, na mellora do estilo e no seguimento dos cambios no código, actualizando os apartados correspondentes conforme evolucionaba a implementación; nos de implementación, axudou ademais a inspeccionar o código e documentar os detalles técnicos. No desenvolvemento, empregouse como apoio para navegar polo proxecto, localizar ficheiros e fragmentos de código relevantes, comprender o ecosistema e as tecnoloxías implicadas, na depuración e corrección de erros, e como asistencia puntual na creación de código.
@@ -840,8 +843,7 @@ Seleccionouse a configuración laxa como resultado do proceso de calibrado. Os v
 \vspace{2em}
 \noindent\textbf{Data:} 12 de xullo de 2026
 
-\vspace{1em}
-\vspace{1em}
+\vspace{0.5em}
 \noindent\textbf{Sinatura:}\hspace{0.5cm}\raisebox{-0.4cm}{\includegraphics[width=4cm]{images/firma.png}}
 
 \end{document}
