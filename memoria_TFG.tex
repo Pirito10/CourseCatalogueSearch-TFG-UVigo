@@ -318,7 +318,7 @@ O catálogo de DACEM almacena cada contido obrigatoriamente en inglés, mentres 
 
 O idioma de orixe da consulta determínase a partir do idioma activo na interface de Drupal, en lugar de aplicar detección automática sobre o texto introducido. Esta decisión responde á escasa fiabilidade da detección automática de idioma do motor de tradución sobre termos académicos curtos e frecuentemente sen acentos: termos como \textit{gestion empresarial} ou \textit{matematicas aplicadas} son detectados incorrectamente como francés ou portugués con alta confianza, debido á semellanza léxica entre os idiomas románicos. O idioma da interface, en cambio, é un dato fiable e sempre dispoñible.
 
-O dicionario estático consultase en primeiro lugar por ser máis rápido e preciso que o motor de tradución neural para vocabulario académico: os motores de propósito xeral tenden a producir traducións incorrectas con palabras soltas e sen contexto (por exemplo, \textit{informática} pode traducirse como \textit{it} en lugar de \textit{computer science}). O dicionario mantén entradas separadas para termos de programas e para termos de compoñentes educativos, de xeito que cada chamada ao servizo consulta unicamente o subconxunto correspondente ao tipo de busca en curso, evitando percorrer entradas irrelevantes.
+O dicionario estático consúltase en primeiro lugar por ser máis rápido e preciso que o motor de tradución neural para vocabulario académico: os motores de propósito xeral tenden a producir traducións incorrectas con palabras soltas e sen contexto (por exemplo, \textit{informática} pode traducirse como \textit{it} en lugar de \textit{computer science}). O dicionario mantén entradas separadas para termos de programas e para termos de compoñentes educativos, de xeito que cada chamada ao servizo consulta unicamente o subconxunto correspondente ao tipo de busca en curso, evitando percorrer entradas irrelevantes.
 
 O termo orixinal da consulta inclúese sempre no conxunto de termos de busca, tanto se se obtén tradución como se non. Deste xeito cóbrense tres escenarios: se o contido dispón de tradución ao idioma do usuario, o termo orixinal pode puntuar directamente contra ela, ofrecendo potencialmente maior precisión que a comparación mediante o equivalente en inglés; se o usuario escribe directamente en inglés, a busca funciona sen necesidade de ningún proceso de tradución; e se a tradución falla ou produce un resultado de baixa calidade, o mecanismo de busca difusa opera igualmente sobre o termo orixinal como salvagarda.
 
@@ -430,7 +430,7 @@ A tokenización divide o texto en palabras de 4 ou máis caracteres mediante a e
 
 A implementación do servizo de tradución articulouse en tres elementos:
 \begin{itemize}
-    \item A configuración do motor \textit{LibreTranslate} \cite{libretranslate} no entorno de desenvolvemento (véxase o anexo~\ref{anx:libretranslate}).
+    \item A configuración do motor \textit{LibreTranslate} \cite{libretranslate} na contorna de desenvolvemento (véxase o anexo~\ref{anx:libretranslate}).
     \item A clase \texttt{TranslationDictionary}, que almacena o vocabulario académico estático.
     \item A clase \texttt{TranslationService}, que coordina o dicionario e o motor e serve de punto de entrada para a clase \texttt{FuzzySearch}.
 \end{itemize}
@@ -533,7 +533,7 @@ Ademais dos requisitos funcionais, os requisitos non funcionais definidos na sec
 
 O desenvolvemento presentou dificultades principalmente na integración coa arquitectura interna de Drupal, que require comprender o funcionamento do sistema de \textit{hooks} e dos índices de \textit{Search API} antes de poder intervir nel de forma eficaz. Tamén foi necesario tomar decisións de deseño non triviais, como a estratexia de detección de idioma para a tradución automática, onde a solución máis evidente resultou ser menos fiable que un enfoque alternativo.
 
-A nivel persoal, este traballo supuxo o primeiro contacto con Drupal e co entorno de desenvolvemento DDEV, tecnoloxías das que non tiña coñecemento previo. Traballar sobre un sistema desta envergadura, con múltiples módulos interconectados e unha arquitectura interna complexa, esixiu un período de adaptación significativo antes de poder comezar a implementar calquera mellora. Igualmente relevante foi o proceso de investigación previo á implementación de cada funcionalidade: avaliar diferentes alternativas para a busca difusa, seleccionar un motor de tradución automática que se axustase aos requisitos do proxecto e decidir como estruturar o índice de busca requiriu consultar documentación, analizar casos de uso e contrastar opcións antes de tomar cada decisión técnica. Este proceso de investigación e toma de decisións informadas foi, probablemente, unha das aprendizaxes máis valiosas do traballo.
+A nivel persoal, este traballo supuxo o primeiro contacto con Drupal e coa contorna de desenvolvemento DDEV, tecnoloxías das que non tiña coñecemento previo. Traballar sobre un sistema desta envergadura, con múltiples módulos interconectados e unha arquitectura interna complexa, esixiu un período de adaptación significativo antes de poder comezar a implementar calquera mellora. Igualmente relevante foi o proceso de investigación previo á implementación de cada funcionalidade: avaliar diferentes alternativas para a busca difusa, seleccionar un motor de tradución automática que se axustase aos requisitos do proxecto e decidir como estruturar o índice de busca requiriu consultar documentación, analizar casos de uso e contrastar opcións antes de tomar cada decisión técnica. Este proceso de investigación e toma de decisións informadas foi, probablemente, unha das aprendizaxes máis valiosas do traballo.
 
 As melloras desenvolvidas supoñen unha contribución concreta á plataforma DACEM, abordando limitacións reais do sistema de busca que afectan directamente á experiencia dos estudantes en mobilidade que consultan o catálogo.
 
@@ -547,7 +547,7 @@ A partir do traballo realizado, identifícanse as seguintes liñas de traballo f
 \begin{itemize}
     \item \textbf{Implementación da busca avanzada por compatibilidade de compoñentes educativos.} A funcionalidade foi completamente deseñada no marco deste traballo, incluíndo a interface de usuario, o mecanismo de puntuación e os requisitos funcionais. A súa implementación constituiría a continuación máis directa do traballo aquí presentado.
 
-    \item \textbf{Despregamento do motor de tradución automática en produción.} O motor \textit{LibreTranslate} está configurado como un servizo Docker no entorno de desenvolvemento local, pero non no servidor de produción. Para que a tradución automática estea operativa na plataforma pública, sería necesario integrar este servizo na infraestrutura de despregamento real.
+    \item \textbf{Despregamento do motor de tradución automática en produción.} O motor \textit{LibreTranslate} está configurado como un servizo Docker na contorna de desenvolvemento local, pero non no servidor de produción. Para que a tradución automática estea operativa na plataforma pública, sería necesario integrar este servizo na infraestrutura de despregamento real.
 
     \item \textbf{Melloras no algoritmo de busca difusa.} O algoritmo actual baséase na distancia de Levenshtein sobre palabras individuais. Poderían explorarse técnicas complementarias como a redución de palabras á súa raíz (\textit{stemming}), o uso de sinónimos ou un proceso de calibrado máis sistemático baseado en datos reais de uso, co obxectivo de mellorar a precisión e exhaustividade dos resultados.
 
@@ -617,10 +617,10 @@ Para a integración dun servizo de tradución automática nunha plataforma web, 
 
     \item \textbf{LibreTranslate} \cite{libretranslate_portal}: API de pago sen nivel gratuíto, con límites de petición por minuto. Comparte a problemática de dependencia externa das opcións anteriores.
 
-    \item \textbf{LibreTranslate (autoaloxado)}: motor de código aberto despregable como contedor Docker, sen coste por petición, sen límites de cota e sen saída de datos do servidor.
+    \item \textbf{LibreTranslate (autoaloxado)}: motor de código aberto despregable como contedor Docker, sen custo por petición, sen límites de cota e sen saída de datos do servidor.
 \end{itemize}
 
-Optouse pola opción autoaloxada de \textit{LibreTranslate} polas seguintes razóns: elimina a dependencia de servizos externos de pago, garante que os datos das consultas permanecen no servidor da plataforma, non impón límites de petición e intégrase de forma natural no entorno de desenvolvemento DDEV mediante Docker.
+Optouse pola opción autoaloxada de \textit{LibreTranslate} polas seguintes razóns: elimina a dependencia de servizos externos de pago, garante que os datos das consultas permanecen no servidor da plataforma, non impón límites de petición e intégrase de forma natural na contorna de desenvolvemento DDEV mediante Docker.
 
 O principal inconveniente de \textit{LibreTranslate} é a calidade de tradución inferior á de alternativas comerciais, especialmente para termos curtos e illados sen contexto, como os habituais en nomes de programas e compoñentes educativos, que adoitan ser palabras soltas ou frases técnicas curtas. Ademais, o contedor require dunha cantidade non despreciable de RAM e presenta latencia nas primeiras peticións tras o arranque.
 
