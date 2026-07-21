@@ -38,6 +38,13 @@ search-programme-sort:
     #- core/jquery
     - core/once
 
+course-search-modal:
+  js:
+    js/course-search-modal.js: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
 
 iec_mobility_autosubmit:
   js:
