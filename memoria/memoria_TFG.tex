@@ -1,0 +1,849 @@
+% **************************************************
+% * Opciones de clase y globales
+% **************************************************
+\documentclass[%
+    a4paper,               % Tamaño de papel A4
+    twoside,               % Páginas pares e impares con diseño diferenciado
+    10pt,                  % Tamaño de fuente. No inferior a 10 puntos.
+]{article}                 % Basado en el tipo "article"
+
+% **************************************************
+% * Idioma y paquete de formato
+% **************************************************
+\usepackage[galician]{babel}
+\usepackage{tfgteleco}
+\addto\captionsgalician{\renewcommand{\tablename}{Táboa}}
+\newfontfamily\greekfont{DejaVu Serif}
+
+% **************************************************
+% * Datos para la portada del TFG
+% **************************************************
+\title{Deseño e desenvolvemento dunha funcionalidade de busca e filtrado de cursos nun catálogo de cursos en liña}
+\author{Aarón Riveiro Vilar}
+\titores{Manuel Caeiro Rodríguez, Óscar Vázquez Trigo}
+\curso{2025/2026}
+
+% **************************************************
+% * Cabeceras (opcionales)
+% **************************************************
+\cabeceiras{true}
+
+% **************************************************
+% * Inicio del documento
+% **************************************************
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\maketitle
+% **************************************************
+% * Tábla de contenidos (opcional)
+% **************************************************
+\tableofcontents
+\clearpage
+\hypersetup{pageanchor=true}
+
+% **************************************************
+% * Introducción
+% **************************************************
+\section{Introdución}
+Nos últimos anos, o crecemento sostido dos sistemas de información dixitais deu lugar a repositorios con volumes de datos cada vez maiores e máis heteroxéneos. Neste contexto, a mera dispoñibilidade da información xa non resulta suficiente: é necesario dotar os sistemas de mecanismos eficaces que permitan localizar, filtrar e presentar os datos de forma relevante para o usuario. A disciplina da recuperación de información (\textit{Information Retrieval}) estuda precisamente os métodos e modelos que permiten acceder de maneira eficiente a grandes coleccións de documentos, maximizando a relevancia dos resultados ofrecidos fronte a unha consulta determinada \cite{sanderson2012}.
+
+A medida que aumenta o tamaño e a complexidade dos repositorios, a experiencia de usuario pasa a depender en grande medida da calidade do sistema de busca e filtrado. Non só é importante a rapidez de resposta, senón tamén a precisión e exhaustividade dos resultados, así como a capacidade do sistema para interpretar a intención de busca do usuario e ofrecer mecanismos de refinamento progresivo mediante filtros, facetas ou criterios adicionais \cite{raghavan1989}. Un sistema de busca limitado a coincidencias literais sobre un único campo de texto pode resultar insuficiente en contornas nas que os datos presentan múltiples dimensións e atributos relevantes.
+
+Por iso, o deseño e a implementación de estratexias avanzadas de busca e filtrado constitúen un elemento clave en calquera sistema de información orientado ao usuario final, especialmente cando se pretende facilitar o acceso eficiente a contidos estruturados e mellorar a usabilidade global da plataforma.
+
+% **************************************************
+% * Contexto
+% **************************************************
+\subsection{Contexto do proxecto}
+O proxecto DACEM (\textit{Digitising Academic Catalogues for Enhanced Mobility}) \cite{dacem}, aprobado na convocatoria de 2023 do programa Erasmus+ para Asociacións Estratéxicas en Educación Superior (código de proxecto 2023-1-ES01-KA220-HED-000160344), ten como finalidade o desenvolvemento dunha plataforma de catálogo de cursos dirixida a institucións educativas europeas. O seu obxectivo principal é ofrecer un sistema que permita publicar e manter información actualizada sobre titulacións e materias de forma accesible, estruturada e interoperable, facilitando así os procesos de mobilidade académica internacional. A plataforma, dispoñible publicamente en \url{https://dacem.eu}, está orientada a dous perfís principais de usuarios: as institucións educativas, que a empregan para publicar e manter actualizado o seu catálogo de cursos; e os estudantes que, no marco de procesos de mobilidade Erasmus, consultan a oferta formativa das universidades parceiras.
+
+O sistema de información asociado a esta plataforma está fundamentado en tecnoloxías de software libre e está concibido para poder despregarse tanto en contornas locais como en infraestruturas na nube. Máis alá do almacenamento estruturado de datos académicos, o correcto funcionamento do sistema depende da súa capacidade para xestionar, organizar e recuperar a información de maneira eficiente. Neste contexto, os mecanismos de busca e filtrado desempeñan un papel esencial, xa que constitúen o principal medio de interacción entre o usuario e o repositorio de cursos. A calidade destes mecanismos condiciona directamente a usabilidade do sistema, a precisión dos resultados obtidos e a experiencia global de navegación.
+
+% **************************************************
+% * Motivación
+% **************************************************
+\subsection{Motivación}
+Un dos retos fundamentais nos sistemas de información que xestionan grandes volumes de datos estruturados non reside unicamente no seu almacenamento, senón na forma en que estes datos son recuperados e presentados ao usuario. A medida que un repositorio medra en número de elementos e en complexidade de atributos, os mecanismos de busca simples baseados en coincidencias textuais directas poden resultar insuficientes para ofrecer resultados relevantes e axustados ás necesidades reais de consulta.
+
+Esta problemática é especialmente significativa en contornas nas que os datos presentan múltiples dimensións descritivas (como titulacións, materias, áreas de coñecemento, idiomas, créditos ou modalidades) e nas que o usuario pode ter criterios de busca diversos e combinados. A ausencia de mecanismos avanzados de filtrado e refinamento progresivo limita a capacidade do sistema para adaptarse a diferentes perfís de usuario e escenarios de consulta, reducindo a eficiencia na localización de información pertinente.
+
+No ámbito actual do desenvolvemento de aplicacións web e sistemas de xestión de contidos, as tendencias apuntan cara á implementación de motores de busca máis sofisticados, capaces de indexar múltiples campos, ponderar resultados segundo a relevancia, incorporar criterios de filtrado dinámico, xestionar consultas en múltiples idiomas e mellorar a experiencia de usuario mediante interfaces intuitivas. Estas solucións non só optimizan o acceso á información, senón que contribúen a unha maior usabilidade e aproveitamento do sistema no seu conxunto.
+
+O presente Traballo de Fin de Grao enmárcase neste contexto, propoñendo o deseño e desenvolvemento de melloras nos mecanismos de busca e filtrado do catálogo de cursos da plataforma DACEM.
+
+% **************************************************
+% * Plataforma de partida
+% **************************************************
+\subsection{A plataforma de partida}
+
+A plataforma DACEM está implementada sobre Drupal 10, un sistema de xestión de contidos (CMS) de código aberto amplamente empregado no ámbito académico e institucional \cite{drupal_usage}. Drupal 10 proporciona unha contorna flexible para a definición de tipos de contido estruturado, a xestión de usuarios e a publicación de información a través de interfaces web configurables, como se mostra na figura~\ref{fig:dacem}.
+
+\begin{figure}[b!]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=0.78\linewidth]{images/dacem.png}}
+    \caption{Páxina de inicio da plataforma DACEM.}
+    \label{fig:dacem}
+\end{figure}
+
+O modelo de datos organízase arredor de tres tipos de contido principais: \textit{programme}, que representa unha titulación académica; \textit{individual educational component} (IEC), correspondente a unha materia ou compoñente curricular individual; e \textit{institution}, que modela as universidades participantes. Cada entidade conta cun conxunto de campos estruturados que recollen atributos como a área de coñecemento, o nivel de cualificación, os créditos, o idioma de impartición ou o país de orixe, entre outros.
+
+Para a presentación e consulta do catálogo, a plataforma emprega o módulo \textit{Views}, integrado no núcleo de Drupal, que permite definir listaxes e consultas de contido de forma declarativa. O módulo \textit{Better Exposed Filters} \cite{better_exposed_filters} complementa \textit{Views} proporcionando a interface de filtrado ao usuario. Existen dúas vistas principais de busca: \textit{search\_programme}, accesible en \texttt{/search-programme}, orientada á consulta de titulacións; e \textit{search\_iec}, en \texttt{/search-iec}, orientada á consulta de compoñentes educativos individuais. Existe ademais a vista do catálogo de institución (\textit{institution\_new\_catalogue}), que presenta os programas e compoñentes educativos ofertados por unha institución concreta, accesible en \texttt{/catalogue/\{nid\}/programmes} e \texttt{/catalogue/\{nid\}/iecs} respectivamente. A capa de presentación visual está baseada nun tema personalizado construído sobre Bootstrap 5.
+
+A interface de busca ofrece ao usuario, nas vistas de busca e no catálogo de institución, unha barra de texto libre para formular a consulta, acompañada de filtros despregables que varían segundo o tipo de entidade consultada e permiten acotar os resultados por atributos como o campo de estudo, o tipo, a localización ou o idioma de impartición, así como un selector para restrinxir os resultados a programas e compoñentes dispoñibles para estudantes de mobilidade. Ademais, a vista de titulacións inclúe un selector adicional que permite ao usuario indicar o seu programa de orixe, de xeito que o sistema filtra os resultados para mostrar unicamente aqueles con acordos de colaboración con dita institución, como se amosa na figura~\ref{fig:busqueda}.
+
+\begin{figure}[b!]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=0.77\linewidth]{images/dacem-busqueda.png}}
+    \caption{Interface de busca da plataforma DACEM na vista de programas.}
+    \label{fig:busqueda}
+\end{figure}
+
+O mecanismo de busca textual actual baséase no filtro \textit{combine} de \textit{Views}, que realiza comparacións de subcadeas sobre o campo título das entidades. Esta aproximación presenta limitacións relevantes:
+\begin{itemize}
+    \item A busca restrinxese ao campo título, ignorando atributos como a descrición ou a área de coñecemento.
+    \item Non se aplica ningunha ponderación por relevancia, polo que os resultados se presentan en orde alfabética con independencia da pertinencia da consulta.
+    \item Non existe tolerancia a erros tipográficos, de xeito que calquera inexactitude na consulta pode producir cero resultados aínda que o elemento buscado exista no catálogo.
+    \item Aínda que os contidos están dispoñibles en inglés e opcionalmente noutros idiomas, a busca non contempla a posibilidade de formular a consulta nun idioma distinto ao dos contidos, o que impide localizar resultados mediante termos non ingleses cando non existe tradución indexada.
+    \item As opcións de filtrado son estáticas e non se adaptan ao conxunto de resultados dispoñibles, polo que poden aparecer valores sen correspondencia con ningunha entrada existente.
+    \item A plataforma non dispón dun mecanismo que permita buscar programas en función dos compoñentes educativos que conteñen, impedindo ao usuario localizar facilmente aqueles programas que mellor se axustan á súa formación académica previa.
+\end{itemize}
+
+% **************************************************
+% * Obxectivos e requisitos
+% **************************************************
+\section{Obxectivos e requisitos}
+\label{sec:obxectivos}
+O presente traballo ten como obxectivo principal mellorar a experiencia de busca e navegación do catálogo de cursos da plataforma DACEM. Partindo das limitacións identificadas no sistema actual (ausencia de criterios de ordenación, busca por coincidencia exacta, falta de tolerancia a erros tipográficos, imposibilidade de consultar en idiomas distintos ao dos contidos e carencia dun mecanismo para localizar programas segundo os compoñentes educativos que conteñen), propónse o deseño e implementación de catro melloras concretas:
+\begin{itemize}
+    \item A incorporación de criterios de ordenación de resultados nas vistas de busca e na vista do catálogo de institución.
+    \item A implementación dun mecanismo de busca difusa que permita localizar programas e compoñentes educativos aínda en presenza de erros tipográficos na consulta.
+    \item A incorporación dun servizo de tradución automática da consulta que permita obter resultados pertinentes aínda cando os contidos non dispoñan de tradución ao idioma do usuario.
+    \item O deseño dun mecanismo de busca avanzada que permita ao usuario localizar programas a partir dun conxunto de compoñentes educativos de referencia, ordenando os resultados pola suma das puntuacións de afinidade obtidas para cada compoñente introducido.
+\end{itemize}
+
+A continuación defínense os requisitos funcionais e non funcionais que guían o desenvolvemento. Enténdese por requisito funcional aquel que describe as capacidades concretas que debe ofrecer o sistema, mentres que os requisitos non funcionais establecen condicións relativas ao seu comportamento, integración e mantenibilidade, sen especificar funcionalidades concretas.
+
+% **************************************************
+% * Requisitos funcionais
+% **************************************************
+\subsection{Requisitos funcionais}
+
+% **************************************************
+% * Ordenación de resultados
+% **************************************************
+\subsubsection{Ordenación de resultados}
+\label{req:sec:ordenacion}
+\begin{itemize}
+    \item \label{req:or1}\textbf{OR-1.} O sistema debe permitir ao usuario ordenar os resultados das vistas de busca segundo diferentes criterios, adaptados ao tipo de entidade que se consulta.
+
+    \item \label{req:or2}\textbf{OR-2.} Cada criterio de ordenación debe permitir alternar entre orde ascendente e descendente mediante a mesma acción de usuario.
+
+    \item \label{req:or3}\textbf{OR-3.} Todas as vistas deben contemplar os seguintes criterios de ordenación comúns: orde alfabética por título, campo de estudo e número de créditos.
+
+    \item \label{req:or4}\textbf{OR-4.} As vistas de busca (\textit{search\_programme} e \textit{search\_iec}) deben incluír adicionalmente o criterio de ordenación por país de orixe da institución.
+
+    \item \label{req:or5}\textbf{OR-5.} A vista de programas (\textit{search\_programme}) e a páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) deben incluír adicionalmente o criterio de ordenación por nivel de cualificación EQF (\textit{European Qualifications Framework}).
+
+    \item \label{req:or6}\textbf{OR-6.} A vista de compoñentes educativos (\textit{search\_iec}) e a páxina de compoñentes educativos do catálogo de institución deben incluír adicionalmente os criterios de ordenación por programa asociado e cuadrimestre.
+
+    \item \label{req:or7}\textbf{OR-7.} A interface de ordenación debe integrarse visualmente de forma coherente co deseño existente da plataforma.
+\end{itemize}
+
+% **************************************************
+% * Busca difusa
+% **************************************************
+\subsubsection{Busca difusa}
+\label{req:sec:busca}
+\begin{itemize}
+    \item \label{req:bd1}\textbf{BD-1.} O sistema debe ser capaz de localizar resultados relevantes aínda cando a consulta introducida polo usuario conteña erros tipográficos ou grafías aproximadas.
+
+    \item \label{req:bd2}\textbf{BD-2.} A busca difusa debe aplicarse ás vistas de busca e á vista do catálogo de institución.
+
+    \item \label{req:bd3}\textbf{BD-3.} A busca debe operar sobre múltiples campos indexados, de xeito que a consulta poida coincidir co título da entidade, co nome da institución asociada ou, no caso dos compoñentes educativos, co título do programa ao que pertencen.
+
+    \item \label{req:bd4}\textbf{BD-4.} A busca difusa debe aplicar un criterio de similaridade entre a consulta e os campos indexados dos elementos do catálogo, de maneira que se poidan recuperar resultados con pequenas desviacións ortográficas respecto ao texto almacenado.
+
+    \item \label{req:bd5}\textbf{BD-5.} A normalización da consulta debe incluír a conversión a minúsculas e a eliminación de diacríticos, de xeito que maiúsculas e caracteres acentuados non afecten aos resultados da busca.
+
+    \item \label{req:bd6}\textbf{BD-6.} A busca debe operar sobre todos os idiomas indexados, de xeito que o usuario poida localizar resultados con independencia do idioma no que estea configurada a interface ou do idioma no que estea almacenado o título.
+
+    \item \label{req:bd7}\textbf{BD-7.} Os resultados deben presentarse ordenados por relevancia, de xeito que os elementos con maior correspondencia coa consulta aparezan en primeiro lugar.
+
+    \item \label{req:bd8}\textbf{BD-8.} O mecanismo de busca difusa debe integrarse no fluxo de consulta existente, de xeito que o usuario non perciba diferenzas na interface respecto ao comportamento anterior.
+
+    \item \label{req:bd9}\textbf{BD-9.} O sistema debe manter un comportamento consistente ante consultas baleiras ou moi curtas, evitando erros ou resultados inesperados.
+\end{itemize}
+
+% **************************************************
+% * Tradución automática da consulta
+% **************************************************
+\subsubsection{Tradución automática da consulta}
+\label{req:sec:traduccion}
+\begin{itemize}
+    \item \label{req:ta1}\textbf{TA-1.} O sistema debe ser capaz de localizar resultados pertinentes cando a consulta está formulada nun idioma distinto ao dos contidos almacenados, sen requirir que o usuario reformule a busca en inglés.
+
+    \item \label{req:ta2}\textbf{TA-2.} A tradución debe realizarse ao inglés, lingua na que se almacena obrigatoriamente todo o contido do catálogo.
+
+    \item \label{req:ta3}\textbf{TA-3.} O sistema debe dispoñer dun mecanismo de tradución en dous niveis: un dicionario estático de termos académicos como primeira opción, e un servizo de tradución automática como alternativa cando o termo non estea recollido nel.
+
+    \item \label{req:ta4}\textbf{TA-4.} O termo orixinal da consulta debe incluírse sempre xunto á tradución como medida de robustez, de xeito que a busca funcione correctamente aínda en caso de fallo na tradución ou cando o usuario escriba directamente en inglés, sen afectar á dispoñibilidade do sistema.
+\end{itemize}
+
+% **************************************************
+% * Busca avanzada por compatibilidade de compoñentes educativos
+% **************************************************
+\subsubsection{Busca avanzada por compatibilidade de compoñentes educativos}
+\label{req:sec:busca_avanzada}
+\begin{itemize}
+    \item \label{req:ba1}\textbf{BA-1.} O sistema debe ofrecer ao usuario un mecanismo de busca avanzada na vista de programas (\textit{search\_programme}) e na páxina de programas do catálogo de institución (\textit{institution\_new\_catalogue}) que lle permita introducir un conxunto de compoñentes educativos de referencia, accesible mediante un elemento de interface que abra un diálogo de busca avanzada.
+
+    \item \label{req:ba2}\textbf{BA-2.} A interface debe permitir engadir de forma dinámica un número indeterminado de campos de texto, cada un correspondente a un compoñente educativo.
+
+    \item \label{req:ba3}\textbf{BA-3.} O sistema debe aplicar o mecanismo de busca difusa para calcular a correspondencia entre cada termo introducido polo usuario e os compoñentes educativos do catálogo.
+
+    \item \label{req:ba4}\textbf{BA-4.} Os resultados deben presentarse ordenados pola suma das puntuacións de afinidade obtidas para cada compoñente introducido, de xeito que os programas con maior correspondencia global co conxunto de termos introducidos aparezan en primeiro lugar.
+
+    \item \label{req:ba5}\textbf{BA-5.} O sistema debe ignorar os campos de texto baleiros na busca, garantindo un comportamento robusto independentemente do número de campos que o usuario deixe sen cubrir.
+\end{itemize}
+
+% **************************************************
+% * Requisitos non funcionais
+% **************************************************
+\subsection{Requisitos non funcionais}
+\label{req:sec:rnf}
+\begin{itemize}
+    \item \label{req:rnf1}\textbf{RNF-1.} A solución debe integrarse coa plataforma existente sen alterar a estrutura fundamental do modelo de datos nin comprometer o funcionamento do resto de funcionalidades do sistema.
+
+    \item \label{req:rnf2}\textbf{RNF-2.} O desenvolvemento debe estar fundamentado en tecnoloxías de código aberto, mantendo coherencia cos principios e a arquitectura do proxecto DACEM.
+
+    \item \label{req:rnf3}\textbf{RNF-3.} O sistema debe garantir un comportamento estable e previsible ante entradas incorrectas ou consultas mal formadas, evitando erros visibles para o usuario final.
+
+    \item \label{req:rnf4}\textbf{RNF-4.} A interface debe cumprir criterios básicos de usabilidade, asegurando que os mecanismos de interacción resulten intuitivos e coherentes co deseño xeral da plataforma.
+
+    \item \label{req:rnf5}\textbf{RNF-5.} O sistema debe garantir tempos de resposta axeitados nas consultas, de maneira que as melloras introducidas non degraden de forma perceptible a experiencia de uso.
+
+    \item \label{req:rnf6}\textbf{RNF-6.} A solución debe minimizar o impacto nos recursos do servidor, evitando sobrecargas innecesarias e optimizando as consultas realizadas á base de datos.
+
+    \item \label{req:rnf7}\textbf{RNF-7.} O rendemento do sistema debe manterse estable ante un incremento razoable do volume de datos almacenados no catálogo, asegurando que a solución escale de forma adecuada.
+
+    \item \label{req:rnf8}\textbf{RNF-8.} A implementación debe estruturarse de forma modular e documentada, de xeito que cada mellora poida ser mantida ou ampliada de forma independente sen afectar ao resto do sistema.
+\end{itemize}
+
+% **************************************************
+% * Deseño
+% **************************************************
+\section{Deseño}
+
+\subsection{Ordenación de resultados}
+\label{sec:diseno_ordenacion}
+
+Para incorporar a funcionalidade de ordenación á vista de programas, á vista de compoñentes educativos e á vista do catálogo de institución, optouse por empregar o mecanismo de ordenación exposta do módulo \textit{Views} de Drupal, en lugar de implementar unha solución baseada en manipulación directa de consultas ou en ordenación no lado do cliente. Esta decisión responde a tres razóns principais:
+\begin{itemize}
+    \item O mecanismo intégrase de forma nativa co sistema \textit{AJAX} de \textit{Views}, o que evita ter que reimplementar a actualización parcial de resultados.
+    \item Mantén a coherencia coa arquitectura da plataforma, que xa emprega \textit{Views} de forma extensiva para a xestión e presentación de contido.
+    \item Os criterios de ordenación quedan declarados na configuración da vista en lugar de estar codificados en PHP, o que facilita a súa modificación sen necesidade de modificar código.
+\end{itemize}
+
+O mecanismo funciona do seguinte xeito: cando se declara un criterio de ordenación como exposto na configuración dunha vista, \textit{Views} xera automaticamente dous campos de control no formulario asociado, un que identifica o criterio polo que ordenar e outro que indica a dirección (ascendente ou descendente), e reconstrúe a consulta ao recibir o envío do formulario.
+
+Para a interacción do usuario, deseñouse un comportamento de alternancia: o primeiro clic sobre un botón de ordenación establece o criterio en orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección de ordenación, como se mostra na figura~\ref{fig:ordenacion}. Esta decisión permite concentrar cada criterio nun único botón, evitando duplicar os controis en dúas versións por dirección. A lóxica de alternancia, implementada en \textit{JavaScript}, le o campo de ordenación activo no formulario e inverte a dirección se coincide co botón pulsado, ou establece a orde ascendente por defecto en caso contrario. Ademais, o botón correspondente ao criterio activo mostra un indicador visual da dirección de ordenación aplicada.
+
+\begin{figure}[b!]
+    \centering
+    \includegraphics[width=\linewidth]{images/ordenacion-diseño.png}
+    \caption{Deseño da interacción dos botóns de ordenación.}
+    \label{fig:ordenacion}
+\end{figure}
+
+Os criterios de ordenación definidos para cada vista son os seguintes:
+
+\begin{itemize}
+    \item \textbf{Vista de programas}: título, campo de estudo, nivel EQF, créditos e país.
+    \item \textbf{Vista de compoñentes educativos}: título, programa pai, créditos, cuadrimestre, campo de estudo e país.
+    \item \textbf{Catálogo de institución, programas}: título, campo de estudo, nivel EQF e créditos.
+    \item \textbf{Catálogo de institución, compoñentes educativos}: título, programa pai, campo de estudo, créditos e cuadrimestre.
+\end{itemize}
+
+Os criterios de tipo textual (título, campo de estudo, programa pai e país) ordénanse de forma alfabética; os de tipo numérico (créditos, nivel EQF e cuadrimestre) ordénanse por valor numérico.
+
+Algúns destes criterios implican campos que non pertencen directamente ao nodo listado, senón a entidades relacionadas. O país reside no nodo institución referenciado polo programa; o campo de estudo e o título do programa pai, tanto na vista de compoñentes educativos como na páxina de compoñentes educativos do catálogo de institución, pertencen ao nodo programa referenciado polo IEC. Nestes casos, a ordenación resólvese a través das relacións entre entidades xa declaradas na configuración da vista, sen necesidade de definir unións adicionais entre táboas.
+
+\subsection{Busca difusa}
+\label{sec:diseno_busca}
+
+A busca difusa articulouse en tres compoñentes, aplicados de forma idéntica ás vistas de busca e á vista do catálogo de institución:
+\begin{itemize}
+    \item \textbf{Índices de Search API}: un índice para cada tipo de contido (programas e compoñentes educativos), que proporcionan os campos sobre os que opera a clase de puntuación: título e nome da institución para os programas, e título, nome da institución e título do programa asociado para os compoñentes educativos (véxase o anexo~\ref{anx:search_api}).
+    \item \textbf{Hooks de Views}: dous puntos de extensión de Drupal que integran a lóxica de busca difusa na execución das vistas.
+    \item \textbf{Clase PHP de puntuación}: calcula a similitude entre a consulta e o conxunto de campos indexados de cada candidato mediante a distancia de Levenshtein (véxase o anexo~\ref{anx:busca_difusa}).
+\end{itemize}
+
+Fronte a unha consulta SQL directa ás táboas de nodos, os índices ofrecen a vantaxe de desacoplar a lóxica de puntuación do esquema da base de datos e de manterse actualizados de forma automática ao modificarse o contido. Ambos os índices están configurados para cubrir todos os idiomas dispoñibles, de xeito que a busca non queda restrinxida ao idioma da interface.
+
+A decisión de interceptar a consulta mediante \textit{hooks}, en lugar de actuar sobre a capa de presentación, responde ao obxectivo de que o mecanismo sexa transparente para o usuario e compatible co sistema \textit{AJAX} de \textit{Views}.
+
+A puntuación aplícase a nivel de palabra, e non sobre a frase completa, porque nun título formado por varias palabras un único erro tipográfico impediría calquera coincidencia ao comparar as cadeas enteiras. Comparando palabra a palabra, cada termo avalíase de forma independente e o resultado global reflicte mellor o grao real de similitude. Tanto o termo de busca como o texto indexado de cada candidato son normalizados previamente mediante conversión a minúsculas e eliminación de acentos, o que garante que a busca sexa insensible a maiúsculas e acentos, conforme ao requisito funcional establecido na sección~\ref{sec:obxectivos}. A continuación, tokenízanse en palabras de catro ou máis caracteres; o limiar de lonxitude mínima descarta preposicións, artigos e partículas curtas que, pola súa alta frecuencia, xerarían falsos positivos. A similitude calcúlase comparando cada palabra da consulta con cada palabra extraída do texto indexado do candidato, segundo os seguintes niveis:
+
+\begin{itemize}
+    \item Coincidencia exacta: puntuación 1,0.
+    \item Coincidencia de prefixo (a palabra da consulta é inicio dunha palabra do texto indexado): puntuación 0,85.
+    \item Distancia de Levenshtein para palabras curtas (ata 5 caracteres): ata 1 erro permitido.
+    \item Distancia de Levenshtein para palabras longas (máis de 5 caracteres): ata 3 erros permitidos.
+    \item Distancia superior ao limiar: puntuación 0,0 (descartado).
+\end{itemize}
+
+A puntuación total dun elemento é a suma das mellores coincidencias obtidas para cada palabra da consulta. Esta escala continua permite ordenar os resultados por relevancia, a diferenza dun enfoque binario que simplemente incluiría ou excluiría resultados sen distinguir grao de axuste; en caso de empate na puntuación, aplícase como criterio de desempate a orde alfabética polo título. Os valores concretos de cada nivel e os limiares de distancia foron determinados de forma empírica a través dun proceso de calibrado (véxase o anexo~\ref{anx:calibrado}).
+
+O fluxo de execución, esquematizado na figura~\ref{fig:fuzzy_diseno}, é o seguinte: cando o usuario introduce un termo, o \textit{hook} de modificación de consulta intercepta a \textit{query} SQL e invoca a clase de puntuación, que obtén os termos de busca a través do servizo de tradución automática descrito na sección~\ref{sec:diseno_traduccion}, carga todos os candidatos indexados en \textit{Search API}, normaliza e tokeniza tanto os termos de busca como o texto de cada candidato, e calcula a puntuación de forma independente para cada termo; os resultados combínanse conservando a puntuación máxima por candidato. Con esa información, elimina a condición de filtrado por subcadea exacta e substitúea por un filtro polo conxunto de identificadores dos elementos que superaron o limiar de puntuación. Se o usuario non seleccionou explicitamente un criterio de ordenación, limpa ademais os criterios preexistentes da vista; a orde de relevancia dos candidatos trasládase entón ao \textit{hook} de pre-execución mediante un mecanismo de almacenamento compartido, e este, xusto antes de que \textit{Views} execute a consulta, incorpora á SQL un criterio de ordenación que garante que os resultados se devolven directamente na orde de relevancia correcta, paxinación incluída. Se o usuario seleccionou un criterio de ordenación, este prevalece sobre a orde de relevancia.
+
+\begin{figure}[t!]
+    \centering
+    \includegraphics[width=\linewidth]{images/fuzzy-diseño.png}
+    \caption{Deseño do mecanismo de busca difusa.}
+    \label{fig:fuzzy_diseno}
+\end{figure}
+
+\subsection{Tradución automática da consulta}
+\label{sec:diseno_traduccion}
+
+O catálogo de DACEM almacena cada contido obrigatoriamente en inglés, mentres que as traducións a outros idiomas son opcionais. Un usuario que formule a consulta noutro idioma pode non obter resultados pertinentes para contidos que carezan de tradución ao seu idioma, xa que o mecanismo de busca difusa compara o termo introducido directamente contra o texto indexado, sen ningún proceso de equivalencia semántica entre idiomas. Para cubrir esta limitación, incorpórase un servizo de tradución automática que obtén o equivalente en inglés do termo de busca e o engade como termo adicional de consulta. A busca execútase entón dúas veces (co termo orixinal e co traducido), comparando cada un contra o conxunto completo do índice con independencia do idioma de cada contido; os resultados combínanse conservando a puntuación máxima por candidato. A tradución realízase unicamente ao inglés, idioma sempre dispoñible no catálogo, polo que basta cunha única tradución por consulta para cubrilo por completo. O servizo articulouse en dous compoñentes:
+
+\begin{itemize}
+    \item \textbf{Dicionario estático de termos académicos}: cobre o vocabulario máis habitual do ámbito educativo, con entradas separadas para programas e para compoñentes educativos.
+    \item \textbf{Motor de tradución automática neural}: empregado como alternativa cando o termo non está recollido no dicionario.
+\end{itemize}
+
+O idioma de orixe da consulta determínase a partir do idioma activo na interface de Drupal, en lugar de aplicar detección automática sobre o texto introducido. Esta decisión responde á escasa fiabilidade da detección automática de idioma do motor de tradución sobre termos académicos curtos e frecuentemente sen acentos: termos como \textit{gestion empresarial} ou \textit{matematicas aplicadas} son detectados incorrectamente como francés ou portugués con alta confianza, debido á semellanza léxica entre os idiomas románicos. O idioma da interface, en cambio, é un dato fiable e sempre dispoñible.
+
+O dicionario estático consúltase en primeiro lugar por ser máis rápido e preciso que o motor de tradución neural para vocabulario académico: os motores de propósito xeral tenden a producir traducións incorrectas con palabras soltas e sen contexto (por exemplo, \textit{informática} pode traducirse como \textit{it} en lugar de \textit{computer science}). O dicionario mantén entradas separadas para termos de programas e para termos de compoñentes educativos, de xeito que cada chamada ao servizo consulta unicamente o subconxunto correspondente ao tipo de busca en curso, evitando percorrer entradas irrelevantes.
+
+O termo orixinal da consulta inclúese sempre no conxunto de termos de busca, tanto se se obtén tradución como se non. Deste xeito cóbrense tres escenarios: se o contido dispón de tradución ao idioma do usuario, o termo orixinal pode puntuar directamente contra ela, ofrecendo potencialmente maior precisión que a comparación mediante o equivalente en inglés; se o usuario escribe directamente en inglés, a busca funciona sen necesidade de ningún proceso de tradución; e se a tradución falla ou produce un resultado de baixa calidade, o mecanismo de busca difusa opera igualmente sobre o termo orixinal como salvagarda.
+
+O fluxo de execución, esquematizado na figura~\ref{fig:traduccion_diseno}, é o seguinte: cando o usuario introduce un termo, o servizo de tradución detecta o idioma da interface; se non é inglés, consulta primeiro o dicionario e, se o termo non está recollido, invoca o motor de tradución automática. O resultado é un conxunto de un ou dous termos (o orixinal e, se procede, a súa tradución ao inglés) que se pasan ao mecanismo de busca difusa. A puntuación calcúlase de forma independente para cada termo e consérvase a puntuación máxima obtida para cada candidato.
+
+\begin{figure}[b!]
+    \centering
+    \includegraphics[width=0.96\linewidth]{images/traduccion-diseño.png}
+    \caption{Deseño do fluxo de tradución automática da consulta.}
+    \label{fig:traduccion_diseno}
+\end{figure}
+
+% **************************************************
+% * Busca avanzada por compatibilidade de compoñentes educativos
+% **************************************************
+\subsection{Busca avanzada por compatibilidade de compoñentes educativos}
+\label{sec:diseno_busca_avanzada}
+
+A busca estándar da plataforma opera sobre o título das entidades e outros campos indexados, pero non permite ao usuario expresar que tipo de contido académico busca nun programa. Para cubrir esta carencia, deséñase un mecanismo de busca avanzada que permite ao usuario introducir un conxunto de compoñentes educativos de referencia e obter como resultado os programas do catálogo ordenados por afinidade co perfil introducido.
+
+O punto de entrada da funcionalidade é un botón \textit{Busca avanzada} situado na interface da vista de programas e na páxina de programas do catálogo de institución. Ao pulsalo, ábrese un diálogo, ilustrado na figura~\ref{fig:avanzada_diseno}, que presenta un formulario cos seguintes elementos:
+
+\begin{figure}[b!]
+    \centering
+    \includegraphics[width=0.86\linewidth]{images/avanzada-diseño.png}
+    \caption{Deseño da interface de busca avanzada por compatibilidade de compoñentes educativos.}
+    \label{fig:avanzada_diseno}
+\end{figure}
+
+\begin{itemize}
+    \item Campos de texto, un por cada compoñente educativo de referencia que o usuario desexe introducir. De forma predeterminada móstrase un único campo baleiro.
+    \item Un botón \textit{Engadir compoñente} que permite incorporar novos campos de forma dinámica, sen límite predefinido.
+    \item Un botón de eliminación asociado a cada campo que permite eliminalo individualmente.
+    \item Un botón \textit{Buscar} que lanza a consulta cos termos introducidos.
+\end{itemize}
+
+Ao executar a busca, o sistema percorre o índice de compoñentes educativos para cada termo non baleiro introducido polo usuario, aplicando o mecanismo de busca difusa descrito na sección~\ref{sec:diseno_busca}. Cada entrada do índice inclúe o identificador do programa ao que pertence o compoñente, polo que non son necesarias consultas adicionais. Para cada compoñente que supere o limiar de puntuación, rexístrase a tripla \textit{(programme\_id, termo, puntuación)}. Unha vez procesados todos os termos, agréganse os resultados por programa: para cada termo, consérvase unicamente a puntuación máxima obtida entre todos os compoñentes dese programa, e a puntuación total do programa é a suma destas puntuacións máximas. Deste xeito, non só se ten en conta cantos termos encontran correspondencia, senón tamén a calidade de cada encaixe: un programa con dous encaixes exactos puntúa por encima dun con dous encaixes aproximados. Os programas preséntanse ordenados de maior a menor puntuación total.
+
+% **************************************************
+% * Desarrollo
+% **************************************************
+\section{Desenvolvemento}
+
+\subsection{Ordenación de resultados}
+
+A implementación da ordenación articulouse en tres capas coordinadas:
+\begin{itemize}
+    \item A configuración declarativa das vistas.
+    \item Os modelos Twig.
+    \item A lóxica JavaScript.
+\end{itemize}
+
+Na configuración YAML de cada vista, cada criterio de ordenación declarouse como exposto e asignóuselle un identificador único (\textit{field identifier}). Este identificador establece o contrato entre a configuración da vista e a capa JavaScript: o valor do atributo \texttt{data-sort-by} de cada botón no HTML debe coincidir exactamente con este identificador para que o mecanismo funcione correctamente.
+
+Algúns criterios implican campos de entidades relacionadas; nestes casos, o criterio declara o parámetro de relación correspondente, reutilizando as unións entre entidades xa definidas na configuración da vista, sen necesidade de declarar unións adicionais:
+\begin{itemize}
+    \item \textbf{Vista de programas}: a ordenación por país emprega a relación coa institución referenciada polo programa.
+    \item \textbf{Vista de compoñentes educativos}: a ordenación por campo de estudo e por título do programa pai usa a relación co nodo programa referenciado polo IEC; a ordenación por país encadéase ademais a través da relación co nodo institución.
+    \item \textbf{Catálogo de institución, compoñentes educativos}: a ordenación por campo de estudo e por título do programa pai usa a relación co nodo programa referenciado polo IEC.
+\end{itemize}
+
+Nos modelos Twig de cada vista engadíronse os botóns de ordenación, cada un coa clase \texttt{js-sort} e o atributo \texttt{data-sort-by} co identificador do criterio correspondente, como se amosa na figura~\ref{fig:ordenacion_impl}. Os modelos de todas as vistas cargan a mesma biblioteca JavaScript.
+
+\begin{figure}[t!]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=0.85\linewidth]{images/ordenacion-desarrollo.png}}
+    \caption{Botóns de ordenación dispoñibles na vista de programas.}
+    \label{fig:ordenacion_impl}
+\end{figure}
+
+A plataforma de partida xa incluía un script JavaScript con lóxica de detección de clics sobre os botóns \texttt{.js-sort} e o envío do formulario. Modificouse para implementar o comportamento de alternancia descrito na sección~\ref{sec:diseno_ordenacion}: en lugar de usar sempre a dirección especificada no atributo do botón, o script le agora o estado actual dos campos \texttt{sort\_by} e \texttt{sort\_order} do formulario e inverte a dirección se o mesmo criterio xa está activo, ou establece a dirección ascendente por defecto en caso contrario. Así mesmo, actualizouse o método de envío: en lugar de disparar un evento \textit{change} sobre os campos do formulario, o script simula agora un clic directo no botón de envío, o que desencadea o mecanismo de \textit{Views} e actualiza os resultados mediante AJAX sen recargar a páxina.
+
+Incorporouse ademais a función \texttt{updateSortIndicators()}, invocada na carga inicial da páxina e tras cada clic, que asigna ao botón activo a clase \texttt{is-sort-asc} ou \texttt{is-sort-desc} segundo a dirección de ordenación, de xeito que o pseudoelemento \texttt{::after} definido nos estilos do tema renderiza o indicador de dirección. Para que a ordenación explícita do usuario prevaleza sobre a orde de relevancia da busca difusa, o script engade ao formulario un campo oculto \texttt{user\_sort} que toma o valor \texttt{1} cando o usuario fai clic nun botón de ordenación; este parámetro é lido polo servidor para decidir se aplicar a orde de relevancia ou respectar o criterio escollido polo usuario.
+
+\subsection{Busca difusa}
+
+A implementación da busca difusa concretouse en tres elementos:
+\begin{itemize}
+    \item A configuración do servidor e dos índices de \textit{Search API}.
+    \item A extensión do módulo \texttt{custom\_views\_filters} mediante dous \textit{hooks} de \textit{Views}.
+    \item A nova clase \texttt{FuzzySearch} que encapsula a lóxica de puntuación.
+\end{itemize}
+
+Creouse un servidor de \textit{Search API} con \textit{backend} de base de datos, configurado cun limiar de lonxitude mínima de palabra de 4 caracteres, coherente co mecanismo de tokenización da clase de puntuación; a indexación de frases e a concordancia parcial desactiváronse, xa que o índice se emprega unicamente como catálogo de campos sobre o que operar a métrica de Levenshtein, sen usar a busca nativa do módulo. Sobre este servidor configuráronse dous índices sen restrición de idioma: \texttt{programmes}, que indexa os nodos de tipo \textit{programme} polos campos \texttt{title} e \texttt{institution} (título da institución referenciada polo programa); e \texttt{courses}, que indexa os nodos de tipo \textit{course} polos campos \texttt{title}, \texttt{institution} (título da institución, accedida a través do programa asociado) e \texttt{programme} (título do programa ao que pertence o compoñente).
+
+O \textit{hook} \texttt{hook\_views\_query\_alter} invócase antes de que \textit{Views} execute a consulta, permitindo interceptala e modificala. Este \textit{hook} xa existía no módulo \texttt{custom\_views\_filters} para outras vistas; engadiuse nel a lóxica de busca difusa para as vistas de busca e para a vista do catálogo de institución. Para cada vista, obtense o valor do campo \texttt{combine} do formulario exposto e invócase o método estático \texttt{FuzzySearch::scoreFromIndex()} co índice correspondente; este método encárgase internamente de obter os termos de busca a través do servizo de tradución, cargar os candidatos do índice, puntualos de forma independente para cada termo e combinar os resultados conservando a puntuación máxima por NID. A condición SQL orixinal do filtro \texttt{combine} identifícase polo operador \texttt{formula} e a presenza do termo de busca nos seus argumentos, e elimínase da \textit{query}. En función do resultado: se a clase devolve \texttt{NULL} (o termo non produce tokens), non se aplica ningún filtro e móstranse todos os resultados; se devolve un array baleiro, engádese a condición \texttt{nid IN (0)} para forzar un resultado baleiro; se hai coincidencias, engádese a condición \texttt{nid IN (\{NIDs\})} e, se o formulario non inclúe o parámetro \texttt{user\_sort}, limpanse ademais os criterios de ordenación da vista (\texttt{\$query->orderby = []}) e gárdanse os NIDs ordenados por relevancia na propiedade estática \texttt{\$orderedNids}, de xeito que o \textit{hook} de pre-execución aplique a orde de relevancia; de incluílo, mantense o criterio de ordenación escollido polo usuario.
+
+Engadiuse ademais o novo \textit{hook} \texttt{hook\_views\_pre\_execute}, que se invoca xusto antes de que \textit{Views} execute a consulta. Este comproba se a propiedade \texttt{\$orderedNids} non está baleira e, de ser así, obtén o obxecto \texttt{SelectInterface} da \textit{query}, constrúe mediante \texttt{addExpression()} a expresión \texttt{FIELD(node\_field\_data.nid, n1, n2, \ldots)} cos NIDs ordenados e engádea como criterio \texttt{ORDER BY}. Deste xeito, a base de datos devolve as filas directamente na orde de relevancia, sen ningunha reordenación posterior en PHP, e a paxinación tamén a respecta.
+
+A clase \texttt{FuzzySearch}, creada dentro do módulo \texttt{custom\_views\_filters}, centraliza a lóxica de puntuación. O punto de entrada é o método estático \texttt{scoreFromIndex()}, que recibe o texto de busca e o identificador do índice e devolve os candidatos ordenados por puntuación descendente, ou \texttt{NULL} se o texto non produce ningún token válido. Este delega en dous métodos: \texttt{loadCandidatesFromIndex()}, que obtén os candidatos do índice, e \texttt{scoreAndFilter()}, que aplica a puntuación. A clase mantén ademais a propiedade estática \texttt{\$orderedNids}, que actúa como canle de comunicación entre os dous \textit{hooks}: \texttt{hook\_views\_query\_alter} escríbea cos NIDs ordenados por puntuación e \texttt{hook\_views\_pre\_execute} léea para construír a expresión \texttt{FIELD()}.
+
+\texttt{loadCandidatesFromIndex()} consulta o índice de \textit{Search API} mediante unha \textit{query} sen restrición de idioma e cun rango de ata 10.000 resultados. O identificador de cada ítem ten o formato \texttt{entity:node/\{nid\}:\{lang\}}; o NID extráese deste identificador mediante expresión regular. Para cada ítem, itera sobre os campos indexados e concatena os seus valores nun único texto, que é o que se pasa á fase de puntuación.
+
+\texttt{scoreAndFilter()} normaliza e tokeniza o termo de busca e, para cada candidato, compara cada palabra da consulta con cada palabra dos campos indexados do candidato, acumulando a mellor puntuación obtida. Dado que \textit{Search API} indexa cada tradución dun nodo como un ítem independente, o mesmo NID pode aparecer varias veces; por iso, os resultados indexanse por NID e, en caso de duplicado, consérvase a puntuación máis alta. Finalmente, os resultados ordénanse por puntuación descendente, como se amosa na figura~\ref{fig:fuzzy_impl}; en caso de empate, aplícase como criterio de desempate a orde alfabética polo título do candidato.
+
+\begin{figure}[b!]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=0.89\linewidth]{images/fuzzy-desarrollo.png}}
+    \caption{Resultados da busca difusa para a consulta \texttt{telcommuniation}, con erros tipográficos respecto a \textit{Telecommunications}.}
+    \label{fig:fuzzy_impl}
+\end{figure}
+
+A tokenización divide o texto en palabras de 4 ou máis caracteres mediante a expresión regular \texttt{[a-z]\{4,\}}. O método \texttt{wordScore()} compara dúas palabras normalizadas e devolve unha puntuación entre 0 e 1. Os primeiros casos son a coincidencia exacta, que retorna unha puntuación de 1, e a coincidencia de prefixo, que retorna unha puntuación de 0,85. Para os demais, calcúlase a distancia de Levenshtein mediante a función \texttt{levenshtein()} de PHP e compárase cun limiar (isto é, a cantidade máxima de erros permitidos): se o supera, a puntuación é 0; se non, aplícase a fórmula $1 - d/L$, onde $d$ é a distancia e $L$ a lonxitude da maior palabra das dúas, de xeito que máis erros implican menor puntuación. O limiar é 1 para palabras de ata 5 caracteres e 3 para as máis longas.
+
+\subsection{Tradución automática da consulta}
+\label{sec:impl_traduccion}
+
+A implementación do servizo de tradución articulouse en tres elementos:
+\begin{itemize}
+    \item A configuración do motor \textit{LibreTranslate} \cite{libretranslate} na contorna de desenvolvemento (véxase o anexo~\ref{anx:libretranslate}).
+    \item A clase \texttt{TranslationDictionary}, que almacena o vocabulario académico estático.
+    \item A clase \texttt{TranslationService}, que coordina o dicionario e o motor e serve de punto de entrada para a clase \texttt{FuzzySearch}.
+\end{itemize}
+
+O motor de tradución automática neural \textit{LibreTranslate} integróuse na contorna de desenvolvemento DDEV como un servizo Docker adicional, accesible desde o módulo PHP na URL interna \texttt{http://libretranslate:5000}. Estableceuse o límite de memoria do contedor en 1\,GB. A comunicación co servizo realízase mediante peticións POST ao punto de entrada \texttt{/translate}, que reciben o texto de entrada, o idioma de orixe e o idioma destino, e devolven o texto traducido en formato JSON; un \textit{timeout} de 5 segundos garante que un fallo de comunicación non bloquee a busca, retornando \texttt{NULL} en caso de excepción.
+
+A clase \texttt{TranslationDictionary} é unha clase PHP estática con dúas constantes: \texttt{PROGRAMMES}, con termos de titulacións, e \texttt{COURSES}, con termos de compoñentes educativos. Cada constante é un array indexado polo termo en inglés e cuxos valores son arrays de traducións por código de idioma, cubrindo os idiomas da plataforma (español, francés, checo, húngaro, esloveno, estoniano, galego, portugués e grego).
+
+A clase \texttt{TranslationService} centraliza a lóxica de tradución. O punto de entrada é o método estático \texttt{getSearchTerms()}, que recibe o texto de busca e o identificador do índice, e devolve un array de un ou dous termos. O idioma de orixe obtense mediante \texttt{uiLanguage()}, que recupera o idioma activo da interface de Drupal; se o idioma é inglés, \texttt{getSearchTerms()} retorna directamente o termo orixinal sen consultar ningún servizo. En caso contrario, consulta primeiro o dicionario correspondente ao tipo de índice e, se o termo non está recollido, invoca o motor de tradución. Se se obtén un resultado distinto do termo orixinal, engádese como segundo elemento do array, como se amosa na figura~\ref{fig:traduccion_impl}.
+
+\begin{figure}[h!]
+    \centering
+    \setlength{\fboxsep}{0pt}
+    \fbox{\includegraphics[width=0.73\linewidth]{images/traduccion-desarrollo.png}}
+    \caption{Resultados da busca para a consulta en grego correspondente a \textit{medicina}, obtidos grazas á tradución automática da consulta.}
+    \label{fig:traduccion_impl}
+\end{figure}
+
+\texttt{getSearchTerms()} delega a consulta ao dicionario en \texttt{dictionaryLookup()}, que á súa vez invoca \texttt{buildInvertedIndex()}. Para realizar a consulta de forma eficiente, este método transforma a estrutura do dicionario, indexada polo termo en inglés, nun índice invertido indexado por idioma e por termo normalizado, de xeito que a busca dun termo concreto nun idioma concreto é directa, sen percorrer todas as entradas. O índice constrúese a partir de \texttt{COURSES} para buscas de compoñentes educativos e de \texttt{PROGRAMMES} para buscas de programas. A comparación realízase sobre texto normalizado mediante \texttt{normalize()}, que converte a minúsculas, elimina diacríticos e colapsa espazos.
+
+% **************************************************
+% * Validación
+% **************************************************
+\section{Validación e probas}
+
+\subsection{Ordenación de resultados}
+
+A validación da funcionalidade de ordenación realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:ordenacion} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_ordenacion} do anexo~\ref{anx:validacion}.
+
+Comprobouse que cada botón aplica correctamente o criterio de ordenación correspondente, que a dirección se inverte ao facer clic de novo sobre o mesmo botón, e que o indicador visual reflicte en todo momento a dirección activa.
+
+\subsection{Busca difusa}
+
+A validación do mecanismo de busca difusa realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:busca} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_busca} do anexo~\ref{anx:validacion}.
+
+O correcto funcionamento do mecanismo queda avalado polo proceso de calibrado do algoritmo, realizado mediante unha batería de consultas representativas dos escenarios de uso esperados e cuxos resultados se detallan no anexo~\ref{anx:calibrado}.
+
+\subsection{Tradución automática da consulta}
+
+A validación do servizo de tradución automática realizouse comprobando que cada un dos requisitos funcionais definidos na sección~\ref{req:sec:traduccion} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_traduccion} do anexo~\ref{anx:validacion}.
+
+Para validar o comportamento do servizo de tradución en escenarios reais, realizouse unha batería de probas sobre un conxunto de datos de proba específico. Creáronse catro nodos de tipo \textit{programme} con fins exclusivos de proba:
+\begin{itemize}
+    \item \textit{Medicine}
+    \item \textit{Computer Science}
+    \item \textit{Biotechnology}
+    \item \textit{History}
+\end{itemize}
+
+Definiuse un conxunto de 10 consultas que cobren unha variedade de escenarios, tanto en canto aos idiomas como aos mecanismos do sistema de tradución. A táboa~\ref{tab:probas_traduccion} resume estas consultas xunto co resultado esperado en cada caso.
+
+\begin{table}[t]
+    \centering
+    \begin{tabular}{p{3.05cm} p{3.6cm} p{3.6cm} p{4cm}}
+        \hline
+        \textbf{Idioma} & \textbf{Consulta}    & \textbf{Mecanismo} & \textbf{Resultado esperado} \\
+        \hline
+        Español         & medicina             & Dicionario         & Medicine                    \\
+        Francés         & médecine             & Dicionario         & Medicine                    \\
+        Galego          & medicina             & Dicionario         & Medicine                    \\
+        Grego           & {\greekfont ιατρική} & Dicionario         & Medicine                    \\
+        Español         & informática          & Dicionario         & Computer Science            \\
+        Español         & biotecnología        & Motor neural       & Biotechnology               \\
+        Francés         & biotechnologie       & Motor neural       & Biotechnology               \\
+        Húngaro         & történelem           & Motor neural       & History                     \\
+        Esloveno        & zgodovina            & Motor neural       & History                     \\
+        Inglés          & medicine             & Sen tradución      & Medicine                    \\
+        \hline
+    \end{tabular}
+    \caption{Batería de consultas do servizo de tradución automática.}
+    \label{tab:probas_traduccion}
+\end{table}
+
+En todos os casos, o resultado obtido coincidiu co esperado, o que confirma o correcto funcionamento tanto do dicionario estático como do motor de tradución neural.
+
+\subsection{Requisitos non funcionais}
+
+A validación dos requisitos non funcionais realizouse comprobando que cada un dos aspectos definidos na sección~\ref{req:sec:rnf} queda satisfeito na implementación desenvolvida. Os resultados recóllense na táboa~\ref{tab:validacion_rnf} do anexo~\ref{anx:validacion}.
+
+% **************************************************
+% * Conclusiones
+% **************************************************
+\section{Conclusións e liñas futuras}
+
+\subsection{Conclusións}
+
+Este traballo abordou o deseño e desenvolvemento de melloras nos mecanismos de busca e filtrado do catálogo de cursos da plataforma DACEM, partindo das limitacións identificadas no sistema de busca orixinal: ausencia de criterios de ordenación, busca por coincidencia exacta, falta de tolerancia a erros tipográficos, imposibilidade de consultar en idiomas distintos ao dos contidos e carencia dun mecanismo para localizar programas segundo os compoñentes educativos que conteñen.
+
+Das catro melloras propostas, implementáronse e validáronse satisfactoriamente tres:
+
+\begin{itemize}
+    \item A \textbf{ordenación de resultados} mediante botóns de criterio múltiple, integrada nas tres vistas da plataforma e con soporte para alternancia de dirección nunha única acción de usuario.
+    \item A \textbf{busca difusa}, baseada na distancia de Levenshtein con puntuación por palabra e normalización de texto, que permite localizar resultados pertinentes aínda en presenza de erros tipográficos e con independencia do uso de maiúsculas ou diacríticos.
+    \item A \textbf{tradución automática da consulta}, articulada en dous niveis (dicionario estático de termos académicos e motor neuronal \textit{LibreTranslate}), que permite formular consultas no idioma da interface e obter resultados en calquera idioma dispoñible no catálogo.
+\end{itemize}
+
+A cuarta mellora proposta, a \textbf{busca avanzada por compatibilidade de compoñentes educativos}, non chegou a implementarse por limitacións de tempo. O deseño da funcionalidade, incluíndo a interface de usuario, o mecanismo de puntuación e os requisitos funcionais, quedou recollido nas seccións~\ref{req:sec:busca_avanzada} e~\ref{sec:diseno_busca_avanzada} como punto de partida para un traballo futuro.
+
+Ademais dos requisitos funcionais, os requisitos non funcionais definidos na sección~\ref{req:sec:rnf} quedaron igualmente satisfeitos: a solución intégrase na plataforma sen alterar o modelo de datos, emprega exclusivamente tecnoloxías de código aberto, mantén un comportamento estable ante entradas incorrectas, resulta coherente co deseño visual existente e está estruturada de forma modular.
+
+O desenvolvemento presentou dificultades principalmente na integración coa arquitectura interna de Drupal, que require comprender o funcionamento do sistema de \textit{hooks} e dos índices de \textit{Search API} antes de poder intervir nel de forma eficaz. Tamén foi necesario tomar decisións de deseño non triviais, como a estratexia de detección de idioma para a tradución automática, onde a solución máis evidente resultou ser menos fiable que un enfoque alternativo.
+
+A nivel persoal, este traballo supuxo o primeiro contacto con Drupal e coa contorna de desenvolvemento DDEV, tecnoloxías das que non tiña coñecemento previo. Traballar sobre un sistema desta envergadura, con múltiples módulos interconectados e unha arquitectura interna complexa, esixiu un período de adaptación significativo antes de poder comezar a implementar calquera mellora. Igualmente relevante foi o proceso de investigación previo á implementación de cada funcionalidade: avaliar diferentes alternativas para a busca difusa, seleccionar un motor de tradución automática que se axustase aos requisitos do proxecto e decidir como estruturar o índice de busca requiriu consultar documentación, analizar casos de uso e contrastar opcións antes de tomar cada decisión técnica. Este proceso de investigación e toma de decisións informadas foi, probablemente, unha das aprendizaxes máis valiosas do traballo.
+
+As melloras desenvolvidas supoñen unha contribución concreta á plataforma DACEM, abordando limitacións reais do sistema de busca que afectan directamente á experiencia dos estudantes en mobilidade que consultan o catálogo.
+
+% **************************************************
+% * Liñas futuras
+% **************************************************
+\subsection{Liñas futuras}
+
+A partir do traballo realizado, identifícanse as seguintes liñas de traballo futuro:
+
+\begin{itemize}
+    \item \textbf{Implementación da busca avanzada por compatibilidade de compoñentes educativos.} A funcionalidade foi completamente deseñada no marco deste traballo, incluíndo a interface de usuario, o mecanismo de puntuación e os requisitos funcionais. A súa implementación constituiría a continuación máis directa do traballo aquí presentado.
+
+    \item \textbf{Despregamento do motor de tradución automática en produción.} O motor \textit{LibreTranslate} está configurado como un servizo Docker na contorna de desenvolvemento local, pero non no servidor de produción. Para que a tradución automática estea operativa na plataforma pública, sería necesario integrar este servizo na infraestrutura de despregamento real.
+
+    \item \textbf{Melloras no algoritmo de busca difusa.} O algoritmo actual baséase na distancia de Levenshtein sobre palabras individuais. Poderían explorarse técnicas complementarias como a redución de palabras á súa raíz (\textit{stemming}), o uso de sinónimos ou un proceso de calibrado máis sistemático baseado en datos reais de uso, co obxectivo de mellorar a precisión e exhaustividade dos resultados.
+
+    \item \textbf{Migración a un \textit{backend} de indexación dedicado.} O índice de \textit{Search API} empregado neste traballo utiliza a base de datos relacional existente como \textit{backend}. Se o volume de datos do catálogo medra significativamente, podería resultar conveniente migrar a un motor de indexación dedicado como \textit{Apache Solr} ou \textit{Elasticsearch}, que ofrecen mellor rendemento e capacidades de busca máis avanzadas, tal como se describe no anexo~\ref{anx:search_api}.
+
+    \item \textbf{Busca federada.} Nun contexto de mobilidade académica internacional, sería de interese que o sistema puidese lanzar consultas de forma simultánea contra fontes de datos externas, como catálogos doutras universidades socias, agregando os resultados nunha vista unificada para o usuario \cite{shokouhi2011}.
+\end{itemize}
+
+% **************************************************
+% * Bibliografía
+% **************************************************
+{\small
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+}
+\clearpage
+
+% **************************************************
+% * Anexos
+% **************************************************
+\section{Anexos}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% **************************************************
+% * Estado da arte
+% **************************************************
+\subsection{Estado da arte}
+
+\subsubsection{Busca e indexación en sistemas de xestión de contidos}
+\label{anx:search_api}
+
+Os sistemas de xestión de contidos modernos incorporan habitualmente mecanismos de busca que van máis alá da simple consulta SQL. En Drupal 10, a solución integrada por defecto para a busca en listaxes de contido é o módulo \textit{Views}, cuxo filtro \textit{combine} realiza comparacións de subcadeas mediante operadores SQL \texttt{LIKE}. Esta aproximación limítase a coincidencias exactas e non ofrece capacidades de indexación nin de ponderación de resultados por relevancia.
+
+Para cubrir estas limitacións, o ecosistema de Drupal conta co módulo \textit{Search API} \cite{search_api}, que proporciona unha capa de abstracción para a indexación e consulta de contido. O módulo inclúe un sistema de procesadores configurables (como normalización de maiúsculas, transliteración de acentos, tokenización ou eliminación de palabras baleiras) que se aplican durante a indexación con independencia do \textit{backend} escollido. Os \textit{backends} dispoñibles máis empregados son os seguintes:
+
+\begin{itemize}
+    \item \textbf{Backend de base de datos}: almacena o índice en táboas da base de datos relacional existente. Non require infraestrutura adicional e ofrece un rendemento axeitado para catálogos de tamaño moderado.
+
+    \item \textbf{Apache Solr} \cite{solr}: motor de busca de código aberto baseado en Lucene, optimizado para grandes volumes de datos e con capacidades avanzadas de ponderación de resultados por relevancia. Require un servidor Solr externo.
+
+    \item \textbf{Elasticsearch} \cite{elasticsearch}: solución distribuída orientada á alta dispoñibilidade e á escalabilidade horizontal, con capacidades similares a Solr. Tamén require infraestrutura adicional dedicada.
+\end{itemize}
+
+Para este traballo optouse polo \textit{backend} de base de datos, dado que non require infraestrutura adicional, é suficiente para o volume de datos do catálogo DACEM, e permite integrar a lóxica de busca difusa directamente en PHP, empregando o índice para recuperar os títulos sobre os que aplicar a métrica de Levenshtein.
+
+\subsubsection{Busca difusa e correspondencia aproximada de cadeas}
+\label{anx:busca_difusa}
+
+A busca difusa (\textit{fuzzy search}) é unha técnica de recuperación de información que permite localizar resultados relevantes aínda cando a consulta do usuario non coincide exactamente co texto almacenado. A diferenza da busca por subcadeas exactas, tolera desviacións ortográficas e erros tipográficos, o que mellora a experiencia de usuario en sistemas con datos introducidos manualmente ou con vocabulario técnico susceptible a equivocacións.
+
+O fundamento teórico da busca difusa reside no concepto de distancia de edición entre dúas cadeas, definida como o número mínimo de operacións elementais necesarias para transformar unha cadea na outra. O algoritmo máis empregado é a \textbf{distancia de Levenshtein} \cite{levenshtein}, que considera tres operacións básicas: inserción, eliminación e substitución dun carácter. Dados dous textos de lonxitude $m$ e $n$, calcúlase en tempo $O(m \times n)$ mediante programación dinámica.
+
+A \textbf{distancia de Damerau-Levenshtein} \cite{damerau} amplía este modelo incorporando as transposicións de caracteres adxacentes como operación atómica, o que a fai máis precisa para modelar erros tipográficos humanos, onde o intercambio de dúas letras consecutivas é un dos erros máis frecuentes. Outra métrica habitual é a \textbf{similitude de Jaro-Winkler} \cite{winkler}, que premia as cadeas con prefixo común e adoita empregarse na comparación de nomes propios. Por último, os enfoques baseados en \textbf{n-gramas} \cite{ukkonen} dividen as cadeas en secuencias solapadas de $n$ caracteres e comparan a proporción de n-gramas compartidos, ofrecendo bo rendemento en textos longos e sendo facilmente paralelizables.
+
+Para o presente traballo optouse pola distancia de Levenshtein como criterio de similaridade, pola súa sinxeleza conceptual, a súa robustez ante os tipos de erro tipográfico máis comúns e a súa idoneidade para cadeas curtas como os títulos de programas e compoñentes educativos.
+
+\subsubsection{Selección do motor de tradución automática}
+\label{anx:libretranslate}
+
+Para a integración dun servizo de tradución automática nunha plataforma web, a opción máis habitual é o uso de APIs externas de tradución, que permiten enviar texto e recibir a tradución sen necesidade de despregar modelos propios. As principais alternativas consideradas foron as seguintes:
+
+\begin{itemize}
+    \item \textbf{DeepL} \cite{deepl}: API de tradución de pago considerada de alta calidade. Ao ser un servizo externo, as consultas dos usuarios abandonan o servidor da plataforma.
+
+    \item \textbf{Google Cloud Translation} \cite{google_translate}: dispón dun nivel gratuíto de 500.000 caracteres mensuais, con tarifas de pago para volumes maiores. Comparte con DeepL a problemática de dependencia externa e saída de datos do servidor.
+
+    \item \textbf{LibreTranslate} \cite{libretranslate_portal}: API de pago sen nivel gratuíto, con límites de petición por minuto. Comparte a problemática de dependencia externa das opcións anteriores.
+
+    \item \textbf{LibreTranslate (autoaloxado)}: motor de código aberto despregable como contedor Docker, sen custo por petición, sen límites de cota e sen saída de datos do servidor.
+\end{itemize}
+
+Optouse pola opción autoaloxada de \textit{LibreTranslate} polas seguintes razóns: elimina a dependencia de servizos externos de pago, garante que os datos das consultas permanecen no servidor da plataforma, non impón límites de petición e intégrase de forma natural na contorna de desenvolvemento DDEV mediante Docker.
+
+O principal inconveniente de \textit{LibreTranslate} é a calidade de tradución inferior á de alternativas comerciais, especialmente para termos curtos e illados sen contexto, como os habituais en nomes de programas e compoñentes educativos, que adoitan ser palabras soltas ou frases técnicas curtas. Ademais, o contedor require dunha cantidade non despreciable de RAM e presenta latencia nas primeiras peticións tras o arranque.
+
+Estas limitacións mitigáronse con dúas medidas: a incorporación dun dicionario estático de termos académicos habituais, que cobre os casos de tradución incorrecta máis frecuentes e actúa como primeira opción antes de invocar o motor; e o establecemento dun límite de memoria de 1\,GB no contedor, que acota o seu consumo de recursos.
+
+% **************************************************
+% * Calibrado do algoritmo de busca difusa
+% **************************************************
+\subsection{Calibrado do algoritmo de busca difusa}
+\label{anx:calibrado}
+
+O proceso de calibrado ten como obxectivo determinar os valores óptimos dos parámetros que controlan o comportamento do algoritmo: o limiar de distancia de edición, que establece o número máximo de erros tolerados para que dúas palabras se consideren similares, e a puntuación asignada á coincidencia de prefixo. Para iso, definíronse un conxunto de datos de proba e unha batería de consultas representativa dos escenarios de uso esperados. Avaliáronse cinco configuracións distintas e seleccionouse a que mellores resultados produce.
+
+\subsubsection{Datos de proba}
+
+Creáronse tres nodos de tipo \textit{programme} con fins exclusivos de proba:
+\begin{itemize}
+    \item \textit{Engineering and Computer Science}
+    \item \textit{Medicine and Health Sciences}
+    \item \textit{Biotechnology}
+\end{itemize}
+
+\subsubsection{Batería de consultas}
+
+Definíronse 11 consultas que cobren os escenarios de uso máis representativos, como se detalla na táboa~\ref{tab:bateria}.
+
+\begin{table}[t]
+    \centering
+    \begin{tabular}{lll}
+        \hline
+        \textbf{Consulta}         & \textbf{Resultado esperado} & \textbf{Escenario}                              \\
+        \hline
+        \texttt{engineering}      & aparece                     & Coincidencia exacta                             \\
+        \texttt{enginering}       & aparece                     & 1 erro tipográfico                              \\
+        \texttt{enginiring}       & aparece                     & 2 erros tipográficos en palabra longa           \\
+        \texttt{biotenology}      & aparece                     & 2 erros tipográficos en palabra longa           \\
+        \texttt{helath}           & aparece                     & 2 erros tipográficos en palabra de 6 caracteres \\
+        \texttt{biotenolohy}      & aparece                     & 3 erros tipográficos en palabra longa           \\
+        \texttt{engi}             & aparece                     & Coincidencia de prefixo                         \\
+        \texttt{computer science} & aparece                     & Consulta de varias palabras                     \\
+        \texttt{engnrng}          & non aparece                 & Palabra excesivamente deformada                 \\
+        \texttt{zzzz}             & non aparece                 & Termo irrelevante                               \\
+        \texttt{eng}              & sen filtro                  & Non supera a lonxitude mínima                   \\
+        \hline
+    \end{tabular}
+    \caption{Batería de consultas empregada no calibrado.}
+    \label{tab:bateria}
+\end{table}
+
+\subsubsection{Parámetros e configuracións avaliadas}
+
+Avaliáronse cinco configuracións que varían o limiar de distancia de edición, a puntuación de prefixo e outros mecanismos de filtrado, co obxectivo de identificar a combinación de parámetros máis equilibrada. O limiar para palabras de ata 5 caracteres mantívose en 1 en todas as configuracións, dado que permitir 2 erros nunha palabra curta xeraría demasiados falsos positivos; o parámetro variable é o limiar para palabras de máis de 5 caracteres. As configuracións son:
+
+\begin{itemize}
+    \item \textbf{Base}: limiar 2 para palabras longas, puntuación de prefixo 0,85. É a configuración inicial da que parten as demais.
+    \item \textbf{Estrita}: limiar 1 para palabras longas e filtro adicional de puntuación mínima de 0,5 que descarta coincidencias débiles.
+    \item \textbf{Laxa}: limiar 3 para palabras longas, o que permite ata 3 erros en palabras suficientemente extensas.
+    \item \textbf{Sen prefixo}: idéntica á base, pero coa coincidencia de prefixo desactivada.
+    \item \textbf{Limiar granular}: distingue tres rangos, con limiar 0 para palabras de ata 4 caracteres, 1 para palabras de 5 a 7 e 2 para as máis longas.
+\end{itemize}
+
+\subsubsection{Resultados}
+
+A táboa~\ref{tab:calibrado} resume os resultados de cada configuración sobre a batería de consultas. A marca $\surd$ indica que o resultado obtido coincide co esperado; $\times$ indica que non.
+
+\begin{table}[b]
+    \centering
+    \begin{tabular}{lccccc}
+        \hline
+        \textbf{Consulta}         & \textbf{Base} & \textbf{Estrita} & \textbf{Laxa} & \textbf{Sen prefixo} & \textbf{Granular} \\
+        \hline
+        \texttt{engineering}      & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{enginering}       & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{enginiring}       & $\surd$       & $\times$         & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{biotenology}      & $\surd$       & $\times$         & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{helath}           & $\surd$       & $\times$         & $\surd$       & $\surd$              & $\times$          \\
+        \texttt{biotenolohy}      & $\times$      & $\times$         & $\surd$       & $\times$             & $\times$          \\
+        \texttt{engi}             & $\surd$       & $\surd$          & $\surd$       & $\times$             & $\surd$           \\
+        \texttt{computer science} & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{engnrng}          & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{zzzz}             & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \texttt{eng}              & $\surd$       & $\surd$          & $\surd$       & $\surd$              & $\surd$           \\
+        \hline
+        \textbf{Fallos}           & \textbf{1}    & \textbf{4}       & \textbf{0}    & \textbf{2}           & \textbf{2}        \\
+        \hline
+    \end{tabular}
+    \caption{Resultados das configuracións sobre a batería de consultas.}
+    \label{tab:calibrado}
+\end{table}
+
+A configuración estrita rexeita demasiados casos válidos: descartanse erros de dúas edicións que son perfectamente razoables. A configuración sen prefixo falla en consultas polo inicio dunha palabra. A configuración granular non tolera 2 erros en palabras de lonxitude intermedia. A configuración base produce fallos en palabras longas con 3 erros tipográficos. A configuración laxa produce 0 fallos en toda a batería e representa o equilibrio máis axeitado entre tolerancia e precisión.
+
+\subsubsection{Configuración seleccionada}
+
+\begin{itemize}
+    \item \textbf{Puntuación de prefixo}: 0,85. Esta puntuación sitúase por riba das correspondencias por distancia de Levenshtein en palabras curtas (un erro nunha palabra de 4 caracteres dá $1 - 1/4 = 0{,}75$; nunha de 5 caracteres, $1 - 1/5 = 0{,}80$), e por debaixo da coincidencia exacta (1,0). Para palabras longas a relación invértese: 1 edición nunha palabra de 7 ou máis caracteres supera 0,85, o que reflicte que especificar case toda a palabra con un erro é máis preciso que quedarse a medias.
+    \item \textbf{Limiar de distancia de edición}: 1 para palabras de ata 5 caracteres e 3 para palabras de máis de 5 caracteres.
+    \item \textbf{Fórmula de puntuación por distancia de edición}: $1 - d/L$, onde $d$ é a distancia de Levenshtein e $L$ a lonxitude da palabra máis longa das dúas comparadas.
+\end{itemize}
+
+% **************************************************
+% * Táboas de validación
+% **************************************************
+\subsection{Táboas de validación}
+\label{anx:validacion}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                             \\
+        \hline
+        \hyperref[req:or1]{OR-1} & Os botóns de ordenación están dispoñibles nas tres vistas, con criterios adaptados a cada tipo de contido       \\
+        \hyperref[req:or2]{OR-2} & Un primeiro clic establece a orde ascendente; un segundo clic sobre o mesmo botón inverte a dirección           \\
+        \hyperref[req:or3]{OR-3} & Dispoñibles en todas as vistas                                                                                  \\
+        \hyperref[req:or4]{OR-4} & Dispoñible nas vistas \textit{search\_programme} e \textit{search\_iec}                                         \\
+        \hyperref[req:or5]{OR-5} & Dispoñible na vista \textit{search\_programme} e na páxina de programas de \textit{institution\_new\_catalogue} \\
+        \hyperref[req:or6]{OR-6} & Dispoñible na vista \textit{search\_iec} e na páxina de IECs de \textit{institution\_new\_catalogue}            \\
+        \hyperref[req:or7]{OR-7} & Os botóns empregan os estilos do tema Bootstrap 5 da plataforma, con indicador de dirección no criterio activo  \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de ordenación de resultados.}
+    \label{tab:validacion_ordenacion}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                                                               \\
+        \hline
+        \hyperref[req:bd1]{BD-1} & Verificado con consultas con erros tipográficos; os resultados inclúen entidades relevantes                                                       \\
+        \hyperref[req:bd2]{BD-2} & Aplicada nas vistas \textit{search\_programme}, \textit{search\_iec} e \textit{institution\_new\_catalogue}                                       \\
+        \hyperref[req:bd3]{BD-3} & A busca opera sobre título, institución asociada e, para IECs, programa ao que pertencen                                                          \\
+        \hyperref[req:bd4]{BD-4} & Emprégase a distancia de Levenshtein normalizada como criterio de similaridade entre a consulta e os campos indexados                             \\
+        \hyperref[req:bd5]{BD-5} & Tanto o termo de busca coma os candidatos son normalizados antes da súa comparación, polo que maiúsculas e diacríticos non afectan aos resultados \\
+        \hyperref[req:bd6]{BD-6} & A busca compara o termo contra todas as traducións indexadas de cada contido, con independencia do idioma da interface do usuario                 \\
+        \hyperref[req:bd7]{BD-7} & Os resultados máis relevantes aparecen en primeiro lugar; se o usuario escolleu un criterio de ordenación propio, este prevalece                  \\
+        \hyperref[req:bd8]{BD-8} & A interface non sofreu ningunha modificación visible respecto ao comportamento anterior                                                           \\
+        \hyperref[req:bd9]{BD-9} & Ante consultas baleiras ou moi curtas, non se aplica ningún filtro e móstranse todos os resultados                                                \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de busca difusa.}
+    \label{tab:validacion_busca}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}            & \textbf{Validación}                                                                                                                        \\
+        \hline
+        \hyperref[req:ta1]{TA-1} & O sistema localiza resultados pertinentes ante consultas formuladas nun idioma diferente ao dos contidos indexados                         \\
+        \hyperref[req:ta2]{TA-2} & Todas as traducións da consulta realízanse ao inglés                                                                                       \\
+        \hyperref[req:ta3]{TA-3} & O dicionario estático actúa como primeira opción; o motor de tradución automática invócase unicamente cando o termo non está recollido nel \\
+        \hyperref[req:ta4]{TA-4} & O termo orixinal inclúese sempre no conxunto de termos de busca, garantindo o funcionamento correcto aínda en caso de fallo na tradución   \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos de tradución automática da consulta.}
+    \label{tab:validacion_traduccion}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{p{1.5cm} p{\dimexpr\linewidth-1.5cm-4\tabcolsep\relax}}
+        \hline
+        \textbf{Req.}              & \textbf{Validación}                                                                                                                                     \\
+        \hline
+        \hyperref[req:rnf1]{RNF-1} & A solución intégrase mediante hooks e módulos propios de Drupal, sen modificar o modelo de datos nin afectar ao resto de funcionalidades                \\
+        \hyperref[req:rnf2]{RNF-2} & Toda a implementación emprega Drupal, PHP e librarías de código aberto, en coherencia coa arquitectura do proxecto                                      \\
+        \hyperref[req:rnf3]{RNF-3} & O sistema xestiona entradas baleiras, moi curtas ou sen coincidencias sen producir erros visibles para o usuario                                        \\
+        \hyperref[req:rnf4]{RNF-4} & Os elementos de interacción integráronse co deseño existente da plataforma, empregando os estilos e compoñentes do tema Bootstrap 5                     \\
+        \hyperref[req:rnf5]{RNF-5} & O tempo de resposta observado durante o desenvolvemento non presentou degradación perceptible respecto ao comportamento previo                          \\
+        \hyperref[req:rnf6]{RNF-6} & As consultas ao índice de Search API limítanse aos campos necesarios e opérase sobre os resultados en memoria, sen consultas adicionais á base de datos \\
+        \hyperref[req:rnf7]{RNF-7} & O algoritmo opera sobre o índice de Search API, polo que o rendemento depende do motor de indexación e non escala linearmente co volume de contido      \\
+        \hyperref[req:rnf8]{RNF-8} & Cada mellora está implementada nun módulo propio con clases e servizos independentes, o que facilita o seu mantemento e extensión por separado          \\
+        \hline
+    \end{tabular}
+    \caption{Validación dos requisitos non funcionais.}
+    \label{tab:validacion_rnf}
+\end{table}
+
+% **************************************************
+% * Declaración de uso de IAX
+% **************************************************
+\subsection{Declaración de uso de intelixencia artificial xerativa}
+
+\vspace{0.5em}
+\noindent\textbf{Título do traballo:} Deseño e desenvolvemento dunha funcionalidade de busca e filtrado de cursos nun catálogo de cursos en liña
+
+\noindent\textbf{Materia:} Traballo de Fin de Grao
+
+\noindent\textbf{Titulación:} Grao en Enxeñaría de Tecnoloxías de Telecomunicación
+
+\noindent\textbf{Curso académico:} 2025/2026
+
+\noindent\textbf{Autor:} Aarón Riveiro Vilar
+
+\vspace{1em}
+\noindent Algúns dos contidos incluídos neste traballo foron producidos coa axuda de intelixencia artificial xerativa:
+
+\vspace{0.5em}
+\noindent Finalidade do uso de intelixencia artificial xerativa:
+
+\begin{itemize}
+    \item {[\ \ \ ]} Xeración de texto
+    \item {[\ \ \ ]} Xeración de imaxes
+    \item {[X]} Xeración de código fonte: Claude (Anthropic)
+    \item {[X]} Edición e/ou cambios no formato de contidos existentes: Claude (Anthropic)
+    \item {[X]} Revisión e/ou axudas á redacción: Claude (Anthropic)
+    \item {[\ \ \ ]} Outros
+\end{itemize}
+
+\noindent\textbf{Observacións}:
+\nopagebreak
+
+\vspace{0.5em}
+\noindent A ferramenta empregouse en dous ámbitos diferenciados. Na redacción da memoria, o autor elaborou cada apartado e Claude asistiu na corrección gramatical e ortográfica, na mellora do estilo e no seguimento dos cambios no código, actualizando os apartados correspondentes conforme evolucionaba a implementación; nos de implementación, axudou ademais a inspeccionar o código e documentar os detalles técnicos. No desenvolvemento, empregouse como apoio para navegar polo proxecto, localizar ficheiros e fragmentos de código relevantes, comprender o ecosistema e as tecnoloxías implicadas, na depuración e corrección de erros, e como asistencia puntual na creación de código.
+
+\vspace{2em}
+\noindent\textbf{Data:} 12 de xullo de 2026
+
+\vspace{0.5em}
+\noindent\textbf{Sinatura:}\hspace{0.5cm}\raisebox{-0.4cm}{\includegraphics[width=4cm]{images/firma.png}}
+
+\end{document}
