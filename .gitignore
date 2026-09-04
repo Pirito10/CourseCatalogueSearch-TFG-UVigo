@@ -18,6 +18,7 @@
 # Volcados de base de datos
 *.sql
 *.sql.gz
+!db/test-data.sql.gz
 
 # Sistema operativo
 .DS_Store
