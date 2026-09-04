@@ -1,19 +1,19 @@
 # Dependencias PHP (regeneradas con composer install)
-/vendor/
+/src/vendor/
 
 # Drupal core y módulos/temas contrib (gestionados por Composer)
-/web/core/
-/web/modules/contrib/
-/web/themes/contrib/
-/web/libraries/
+/src/web/core/
+/src/web/modules/contrib/
+/src/web/themes/contrib/
+/src/web/libraries/
 
 # Ficheros subidos por usuarios
-/web/sites/default/files/
+/src/web/sites/default/files/
 
 # Settings con credenciales
-/web/sites/default/settings.php
-/web/sites/default/settings.local.php
-/web/sites/default/settings.ddev.php
+/src/web/sites/default/settings.php
+/src/web/sites/default/settings.local.php
+/src/web/sites/default/settings.ddev.php
 
 # Volcados de base de datos
 *.sql
@@ -30,7 +30,9 @@ Thumbs.db
 # Notas locales de desarrollo
 docs/changelogs/
 
-# Memoria TFG (repo independiente)
-TFG-Memoria/
-/.editorconfig
-/.gitattributes
+# Memoria
+*.bbl
+*.synctex.gz
+
+/src/.editorconfig
+/src/.gitattributes
