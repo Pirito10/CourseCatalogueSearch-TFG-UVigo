@@ -1,4 +1,5 @@
 {{ attach_library('b5subtheme/search-programme-sort') }}
+{{ attach_library('b5subtheme/course-search-modal') }}
 
 <style>:root
 {
@@ -105,7 +106,10 @@
 							</div>
 						</div>
 
-						<div class="col ms-auto text-end">
+						<div class="col ms-auto text-end d-flex gap-2 justify-content-end">
+							<button class="btn btn-outline-light border-white" data-bs-toggle="modal" data-bs-target="#courseSearchModal">
+								{{ 'Search by courses'|t }}
+							</button>
 							<button class="btn btn-primary bg-black border-0" data-bs-toggle="modal" data-bs-target="#homeProgrammeModal">
 								{{ selected_home_programme ? 'Change Home Programme'|t : 'Select Home Programme'|t }}
 							</button>
@@ -288,6 +292,41 @@
 
 		{# (opcional) attachments/feeds si los usas #}
 		{{ attachment_after }}
+	</div>
+</div>
+
+
+<div class="modal fade" id="courseSearchModal" tabindex="-1" aria-labelledby="courseSearchModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content rounded-0">
+
+			<div class="modal-header border-0 pb-0">
+				<h5 class="modal-title" id="courseSearchModalLabel">{{ 'Search by courses'|t }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+
+			<div class="modal-body">
+				<p class="text-muted small">{{ 'Enter the courses you are looking for and we will find the programmes that cover the most.'|t }}</p>
+
+				<div id="course-search-list">
+					<div class="course-search-row d-flex gap-2 mb-2">
+						<input type="text" class="form-control rounded-0" placeholder="{{ 'Course 1'|t }}">
+						<button type="button" class="btn btn-outline-secondary btn-sm rounded-0 course-search-remove">✕</button>
+					</div>
+				</div>
+
+				<button type="button" id="course-search-add-btn" class="btn btn-outline-dark btn-sm rounded-0 mb-3">
+					+ {{ 'Add course'|t }}
+				</button>
+
+				<button type="button" id="course-search-btn" class="btn btn-dark rounded-0 mb-3 ms-2">
+					{{ 'Search'|t }}
+				</button>
+
+				<div id="course-search-results"></div>
+			</div>
+
+		</div>
 	</div>
 </div>
 
