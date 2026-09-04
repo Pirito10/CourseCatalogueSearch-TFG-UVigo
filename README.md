@@ -17,3 +17,27 @@ The project features:
 - Original query term always kept as a translation fallback.
 - Transparent integration via Views hooks and Search API, with no data-model or interface changes.
 - Full design for an advanced search ranking programmes by educational-component affinity.
+
+## How To Run
+### Requirements
+Make sure you have [Docker](https://www.docker.com) and [DDEV](https://ddev.readthedocs.io/en/stable/#installation) installed on your system.
+
+### Usage
+Start the environment and install the dependencies with:
+```bash
+cd src
+ddev start
+ddev composer install
+```
+Once the dependencies are installed, import the bundled test database and rebuild the cache with:
+```bash
+ddev import-db --file=../db/test-data.sql.gz
+ddev drush cache:rebuild
+```
+
+Then, open your web browser, navigate to `https://prueba.ddev.site` and browse to `/search-programme`, `/search-iec` or an institution's catalogue.
+
+To sign in as administrator, generate a one-time login link with:
+```bash
+ddev drush user:login
+```
